@@ -1,0 +1,1460 @@
+﻿@{
+    ViewBag.Title = "ManagerEmployeeInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Ecesis Impulse</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/assets/pages/css/NewStyle.css" rel="stylesheet" />
+
+    <link href="~/assets/pages/css/Select2.min.css" rel="stylesheet" />
+
+    @*<link href="../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/pages/css/lock.min.css" rel="stylesheet" type="text/css" />*@
+
+    <link rel="shortcut icon" href="favicon.ico" />
+
+
+    @*@Scripts.Render("~/assets/assetsCSS")*@
+
+    <style>
+        .closer {
+            margin-top: -25px;
+            float: right;
+            width: 25px;
+            border-radius: 50%;
+            border: 2px solid #204d9e;
+            padding-left: 1px;
+            height: 25px;
+            outline: 0;
+            background: transparent;
+            color: #204d9e;
+        }
+
+        .listContainer {
+            background-color: #fff;
+            border: 1px solid #ededed;
+            border-radius: 4px;
+            margin: 25px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 260px;
+            height: 180px;
+        }
+
+        .profile-img {
+            cursor: pointer;
+            height: 80px;
+            margin: 0 auto;
+            position: relative;
+            width: 80px;
+        }
+
+            .profile-img .avatar {
+                font-size: 24px;
+                height: 80px;
+                line-height: 80px;
+                margin: 0;
+                width: 80px;
+            }
+
+        .avatar {
+            background-color: #aaa;
+            border-radius: 50%;
+            color: #fff;
+            display: inline-block;
+            font-weight: 500;
+            height: 38px;
+            line-height: 38px;
+            margin: 0 10px 0 0;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            vertical-align: middle;
+            width: 38px;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .dropdown.profile-action {
+            position: absolute;
+            right: 5px;
+            text-align: right;
+            top: 10px;
+        }
+
+        .action-icon {
+            color: #777;
+            font-size: 18px;
+            display: inline-block;
+        }
+
+        .dropdown-menu {
+            font-size: 13px;
+        }
+
+        .dropdown-menu {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            transform-origin: left top 0;
+            box-shadow: inherit;
+            background-color: #fff;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: .25rem 1.5rem;
+            clear: both;
+            font-weight: 400;
+            color: #212529;
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .text-ellipsis {
+            display: block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-name {
+            color: #333;
+        }
+
+        .m-t-10 {
+            margin-top: 10px !important;
+        }
+
+        .text-muted {
+            color: #8e8e8e !important;
+        }
+
+        .small, small {
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        .listContainer .user-name > a {
+            color: #333 !important;
+            font-weight: bold;
+        }
+
+        .stuck {
+            position: fixed;
+            width: 100%;
+            z-index: 1;
+            height: 50px;
+            background-color: #f7f7f7;
+            margin-top: -6px;
+        }
+
+        .button1 {
+            width: 50px;
+            height: 50px;
+            margin-right: 14PX;
+            font-family: 'Roboto', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-weight: 500;
+            color: #fff;
+            background-color: #2ee59d;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+            outline: none;
+        }
+
+            .button1:hover {
+                background-color: #2EE59D;
+                box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+                color: #fff;
+                transform: translateY(-7px);
+            }
+
+        .switch {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 50px;
+            text-align: center;
+            background: #00bc9c;
+            transition: all 0.2s ease;
+            border-radius: 25px;
+        }
+
+            .switch span {
+                position: absolute;
+                width: 20px;
+                height: 4px;
+                top: 50%;
+                left: 50%;
+                margin: -2px 0px 0px -4px;
+                background: #fff;
+                display: block;
+                transform: rotate(-45deg);
+                transition: all 0.2s ease;
+            }
+
+                .switch span:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 4px;
+                    height: 12px;
+                    margin-top: -8px;
+                    background: #fff;
+                    transition: all 0.2s ease;
+                }
+
+        input[type=radio] {
+            display: none;
+        }
+
+        .switch label {
+            cursor: pointer;
+            color: rgba(0,0,0,0.2);
+            width: 60px;
+            line-height: 50px;
+            transition: all 0.2s ease;
+        }
+
+        label[for=yes] {
+            position: absolute;
+            left: 0px;
+            height: 20px;
+        }
+
+        label[for=no] {
+            position: absolute;
+            right: 0px;
+        }
+
+        #no:checked ~ .switch {
+            background: #eb4f37;
+        }
+
+            #no:checked ~ .switch span {
+                background: #fff;
+                margin-left: -8px;
+            }
+
+                #no:checked ~ .switch span:after {
+                    background: #fff;
+                    height: 20px;
+                    margin-top: -8px;
+                    margin-left: 8px;
+                }
+
+        .font_class {
+            font-size: 15px;
+            padding-left: 15px;
+            color: black;
+        }
+
+        #yes:checked ~ .switch label[for=yes] {
+            color: #fff;
+        }
+
+        #no:checked ~ .switch label[for=no] {
+            color: #fff;
+        }
+
+        .noborder {
+            border: 0px;
+        }
+
+        select[disabled] {
+            background-color: blue;
+        }
+
+        .trashBin {
+            color: #E43A45;
+            border: 0px;
+            background-color: transparent;
+            padding: 8px;
+        }
+
+        .downFile {
+            color: #1BBC9B;
+            border: 0px;
+            background-color: transparent;
+            padding: 8px;
+        }
+
+        .avatar-upload {
+            position: relative;
+            max-width: 205px;
+        }
+
+            .avatar-upload .avatar-edit {
+                position: absolute;
+                right: 12px;
+                z-index: 1;
+                top: 10px;
+            }
+
+                .avatar-upload .avatar-edit input {
+                    display: none;
+                }
+
+                    .avatar-upload .avatar-edit input + label {
+                        display: inline-block;
+                        width: 34px;
+                        height: 34px;
+                        margin-bottom: 0;
+                        border-radius: 100%;
+                        background: #ffffff;
+                        border: 1px solid transparent;
+                        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+                        cursor: pointer;
+                        font-weight: normal;
+                        transition: all 0.2s ease-in-out;
+                    }
+
+                        .avatar-upload .avatar-edit input + label:hover {
+                            background: #f1f1f1;
+                            border-color: #d6d6d6;
+                        }
+
+                        .avatar-upload .avatar-edit input + label:after {
+                            content: "\f040";
+                            font-family: "FontAwesome";
+                            color: #757575;
+                            position: absolute;
+                            top: 10px;
+                            left: 0;
+                            right: 0;
+                            text-align: center;
+                            margin: auto;
+                        }
+
+            .avatar-upload .avatar-preview {
+                width: 192px;
+                height: 192px;
+                position: relative;
+                border-radius: 100%;
+                border: 6px solid #f8f8f8;
+                box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+            }
+
+                .avatar-upload .avatar-preview > div > div > img {
+                    width: 192px;
+                    height: 192px;
+                    border-radius: 100%;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                }
+
+        .labelclass {
+            color: #2679e0 !important;
+            margin-top: -15px;
+            margin-left: -15px;
+        }
+
+        .labelclass1 {
+            color: #2679e0 !important;
+            margin-top: -15px;
+        }
+
+        .modal1.fade:not(.in).right .modal1-dialog {
+            -webkit-transform: translate3d(25%, 0, 0);
+            transform: translate3d(25%, 0, 0);
+        }
+
+        .scrollbar {
+            background: #F5F5F5;
+            overflow-y: scroll;
+        }
+
+        .force-overflow {
+            min-height: 450px;
+        }
+
+        #style-15::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        #style-15::-webkit-scrollbar {
+            width: 7px;
+            background-color: #F5F5F5;
+        }
+
+        #style-15::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #FFF;
+            background-image: -webkit-gradient(linear, 40% 0%, 75% 84%, from(#4297dc), to(#4297dc), color-stop(0.6,#bce7fe));
+        }
+
+        .dollar {
+            display: inline-block;
+            position: relative;
+        }
+
+            .dollar input {
+                padding-left: 20px;
+            }
+
+            .dollar:before {
+                position: absolute;
+                content: "₹";
+                left: 10px;
+                top: 10px;
+                font-size: 20px;
+            }
+
+        .border-styles {
+            font-size: 20px;
+            height: 44px;
+            margin-left: 5px;
+            border: .3px solid #d6d6d6;
+            color: #716c6c;
+        }
+
+        button {
+            width: 65px;
+            height: 40px;
+            background: linear-gradient(to bottom, #4eb5e5 0%,#389ed5 100%); /* W3C */
+            border: none;
+            border-radius: 5px;
+            position: relative;
+            border-bottom: 4px solid #2b8bc6;
+            color: #fbfbfb;
+            font-weight: 600;
+            font-family: 'Open Sans', sans-serif;
+            text-shadow: 1px 1px 1px rgba(0,0,0,.4);
+            font-size: 15px;
+            text-align: left;
+            text-indent: 5px;
+            box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2);
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        buttonr {
+            width: 65px;
+            height: 40px;
+            background: linear-gradient(to bottom, #4eb5e5 0%,#389ed5 100%); /* W3C */
+            border: none;
+            border-radius: 5px;
+            position: relative;
+            border-bottom: 4px solid #2b8bc6;
+            color: #fbfbfb;
+            font-weight: 600;
+            font-family: 'Open Sans', sans-serif;
+            text-shadow: 1px 1px 1px rgba(0,0,0,.4);
+            font-size: 15px;
+            text-align: left;
+            text-indent: 5px;
+            /*box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2);*/
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        button.back {
+            text-align: center;
+            font-size: 30px;
+            box-sizing: border-box;
+        }
+
+            button.back:after {
+                content: "";
+                width: 0;
+                height: 0;
+                display: block;
+                border-top: 20px solid #187dbc;
+                border-bottom: 20px solid #187dbc;
+                border-right: 16px solid transparent;
+                border-left: 20px solid #187dbc;
+                position: absolute;
+                opacity: 0.6;
+                left: 0;
+                top: 0;
+                border-radius: 5px 0 0 5px;
+            }
+
+        .Nborder {
+            height: 44px;
+            font-size: 15px;
+            margin-left: 0px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(227, 227, 227);
+            border-image: initial;
+            border-radius: 4px;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+            color: #888;
+        }
+
+        .save-icon {
+            font-size: 18px;
+        }
+
+        .labelclass {
+            color: #2679e0 !important;
+            margin-top: -15px;
+            margin-left: -15px;
+        }
+
+        .labelclass1 {
+            color: #2679e0 !important;
+            margin-top: -15px;
+        }
+
+        .handCursor:hover {
+            cursor: pointer;
+        }
+
+        .btn-print {
+            border: 1px solid #fd686f;
+            margin-left: 50px;
+            height: 36px;
+            color: #fc6372;
+        }
+
+            .btn-print:hover {
+                background-color: #fd686f;
+                color: white;
+            }
+
+        .lbl-print {
+            font-family: 'Montserrat', sans-serif;
+            margin-left: 10px;
+            font-size: 20px;
+        }
+
+        .fa-times {
+            color: red;
+        }
+
+        .fa-check {
+            color: green;
+        }
+
+        .profile-boxes {
+            min-height: 420px;
+        }
+
+        .custom-modal .modal-body {
+            padding: 10px;
+        }
+
+        .card-boxs {
+            background-color: #f7f7f7;
+            border: 1px solid #f7f7f7;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            padding: 20px;
+            position: relative;
+            min-height: 100%;
+        }
+
+        .back-icon {
+            background-color: #fff;
+            border: 1px solid #00dfff;
+            border-radius: 24px;
+            color: #72c8d3;
+            float: right;
+            font-size: 12px;
+            line-height: 24px;
+            min-height: 26px;
+            text-align: center;
+            width: 26px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<!-- END HEAD -->
+<body style="background-color:#f7f7f7;" ng-app="Employeedetails">
+    <div ng-controller="Employees" data-ng-init="GetEmplist(roleId,refNo)" id="controllerID" ng-cloak>
+
+        <div id="first" class="" ng-init="assignRef(refNo)" ng-cloak>
+            <div class="listContainer col-md-3" ng-repeat="el in EmpList" ng-cloak>
+                <div class="profile-img">
+                    <a href="" class="avatar"><img class="avatar" ng-src="{{el.file_path}}" /></a>
+                </div>
+                <div class="dropdown profile-action">
+                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-pencil" id="{{el.emp_ref_no}}" onclick="GetInfo(this.id)"></i>
+
+                    </a>
+                </div>
+                <h4 class="user-name m-t-10 mb-0 text-ellipsis" style="font-size:1.5rem"><a id="{{el.emp_ref_no}}" onclick="GetInfo(this.id)">{{el.emp_full_name}}</a></h4>
+                <div class="small text-muted">{{el.emp_ref_code}}</div>
+                <div class="small text-muted">{{el.department}}</div>
+            </div>
+        </div>
+
+        <div class="content container-fluid hidden" id="detView" ng-model="Result[0]">
+
+            <div class="pull-right handCursor">
+                <i class="fa fa-chevron-left" onclick="window.location.reload()" title="Back" style="font-size: 20px;"></i>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4 class="page-title">My Profile</h4>
+                </div>
+            </div>
+            <div class="card-box mb-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="profile-view">
+                            <div class="profile-img-wrap">
+                                <div class="profile-img">
+                                    <img alt="" src="{{Result[0].file_path}}" id="userprofileview">
+                                </div>
+                            </div>
+                            <div class="profile-basic">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="profile-info-left">
+                                            <h3 class="user-name m-t-0 mb-0">{{Result[0].emp_first_name}} {{Result[0].emp_last_name}}</h3>
+                                            <h4 class="text-muted">{{Result[0].designation}}</h4>
+                                            <small class="text-muted">{{Result[0].department}}</small>
+                                            <div class="staff-id">Employee ID : {{Result[0].emp_ref_code}}</div>
+                                            <div class="small doj text-muted">Date of Join : {{Result[0].emp_joining_date}}</div>
+                                            <div class="staff-msg">
+                                                <a class="btn btn-custom" href="">Send Message</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Phone:</div>
+                                                <div class="text"><a href="">{{Result[0].mobile_number}}</a></div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Email:</div>
+                                                <div class="text"><a href="">{{Result[0].email_id}}</a></div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Birthday:</div>
+                                                <div class="text">{{Result[0].date_of_birth}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Address:</div>
+                                                <div class="text">
+                                                    {{Result[0].local_street}},{{Result[0].local_level}}<br />
+                                                    {{Result[0].local_unit}},{{Result[0].local_state}}-{{Result[0].local_postal_code}}
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Gender:</div>
+                                                <div class="text">{{Result[0].gender}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Reports to:</div>
+                                                <div class="text">
+                                                    <div class="avatar-box">
+                                                        <div class="avatar avatar-xs">
+                                                            <img src="{{Result[0].manager_pic}}" alt="">
+                                                        </div>
+                                                    </div>
+                                                    <a id="{{Result[0].report_to_manager}}" onclick="GetInfo(this.id)">
+                                                        {{Result[0].manager}}
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box tab-box">
+                <div class="row user-tabs">
+                    <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                        <ul class="nav nav-tabs nav-tabs-bottom" style="margin-bottom: 0px;">
+                            <li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active" id="profile" >Profile</a></li>                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <!-- Profile Info Tab -->
+                <div id="emp_profile" class="pro-overview tab-pane active">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card-box profile-box" style="height: 465px;">
+                                <h3 class="card-title">Personal Informations</h3>
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Passport No.</div>
+                                        <div class="text">{{Result[0].passport_number}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Blood Group</div>
+                                        <div class="text">{{Result[0].blood_group}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Marital status</div>
+                                        <div class="text">{{Result[0].maritial_status}}</div>
+                                    </li>
+                                    <li id="spouse" class="hidden">
+                                        <div class="title">Spouse Name</div>
+                                        <div class="text">{{Result[0].spouse_name}}</div>
+                                        <div class="title">Spouse Contact</div>
+                                        <div class="text">{{Result[0].spouse_contact}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Nearest bus Stop</div>
+                                        <div class="text">{{Result[0].nearest_bus_stop}}</div>
+                                    </li>
+                                </ul>
+                                <br />
+                                <h3 class="card-title">Bank Information</h3>
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Bank account No.</div>
+                                        <div class="text">{{Result[0].bank_account_no}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Aadhaar Card No</div>
+                                        <div class="text">{{Result[0].aadhar_no}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">PAN No</div>
+                                        <div class="text">{{Result[0].pan_card_no}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">PF No</div>
+                                        <div class="text">{{Result[0].PF_no}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">ESI No</div>
+                                        <div class="text">{{Result[0].ESI_no}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">UAN No</div>
+                                        <div class="text">{{Result[0].UAN_No}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-box profile-box" style="height: 465px;">
+                                <h3 class="card-title">Emergency Contact</h3>
+                                <h2 class="section-title" style="color: #000000;text-shadow: 2px 2px 20px #98a8ab;">Primary</h2>
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Name</div>
+                                        <div class="text">{{Result[0].emrergency_contact_name}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Relationship</div>
+                                        <div class="text">{{Result[0].emergency_contact_relationship}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Address</div>
+                                        <div class="text">{{Result[0].emrergency_contact_address}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Phone </div>
+                                        <div class="text">{{Result[0].emrergency_contact_number}}</div>
+                                    </li>
+                                </ul>
+                                <hr><br />
+                                <h2 class="section-title" style="color: #000000;text-shadow: 2px 2px 20px #98a8ab;">Secondary</h2>
+                                <ul class="personal-info">
+                                    <li>
+                                        <div class="title">Name</div>
+                                        <div class="text">{{Result[0].emergency_contact_name1}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Relationship</div>
+                                        <div class="text">{{Result[0].emergency_contact_relationship1}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Address</div>
+                                        <div class="text">{{Result[0].emergency_contact_address1}}</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Phone </div>
+                                        <div class="text">{{Result[0].emergency_contact_number1}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card-box profile-box">
+                                <h3 class="card-title">Education Informations</h3>
+                                <div class="experience-box">
+                                    <ul class="experience-list">
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a class="name">SSLC</a>
+                                                    <div>{{Result[0].sslc_mark}}</div>
+                                                    <span class="time">{{Result[0].sslc_pass_year}}</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a class="name">12th</a>
+                                                    <div>{{Result[0].twelth_mark}}</div>
+                                                    <span class="time">{{Result[0].twelth_pass_year}}</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a class="name">Graduation</a>
+                                                    <div>{{Result[0].graduation_value}}</div>
+                                                    <span class="time">{{Result[0].graduation_year}}</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a class="name">Post Graduation</a>
+                                                    <div>{{Result[0].post_graduation_value}}</div>
+                                                    <span class="time">{{Result[0].post_graduation_year}}</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-box profile-box">
+                                <h3 class="card-title">Experience</h3>
+                                <div class="experience-box">
+                                    <ul class="experience-list">
+                                        <li ng-repeat="exp in details">
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a href="#/" class="name">{{exp.designation}} at {{exp.company_name}}, {{exp.location}}</a>
+                                                    <span class="time">{{exp.experience}} years</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Profile Info Tab -->
+            </div>
+        </div>
+    </div>
+
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+
+    <script>
+
+        var exCount = 1;
+        
+        function formatDate(date)
+        {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [month, day, year].join('/');
+        }
+        
+        function empDetails()
+        {
+            var refN = $("#ddlEmployee").val();
+
+            var empName = $("#ddlEmployee option:selected").text();
+
+            var Result = parent.addExper(refN,empName);
+        }
+        
+        function Educationwithoutdocuments()
+        {
+            var sCondition = "where ref_no = "+sEmpRefNo;
+
+            var StrJsonDatas;
+
+            StrJsonDatas = eval({
+                sslc_mark: $('#txtsslcper').val(),
+                sslc_syllabus: $('#ddlsslcsyllabus').val(),
+                sslc_pass_year: $('#txtsslcyop').val(),
+                twelth_mark: $('#txttwelthper').val(),
+                twelth_syllabus: $('#ddltwelthsyllabus').val(),
+                twelth_pass_year: $('#txttwelthyop').val(),
+                graduation: $('#ddlGraduate').val(),
+                graduation_year: $('#txtgradyop').val(),
+                post_graduation: $('#ddlPGraduate').val(),
+                post_graduation_year: $('#txtpgradyop').val(),
+                is_filled: 1
+            });
+
+            var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeEducationDetails", sCondition);
+
+            if(Result !=null || Result != "")
+            {
+                return "Success";
+            }
+            else{
+                return "Error" ;
+            }
+        }
+        
+        function bindMaritalStatus(maritals){
+
+
+            if (maritals == 1) {
+
+                $('#spouseDIV').addClass('hidden');
+                $('#spouseDIVView').addClass('hidden');
+            }
+            else {
+                $('#spouseDIV').removeClass('hidden');
+                $('#spouseDIVView').removeClass('hidden');
+            }
+        }
+        
+        function bindDesignation(design)
+        {
+
+            var sCondition;
+
+            if ($("#ddllevel").val() == 1) {
+                if ($("#ddldivision").val() == 1) {
+                    sCondition = "where department_id in(1,2) and role_id IN (2,12) order by designation_id asc";
+                }
+                else {
+                    sCondition = "where department_id =" + $("#ddldivision").val() + " and role_id IN (2,12) order by designation_id asc";
+                }
+            }
+            else if ($("#ddllevel").val() == 2) {
+                if ($("#ddldivision").val() == 1) {
+                    sCondition = "where department_id in(1,2) and role_id NOT IN (2,12) order by designation_id asc";
+                }
+                else {
+                    sCondition = "where department_id =" + $("#ddldivision").val() + " and role_id NOT IN (2,12) order by designation_id asc";
+                }
+            }
+
+
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: null });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectDesignation");
+
+            $('#ddldesignation').empty().append();
+
+            $('#ddldesignation').append('<option value="-1">Select Designation</option>');
+
+            if (Result != "" && Result != null) {
+
+                for (var i = 0; i < Result.length; i++)
+                {
+                    $('#ddldesignation').append('<option value="' + Result[i]["designation_id"] + '" id="' + Result[i]["role_id"] + '">' + Result[i]["display_value"] + '</option>');
+                }
+            }
+
+            $("#ddldesignation").val(design).change();
+
+        }
+
+        function bindManager(manager, empRef)
+        {
+            //var Condition = "WHERE delete_status=0 and role_id in(1,2,12) order by emp_full_name asc";
+
+            //var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            var paramNames = [], paramValues = [];
+
+            paramNames.push('refNo');
+
+            paramValues.push(empRef);
+
+            paramNames.push('type');
+
+            paramValues.push(2);
+
+            var strJsonDatas = eval({ strSessionID: '', ProcParameters: paramNames, ProcInputData: paramValues });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectEmployeeLists");
+
+            $('#ddlrptTomgr').empty().append();
+
+            if (Result != "" && Result != null) {
+                for (var i = 0; i < Result.length; i++) {
+
+                    $('#ddlrptTomgr').append('<option value="' + Result[i]["emp_ref_no"] + '">' + Result[i]["emp_full_name"] + '</option>');
+
+                }
+            }
+            $("#ddlrptTomgr").val(manager).change();
+
+        }
+
+        function freshers(isFresh)
+        {
+            if (isFresh == 1)
+            {
+                $('#exprdetails').addClass('hidden');
+                $('#fresher').removeClass('hidden');
+
+                $('#exprdetailsview').addClass('hidden');
+                $('#fresherView').removeClass('hidden');
+                fresher = 1;
+            }
+            else if (isFresh == 2) {
+
+                $('#exprdetails').removeClass('hidden');
+                $('#fresher').addClass('hidden');
+
+                $('#exprdetailsview').removeClass('hidden');
+                $('#fresherView').addClass('hidden');
+
+                $('#yesFresher').addClass('hidden');
+
+                fresher = 2;
+            }
+        }
+
+        $('input[type=radio][name=rdo]').change(function ()
+        {
+            if (this.id == 'yes') {
+                $('#exprdetails').addClass('hidden');
+                $('#fresher').removeClass('hidden');
+                fresher = 1;
+            }
+            else if (this.id == 'no') {
+                $('#exprdetails').removeClass('hidden');
+                $('#fresher').addClass('hidden');
+
+                fresher = 2;
+            }
+        });
+
+        var ResultEducation;
+
+        function BindFields()
+        {
+            var Condition = "WHERE enumeration_key in ('Graduation','POST_Graduation','Syllabus','Blood_group')";
+            //var Condition = "WHERE order_no = " + orderid + " order by 1 desc";//Anoop
+            var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            ResultEducation = oAPICall.SelectData(strJsonDatas, "SelectMandatoryValues");
+
+            $('#ddlBlood').empty().append();
+            $('#ddlGraduate').empty().append();
+            $('#ddlPGraduate').empty().append();
+            $('#ddlsslcsyllabus').empty().append();
+            $('#ddltwelthsyllabus').empty().append();
+
+
+            $('#ddlsslcsyllabus').append('<option value=-1>Select Syllabus</option>');
+
+            $('#ddltwelthsyllabus').append('<option value=-1>Select Syllabus</option>');
+
+            $('#ddlBlood').append('<option value=-1>Select Blood Group</option>');
+
+            $('#ddlGraduate').append('<option value=-1>Select Graduate</option>');
+
+            $('#ddlPGraduate').append('<option value=-1>Select Post Graduate</option>');
+
+
+            if (ResultEducation != "" && ResultEducation != null) {
+
+                for (var i = 0; i < ResultEducation.length; i++) {
+
+                    var sEnukey = ResultEducation[i]["enumeration_key"];
+                    var sEnuValue = ResultEducation[i]["value"];
+                    var sEnuDispValue = ResultEducation[i]["display_value"];
+                    if (sEnukey == 'Blood_Group') {
+                        $('#ddlBlood').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+                    else if (sEnukey == 'Graduation') {
+                        $('#ddlGraduate').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+                    else if (sEnukey == 'Post_Graduation') {
+                        $('#ddlPGraduate').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+                    else if (sEnukey == 'Syllabus') {
+
+                        $('#ddlsslcsyllabus').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        $('#ddltwelthsyllabus').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+
+                }
+            }
+
+        }
+
+        function EduDivShow(id, filePath)
+        {
+            var fileType = filePath.split('.');
+
+            var imageType, imgID, lblID,downLinkID,divID,EimgID, ElblID,EdivID;
+
+
+            if(fileType[fileType.length - 1] != "pdf")
+            {
+                imageType = "../content/Image/image_icon.png";
+            }
+            else
+            {
+                imageType = "../content/Image/pdf_icon.png";
+            }
+
+            divID = "#" + id + "View"
+
+            EdivID = "#" + id + "ViewV"
+
+            imgID = "#" + id + "Img";
+
+            EimgID = "#" + id + "ImgV";
+
+            lblID = "#" + id + "lbl";
+
+            ElblID = "#" + id + "lblV";
+
+            downLinkID = id + "Down";
+
+            $(imgID).attr('src', imageType);
+
+            $(EimgID).attr('src', imageType);
+
+            var a = document.getElementById(downLinkID);
+
+            a.href = filePath;
+
+            var fileName = filePath.split('_');
+
+            $(lblID).text(fileName[fileName.length - 1]);
+
+            $(ElblID).text(fileName[fileName.length - 1]);
+
+            $(divID).removeClass('hidden');
+
+            id ='#' + id + 'Upload' ;
+
+            $(id).addClass('hidden');
+
+            $(EdivID).removeClass('hidden');
+
+        }
+        
+        function BindDesig()
+        {
+            var deptId = $("#EmpDepartment").val();
+
+            var level = $("#EmpLevel").val();
+
+            var sCondition;
+
+            if(level == 1)
+            {
+                if (deptId == 1)
+                {
+                    sCondition = "where department_id in(1,2) and role_id in (2,12,18,19) order by designation_id asc";
+                }
+                else
+                {
+                    sCondition = "where department_id =" + deptId + " and role_id in (2,12,18,19) order by designation_id asc";
+                }
+            }
+            else if( level == 2)
+            {
+                if (deptId == 1)
+                {
+                    sCondition = "where department_id in(1,2) and role_id NOT IN (2,12,18,19) order by designation_id asc";
+                }
+                else
+                {
+                    sCondition = "where department_id =" + deptId + " and role_id NOT IN (2,12,18,19) order by designation_id asc";
+                }
+            }
+
+
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: null });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectDesignation");
+
+            $('#EmpDesignation').empty().append();
+
+            $('#EmpDesignation').append('<option value="-1">Select Designation</option>');
+
+            if (Result != "" && Result != null) {
+
+                var  s = 100;
+
+                for (var i = 0; i < Result.length; i++) {
+                    $('#EmpDesignation').append('<option value="' + Result[i]["designation_id"] + '" id="'+Result[i]["role_id"]+'">' + Result[i]["display_value"] + '</option>');
+
+                    s++;
+                }
+            }
+        }
+        
+        function BindEducationDetails(sEmpRef)
+        {
+            sEmpRefNo = sEmpRef;
+
+            var Condition = "WHERE ref_no =" +sEmpRef;
+
+            var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectEmployeeEducationDetails");
+
+            if(Result != null || Result != "")
+            {
+
+                if(Result[0]["is_filled"]!=0)
+                {
+
+                    if(Result[0]["sslc_doc"] === undefined){
+                        Result[0]["sslc_doc"] = "";
+                    }
+
+                    if(Result[0]["twelth_doc"] === undefined){
+                        Result[0]["twelth_doc"] = "";
+                    }
+
+                    if(Result[0]["graduation_doc"] === undefined){
+                        Result[0]["graduation_doc"] = "";
+                    }
+
+                    if(Result[0]["post_graduation_doc"] === undefined){
+                        Result[0]["post_graduation_doc"] = "";
+                    }
+
+                    if(Result[0]["sslc_syllabus"] === undefined){
+
+                        Result[0]["sslc_syllabus"] = -1;
+
+                    }
+                    if(Result[0]["twelth_syllabus"] === undefined){
+
+                        Result[0]["twelth_syllabus"] = -1;
+
+                    }
+                    if(Result[0]["graduation"] === undefined){
+
+                        Result[0]["graduation"] = -1;
+
+                    }
+                    if(Result[0]["post_graduation"] === undefined){
+
+                        Result[0]["post_graduation"] = -1;
+
+                    }
+
+                    $("#txtsslcper").val(Result[0]["sslc_mark"]);
+
+                    $("#ddlsslcsyllabus").val(Result[0]["sslc_syllabus"]).change();
+
+                    $("#txtsslcyop").val(Result[0]["sslc_pass_year"]);
+
+                    if(Result[0]["sslc_doc"] != '')
+                    {
+                        EduDivShow("sslcDoc",Result[0]["sslc_doc"]);
+                    }
+
+                    $("#txttwelthper").val(Result[0]["twelth_mark"]);
+
+                    $("#ddltwelthsyllabus").val(Result[0]["twelth_syllabus"]).change();
+
+                    $("#txttwelthyop").val(Result[0]["twelth_pass_year"]);
+
+                    if(Result[0]["twelth_doc"] != '')
+                    {
+                        EduDivShow("twelthDoc",Result[0]["twelth_doc"]);
+                    }
+
+                    $("#ddlGraduate").val(Result[0]["graduation"]).change();
+
+                    $("#txtgradyop").val(Result[0]["graduation_year"]);
+
+                    if( Result[0]["graduation_doc"] != '')
+                    {
+                        EduDivShow("gradDoc",Result[0]["graduation_doc"]);
+                    }
+
+
+                    $("#ddlPGraduate").val(Result[0]["post_graduation"]).change();
+
+                    $("#txtpgradyop").val(Result[0]["post_graduation_year"]);
+
+                    if(Result[0]["post_graduation_doc"] != '')
+                    {
+                        EduDivShow("pgradDoc",Result[0]["post_graduation_doc"]);
+                    }
+
+
+                }
+            }
+        }
+
+        function GetInfo(ref)
+        {
+            var role;
+
+            sEmpRefNo = ref;
+
+            //var Condition = "WHERE emp_ref_no =" +ref;
+
+            //var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            //var Result = oAPICall.SelectData(strJsonDatas, "SelectEmployeeDetails");
+
+            var paramNames = [], paramValues = [];
+
+            paramNames.push('refNo');
+
+            paramValues.push(ref);
+
+            paramNames.push('type');
+
+            paramValues.push(2);
+
+            var strJsonDatas = eval({ strSessionID: '', ProcParameters: paramNames, ProcInputData: paramValues });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectEmployeeLists");
+
+            if (Result != "" || Result != null)
+            {
+                role = Result[0]["role_id"];
+            }
+
+            if(roleId == 9 && role == 2)
+            {
+                $("#salary").addClass('hidden');
+
+                $("#salaryEdit").addClass('hidden');
+            }
+
+            angular.element(document.getElementById('controllerID')).scope().BindValues(ref);
+        }
+
+        var oAPICall;
+
+        var fresher;
+
+        var refNo, sEmpRefNo,roleId;
+
+        var fileValidate = 0 , isUploadEdu = "No";
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        $(document).ready(function () {
+
+            oAPICall = new APICall();
+
+            $('#spouseDIV').addClass('hidden');
+            $('#spouseDIVView').addClass('hidden');
+
+            $('#exprdetails').addClass('hidden');
+
+            $('#exprdetailsView').addClass('hidden');
+
+            $('#sslcDocView').addClass('hidden');
+            $('#twelthDocView').addClass('hidden');
+            $('#gradDocView').addClass('hidden');
+            $('#pgradDocView').addClass('hidden');
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+            roleId = sUserDetails.RoleId;
+
+            if(roleId == 1 || roleId == 9 || roleId == 10)
+            {
+                $("#salary").removeClass('hidden');
+
+                $("#bankStatutory").removeClass('hidden');
+
+                $("#salaryEdit").removeClass('hidden');
+            }
+
+            if(roleId != 1)
+            {
+                $("#DeleteEmployee").addClass('hidden');
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+<script src="~/Scripts/js/angular.min.js"></script>
+<script src="~/Scripts/AngularController/EmployeeController.js"></script>

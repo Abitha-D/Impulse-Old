@@ -1,0 +1,499 @@
+﻿<style>
+    .col-width {
+        width: 17%;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    .ui-state-highlight {
+        background: #c4e3fa !important;
+    }
+
+    .ui-jqgrid tr.ui-row-ltr td {
+        border-color: #c7c2c2;
+    }
+
+    #loadingDiv {
+        position: absolute;
+        top: 150px;
+        right: -475px;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 10000000;
+        opacity: 0.4;
+    }
+
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="RoleMaster" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">Role Master</span>
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+                        </strong>
+                        <a href="#">
+                            <i class="fa fa-refresh" id="btnRefresh" title="Refresh" onclick="parent.document.getElementById('framecontent').src = '../master/RoleMaster'"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="col-sm-12">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-8">
+                            <div style="padding-top:15px" id="FirstPage">
+                                <!-- <div class="col-sm-12">-->
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Role Type:</label>
+                                    <div class="col-sm-4">
+                                        <select style="width:100%" class="select2_demo_3 form-control" id="ddlroletype" data-placeholder="Choose a Role...">
+                                            <option></option>
+
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-2 control-label">Is Active:</label>
+                                    <div class="col-sm-4">
+                                        <select style="width:100%" class="select2_demo_3 form-control" id="ddlisactive" data-placeholder="Choose a Module...">
+                                            <option></option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                    <label class="col-sm-6 control-label">Is Active:</label>
+                                    <div class="col-sm-6">
+                                        <select style="width:100%" class="select2_demo_3 form-control" id="ddlisactive" data-placeholder="Choose a Module...">
+                                            <option></option>
+
+                                        </select>
+                                    </div>
+                                </div>*@
+                            </div>
+
+                            </div>
+                        <div class="col-sm-5"></div>
+                            <div id="MainPage">
+                                <div class="col-sm-12">
+                                    <div class="ibox-content">
+                                        <div class="jqGrid_wrapper">
+                                            <table id="tblPageAcessListGrid"></table>
+                                            <div id="pagerPageAcessgrid"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <!--Close div-->
+            </div>
+        </div>
+        <input type="hidden" id="hdnRoleId" />
+         
+    </div>
+    <div id="loadingDiv" style="display: none;">
+        <img id="myImage" src="~/Content/Image/loading_spinner.gif">
+    </div><br>
+</form>
+
+
+<script>
+    localStorage.setItem("PageID", "RoleMaster");
+    function BindIsActivePage(sModuleId) {
+
+        $('#ddlisactive').empty().append();
+        $('#ddlisactive').append('<option></option>');
+        var Condition = "where module_id in(" + sModuleId + ")";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectModuleList");
+
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlisactive').append('<option value="' + Result[i]["module_id"] + '">' + Result[i]["display_value"] + '</option>');
+            }
+        }
+    }
+
+    function ModuleListGrid(sModuleRt) {
+        var oJQGridFunctions = new JQGridFunctions();
+        var mydata = '';
+        mydata = sModuleRt;//RoleMasterPageLoad();
+        var grid = $('#tblPageAcessListGrid');
+        jQuery(grid).jqGrid({
+            data: mydata,
+            colNames: ['ModuleId', 'Module Name', 'Sub Module Id', 'Sub Module Name', '', ''],
+            colModel: [
+           { name: 'module_id', index: 'module_id', width: 50, align: "center", hidden: true },
+           { name: 'module_name', index: 'module_name', width: 100, align: "center", search: true },
+           { name: 'sub_module_id', index: 'sub_module_id', width: 60, align: "center", search: true },
+           { name: 'sub_module_name', index: 'sub_module_name', width: 120, align: "center", search: true },
+           { name: 'role_id', index: 'role_id', width: 110, align: "center", hidden: true },
+             { name: 'is_active', index: 'is_active', width: 110, align: "center", hidden: true }
+            ],
+            caption: 'Sub Module List',
+            pager: '#pagerPageAcessgrid',
+            viewrecords: true,
+            datatype: "local",
+            height: 250,
+            autowidth: true,
+            shrinkToFit: true,
+            multiselect: true,
+            rowNum: 100,
+            rowList: [10, 30, 50, 100],
+
+            hidegrid: true,
+            searchOperators: true,
+            multipleSearch: true,
+            ignoreCase: true,
+            onSelectRow: function (rowid) {
+
+                try {
+
+                    var lastSel;
+                    var sel_id = grid.jqGrid('getGridParam', 'selrow');
+                    var sModuleId = grid.jqGrid('getCell', sel_id, 'module_id');
+                    var sModuleName = grid.jqGrid('getCell', sel_id, 'module_name');
+                    var moduleid = []; var modulevalue = [];
+
+                    $('#ddlisactive').empty()
+                    var Rowids = $("#tblPageAcessListGrid").getGridParam('selarrrow');
+
+                    for (var i = 0; i < Rowids.length; i++) {
+                        var RowData = $("#tblPageAcessListGrid").getRowData(Rowids[i]);
+                        moduleid.push(RowData["module_id"]);
+                        modulevalue.push(RowData["module_name"]);
+
+                    }
+                    for (i = 0; i < moduleid.length; i++) {
+                       
+                        $('#ddlisactive').append('<option value="' + moduleid[i] + '">' + modulevalue[i] + '</option>');
+                    }
+                   
+                    $("#ddlisactive option").each(function () {
+                        $(this).siblings("[value=" + this.value + "]").remove();
+                    });
+                    $("#ddlisactive").prepend("<option></option>").val('');
+                }
+                catch (ex) {
+                }
+
+            },
+            ondblClickRow: function (rowid) {
+
+
+            }
+
+        }
+
+              );
+        jQuery(grid).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false });
+        hide();
+    }
+
+
+    function ModulePgeGrid1() {
+        var sRoleId = $('#ddlroletype').val();
+        $('#hdnRoleId').val('');
+        var sCondition = " WHERE  role_id =" + sRoleId + "";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectModuleListData");
+        jQuery('#tblPageAcessListGrid').jqGrid('resetSelection');
+        if (Result > 0 || Result != "") {
+            var rowID = $('#tblPageAcessListGrid').jqGrid('getDataIDs');
+            $('#hdnRoleId').val(sRoleId);
+            for (var i = 0; i < rowID.length; i++) {
+
+                for (var j = 0; j < Result.length; j++) {
+                    var srole_id = $('#tblPageAcessListGrid').getCell(rowID[i], 'sub_module_id');
+                    if (srole_id == Result[j]["sub_module_id"]) {
+                        jQuery("#tblPageAcessListGrid").setSelection(rowID[i], true);
+
+                    }
+                }
+            }
+        }
+    }
+
+    function ModulePgeGrid() {
+
+        var sCondition = " WHERE module_id <> 0";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectSubModuleList");
+        var sModuleRt = [];
+        var sRoleId = $('#hdnRoleId').val();
+
+        if (Result != '' && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                var sModuleId = Result[i].module_id;
+                var sSubModuleId = Result[i].sub_module_id;
+                //change sub_module_name to display_value
+                var sSubModuleName = Result[i].display_value;
+                var sRoleId = Result[i].role_id;
+
+                var sCondition = " WHERE module_id=" + sModuleId + "";
+                var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+                var Result1 = oAPICall.SelectData(strJsonDatas, "SelectModuleList");
+                if (Result1 != '' && Result1 != null) {
+
+                    var sModuleName = Result1[0].display_value;
+                    var sIsActive = Result1[0].is_active;
+                }
+                sModuleRt[i] = {
+                    module_id: sModuleId, module_name: sModuleName, sub_module_id: sSubModuleId, sub_module_name: sSubModuleName, role_id: sRoleId, is_active: sIsActive
+
+                };
+            }
+            //return sModuleRt;
+           
+        }
+    }
+
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+
+    function PopulateRoleGrid() {
+
+        var sCondition = " WHERE delete_status=0 order by 1 desc";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectRoleList");
+        var sRoleDt = [];
+        if (Result != '' && Result != null) {
+
+            for (var i = 0; i < Result.length; i++) {
+                var sRoleId = Result[i].role_id;
+                var sPRoleCode = Result[i].role_code;
+                var sRoleName = Result[i].role_name;
+                sRoleDt[i] = {
+                    role_id: sRoleId, role_code: sPRoleCode, role_name: sRoleName
+                };
+            }
+            return sRoleDt;
+        }
+    }
+
+
+    function CreateRolePermission(sRoleId, IsUpdate) {
+
+        var Rowids = $("#tblPageAcessListGrid").getGridParam('selarrrow');
+
+        for (var i = 0; i < Rowids.length; i++) {
+            var RowData = $("#tblPageAcessListGrid").getRowData(Rowids[i]);
+            var sSubModId = RowData["sub_module_id"];
+            var sModId = RowData["module_id"];
+            var sStrJsonDatas = eval({ permission_id:1,role_id: sRoleId, sub_module_id: sSubModId, module_id: sModId, is_active: $('#ddlisactive').val() });
+            var Result = oAPICall.InsertData(sStrJsonDatas, 'CreateRolePermission');
+
+        }
+        if (Result != null && Result != '') {
+            hide();
+            msgalert('Sucess', 'Successfully Created', 1);
+
+        }
+    }
+
+    function UpdateRolePermission(sRoleId) {
+
+        var sCondition = "where role_id=" + sRoleId + "";
+        var strJsonDatas = eval({ strSessionID: UserSession, strCondition: sCondition });
+        var Result = oAPICall.DeleteData(strJsonDatas, 'DeleteRolePermission');
+        if (Result != null && Result != '') {
+            CreateRolePermission(sRoleId);
+        }
+    }
+    function show() {
+        document.getElementById("loadingDiv").style.display = "block";
+        // setTimeout("hide()", 7000);  // 5 seconds
+    }
+    function hide() {
+        document.getElementById("loadingDiv").style.display = "none";
+    }
+    function RoleMasterPageLoad() {
+        var sData1 = [], sData2 = [];
+        var strJsonData = eval({ CurrentUser: 1 });
+        var Result = "";
+        $.ajax({
+            url: "GetRoleMasterPageLoad",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(strJsonData),
+            success: function (data) {
+                var ResultRoletype= jQuery.parseJSON(data.strRoletype);
+                var ResultSubmodulelist = jQuery.parseJSON(data.strSubmodulelist);
+                var ResultModulelist = jQuery.parseJSON(data.strModulelist);
+                
+                // ----------------------------------- ROLETYPE --------------------------
+                if (ResultRoletype != "" && ResultRoletype != null) {
+                    $('#ddlroletype').empty().append();
+                    $('#ddlroletype').append('<option></option>');
+                    for (var i = 0; i < ResultRoletype.length; i++) {
+                        $('#ddlroletype').append('<option value="' + ResultRoletype[i]["role_id"] + '">' + ResultRoletype[i]["role_name"] + '</option>');
+                    }
+                }
+                // ----------------------------------- SUBMODULELIST -------------------------
+                if (ResultSubmodulelist != "" && ResultSubmodulelist != null) {
+                    var sModuleRt = [];
+                    var sRoleId = $('#hdnRoleId').val();
+                    for (var i = 0; i < ResultSubmodulelist.length; i++) {
+                        var sModuleId = ResultSubmodulelist[i].module_id;
+                        var sSubModuleId = ResultSubmodulelist[i].sub_module_id;
+                        var sSubModuleName = ResultSubmodulelist[i].display_value;
+               
+                        
+                            for (var k = 0; k < ResultModulelist.length; k++) {
+                                if (ResultSubmodulelist[i].module_id == ResultModulelist[k].module_id) {
+                                var sModuleName = ResultModulelist[k].display_value;
+                                var sIsActive = ResultModulelist[k].is_active;
+                            }
+                        }
+                        sModuleRt[i] = {
+                            module_id: sModuleId, module_name: sModuleName, sub_module_id: sSubModuleId, sub_module_name: sSubModuleName, role_id: sRoleId, is_active: sIsActive
+
+                        };
+                    }
+                    //  return sModuleRt;
+                    ModuleListGrid(sModuleRt);
+                }
+                
+            }
+        });
+    }
+
+    $(document).ready(function () {
+
+        //BindRoleType();
+        var sWidth = $('.tab-content').width();
+        $('#tblPageAcessListGrid').setGridWidth(sWidth - 20);
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblPageAcessListGrid').setGridWidth(sWidth);
+
+        });
+       
+        //ModuleListGrid();
+        RoleMasterPageLoad();
+        
+        $("#tblPageAcessListGrid").on('deselectRow', function (e, table, rowId) {
+            alert(rowId); // $('#'+rowId, table);
+        });
+        $("#cb_tblPageAcessListGrid").click(function () {
+            var moduleid = []; var modulevalue = [];
+
+            $('#ddlisactive').empty();
+            var Rowids = $("#tblPageAcessListGrid").getGridParam('selarrrow');
+
+            for (var i = 0; i < Rowids.length; i++) {
+                var RowData = $("#tblPageAcessListGrid").getRowData(Rowids[i]);
+                moduleid.push(RowData["module_id"]);
+                modulevalue.push(RowData["module_name"]);
+
+            }
+
+            for (i = 0; i < moduleid.length; i++) {
+                $('#ddlisactive').append('<option value="' + moduleid[i] + '">' + modulevalue[i] + '</option>');
+            }
+
+            $("#ddlisactive option").each(function () {
+                $(this).siblings("[value=" + this.value + "]").remove();
+            });
+
+        });
+
+        $('#ddlroletype').change(function () {
+
+           ModulePgeGrid1();
+        });
+
+        //$('#btnRefresh').click(function () {
+            
+        //    clear();
+        //    BindRoleType();
+        //    BindIsActivePage();
+        //    ModuleListGrid();
+
+        //});
+        function clear() {
+            $('#ddlroletype').val('').change();
+            $("#ddlisactive").val('').change();
+        }
+        var seen = {};
+        jQuery('.select2_demo_3').children().each(function () {
+            var txt = jQuery(this).attr('value');
+            if (seen[txt]) {
+                jQuery(this).remove();
+            } else {
+                seen[txt] = true;
+            }
+        });
+
+
+        $('#btnSave').click(function () {
+
+            var sRoleId = $('#ddlroletype').val();
+            if (document.getElementById('ddlroletype').value == "") {
+                document.getElementById('ddlroletype').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please choose role type', 2);
+                return;
+            }
+            if (document.getElementById('ddlisactive').value == "") {
+                document.getElementById('ddlisactive').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please choose Is Active', 2);
+                return;
+            }
+            var Rowids = $("#tblPageAcessListGrid").getGridParam('selarrrow');
+
+            if (Rowids.length <= 0) {
+                msgalert('Warning', 'Select atleast one sub module page', 2);
+                return;
+            }
+            if (sRoleId != "") {
+ 
+                show();
+                setTimeout(function () {
+                    UpdateRolePermission(sRoleId);
+                }, 1000);
+               
+            }
+        });
+
+
+
+        $('.ui-pg-selbox').change(function () {
+            // ModulePgeGrid();
+            ModulePgeGrid1();
+        });
+
+
+    });
+
+</script>

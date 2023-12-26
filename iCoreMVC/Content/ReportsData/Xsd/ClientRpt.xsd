@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ClientRpt" targetNamespace="http://tempuri.org/ClientRpt.xsd" xmlns:mstns="http://tempuri.org/ClientRpt.xsd" xmlns="http://tempuri.org/ClientRpt.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ClientRpt" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ClientRpt" msprop:Generator_UserDSName="ClientRpt">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="BTS_TB_CLIENTWISE_TEMP" msprop:Generator_TableClassName="BTS_TB_CLIENTWISE_TEMPDataTable" msprop:Generator_TableVarName="tableBTS_TB_CLIENTWISE_TEMP" msprop:Generator_TablePropName="BTS_TB_CLIENTWISE_TEMP" msprop:Generator_RowDeletingName="BTS_TB_CLIENTWISE_TEMPRowDeleting" msprop:Generator_RowChangingName="BTS_TB_CLIENTWISE_TEMPRowChanging" msprop:Generator_RowEvHandlerName="BTS_TB_CLIENTWISE_TEMPRowChangeEventHandler" msprop:Generator_RowDeletedName="BTS_TB_CLIENTWISE_TEMPRowDeleted" msprop:Generator_UserTableName="BTS_TB_CLIENTWISE_TEMP" msprop:Generator_RowChangedName="BTS_TB_CLIENTWISE_TEMPRowChanged" msprop:Generator_RowEvArgName="BTS_TB_CLIENTWISE_TEMPRowChangeEvent" msprop:Generator_RowClassName="BTS_TB_CLIENTWISE_TEMPRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="client_name" msprop:Generator_ColumnVarNameInTable="columnclient_name" msprop:Generator_ColumnPropNameInRow="client_name" msprop:Generator_ColumnPropNameInTable="client_nameColumn" msprop:Generator_UserColumnName="client_name" type="xs:string" minOccurs="0" />
+              <xs:element name="no_of_orders" msprop:Generator_ColumnVarNameInTable="columnno_of_orders" msprop:Generator_ColumnPropNameInRow="no_of_orders" msprop:Generator_ColumnPropNameInTable="no_of_ordersColumn" msprop:Generator_UserColumnName="no_of_orders" type="xs:string" minOccurs="0" />
+              <xs:element name="data_fee" msprop:Generator_ColumnVarNameInTable="columndata_fee" msprop:Generator_ColumnPropNameInRow="data_fee" msprop:Generator_ColumnPropNameInTable="data_feeColumn" msprop:Generator_UserColumnName="data_fee" type="xs:string" minOccurs="0" />
+              <xs:element name="is_paid" msprop:Generator_ColumnVarNameInTable="columnis_paid" msprop:Generator_ColumnPropNameInRow="is_paid" msprop:Generator_ColumnPropNameInTable="is_paidColumn" msprop:Generator_UserColumnName="is_paid" type="xs:string" minOccurs="0" />
+              <xs:element name="from_date" msprop:Generator_ColumnVarNameInTable="columnfrom_date" msprop:Generator_ColumnPropNameInRow="from_date" msprop:Generator_ColumnPropNameInTable="from_dateColumn" msprop:Generator_UserColumnName="from_date" type="xs:string" minOccurs="0" />
+              <xs:element name="to_date" msprop:Generator_ColumnVarNameInTable="columnto_date" msprop:Generator_ColumnPropNameInRow="to_date" msprop:Generator_ColumnPropNameInTable="to_dateColumn" msprop:Generator_UserColumnName="to_date" type="xs:string" minOccurs="0" />
+              <xs:element name="order_type" msprop:Generator_ColumnVarNameInTable="columnorder_type" msprop:Generator_ColumnPropNameInRow="order_type" msprop:Generator_ColumnPropNameInTable="order_typeColumn" msprop:Generator_UserColumnName="order_type" type="xs:string" minOccurs="0" />
+              <xs:element name="total_fee" msprop:Generator_ColumnVarNameInTable="columntotal_fee" msprop:Generator_ColumnPropNameInRow="total_fee" msprop:Generator_ColumnPropNameInTable="total_feeColumn" msprop:Generator_UserColumnName="total_fee" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

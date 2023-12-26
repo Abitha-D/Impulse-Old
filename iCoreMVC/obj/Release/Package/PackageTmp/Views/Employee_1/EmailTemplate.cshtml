@@ -1,0 +1,253 @@
+﻿@{
+    ViewBag.Title = "EmailTemplate";
+}
+
+<style>
+    .editorframe {
+        border-style: solid;
+        border-width: 1px;
+        border-color: inherit;
+        background-color: #FFFFFF;
+        color: #000099;
+        overflow: scroll;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .editorpreview {
+        border-style: solid;
+        border-width: 1px;
+        border-color: inherit;
+        background-color: #FFFFFF;
+        overflow: scroll;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .fa-forward:hover {
+        color: blue;
+    }
+
+    .fa-backward:hover {
+        color: blue;
+    }
+
+    .fa-forward {
+        color: green;
+    }
+
+    .fa-backward {
+        color: red;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="EmailMaster" class="divbody">
+        <div class="col-sm-12">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">Email Template</span>
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+                        </strong>
+                        <a href="#" title="Refresh">
+                            <i class="fa fa-refresh" id="btnClear"></i>
+                        </a>
+                        @*<a href="#" title="List ALL">
+                                <i class="fa fa-list" id="btnTemplateList"></i>
+                            </a>*@
+                    </div>
+
+                </div>
+                <div class="ibox-content">
+                    <div style="padding-top:15px">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Select Type Of Mail:</label>
+                            <div class="col-sm-3">
+                                <select style="width:100%" class="select2_demo_3 form-control" id="ddlmailtype" data-placeholder="Choose a mail type...">
+                                    <option></option>
+
+                                </select>
+                            </div>
+                            &nbsp;  &nbsp;  &nbsp;
+
+                            <a class="hover"> <i class="fa fa-forward  fa-5x" id="btnPreview" title="Preview" style="margin-top:5px;"></i></a>
+                            <i class="fa fa-backward  fa-5x" id="btnback" title="Back" style="margin-top: 5px;"></i>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div id="editor" contenteditable align="left" class="editorframe textbox">
+                                    &lthtml&gt
+                                    <br />
+                                    <br />
+                                    <br />
+                                    &lt/html&gt
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div id="editorpreview" class="editorpreview textbox">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    function Preview() {
+        var htmldoc = document.getElementById("editor").innerText;
+        var prv = document.getElementById("editorpreview");
+        prv.innerHTML = htmldoc;
+        // alert(htmldoc);
+    }
+
+    function BindMailType() {
+        var Condition = "where LANGUAGE_CODE=" + 1 + " and enumeration_key='Mail_type' order by value asc";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsGenericValues");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlmailtype').append('<option value="' + Result[i]["value"] + '">' + Result[i]["display_value"] + '</option>');
+            }
+        }
+    }
+
+    $(document).ready(function () {
+
+        $('#btnback').hide();
+        $('#editorpreview').hide();
+        BindMailType();
+
+        $('#btnPreview').click(function () {
+            $('#editor').hide();
+            $('#editorpreview').show();
+            Preview();
+            $('#btnPreview').hide();
+            $('#btnback').show();
+        });
+
+        $('#btnback').click(function () {
+            $('#editor').show();
+            $('#editorpreview').hide();
+            $('#btnback').hide();
+            $('#btnPreview').show();
+
+        });
+        $('#btnClear').click(function () {
+
+            $('#editor').show();
+            $('#btnPreview').show();
+            $('#btnback').hide();
+            $('#editorpreview').hide();
+            $('#ddlmailtype').empty().append();
+            $('#ddlmailtype').val('').change();
+            BindMailType();
+            document.getElementById('editor').innerHTML = "&lthtml&gt<br /><br /><br /><span></span><br />&lt/html&gt";
+
+        });
+
+        $('#ddlmailtype').change(function () {
+
+            var sEmailType = $('#ddlmailtype').val();
+
+            var sCondition = " WHERE mail_type=" + sEmailType + "";
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectEmailTemplate");
+            if (Result != "" && Result != null) {
+                var sContent = Result[0].mail_body;
+                document.getElementById('editor').innerText = sContent;
+            }
+            else {
+                document.getElementById('editor').innerHTML = "&lthtml&gt<br /><br /><br /><span></span><br />&lt/html&gt";
+            }
+            $('#editor').show();
+            $('#btnPreview').show();
+            $('#btnback').hide();
+            $('#editorpreview').hide();
+
+        });
+
+        $('#btnSave').click(function () {
+
+            if ($('#ddlmailtype').val() == 0) {
+                msgalert('Warning', 'Choose mail type first', 2);
+                return;
+            }
+            var sEmailType = $('#ddlmailtype').val();
+            var ValidationSuccess = false;
+            ValidationSuccess = ValidateForDuplication(sEmailType, 'ChkDuplicationMailType', '', '');
+            if (!ValidationSuccess) {
+                parent.swal({
+                    title: "Do you want to Update?",
+                    //text: "" + text + "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              //Update
+
+              var Mail_body = document.getElementById("editor").innerText;
+              var Condition = "where mail_type=" + sEmailType + "";
+              var strJsonDatas = eval({ strCondition: Condition, strSessionID: UserSession });
+              var Result = oAPICall.DeleteData(strJsonDatas, 'DeleteEmailTemplate');
+
+              var StrJsonDatas = eval({
+                  mail_type: sEmailType,
+                  mail_body: Mail_body,
+                  updated_date: new Date(),
+                  updated_by: CurrentUser
+              });
+
+              var Result = oAPICall.InsertData(StrJsonDatas, 'CreateEmailTemplate');
+              if (Result != null && Result != '') {
+                  msgalert('Success', 'Email templates updated successfully', 1);
+              }
+          }
+          else {
+              return
+          }
+      });
+            }
+            else {  //create
+                var Mail_body = document.getElementById("editor").innerText;
+                var StrJsonDatas = eval({
+                    mail_type: sEmailType,
+                    mail_body: Mail_body,
+                    created_date: new Date(),
+                    created_by: CurrentUser,
+                    delete_status: 0
+                });
+
+                var Result = oAPICall.InsertData(StrJsonDatas, 'CreateEmailTemplate');
+                if (Result != null && Result != '') {
+                    msgalert('Success', 'Email templates added successfully', 1);
+                }
+            }
+
+
+        });
+
+
+    });
+</script>

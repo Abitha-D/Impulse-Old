@@ -1,0 +1,306 @@
+﻿@{
+    ViewBag.Title = "EmployeeAttendance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <title></title>
+    <link href="~/assets/pages/css/MyStyles.css" rel="stylesheet" />
+    <link href="~/assets/pages/css/Select1.min.css" rel="stylesheet" />
+    
+    <style>
+        .fa-check{
+            color:#2ac280;
+            font-size: smaller;
+        }
+        .fa-clock-o{
+            color:#f62d51 ;
+            font-size: smaller;
+        }
+        .fa-stethoscope{
+            color:#75f;
+            font-size: smaller;
+        }
+        .fa-hourglass-end{
+            color:#a58900;
+            font-size: smaller;
+        }
+        .fa-user-times{
+            color:#5a5353;
+            font-size: smaller;
+        }
+        .fa-close{
+            color:#0087a5;
+            font-size: smaller;
+        }
+        .fa-wheelchair{
+            color:#ff6307;
+            font-size: smaller;
+        }
+
+        .fs-9{
+            font-size: smaller;
+        }
+    </style>
+
+</head>
+<body ng-app="Employeedetails">
+
+    <div ng-controller="Employees" data-ng-init="GetMyAttendance(refNo)" id="controllerID" ng-cloak>
+        <div class="content container-fluid">
+
+            <!-- Search Filter -->
+            <div class="row filter-row">
+                <div class="col-sm-3">
+                    <div class="select floating form-group form-focus select-focus focused">
+                        <select class="select floating form-group form-focus select-focus focused" data-select2-id="1" tabindex="-1" style="width: 100%;font-size: 15px;font-weight: normal;border-color: #e3e3e3;" id="ddlYear">
+                            <option value="0">-</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                        </select>
+                        <label class="focus-label">Select Year</label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <a href="#" class="btn btn-success btn-block" ng-click="GetMyAttendance(refNo)"> Search </a>
+                </div>
+            </div>
+            <!-- /Search Filter -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive" style="overflow: hidden;">
+                        <table class="table table-striped custom-table table-nowrap mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                    <th>5</th>
+                                    <th>6</th>
+                                    <th>7</th>
+                                    <th>8</th>
+                                    <th>9</th>
+                                    <th>10</th>
+                                    <th>11</th>
+                                    <th>12</th>
+                                    <th>13</th>
+                                    <th>14</th>
+                                    <th>15</th>
+                                    <th>16</th>
+                                    <th>17</th>
+                                    <th>18</th>
+                                    <th>19</th>
+                                    <th>20</th>
+                                    <th>21</th>
+                                    <th>22</th>
+                                    <th>23</th>
+                                    <th>24</th>
+                                    <th>25</th>
+                                    <th>26</th>
+                                    <th>27</th>
+                                    <th>28</th>
+                                    <th>29</th>
+                                    <th>30</th>
+                                    <th>31</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="myatt in MyAttendaceList" ng-cloak>
+                                    <td>
+                                        <h2 class="table-avatar">{{myatt.month_name}}</h2>
+                                    </td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day1}}>{{myatt.text1}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day2}}>{{myatt.text2}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day3}}>{{myatt.text3}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day4}}>{{myatt.text4}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day5}}>{{myatt.text5}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day6}}>{{myatt.text6}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day7}}>{{myatt.text7}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day8}}>{{myatt.text8}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day9}}>{{myatt.text9}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day10}}>{{myatt.text10}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day11}}>{{myatt.text11}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day12}}>{{myatt.text12}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day13}}>{{myatt.text13}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day14}}>{{myatt.text14}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day15}}>{{myatt.text15}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day16}}>{{myatt.text16}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day17}}>{{myatt.text17}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day18}}>{{myatt.text18}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day19}}>{{myatt.text19}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day20}}>{{myatt.text20}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day20}}>{{myatt.text20}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day22}}>{{myatt.text22}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day23}}>{{myatt.text23}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day24}}>{{myatt.text24}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day25}}>{{myatt.text25}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day26}}>{{myatt.text26}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day27}}>{{myatt.text27}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day28}}>{{myatt.text28}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day29}}>{{myatt.text29}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day30}}>{{myatt.text30}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{myatt.day31}}>{{myatt.text31}}</i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal custom-modal fade" id="attendance_info" role="dialog" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Attendance Info</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card punch-status">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Timesheet <small class="text-muted">11 Mar 2019</small></h5>
+                                            <div class="punch-det">
+                                                <h6>Punch In at</h6>
+                                                <p>Wed, 11th Mar 2019 10.00 AM</p>
+                                            </div>
+                                            <div class="punch-info">
+                                                <div class="punch-hours">
+                                                    <span>3.45 hrs</span>
+                                                </div>
+                                            </div>
+                                            <div class="punch-det">
+                                                <h6>Punch Out at</h6>
+                                                <p>Wed, 20th Feb 2019 9.00 PM</p>
+                                            </div>
+                                            <div class="statistics">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-6 text-center">
+                                                        <div class="stats-box">
+                                                            <p>Break</p>
+                                                            <h6>1.21 hrs</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-6 text-center">
+                                                        <div class="stats-box">
+                                                            <p>Overtime</p>
+                                                            <h6>3 hrs</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card recent-activity">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Activity</h5>
+                                            <ul class="res-activity-list">
+                                                <li>
+                                                    <p class="mb-0">Punch In at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        10.00 AM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Punch Out at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        11.00 AM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Punch In at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        11.15 AM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Punch Out at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        1.30 PM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Punch In at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        2.00 PM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Punch Out at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        7.30 PM.
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/assets/pages/scripts/Select1.min.js"></script>
+
+    <script>
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+
+        var refNo, sEmpRefNo, roleId;
+
+
+        $(document).ready(function () {
+
+            oAPICall = new APICall();
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+            roleId = sUserDetails.RoleId;
+
+            cudt = oAPICall.GetServerDateOm();
+
+            var cdate = new Date();
+
+            var month = cdate.getMonth()+1;
+
+            var year = cdate.getFullYear();
+
+            $('#ddlYear').val(year).change();
+
+        });
+    </script>
+
+</body>
+</html>
+<script src="~/Scripts/js/angular.min.js"></script>
+<script src="~/Scripts/AngularController/EmployeeController.js"></script>
+

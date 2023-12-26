@@ -1,0 +1,459 @@
+﻿
+@{
+    ViewBag.Title = "SeparationList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+    <head>
+        <title>Separation List</title>
+
+        <link href="~/assets/pages/css/NewStyle.css" rel="stylesheet" />
+        <link href="~/assets/pages/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/assets/pages/css/Select2.min.css" rel="stylesheet" />
+
+        <style>
+            .dropdown {
+              display: inline-block;
+              position: relative;
+            }
+            
+            .dd-button {
+              display: inline-block;
+              border: 1px solid gray;
+              border-radius: 4px;
+              padding: 10px 30px 10px 20px;
+              background-color: #ffffff;
+              cursor: pointer;
+              white-space: nowrap;
+            }
+            
+            .dd-button:after {
+              content: '';
+              position: absolute;
+              top: 20px;
+              right: 15px;
+              transform: translateY(-50%);
+              width: 0; 
+              height: 0; 
+              border-left: 5px solid transparent;
+              border-right: 5px solid transparent;
+              border-top: 5px solid black;
+            }
+            
+            .dd-button:hover {
+              background-color: #eeeeee;
+            }
+            
+            
+            .dd-input {
+              display: none;
+            }
+            
+            .dd-menu {
+              position: absolute;
+              top: 100%;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+              padding: 0;
+              margin: 2px 0 0 0;
+              box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+              background-color: #ffffff;
+              list-style-type: none;
+            }
+            
+            .dd-input + .dd-menu {
+              display: none;
+            } 
+            
+            .dd-input:checked + .dd-menu {
+                display: block;
+                z-index: 1;
+            } 
+            
+            .dd-menu li {
+              padding: 10px 20px;
+              cursor: pointer;
+              white-space: nowrap;
+            }
+            
+            .dd-menu li:hover {
+              background-color: #f6f6f6;
+            }
+            
+            .dd-menu li a {
+              display: block;
+              margin: -10px -20px;
+              padding: 10px 20px;
+            }
+            
+            .dd-menu li.divider{
+              padding: 0;
+              border-bottom: 1px solid #cccccc;
+            }
+
+            .txtClass{
+              width: 423px;
+              border-radius: 5px;
+              height: 75px;
+              border: 2px solid;
+            }
+            .btnClass{
+                width: 80px;
+                border-radius: 5px;
+                background-color: white;
+                border: 2px;
+            }
+        </style>
+
+    </head>
+<body ng-app="Employeedetails">
+    <div ng-controller="Employees" data-ng-init="GetSeperationList(roleId,refNo)" id="controllerID" ng-cloak>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive" style="height: 500px;">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div style="float:right;width:100px;">
+                                <button class="btnClass" ng-click="GetAllSeperationList(roleId, refNo)" id="sepList"><i class="fa fa-list"></i></button>
+                                <button class="btnClass hidden" ng-click="GetSeperationList(roleId,refNo)" id="penList"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                            </div>
+                            <div class="col-sm-12" id="pendingList">
+                                <table class="table table-striped custom-table mb-0 datatable dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 184px;">Name </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 128px;">Designation </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 133px;">Reason </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 113px;">Applied Date </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 90px;">Notice Date </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 130px;">Preferred Date </th>
+                                            @*<th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 120px;">Approved Date </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 158px;">Cancelled Reason </th>*@
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 66px;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="sp in SeparationList" ng-cloak>
+                                             
+                                            <td> {{sp.emp_name}} </td>
+                                            <td> {{sp.designation}} </td>
+                                            <td> {{sp.reason}} </td>
+                                            <td> {{sp.applied_date}} </td>
+                                            <td> {{sp.notice_date}} </td>
+                                            <td> {{sp.preferred_date}} </td>
+                                            @*<td> {{sp.approved_date}} </td>
+                                            <td> {{sp.cancellation_reason}} </td>*@
+                                            <td>
+                                                <div class="mt-action-buttons">
+                                                    <div ng-if="sp.is_direct_admin == '0'">
+                                                        <div ng-if="sp.is_manager_approve == '0'">
+                                                            <div class="btn-group btn-group-circle">
+                                                                <label class="dropdown">
+
+                                                                    <div class="dd-button">
+                                                                        Actions
+                                                                    </div>
+
+                                                                    <input type="checkbox" class="dd-input" id="test">
+
+                                                                    <ul class="dd-menu">
+                                                                        <li data-target="#approveModal" data-toggle="modal" href="#" id="{{sp.seperation_id}}" ng-click="SeperationValues(sp.seperation_id)" style="color: #06bc06;"><i class="fa fa-check" style="margin-right: 10px;"></i>Approve</li>
+                                                                        <li data-target="#rejectModal" data-toggle="modal" href="#" id="{{sp.seperation_id}}" ng-click="SeperationValues(sp.seperation_id)" style="color: red;"><i class="fa fa-times" style="margin-right: 10px;"></i>Reject</li>
+                                                                        @*<li><i class="fa fa-comments" style="margin-right: 10px;"></i>Message</li>*@
+                                                                    </ul>
+
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="sp.is_direct_admin == '1'">
+                                                        <div ng-if="sp.is_ceo_approve == '0'">
+                                                            <div class="btn-group btn-group-circle">
+                                                                <label class="dropdown">
+
+                                                                    <div class="dd-button">
+                                                                        Actions
+                                                                    </div>
+
+                                                                    <input type="checkbox" class="dd-input" id="test">
+
+                                                                    <ul class="dd-menu">
+                                                                        <li data-target="#approveModal" data-toggle="modal" href="#" ng-click="SeperationValues(sp.seperation_id)" style="color: #06bc06;"><i class="fa fa-check" style="margin-right: 10px;"></i>Approve</li>
+                                                                        <li data-target="#rejectModal" data-toggle="modal" href="#" ng-click="SeperationValues(sp.seperation_id)" style="color: red;"><i class="fa fa-times" style="margin-right: 10px;"></i>Reject</li>
+                                                                        @*<li><i class="fa fa-comments" style="margin-right: 10px;"></i>Message</li>*@
+                                                                    </ul>
+
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                @*<div ng-if="lh.is_approved == '1' && lh.end_date > CurrenDate">
+                                                    <div class="btn-group btn-group-circle">
+                                                        <button type="button" id="{{lh.leave_ent_ref_no}}" ng-click="UpdateLeaveDetails(3,lh.leave_ent_ref_no)" class="btn red btn-outline" style="margin-right: 0px;" data-target="#CancelModal" data-toggle="modal">Cancel</button>
+                                                    </div>
+                                                </div>*@
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" @*ng-model="PendingLeaves.emp_ref_no"*@>
+                                    <div class="modal-dialog" role="document" style="width: 600px;height:300px">
+                                        <div class="modal-content">
+                                            <div class="modal-body" style="width: 500px;">
+                                                <div style="margin-top: 50px;width: 125%;">
+                                                    <center><font style="font-size: 35px;">Which Date do you prefer?</font></center>
+                                                </div>
+                                                <div style="margin-top:50px;width:125%;">
+                                                    <center>
+                                                        <input type="radio" value="NoticeDate" id="notice" onchange="changeButtons(this.id)"/> Notice Date &nbsp;&nbsp; <input type="radio" id="prefer" value="PreferredDate" onchange="changeButtons(this.id)" /> Employee Preferred Date <br /><br /><br />
+                                                        <button type="button" class="btn green" style="height: 45px;width: 130px;font-size: 23px;" onclick="SeperationAction(1)">Approve</button>
+                                                        <button type="button" class="btn red" data-dismiss="modal" style="margin-left: 50px;height: 45px;width: 130px;font-size: 23px;">Cancel</button>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" @*ng-model="PendingLeaves.emp_ref_no"*@>
+                                    <div class="modal-dialog" role="document" style="width: 600px;height:300px">
+                                        <div class="modal-content">
+                                            <div class="modal-body" style="width: 500px;">
+                                                <div style="margin-top: 50px;width: 125%;">
+                                                    <center><font style="font-size: 35px;">Can you please give the reason for reject this?</font></center>
+                                                </div>
+                                                <div style="margin-top:50px;width:125%;">
+                                                    <center>
+                                                        <textarea type="text" id="txtReason" class="txtClass" placeholder="Please Enter Reason here...."></textarea><br /><br /><br />
+                                                        <button type="button" class="btn red" style="height: 45px;width: 130px;font-size: 23px;" onclick="SeperationAction(2)">Reject</button>
+                                                        <button type="button" class="btn red" data-dismiss="modal" style="margin-left: 50px;height: 45px;width: 130px;font-size: 23px;">Cancel</button>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 hidden" id="seperationList">
+                                <table class="table table-striped custom-table mb-0 datatable dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 184px;">Name </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 128px;">Designation </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 133px;">Reason </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 113px;">Applied Date </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 120px;">Resigned Date </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 120px;">Approved By </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 120px;">Approved Date </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 120px;">Cancelled By </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 120px;">Cancelled Date </th>
+                                            <th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 158px;">Cancelled Reason </th>
+                                            @*<th tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 66px;">Action</th>*@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="sp in SeparationList" ng-cloak>
+
+                                            <td> {{sp.emp_name}} </td>
+                                            <td> {{sp.designation}} </td>
+                                            <td> {{sp.reason}} </td>
+                                            <td> {{sp.applied_date}} </td>
+                                            <td> {{sp.resigned_date}} </td>
+                                            <td> {{sp.approvedByName}} </td>
+                                            <td> {{sp.approved_date}} </td>
+                                            <td> {{sp.cancelledByName}} </td>
+                                            <td> {{sp.cancelled_date}} </td>
+                                            <td> {{sp.cancelled_reason}} </td>
+                                            @*<td>
+                                                <div class="mt-action-buttons">
+                                                    <div ng-if="sp.is_direct_admin == '0'">
+                                                        <div ng-if="sp.is_manager_approve == '1'">
+                                                            <div class="btn-group btn-group-circle">
+                                                                <label class="dropdown">
+
+                                                                    <div class="dd-button">
+                                                                        Actions
+                                                                    </div>
+
+                                                                    <input type="checkbox" class="dd-input" id="test">
+
+                                                                    <ul class="dd-menu">
+                                                                        <li><i class="fa fa-edit" style="margin-right: 10px;"></i>Modify</li>
+                                                                        <li><i class="fa fa-comments" style="margin-right: 10px;"></i>Message</li>
+                                                                    </ul>
+
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="sp.is_direct_admin == '1'">
+                                                        <div ng-if="sp.is_ceo_approve == '1'">
+                                                            <div class="btn-group btn-group-circle">
+                                                                <label class="dropdown">
+
+                                                                    <div class="dd-button">
+                                                                        Actions
+                                                                    </div>
+
+                                                                    <input type="checkbox" class="dd-input" id="test">
+
+                                                                    <ul class="dd-menu">
+                                                                        <li><i class="fa fa-edit" style="margin-right: 10px;"></i>Modify</li>
+                                                                        <li><i class="fa fa-comments" style="margin-right: 10px;"></i>Message</li>
+                                                                    </ul>
+
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>*@
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" @*ng-model="PendingLeaves.emp_ref_no"*@>
+                                    <div class="modal-dialog" role="document" style="width: 600px;height:300px">
+                                        <div class="modal-content">
+                                            <div class="modal-body" style="width: 500px;">
+                                                <div style="margin-top: 50px;width: 125%;">
+                                                    <center><font style="font-size: 35px;">Which Date do you prefer?</font></center>
+                                                </div>
+                                                <div style="margin-top:50px;width:125%;">
+                                                    <center>
+                                                        <input type="radio" value="NoticeDate" id="notice" onchange="changeButtons(this.id)" /> Notice Date &nbsp;&nbsp; <input type="radio" id="prefer" value="PreferredDate" onchange="changeButtons(this.id)" /> Employee Preferred Date <br /><br /><br />
+                                                        <button type="button" class="btn green" style="height: 45px;width: 130px;font-size: 23px;" onclick="SeperationAction(1)">Approve</button>
+                                                        <button type="button" class="btn red" data-dismiss="modal" style="margin-left: 50px;height: 45px;width: 130px;font-size: 23px;">Cancel</button>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" @*ng-model="PendingLeaves.emp_ref_no"*@>
+                                    <div class="modal-dialog" role="document" style="width: 600px;height:300px">
+                                        <div class="modal-content">
+                                            <div class="modal-body" style="width: 500px;">
+                                                <div style="margin-top: 50px;width: 125%;">
+                                                    <center><font style="font-size: 35px;">Can you please give the reason for reject this?</font></center>
+                                                </div>
+                                                <div style="margin-top:50px;width:125%;">
+                                                    <center>
+                                                        <textarea type="text" id="txtReason" class="txtClass" placeholder="Please Enter Reason here...."></textarea><br /><br /><br />
+                                                        <button type="button" class="btn red" style="height: 45px;width: 130px;font-size: 23px;" onclick="SeperationAction(2)">Reject</button>
+                                                        <button type="button" class="btn red" data-dismiss="modal" style="margin-left: 50px;height: 45px;width: 130px;font-size: 23px;">Cancel</button>
+                                                    </center>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+
+        function changeButtons(id)
+        {
+            if(id == 'notice')
+            {
+                document.getElementById('notice').checked = true;
+
+                document.getElementById('prefer').checked = false;
+            }
+            else if(id == 'prefer')
+            {
+                document.getElementById('prefer').checked = true;
+
+                document.getElementById('notice').checked = false;
+            }
+        }
+
+        function SeperationAction(type)
+        {
+            if(type == 1)
+            {
+                if(document.getElementById('notice').checked == false && document.getElementById('prefer').checked == false)
+                {
+                    msgalert("Warning","Please choose any one date",2);
+                    return;
+                }
+            }
+            else if(type == 2)
+            {
+                if($('#txtReason').val() == "")
+                {
+                    msgalert("Warning","Please Enter Reason",2);
+                    return;
+                }
+            }
+            angular.element(document.getElementById('controllerID')).scope().SeperationAction(type,refNo);
+        }
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        var refNo, sEmpRefNo, roleId;
+
+        $(document).ready(function () {
+
+            oAPICall = new APICall();
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+            roleId = sUserDetails.RoleId;
+
+            cudt = oAPICall.GetServerDateOm();
+
+            var cdate = new Date();
+
+            var month = cdate.getMonth()+1;
+
+            var year = cdate.getFullYear();
+
+            $('#txtDate').val(cdate.getDate() +'/'+month + '/' + year);
+
+            $('#ddlMonth').val(month).change();
+
+            $('#ddlYear').val(year).change();
+
+            $("#mytable #checkall").click(function () {
+                if ($("#mytable #checkall").is(':checked')) {
+                    $("#mytable input[type=checkbox]").each(function () {
+                        $(this).prop("checked", true);
+                    });
+
+                } else {
+                    $("#mytable input[type=checkbox]").each(function () {
+                        $(this).prop("checked", false);
+                    });
+                }
+
+            });
+
+        });
+    </script>
+</body>
+
+</html>
+<script src="~/Scripts/js/angular.min.js"></script>
+<script src="~/Scripts/AngularController/EmployeeController.js"></script>

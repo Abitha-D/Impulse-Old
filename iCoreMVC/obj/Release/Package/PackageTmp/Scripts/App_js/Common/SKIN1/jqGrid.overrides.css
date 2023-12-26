@@ -1,0 +1,208 @@
+.ui-jqgrid
+{
+    box-sizing: content-box;
+}
+.ui-jqgrid .ui-jqgrid-view, .ui-jqgrid .ui-paging-info, .ui-jqgrid .ui-pg-table, .ui-jqgrid .ui-pg-selbox
+{
+    font-size: 13px;
+}
+.ui-widget-content
+{
+    border-top: 0;
+}
+.ui-jqgrid .ui-jqgrid-titlebar
+{
+    height: 41px;
+    line-height: 23px; /*color: #3c8dbc;*/
+    color: #5F5A5A;
+    background-color: rgb(249, 249, 249);
+    text-shadow: 0 0px 0 rgba(255, 255, 255, 0.5);
+    padding: 0px;
+}
+.ui-jqgrid .ui-jqgrid-title
+{
+    float: left;
+    margin: 8px;
+}
+
+.ui-jqgrid .ui-jqgrid-titlebar-close
+{
+    margin: -10px 5px 0 0;
+}
+
+.ui-jqgrid .ui-widget-header
+{
+    border-bottom: 1px solid #D3D3D3;
+    border-top: 1px solid #D0CECE;
+}
+
+.ui-jqgrid .ui-search-toolbar input[type="text"]
+{
+    font-size: 12px;
+    border: 1px solid #CCCCCC;
+    /*border-radius: 4px;*/
+}
+/*
+.ui-jqgrid .ui-state-default, .ui-jqgrid .ui-widget-content .ui-state-default, .ui-jqgrid .ui-widget-header .ui-state-default {
+    background: #F9F9F9;
+    border: 1px solid #D3D3D3;               
+    line-height: 15px;
+    height: 45px;
+    font-weight: bold;
+    color: #777777;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+*/
+
+/*** Column headers ******/
+.ui-jqgrid .ui-jqgrid-hdiv
+{
+    /*background: #F9F9F9;*/
+    border: 1px solid #D3D3D3;
+    line-height: 15px; /*height: 45px;*/
+    font-weight: bold;
+    color: #777777;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.ui-jqgrid .ui-jqgrid-htable th
+{
+    height: auto;
+}
+
+.ui-jqgrid .ui-jqgrid-htable .ui-jqgrid-labels div
+{
+    padding-top: 3px;
+    padding-bottom: 20px;
+}
+
+.ui-jqgrid .ui-jqgrid-htable tr div
+{
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.ui-jqgrid .ui-jqgrid-htable input[type="radio"], .ui-jqgrid .ui-jqgrid-htable input[type="checkbox"]
+{
+    margin: 2px 0 0;
+}
+/**** Data rows ***/
+.ui-jqgrid tr.jqgfirstrow td
+{
+    border: none; /*firefox fix*/
+}
+
+.ui-jqgrid tr.jqgrow, .ui-jqgrid tr.ui-row-ltr
+{
+    border: none;
+}
+.ui-jqgrid tr.ui-row-ltr td
+{
+    border-bottom: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    padding: 3px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
+/*** alt row color fix ***/
+.ui-jqgrid-btable .ui-widget-content.ui-priority-secondary
+{
+    background-image: none;
+    background-color: #F9F9F9;
+    opacity: 1;
+}
+.ui-jqgrid-btable .ui-widget-content.ui-state-hover
+{
+    background-image: none;
+    background-color: #F3F3F3;
+    opacity: 1;
+}
+
+.ui-jqgrid-btable .ui-widget-content.ui-state-highlight
+{
+    background-color: #EEDC94;
+    
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    opacity: 1;
+}
+
+
+.ui-jqgrid .ui-icon-triangle-1-n
+{
+    background-position: 1px -16px;
+}
+
+.ui-jqgrid tr.ui-search-toolbar th
+{
+    border-top-width: 0px !important;
+    border-top-color: inherit !important;
+    border-top-style: ridge !important;
+}
+
+
+/****** PAGER *******/
+.ui-jqgrid .ui-jqgrid-pager
+{
+    background: #F9F9F9;
+    border: 1px solid #D3D3D3;
+    line-height: 15px;
+    height: 45px !important;
+}
+
+.ui-jqgrid .ui-pg-input
+{
+    font-size: inherit;
+    width: auto;
+    box-sizing: content-box;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    padding: 4px;
+}
+.ui-jqgrid .ui-pg-selbox
+{
+    display: block;
+    height: auto;
+    width: 70px;
+    margin: 0px;
+    padding: 1px 4px;
+    line-height: normal;
+    border-radius: 4px;
+}
+.ui-jqgrid .ui-jqgrid-htable th div
+{
+    overflow: visible;
+}
+.ui-jqgrid .ui-pager-control
+{
+    height: 50px;
+    position: relative;
+}
+.ui-pg-table .navtable .ui-corner-all
+{
+    border-radius: 0px;
+}
+.ui-jqgrid .ui-pg-button:hover
+{
+    padding: 1px;
+}
+
+
+.ui-jqgrid .loading
+{
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: auto;
+    height: auto;
+    z-index: 101;
+    padding: 6px;
+    margin: 5px;
+    text-align: center;
+    font-weight: bold;
+    display: none;
+    border-width: 2px !important;
+    font-size: 11px;
+}

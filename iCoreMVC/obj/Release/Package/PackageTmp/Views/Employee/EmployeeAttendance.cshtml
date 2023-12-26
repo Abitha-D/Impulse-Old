@@ -1,0 +1,540 @@
+﻿@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+
+<html>
+<head>
+    <title></title>
+    <link href="~/assets/pages/css/MyStyles.css" rel="stylesheet" />
+    <link href="~/assets/pages/css/Select1.min.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/datetimepicker/jquery.timeentry.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+
+    <style>
+        .ddlClass
+        {
+            height: 22px;
+            width: 48px;
+            font-size: 9px;
+        }
+        .fa-check{
+            color:#2ac280;
+        }
+        .fa-clock-o{
+            color:#f62d51 ;
+        }
+        .fa-stethoscope{
+            color:#75f;
+        }
+        .fa-hourglass-end{
+            color:#a58900;
+        }
+        .fa-user-times{
+            color:#5a5353;
+        }
+        .fa-close{
+            color:#0087a5;
+            
+        }
+        .fa-wheelchair{
+            color:#ff6307;
+        }
+        .table-hover tbody tr:hover {
+            color: #212529;
+            background-color: rgba(0, 0, 0, 0.075);
+         }
+         .table.table th, table.table td {
+            padding-top: 1.1rem;
+            padding-bottom: 1rem;
+          }
+
+
+         .table th, .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+          }
+          #mytable {
+            border-collapse: collapse;
+            border-spacing: 2px;
+          }
+
+          .textClass{
+            font-size: 15px;
+            margin-top: 10px;
+            margin-left: 20px;
+          }
+          
+          .mt{
+              margin-top:30px;
+          }
+
+          .searchBox{
+            border-color: #e3e3e3;
+            box-shadow: none;
+            font-size: 15px;
+            height: 44px;
+            outline: 0!important;
+            background-color: rgb(255, 255, 255);
+            box-shadow: rgba(0, 0, 0, 0.075) 0px 1px 1px inset;
+            padding: 6px 12px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(194, 202, 216);
+            border-image: initial;
+            border-radius: 4px;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s
+          }
+
+          .atType{
+              color: #FFF;
+              font-size: 16px;
+          }
+
+          .back-green{ /*Present*/
+              background-color:#27a736;
+          }
+          .back-red{/*Planned Leave*/
+              background-color:#ff4a3d;
+          }
+          .back-blue{/*Sick Leave*/
+              background-color:#2716de;
+          }
+          .back-orange{/*Half day Leave*/
+              background-color:#fa7d0f;
+          }
+          .back-dark-blue{/*Employee normal Off*/
+              background-color:#2b0fff;
+          }
+          .back-brown{/*Company Off*/
+              background-color:#473947;
+          }
+          .back-magenta{/*Medical Leave*/
+              background-color:#e825e8;
+          }
+          
+          .fs-9{
+              font-size: 9px;
+              color: #7d7d7d;
+          }
+
+          .btn-submit{
+              background-color: #225d9a;
+              border: 1px solid #225d9a;
+              color: #fff;
+          }
+
+          .btn-submit:hover{
+              background: #282a2d;
+              border: 1px solid #282a2d;
+              color: #fff;
+          }
+
+          .labelClass{
+               font-size: 15px;
+               height: 44px;
+               padding: 6px 12px;
+          }
+
+
+    </style>
+
+
+</head>
+<body ng-app="Employeedetails">
+    <div ng-controller="Employees" data-ng-init="GetAttendance(roleId,refNo)" id="controllerID" ng-cloak>
+        <div class="content container-fluid">
+
+            <div class="row hidden" id="attendanceEdit">
+                <div class="row filter-row">
+                    <div class="col-sm-2">
+                        <label class="textClass" style="font-size:15px;">Attendance Date</label>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
+                            <span>
+                                <input type="text" class="form-control" name="from" id="txtDate" autocomplete="off" style=" font-family: Arial, FontAwesome;text-align: left;">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <a ng-click="GetOneDayValue(refNo, roleId)" class="btn btn-submit btn-block"> Search </a>
+                    </div>
+                    <div class="col-sm-3">
+                        <a ng-click="GetAttendance(roleId,refNo)" onclick="toggleDiv()" class="btn btn-submit btn-block"> View Attendence </a>
+                    </div>
+                </div>
+                <div class="row mt">
+                    <div style="float:right;">
+                        <input class="searchBox" id="myInput" type="text" placeholder="Search Employee.." onkeypress="searchWord(this)">
+                        <select class="searchBox" id="ddlAttType">
+                            <option value="-2">Choose Attendance type...</option>
+                            <option ng-repeat="v in AttendanceType" value="{{v.attendance_id}}">{{ v.attendance_type }}</option>
+                        </select>
+                        <a ng-click="SaveAttendance(refNo, roleId)" class="btn btn-submit" style=" width: 100px; margin-left: 20px;"> Save </a>
+                    </div>
+
+                    <div class="table-responsive" style="margin-top: 55px;height:300px;">
+                        <table class="table table-hover table-bordered fixed-header" id="mytable">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><input type="checkbox" id="checkall" style="text-align:center;"></th>
+                                    <th scope="col">Employee Name</th>
+                                    <th scope="col">Attendance Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myContent">
+                                <tr ng-repeat="ca in CurrentAttendance" ng-cloak>
+                                    <td>
+                                        <input type="checkbox" id="{{ca.emp_ref_no}}" style="text-align:center;">
+                                    </td>
+                                    <td>{{ca.emp_name}}</td>
+                                    <td class={{ca.class_name}}>{{ca.value}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="row hidden" id="attendanceEdit">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table table-nowrap mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>1</th>
+                                        <th>2</th>
+                                        <th>3</th>
+                                        <th>4</th>
+                                        <th>5</th>
+                                        <th>6</th>
+                                        <th>7</th>
+                                        <th>8</th>
+                                        <th>9</th>
+                                        <th>10</th>
+                                        <th>11</th>
+                                        <th>12</th>
+                                        <th>13</th>
+                                        <th>14</th>
+                                        <th>15</th>
+                                        <th>16</th>
+                                        <th>17</th>
+                                        <th>18</th>
+                                        <th>19</th>
+                                        <th>20</th>
+                                        <th>21</th>
+                                        <th>22</th>
+                                        <th>23</th>
+                                        <th>24</th>
+                                        <th>25</th>
+                                        <th>26</th>
+                                        <th>27</th>
+                                        <th>28</th>
+                                        <th>29</th>
+                                        <th>30</th>
+                                        <th>31</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-model="AttendanceType">
+                                    <tr ng-repeat="att in AL" ng-cloak>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a class="avatar avatar-xs" href="profile.html"><img alt="" src="~/Content/Image/avatar.png"></a>
+                                                <a href="profile.html">{{att.emp_name}}</a>
+                                            </h2>
+                                        </td>
+                                        <td><select ng-model="att.d1" class="ddlClass" id="ddld1_{{att.emp_ref_no}}" ng-change="changeBackground('ddld1_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d1" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d2" class="ddlClass" id="ddld2_{{att.emp_ref_no}}" ng-change="changeBackground('ddld2_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d2" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d3" class="ddlClass" id="ddld3_{{att.emp_ref_no}}" ng-change="changeBackground('ddld3_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d3" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d4" class="ddlClass" id="ddld4_{{att.emp_ref_no}}" ng-change="changeBackground('ddld4_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d4" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d5" class="ddlClass" id="ddld5_{{att.emp_ref_no}}" ng-change="changeBackground('ddld5_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d5" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d6" class="ddlClass" id="ddld6_{{att.emp_ref_no}}" ng-change="changeBackground('ddld6_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d6" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d7" class="ddlClass" id="ddld7_{{att.emp_ref_no}}" ng-change="changeBackground('ddld7_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d7" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d8" class="ddlClass" id="ddld8_{{att.emp_ref_no}}" ng-change="changeBackground('ddld8_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d8" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d9" class="ddlClass" id="ddld9_{{att.emp_ref_no}}" ng-change="changeBackground('ddld9_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d9" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d10" class="ddlClass" id="ddld10_{{att.emp_ref_no}}" ng-change="changeBackground('ddld10_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d10" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d11" class="ddlClass" id="ddld11_{{att.emp_ref_no}}" ng-change="changeBackground('ddld11_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d11" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d12" class="ddlClass" id="ddld12_{{att.emp_ref_no}}" ng-change="changeBackground('ddld12_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d12" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d13" class="ddlClass" id="ddld13_{{att.emp_ref_no}}" ng-change="changeBackground('ddld13_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d13" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d14" class="ddlClass" id="ddld14_{{att.emp_ref_no}}" ng-change="changeBackground('ddld14_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d14" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d15" class="ddlClass" id="ddld15_{{att.emp_ref_no}}" ng-change="changeBackground('ddld15_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d15" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d16" class="ddlClass" id="ddld16_{{att.emp_ref_no}}" ng-change="changeBackground('ddld16_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d16" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d17" class="ddlClass" id="ddld17_{{att.emp_ref_no}}" ng-change="changeBackground('ddld17_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d17" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d18" class="ddlClass" id="ddld18_{{att.emp_ref_no}}" ng-change="changeBackground('ddld18_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d18" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d19" class="ddlClass" id="ddld19_{{att.emp_ref_no}}" ng-change="changeBackground('ddld19_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d19" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d20" class="ddlClass" id="ddld20_{{att.emp_ref_no}}" ng-change="changeBackground('ddld20_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d20" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d21" class="ddlClass" id="ddld21_{{att.emp_ref_no}}" ng-change="changeBackground('ddld21_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d21" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d22" class="ddlClass" id="ddld22_{{att.emp_ref_no}}" ng-change="changeBackground('ddld22_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d22" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d23" class="ddlClass" id="ddld23_{{att.emp_ref_no}}" ng-change="changeBackground('ddld23_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d23" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d24" class="ddlClass" id="ddld24_{{att.emp_ref_no}}" ng-change="changeBackground('ddld24_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d24" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d25" class="ddlClass" id="ddld25_{{att.emp_ref_no}}" ng-change="changeBackground('ddld25_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d25" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d26" class="ddlClass" id="ddld26_{{att.emp_ref_no}}" ng-change="changeBackground('ddld26_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d26" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d27" class="ddlClass" id="ddld27_{{att.emp_ref_no}}" ng-change="changeBackground('ddld27_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d27" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d28" class="ddlClass" id="ddld28_{{att.emp_ref_no}}" ng-change="changeBackground('ddld28_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d28" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d29" class="ddlClass" id="ddld29_{{att.emp_ref_no}}" ng-change="changeBackground('ddld29_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d29" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d30" class="ddlClass" id="ddld30_{{att.emp_ref_no}}" ng-change="changeBackground('ddld30_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d30" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+                                        <td><select ng-model="att.d31" class="ddlClass" id="ddld31_{{att.emp_ref_no}}" ng-change="changeBackground('ddld31_{{att.emp_ref_no}}')"><option ng-repeat="v in AttendanceType" ng-selected="v.attendance_id == att.d31" value="{{v.attendance_id}}">{{ v.type_name }}</option></select></td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="row" id="Attendanceview">
+                <!-- Search Filter -->
+                <div class="row filter-row">
+
+                    <div class="col-sm-3">
+                        <div class="select floating form-group form-focus select-focus focused">
+                            <select class="select floating form-group form-focus select-focus focused" data-select2-id="1" tabindex="-1" style="width: 100%;font-size: 15px;font-weight: normal;border-color: #e3e3e3;" id="ddlYear">
+                                <option value="0">-</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                            </select>
+                            <label class="focus-label">Select Year</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="select floating form-group form-focus select-focus focused">
+                            <select class="select floating form-group form-focus select-focus focused"
+                                    data-select2-id="1" tabindex="-1" style="width: 100%;font-size: 15px;font-weight: normal;border-color: #e3e3e3;" id="ddlMonth">
+                                <option value="0">-</option>
+                                <option value="1">Jan</option>
+                                <option value="2">Feb</option>
+                                <option value="3">Mar</option>
+                                <option value="4">Apr</option>
+                                <option value="5">May</option>
+                                <option value="6">Jun</option>
+                                <option value="7">Jul</option>
+                                <option value="8">Aug</option>
+                                <option value="9">Sep</option>
+                                <option value="10">Oct</option>
+                                <option value="11">Nov</option>
+                                <option value="12">Dec</option>
+                            </select>
+                            <label class="focus-label">Select Month</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <a ng-click="GetAttendance(roleId,refNo)" class="btn btn-submit btn-block"> Search </a>
+                    </div>
+                    <div class="col-sm-3">
+                        <a onclick="toggleDiv()" class="btn btn-submit btn-block"> Mark Attendance </a>
+                    </div>
+
+                </div>
+                <!-- /Search Filter -->
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table table-nowrap mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                    <th>5</th>
+                                    <th>6</th>
+                                    <th>7</th>
+                                    <th>8</th>
+                                    <th>9</th>
+                                    <th>10</th>
+                                    <th>11</th>
+                                    <th>12</th>
+                                    <th>13</th>
+                                    <th>14</th>
+                                    <th>15</th>
+                                    <th>16</th>
+                                    <th>17</th>
+                                    <th>18</th>
+                                    <th>19</th>
+                                    <th>20</th>
+                                    <th>21</th>
+                                    <th>22</th>
+                                    <th>23</th>
+                                    <th>24</th>
+                                    <th>25</th>
+                                    <th>26</th>
+                                    <th>27</th>
+                                    <th>28</th>
+                                    <th>29</th>
+                                    <th>30</th>
+                                    <th>31</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="att in AttendaceList" ng-cloak>
+                                    <td>
+                                        <h2 class="table-avatar">
+                                            <a class="avatar avatar-xs" href="profile.html"><img alt="" src="~/Content/Image/avatar.png"></a>
+                                            <a href="profile.html">{{att.emp_name}}</a>
+                                        </h2>
+                                    </td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day1}}>{{att.text1}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day2}}>{{att.text2}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day3}}>{{att.text3}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day4}}>{{att.text4}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day5}}>{{att.text5}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day6}}>{{att.text6}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day7}}>{{att.text7}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day8}}>{{att.text8}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day9}}>{{att.text9}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day10}}>{{att.text10}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day11}}>{{att.text11}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day12}}>{{att.text12}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day13}}>{{att.text13}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day14}}>{{att.text14}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day15}}>{{att.text15}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day16}}>{{att.text16}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day17}}>{{att.text17}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day18}}>{{att.text18}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day19}}>{{att.text19}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day20}}>{{att.text20}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day20}}>{{att.text20}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day22}}>{{att.text22}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day23}}>{{att.text23}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day24}}>{{att.text24}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day25}}>{{att.text25}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day26}}>{{att.text26}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day27}}>{{att.text27}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day28}}>{{att.text28}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day29}}>{{att.text29}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day30}}>{{att.text30}}</i></a></td>
+                                    <td><a href="javascript:void(0);" data-toggle="modal" onclick="openModal()" data-target="#attendance_info"><i class={{att.day31}}>{{att.text31}}</i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="~/assets/pages/scripts/Select1.min.js"></script>
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/assets/pages/scripts/form-samples.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="~/assets/layouts/layout3/scripts/layout.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <!-- END THEME LAYOUT SCRIPTS -->
+
+    <script>
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        var temp = 0;
+
+        function toggleDiv()
+        {
+            if(temp == 0)
+            {
+                $('#attendanceEdit').removeClass('hidden');
+                $('#Attendanceview').addClass('hidden');
+                temp = 1;
+            }
+            else if (temp == 1)
+            {
+                $('#attendanceEdit').addClass('hidden');
+                $('#Attendanceview').removeClass('hidden');
+                temp = 0;
+            }
+            
+        }
+
+        function openModal() {
+            parent.$("#attendance_info").modal({
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true
+
+            });
+        }
+
+        function searchWord(id)
+        {
+            var value = $(id).val().toLowerCase();
+            $("#myContent tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        }
+
+        var refNo, sEmpRefNo, roleId;
+
+        function loader(action)
+        {
+            parent.loadergif(action);
+        }
+
+        $(document).ready(function () {
+
+            oAPICall = new APICall();
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+            roleId = sUserDetails.RoleId;
+
+            cudt = oAPICall.GetServerDateOm();
+
+            var cdate = new Date();
+
+            var month = cdate.getMonth()+1;
+
+            var year = cdate.getFullYear();
+
+            $('#txtDate').val(cdate.getDate() +'/'+month + '/' + year);
+
+            $('#ddlMonth').val(month).change();
+
+            $('#ddlYear').val(year).change();
+
+            $("#mytable #checkall").click(function () {
+                if ($("#mytable #checkall").is(':checked')) {
+                    $("#mytable input[type=checkbox]").each(function () {
+                        $(this).prop("checked", true);
+                    });
+
+                } else {
+                    $("#mytable input[type=checkbox]").each(function () {
+                        $(this).prop("checked", false);
+                    });
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
+<script src="~/assets/pages/scripts/components-date-time-pickers.min.js"></script>
+<script src="~/assets/pages/scripts/components-date-time-pickers.js"></script>
+<script src="~/Scripts/js/angular.min.js"></script>
+<script src="~/Scripts/AngularController/EmployeeController.js"></script>
+

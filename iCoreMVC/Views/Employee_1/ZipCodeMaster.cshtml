@@ -1,0 +1,444 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .col-width {
+        width: 17%;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="CPD_Master" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">ZipCode Info</span>
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+                        </strong>
+                        <a href="#" title="List">
+                            <i class="fa fa-list" id="btnCityList"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnback"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div style="padding-top:15px" id="MainPage">
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">State<font color="red">*</font> :</label>
+                            <div class="col-sm-7">
+                                <select style="width:100%" class="select2_demo_3 form-control" id="ddlstate" data-placeholder="Choose a state...">
+                                    <option></option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">County<font color="red">*</font> :</label>
+                            <div class="col-sm-7">
+                                <select style="width:100%" class="select2_demo_3 form-control" id="ddlcounty" data-placeholder="Choose a county...">
+                                    <option></option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">City<font color="red">*</font> :</label>
+                            <div class="col-sm-7">
+                                <select style="width:100%" class="select2_demo_3 form-control" id="ddlcity" data-placeholder="Choose a city...">
+                                    <option></option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Zip Code<font color="red">*</font> :</label>
+                            <div class="col-sm-7"><input type="text" id="txtzipcode" maxlength="5" placeholder="Enter zipcode here.." required="" onpaste="return false" class="form-control" onkeypress="javascript:return isNumber(event)" /></div>
+                        </div>
+
+                    </div>
+                    <div id="ListPage">
+                        <div class="col-sm-12">
+                            <div class="ibox-content">
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblZipListGrid"></table>
+                                    <div id="pagerZipgrid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <input type="hidden" id="hdnZipId" />
+    </div>
+</form>
+
+<script>
+    localStorage.setItem("PageID", "CityMaster");
+
+    function BindState() {
+        $('#ddlstate').empty().append();
+        $('#ddlstate').append('<option></option>');
+        var Condition = "where delete_status=0";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsState");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlstate').append('<option value="' + Result[i]["state_id"] + '">' + Result[i]["state_name"] + '</option>');
+            }
+        }
+    }
+
+
+    function BindCounty() {
+        $('#ddlcounty').empty().append();
+        $('#ddlcounty').append('<option></option>');
+        var sStateId = $('#ddlstate').val();
+        var Condition = "where delete_status=0 and state_id=" + sStateId + "";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsCounty");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlcounty').append('<option value="' + Result[i]["county_id"] + '">' + Result[i]["county_name"] + '</option>');
+            }
+        }
+    }
+
+    function BindCity() {
+        $('#ddlcity').empty().append();
+        $('#ddlcity').append('<option></option>');
+        var sCountyId = $('#ddlcounty').val();
+        var Condition = "where delete_status=0 and county_id=" + sCountyId + "";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsCityData");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlcity').append('<option value="' + Result[i]["city_id"] + '">' + Result[i]["city_name"] + '</option>');
+            }
+        }
+    }
+
+    $(function () {
+        $("#btnSave").click(function () {
+            if ($('#ddlstate').val() == "") {
+                document.getElementById('ddlstate').style.borderColor = "red";
+                msgalert('Warning', 'Please choose a state..', 2);
+                return;
+            }
+            if ($('#ddlcounty').val() == "") {
+                document.getElementById('ddlcounty').style.borderColor = "red";
+                msgalert('Warning', 'Please choose a county..', 2);
+                return;
+            }
+            if ($('#ddlcity').val() == "") {
+                document.getElementById('ddlcity').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please choose a city..', 2);
+                return;
+            }
+            if (document.getElementById('txtzipcode').value == "") {
+                document.getElementById('txtzipcode').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter mandatory fields', 2);
+                return
+            }
+            var textBox = document.getElementById("txtzipcode");
+            var textLength = textBox.value.length;
+            if (textLength < 5) {
+                document.getElementById('txtzipcode').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Zip code should be a Minumum of 5 numbers..', 2);
+                return
+            }
+            document.getElementById('txtzipcode').style.borderColor = "";
+            InsertZipCodeMaster();
+
+        });
+
+        function InsertZipCodeMaster() {
+
+            var sZipId = $('#hdnZipId').val();
+            var sMsgDesc = 'New zipcode details added successfully'
+
+
+            if (sZipId <= 0 && sZipId == "") {       //Create Mode
+                var ValidationSuccess = false;
+                var sZipCode = $('#txtzipcode').val();
+                var sCondDup = "where delete_status=0";
+                ValidationSuccess = ValidateForDuplicationwithcondition(sZipCode, 'ChkDupZipCode', sCondDup);
+                if (!ValidationSuccess) {
+                    msgalert('Error', 'Zipcode already exist.. Try another', 3);
+                    document.getElementById('txtzipcode').style.borderColor = "red";
+                    return false;
+                }
+                var StrJsonDatas = eval({
+                    zip_code: $('#txtzipcode').val(),
+                    state_id: $('#ddlstate').val(),
+                    county_id: $('#ddlcounty').val(),
+                    city_id: $('#ddlcity').val(),
+                    delete_status: 0,
+                    created_by: CurrentUser,
+                    created_date: new Date()
+
+                });
+                var Result = oAPICall.InsertData(StrJsonDatas, 'CreateZipCodeMaster');
+                if (Result != null && Result != '') {
+                    sZipId = Result[0].IDENTITY;
+                    $('#hdnZipId').val(sZipId);
+                    Clear();
+                    msgalert('Success', sMsgDesc, 1)
+                }
+            }
+            else {   //Update Mode
+                var StrJsonDatas = eval({
+                    zip_code: $('#txtzipcode').val(),
+                    state_id: $('#ddlstate').val(),
+                    county_id: $('#ddlcounty').val(),
+                    city_id: $('#ddlcity').val(),
+                    updated_by: CurrentUser,
+                    updated_date: new Date()
+
+                });
+                var sCondition = "where zip_id=" + sZipId + "";
+                var Result = oAPICall.UpdateData(StrJsonDatas, 'UpdateZipCodeMaster', sCondition);
+                if (Result != null && Result != '') {
+                    Clear();
+                    sMsgDesc = 'ZipCode details updated successfully'
+                    msgalert('Success', sMsgDesc, 1);
+
+                }
+            }
+        }
+
+    });
+
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+    function ZipCodeListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['Zip Id', 'Zip Code', 'city_id', 'City', 'CountyId', 'County', 'StateId', 'State', '', ''],
+        colModel = [
+            { name: 'zip_id', index: 'zip_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'zip_code', index: 'zip_code', width: 120, align: "center", sorttype: false, search: true },
+            { name: 'city_id', index: 'city_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'city_name', index: 'city_name', width: 80, align: "center", sorttype: false, search: true },
+            { name: 'county_id', index: 'county_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'county_name', index: 'county_name', width: 80, align: "center", sorttype: "int", search: true },
+            { name: 'state_id', index: 'state_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'state_name', index: 'state_name', width: 80, align: "center", sorttype: "int", search: true },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+        ];
+        var mydata = PopulateZipCodeGrid();
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblZipListGrid', '#pagerZipgrid', 'ZipCode List', 250, 14, false, mydata);
+
+    }
+
+    function PopulateZipCodeGrid() {
+
+        var sCondition = " WHERE delete_status = 0 order by 1 desc";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsZipCodeMaster");
+        if (Result != '' && Result != null) {
+            var sStateRt = [];
+            for (var i = 0; i < Result.length; i++) {
+                var sZipId = Result[i].zip_id;
+                var sZipCode = Result[i].zip_code;
+                var sCityId = Result[i].city_id;
+                var sCityName = Result[i].city_name;
+                var sCountyId = Result[i].county_id;
+                var sCountyName = Result[i].county_name;
+                var sStateId = Result[i].state_id;
+                var sStateNmae = Result[i].state_name;
+
+                sStateRt[i] = {
+                    zip_id: sZipId, zip_code: sZipCode, city_id: sCityId, city_name: sCityName, county_id: sCountyId,
+                    county_name: sCountyName, state_id: sStateId, state_name: sStateNmae
+                };
+            }
+            return sStateRt;
+        }
+    }
+   
+    function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    }
+
+    function Clear() {
+        $('#hdnZipId').val('');
+        $('#txtzipcode').val('');
+        $('#ddlstate').val('').change();
+        $('#ddlcounty').val('').change();
+        $('#ddlcity').val('').change();
+        BindState();
+        BindCounty();
+        BindCity();
+    }
+
+
+    $(document).ready(function () {
+
+        BindState();
+        BindCounty();
+
+        $('#ListPage').hide();
+        $('#btnback').hide();
+
+        var sWidth = $('.tab-content').width();
+        $('#tblZipListGrid').setGridWidth(sWidth - 20);
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblZipListGrid').setGridWidth(sWidth);
+
+        });
+
+        
+
+        //var input = document.getElementById('txtzipcode');
+        //input.onkeydown = function (e) {
+        //    var k = e.which;
+        //    /* numeric inputs can come from the keypad or the numeric row at the top */
+        //    if ((k < 48 || k > 57) && (k < 96 || k > 105)) {
+        //        e.preventDefault();
+        //        return false;
+        //    }
+        //};
+
+        $('#txtcityname').focusout(function () {
+            if (document.getElementById('txtcityname').value == "") {
+                document.getElementById('txtcityname').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtcityname').style.borderColor = "green";
+            }
+
+        });
+
+        $('#ddlstate').change(function () {
+            $('#ddlcounty').val('').change();
+            $('#ddlcity').val('').change();
+            BindCounty();
+        });
+        $('#ddlcounty').change(function () {
+            $('#ddlcity').val('').change();
+            BindCity();
+        });
+
+
+        $('#btnCityList').click(function () {
+            $('#btnSave').hide();
+            $('#MainPage').hide();
+            $('#ListPage').show();
+            $('#btnback').show();
+            $('#btnCityList').hide();
+            $('#tblZipListGrid').jqGrid('GridUnload');
+            ZipCodeListGrid();
+        });
+        $('#btnback').click(function () {
+            $('#btnSave').show();
+            $('#MainPage').show();
+            $('#ListPage').hide();
+            $('#btnback').hide();
+            $('#btnCityList').show();
+            $('#tblZipListGrid').jqGrid('GridUnload');
+            ZipCodeListGrid();
+            Clear();
+        });
+
+
+        $(document).delegate('#tblZipListGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblZipListGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                $('#MainPage').show();
+                $('#ListPage').hide();
+                $('#btnSave').show();
+                $('#hdnZipId').val($('#tblZipListGrid').getCell(rowIds[rowid], 'zip_id'));
+                $('#txtzipcode').val($('#tblZipListGrid').getCell(rowIds[rowid], 'zip_code'));
+
+                $('#ddlstate').val("" + $('#tblZipListGrid').getCell(rowIds[rowid], 'state_id') + "").change();
+
+                $('#ddlcounty').val("" + $('#tblZipListGrid').getCell(rowIds[rowid], 'county_id') + "").change();
+
+                $('#ddlcity').val("" + $('#tblZipListGrid').getCell(rowIds[rowid], 'city_id') + "").change();
+                $('#btnback').hide();
+                $('#btnCityList').show();
+            }
+            else {
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    //text: "" + text + "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              var sZipId = $('#tblZipListGrid').getCell(rowIds[rowid], 'zip_id')
+              var sStrJsonDatas = eval({ delete_status: 1 });
+              var Condition = "where zip_id=" + sZipId;
+              var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateZipCodeMaster', Condition);
+              if (Result != "" || Result != null) {
+                  $('#tblZipListGrid').jqGrid('delRowData', rowid);
+                  msgalert('Success', 'Successfully Deleted', 1)
+                  $('#tblZipListGrid').jqGrid('GridUnload');
+                  ZipCodeListGrid();
+              }
+
+          }
+          else {
+              return
+          }
+      });
+                return
+
+            }
+        });
+    });
+
+
+
+</script>

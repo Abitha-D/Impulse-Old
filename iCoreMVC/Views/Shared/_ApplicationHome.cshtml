@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+@*<meta http-equiv="X-UA-Compatible" content="IE=10">*@
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<link rel="shortcut icon" type="image/icon" href="~/Content/Image/loading_spinner.gif" />
+<link href="../Content/css/spinners.css" rel="stylesheet" />
+<link href="~/Content/css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+
+<style>
+    .wrapColumnText {
+        white-space: normal !important;
+        height: auto;
+        vertical-align: text-top;
+    }
+
+    .ui-jqgrid tr.jqgrow td {
+        word-wrap: break-word; /* IE 5.5+ and CSS3 */
+        white-space: pre-wrap; /* CSS3 */
+        white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+        white-space: -pre-wrap; /* Opera 4-6 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        overflow: hidden;
+        height: auto;
+        vertical-align: middle;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    .pace.pace-inactive .pace-progress {
+        display: none;
+    }
+
+    .pace.pace-inactive {
+        display: none;
+    }
+
+    .modal {
+        text-align: center;
+        padding: 0 !important;
+    }
+
+        .modal:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -4px;
+        }
+
+    .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .text-navy {
+        color: #f3f3f4 !important;
+    }
+
+    .btnordernext1 {
+        color: #fff !important;
+        background-color: #337AB7;
+        border-color: #CACACA;
+        width: 15%;
+        height: 35px;
+    }
+</style>
+
+
+<html>
+@*ResetTimers() onmousemove="ResetTimers()" onkeypress="ResetTimers()"*@
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ecesis Impulse</title>
+    <script type="text/javascript" src="~/Scripts/js/plugins/pace/pace.min.js"></script>
+</head>
+<body style="overflow:hidden">
+    <div>
+        @RenderBody()
+
+
+    </div>
+    <div id="myModalPageLoad" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-body" id="divloading_gif">
+                <center><img src='~/Content/Image/loading_spinner.gif' style="width:50%;height:50%" /></center><br />
+            </div>
+        </div>
+    </div>
+    <input type="text" name="hdnUserDetails" id="hdnUserDetails" value="false" style="visibility:hidden;display:none" />
+
+</body>
+</html>
+<script src="~/Scripts/js/plugins/blueimp/blueimp-helper.js"></script>
+<script src="~/Scripts/js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+
+@*<script src="~/Scripts/js/plugins/blueimp/blueimp-gallery.js"></script>*@
+<script src="~/Scripts/js/plugins/blueimp/blueimp-gallery-fullscreen.js"></script>
+<script src="~/Scripts/js/plugins/blueimp/blueimp-gallery-indicator.js"></script>
+
+<script id="jq" src=""></script>
+
+@*@Scripts.Render("~/bundles/icore_js")
+
+    @Scripts.Render("~/bundles/plugin_js")*@
+
+@Scripts.Render("~/bundles/icore_app_js")
+
+<script>
+    $(function () {
+        'use strict'
+        $('#blueimp-gallery').data('fullScreen', true);
+
+
+    });
+
+    function loadergif(action) {
+        if (action == 1) {
+            parent.$("#myModalPageLoad").modal("hide");
+            parent.$("#myModalPageLoad").modal({                    // wire up the actual modal functionality and show the dialog
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true                     // ensure the modal is shown immediately
+
+            });
+        }
+        else {
+            parent.$("#myModalPageLoad").modal("hide");
+        }
+    }
+
+    function msgalert(title, text, type) {
+        if (text == null || text == "") {
+            text = "";
+        }
+        if (type == null || type == "") {
+            type = "";
+        }
+        else if (type == 1) { type = "success" }
+        else if (type == 2) { type = "warning" }
+        else if (type == 3) { type = "error" }
+
+        parent.swal({
+            title: "" + title + "",
+            text: "" + text + "",
+            type: "" + type + ""
+        });
+    }
+
+    $(document).ready(function () {
+
+
+
+    });
+</script>

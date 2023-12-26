@@ -1,0 +1,660 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,5,8,9,10,11" />
+    <title>@ViewBag.Title - BPO Tracking System</title>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+
+    @Styles.Render("~/Content/icore_css")
+    @Styles.Render("~/Content/plugin_css")
+
+    <link href="~/Content/css/plugins/YahooPanel/fonts-min.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/YahooPanel/container.css" rel="stylesheet" />
+
+    @Scripts.Render("~/bundles/icore_js")
+    @Scripts.Render("~/bundles/plugin_js")
+    @Scripts.Render("~/bundles/icore_app_js")
+
+    <script src="~/Scripts/js/plugins/YahooPanel/utilities.js"></script>
+    <script src="~/Scripts/js/plugins/YahooPanel/container-min.js"></script>
+
+  
+    
+
+
+
+
+    @*<script type="text/javascript">
+    // Set timeout variables.
+    var timoutWarning = 15000; // Display warning in 1Mins.
+    //var timoutWarning = 60000; // Display warning in 1Mins.
+    //var timoutNow = 120000; // Timeout in 2 mins.
+    var timoutNow = 30000; // Timeout in 2 mins.
+    var logoutUrl = "../Home/Logout";
+
+    var warningTimer;
+    var timeoutTimer;
+
+    // Start timers.
+    function StartTimers() {
+        warningTimer = setTimeout("IdleWarning()", timoutWarning);
+        timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
+
+    }
+
+    // Reset timers.
+    function ResetTimers() {
+        clearTimeout(warningTimer);
+        clearTimeout(timeoutTimer);
+        StartTimers();
+        parent.$("#timeout").modal("hide");
+
+    }
+
+    // Show idle timeout warning dialog.
+    function IdleWarning() {
+       parent.$("#timeout").modal({                    // wire up the actual modal functionality and show the dialog
+            "backdrop": "static",
+            "keyboard": true,
+            "show": true                     // ensure the modal is shown immediately
+        });
+    }
+
+    // Logout the user.
+    function IdleTimeout() {
+       parent.userlogout();
+       parent.window.location = logoutUrl;
+    }
+    </script>*@
+    <style>
+        /*.ddl{
+            width:250px;
+        }*/
+        .col-sm-12, .col-sm-6 {
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+
+
+        select {
+            width: 100%;
+        }
+
+        body.mini-navbar #page-wrapper {
+            margin: 0 -30px 0px -30px;
+        }
+
+        }
+
+        .wrapper-content {
+            padding: 0px 0px 0px 0px;
+        }
+
+        .wrapper {
+            padding: 0 0px;
+        }
+
+        .chosen-container .chosen-drop {
+            border: 1px solid #aaa;
+        }
+
+        .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple {
+            height: 33px;
+            border: 1px solid #e7eaec;
+            border-radius: 2px;
+        }
+        /*.col-sm-2 {
+            width: 26.666667%;
+        }
+        .col-md-9 {
+            width: 47%;
+        }*/
+        .container {
+            padding-right: 0px;
+            padding-left: 0px;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+
+        /*.col-sm-2 {
+            width: 28.666667%;
+        }
+
+        .col-md-9 {
+            width: 70%;
+        }*/
+
+        .ibox-content {
+            padding: 0px;
+        }
+
+        .fa {
+            font-size: medium;
+            color: gray;
+        }
+
+        th.ui-th-column div {
+            word-wrap: break-word; /* IE 5.5+ and CSS3 */
+            white-space: pre-wrap; /* CSS3 */
+            white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+            white-space: -pre-wrap; /* Opera 4-6 */
+            white-space: -o-pre-wrap; /* Opera 7 */
+            overflow: hidden;
+            height: auto !important;
+            vertical-align: middle;
+        }
+
+        .ui-state-highlight {
+            background: #c4e3fa !important;
+        }
+
+        .sweet-alert p {
+            color: #797979;
+        }
+        /*.ui-jqgrid tr.ui-row-ltr td {
+            border-color: #c7c2c2;
+        }*/
+        .dropdown-menu > li > a {
+            border-radius: 3px;
+            color: inherit;
+            line-height: 25px;
+            margin: 4px;
+            text-align: left;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body style="background-color:#ffffff">
+    @*<div id="wrapper">*@
+    @*onload="parent.StartTimers();" onmousemove="parent.ResetTimers()" onkeypress="parent.ResetTimers()"*@
+    <div>
+        @*<div id="page-wrapper">*@
+        <div>
+            <div class="wrapper wrapper-content animated slideInLeft ">
+                @*fadeInRight*@
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content" id="layout">
+
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display:none">
+        <form>
+            <input type="text" name="hdnUserDetails" id="hdnUserDetails" value="false" style="visibility:hidden" />
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+
+
+<script>
+
+    // function pageLoad() {
+    //     YAHOO.namespace("example.container");
+    //     YAHOO.example.container.wait =
+    //new YAHOO.widget.Panel("wait",
+    //    {
+    //        width: "240px",
+    //        fixedcenter: true,
+    //        close: false,
+    //        draggable: false,
+    //        zindex: 4,
+    //        modal: true,
+    //        visible: false
+    //    }
+    //);
+    //     YAHOO.example.container.wait.setHeader("Loading, please wait...");
+    //     YAHOO.example.container.wait.setBody('<img src="../Process/Loading.gif" />');
+    //     YAHOO.example.container.wait.render(document.body);
+    // }
+
+
+
+    var oAPICall = new APICall();
+    //................Alert Messages..............
+    //function msgalert(title, text)
+    //{
+    //    if (text == null || text == "")
+    //    {
+    //        text = "";
+    //    }
+
+    //    parent.swal({
+    //        title: "<html><font color='red'>Sameer</font></html>",
+    //        text: "" + text + "",
+    //        html: true
+    //    });
+    //}
+    function loadingalert() {
+        parent.swal({
+            title: "<img src='../Content/image/waiting.gif'/>",
+            text: "Please wait your data is submitting...",
+            //imageUrl: "../Content/image/loading_bar.gif", timer: 5000,
+            showConfirmButton: false,
+            html: true
+        });
+    }
+
+
+    //function loader(action) {
+    //    if (action == 1) {
+    //        //parent.swal.close();
+    //        parent.swal({
+    //            text: "<span style='color:#F8BB86'>Please wait..Do not press refresh or back button.</span>",
+    //            title: "<img src='../Content/Image/Loading.gif' style='background-color: white;'  />",
+    //            //timer: 2000,
+    //            showConfirmButton: false,
+    //            //text: "A custom <span style='color:#F8BB86'>html<span> message.",
+    //            html: true,
+    //            allowEscapeKey: false
+    //        });
+    //        parent.$(".sweet-alert").css('background-color', 'rgba(113, 103, 103, 0)');
+
+    //    }
+    //    else {
+    //        parent.swal.close();
+    //        setTimeout(function () {
+    //            parent.$(".sweet-alert").css('background-color', 'white');
+    //        }, 2000);
+
+
+    //    }
+
+    //}
+    function loader(action) {
+        if (action == 1) {
+            parent.$("#myModalLoad").modal("hide");
+            parent.$("#myModalLoad").modal({                    // wire up the actual modal functionality and show the dialog
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true                     // ensure the modal is shown immediately
+
+            });
+        }
+        else {
+            parent.$("#myModalLoad").modal("hide");
+        }
+    }
+
+
+
+    function loader1(action) {
+        if (action == 1) {
+            parent.$("#myModalLoad1").modal("hide");
+            parent.$("#myModalLoad1").modal({                    // wire up the actual modal functionality and show the dialog
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true                     // ensure the modal is shown immediately
+
+            });
+        }
+        else {
+            parent.$("#myModalLoad1").modal("hide");
+        }
+    }
+
+
+    function msgalert(title, text, type) {
+        if (text == null || text == "") {
+            text = "";
+        }
+        if (type == null || type == "") {
+            type = "";
+        }
+        else if (type == 1) { type = "success" }
+        else if (type == 2) { type = "warning" }
+        else if (type == 3) { type = "error" }
+
+        parent.swal({
+            title: "" + title + "",
+            text: "" + text + "",
+            type: "" + type + ""
+        });
+    }
+
+    function msgalertok(title, text, type, fnname) {
+
+        if (text == null || text == "") {
+            text = "";
+        }
+        if (type == null || type == "") {
+            type = "";
+        }
+        else if (type == 1) { type = "success" }
+        else if (type == 2) { type = "warning" }
+        else if (type == 3) { type = "error" }
+
+        parent.swal({
+            title: "" + title + "",
+            text: "" + text + "",
+            type: "" + type + "",
+            showCancelButton: false, confirmButtonColor: "#1ab394", confirmButtonText: "OK", closeOnConfirm: true
+        },
+            function () {
+                var tmpFunc = new Function(fnname)
+                tmpFunc();
+                //parent.swal("Deleted!", "Alert", "success");
+            });
+    }
+    function msgconfirm(title, text, fnname) {
+        var re = "";
+        if (text == null || text == "") {
+            text = "";
+        }
+        parent.swal({
+            title: "" + title + "",
+            text: "" + text + "",
+            type: "success",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            re = 1
+
+                            fnname = fnname + "(" + re + ")"
+                            var tmpFunc = new Function(fnname)
+                            tmpFunc();
+                        } else {
+                            re = 0;
+
+                            fnname = fnname + "(" + re + ")"
+                            var tmpFunc = new Function(fnname)
+                            tmpFunc();
+                        }
+                    });
+    }
+
+
+
+    $(window).resize(function () {
+        var newheight = $('#txtemailid').width();
+        //$('.dll').attr("width", newheight + 'px');
+        //$('.select2-container').css('width:2500px');
+        //$('.red').css('background', 'green');
+        //alert(newheight);
+    });
+
+    //............End of alert messages.........document
+
+
+    $(document).ready(function () {
+
+                retdata =parent.$('#hdnUserDetails').val();
+                var userConfig = new UserConfig();
+                userConfig.InitilizeUserConfig(retdata);
+      
+                parent.RefreshSummary();
+        //if (window.frameElement) {
+
+        //    parent.document.getElementById('framecontent').onload = function () {
+
+        //        
+        //    };
+        //}
+     
+                parent.$("#myModalLoadmenu").modal("hide");
+
+        //-----Default functions................
+        var $image = $(".image-crop > img")
+        $($image).cropper({
+            aspectRatio: 1.618,
+            preview: ".img-preview",
+            done: function (data) {
+                // Output the result data for cropping image.
+            }
+        });
+
+        var $inputImage = $("#inputImage");
+        if (window.FileReader) {
+            $inputImage.change(function () {
+                var fileReader = new FileReader(),
+                        files = this.files,
+                        file;
+
+                if (!files.length) {
+                    return;
+                }
+
+                file = files[0];
+
+                if (/^image\/\w+$/.test(file.type)) {
+                    fileReader.readAsDataURL(file);
+                    fileReader.onload = function () {
+                        $inputImage.val("");
+                        $image.cropper("reset", true).cropper("replace", this.result);
+                    };
+                } else {
+                    showMessage("Please choose an image file.");
+                }
+            });
+        } else {
+            $inputImage.addClass("hide");
+        }
+
+        $("#download").click(function () {
+            window.open($image.cropper("getDataURL"));
+        });
+
+        $("#zoomIn").click(function () {
+            $image.cropper("zoom", 0.1);
+        });
+
+        $("#zoomOut").click(function () {
+            $image.cropper("zoom", -0.1);
+        });
+
+        $("#rotateLeft").click(function () {
+            $image.cropper("rotate", 45);
+        });
+
+        $("#rotateRight").click(function () {
+            $image.cropper("rotate", -45);
+        });
+
+        $("#setDrag").click(function () {
+            $image.cropper("setDragMode", "crop");
+        });
+
+        $('#data_1 .input-group.date').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: true,
+            autoclose: true
+        });
+        //$(".input-group.date").datepicker("setDate", new Date());
+        $('#data_2 .input-group.date').datepicker({
+            startView: 1,
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true,
+            format: "dd/mm/yyyy",
+        });
+
+        $('#data_3 .input-group.date').datepicker({
+            startView: 2,
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+
+        $('#data_4 .input-group.date').datepicker({
+            minViewMode: 1,
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('#data_5 .input-daterange').datepicker({
+            keyboardNavigation: false,
+            forceParse: false,
+            autoclose: true
+        });
+
+        var elem = document.querySelector('.js-switch');
+        var switchery = new Switchery(elem, { color: '#1AB394' });
+
+        var elem_2 = document.querySelector('.js-switch_2');
+        var switchery_2 = new Switchery(elem_2, { color: '#ED5565' });
+
+        var elem_3 = document.querySelector('.js-switch_3');
+        var switchery_3 = new Switchery(elem_3, { color: '#1AB394' });
+
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+
+        //$('.demo1').colorpicker();
+
+        //var divStyle = $('.back-change')[0].style;
+        //$('#demo_apidemo').colorpicker({
+        //    color: divStyle.backgroundColor
+        //}).on('changeColor', function (ev) {
+        //    divStyle.backgroundColor = ev.color.toHex();
+        //});
+
+        $('.clockpicker').clockpicker();
+
+        $('input[name="daterange"]').daterangepicker();
+
+        $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+
+        $('#reportrange').daterangepicker({
+            format: 'MM/DD/YYYY',
+            startDate: moment().subtract(29, 'days'),
+            endDate: moment(),
+            minDate: '01/01/2012',
+            maxDate: '12/31/2015',
+            dateLimit: { days: 60 },
+            showDropdowns: true,
+            showWeekNumbers: true,
+            timePicker: false,
+            timePickerIncrement: 1,
+            timePicker12Hour: true,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            opens: 'right',
+            drops: 'down',
+            buttonClasses: ['btn', 'btn-sm'],
+            applyClass: 'btn-primary',
+            cancelClass: 'btn-default',
+            separator: ' to ',
+            locale: {
+                applyLabel: 'Submit',
+                cancelLabel: 'Cancel',
+                fromLabel: 'From',
+                toLabel: 'To',
+                customRangeLabel: 'Custom',
+                daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                firstDay: 1
+            }
+        }, function (start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        });
+
+        $(".select2_demo_1").select2();
+        $(".select2_demo_2").select2();
+        $(".select2_demo_3").select2({
+            placeholder: "Select a state",
+            allowClear: true
+        });
+
+
+        $(".touchspin1").TouchSpin({
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+
+        $(".touchspin2").TouchSpin({
+            min: 0,
+            max: 100,
+            step: 0.1,
+            decimals: 2,
+            boostat: 5,
+            maxboostedstep: 10,
+            postfix: '%',
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+
+        $(".touchspin3").TouchSpin({
+            verticalbuttons: true,
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+
+
+    });
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': { allow_single_deselect: true },
+        '.chosen-select-no-single': { disable_search_threshold: 10 },
+        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+        '.chosen-select-width': { width: "95%" }
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+
+    $("#ionrange_1").ionRangeSlider({
+        min: 0,
+        max: 5000,
+        type: 'double',
+        prefix: "$",
+        maxPostfix: "+",
+        prettify: false,
+        hasGrid: true
+    });
+
+    $("#ionrange_2").ionRangeSlider({
+        min: 0,
+        max: 10,
+        type: 'single',
+        step: 0.1,
+        postfix: " carats",
+        prettify: false,
+        hasGrid: true
+    });
+
+    $("#ionrange_3").ionRangeSlider({
+        min: -50,
+        max: 50,
+        from: 0,
+        postfix: "°",
+        prettify: false,
+        hasGrid: true
+    });
+
+
+</script>

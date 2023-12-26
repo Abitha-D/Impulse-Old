@@ -1,0 +1,227 @@
+﻿@{
+    ViewBag.Title = "ZipcodewiseReport";
+}
+
+
+<style>
+    .control-label {
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: right;
+    }
+
+    div.RoundedBox {
+        border-radius: 5px;
+        border: 1px solid Peru;
+        margin: auto;
+        overflow: hidden;
+        width: auto;
+        height: auto;
+    }
+</style>
+<div class="col-sm-12" style="padding-right:10px">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>&nbsp;</h5> <span class="label ">Report Credentials</span>
+
+            <div class="ibox-tools">
+
+
+                <strong>
+                    <a href="#">
+                        <i class="fa fa-arrow-left" id="btnSave" onclick="BackToFilter()" title="Back to Filter Report"></i>
+                    </a>
+                </strong>
+                <a class="collapse-link" title="Minimize">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div id="divcred">
+                <div class="col-sm-12" style="padding-top:10px">
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">From Date<font color="red">*</font> :</label>
+                            <div class="col-sm-6">
+                                <div class="input-group date txtfromdt">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" id="txtfromdt" class="form-control" value="" readonly="readonly">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">To Date<font color="red">*</font> :</label>
+                            <div class="col-sm-6">
+                                <div class="input-group date txttodt">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" id="txttodt" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Zipcode:</label>
+                            <div class="col-sm-6">
+                       
+                                <input type="text" id="txtZipcode" class="form-control" maxlength="5"  onkeypress="javascript:return isNumber(event)">
+                                
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                </div>
+                <div class="col-sm-12" style="padding-top: 15px;">
+                    <div class="col-sm-10">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary" id="genreport" onclick="GenerateReport()">
+                            <font color="white"><i style="color:white" class="fa fa-play" title=" Generate Report"></i></font> Generate Report
+
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-12 hidden" id="divframe">
+                <div class="wrapper wrapper-content animated fadeInRight">
+
+                    <div class="row">
+
+                        <iframe src="" id="frmreport" style="width: 100%" frameborder="0" scrolling="auto"></iframe>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    }
+
+    function BackToFilter() {
+        $('#divframe').addClass("hidden");
+        $('#divcred').removeClass("hidden");
+        var iframe = document.getElementById("frmreport");
+        iframe.src = "";
+    }
+    function GenerateReport() {
+        $('#divframe').removeClass("hidden")
+        $('#divcred').addClass("hidden")
+
+
+        var report_id = "5"; // Roprt id 5 is ZipCodeWise Report
+        var report_codition = "";
+
+        var sFromDt = new Date($('#txtfromdt').val());
+        var sToDt = new Date($('#txttodt').val());
+        if (sFromDt != "" && sToDt != "") {
+            report_codition = "where order_date>= '" + $('#txtfromdt').val() + "'and order_date<='" + $('#txttodt').val() + "' order by No_Of_Orders desc";
+        }
+        var paramNames = [], paramValues = [];
+        paramNames.push('sClientId'); paramNames.push('sOrderStDate'); paramNames.push('sOrderEndDate'); paramNames.push('sZipcode');
+
+        paramValues.push(EmpId); paramValues.push($('#txtfromdt').val()); paramValues.push($('#txttodt').val()); paramValues.push($('#txtZipcode').val());
+        var strJsonDatas = eval({ strSessionID: UserSession, ProcParameters: paramNames, ProcInputData: paramValues });
+        var result = eval(oAPICall.SelectData(strJsonDatas, "GetZipcodewiseRpt"));
+
+        //var Result = oAPICall.Sendmail(StrJsonDatas, 'sendmail');
+        document.getElementById('frmreport').src = '';
+        //var filters = jQuery.param(StrJsonDatas);
+        document.getElementById('frmreport').src = '../Content/ReportsData/ReportViewer.aspx?report_id=' + report_id + '&report_codition=' + report_codition;
+
+    }
+
+
+    var sCurDate;
+    var date = new Date(), yr = date.getFullYear(),
+                    h = date.getHours(),
+                    m = date.getMinutes(),
+                    s = date.getSeconds(),
+                    month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
+                    day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(),
+                    sCurDate = month + '-' + day + '-' + yr;
+
+    function setFilterdates() {
+        var cudt = new Date();
+        $('.input-group.date.txttodt').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false,
+            //startDate: '-2m',
+            //startDate: new Date(),
+        });
+
+        $(".input-group.date.txttodt").datepicker("setDate", cudt);
+        $('.input-group.date.txttodt').datepicker("setEndDate", cudt);
+
+
+        $('.input-group.date.txtfromdt').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false,
+            //startDate: '-2m',
+            //startDate: new Date(),
+        });
+
+        var d = new Date($("#txttodt").val());
+        d.setMonth(d.getMonth() - 1);
+        $(".input-group.date.txtfromdt").datepicker("setDate", new Date(d));
+
+        //$('.input-group.date.txtfromdt').datepicker("setEndDate", cudt);
+        //$('.input-group.date.txtfromdt').datepicker("setStartDate", d);
+    }
+
+    $(document).ready(function () {
+
+
+        setFilterdates();
+        $('#txtfromdt').change(function () {
+            var dt = new Date($("#txtfromdt").val());
+            dt.setMonth(dt.getMonth() + 1);
+
+            $('.input-group.date.txttodt').datepicker("setEndDate", dt);
+         //   $('.input-group.date.txtfromdt').datepicker("setStartDate", dt);
+            $(".input-group.date.txttodt").datepicker("setDate", dt);
+
+        });
+    })
+
+    $(function () {
+        var newheight = $(window).height() - 55;
+        $('#frmreport').css({ height: newheight + 'px' });
+    });
+
+    $(window).resize(function () {
+        var newheight = $(window).height() - 55;
+        $('#frmreport').css({ height: newheight + 'px' });
+    });
+
+</script>
+

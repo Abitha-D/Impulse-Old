@@ -1,0 +1,1976 @@
+﻿@{
+    Layout = "../Shared/_ApplicationHome.cshtml";
+    //Layout = "";
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>Ecesis Impulse</title>
+    @*<meta http-equiv="X-UA-Compatible" content="IE=edge">*@
+    @*<meta content="width=device-width, initial-scale=1" name="viewport" />*@
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/Content/css/plugins/datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/datetimepicker/jquery.timeentry.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+
+
+    <link href="~/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="~/Content/Image/loading_spinner.gif" />
+
+    <script src="~/Scripts/js/plugins/pace/pace.min.js"></script>
+
+    <script src="~/Scripts/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+    <link href="~/Content/css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
+    <link href="~/assets/pages/css/MyStyles.css" rel="stylesheet" />
+    <link href="~/assets/pages/css/Select1.min.css" rel="stylesheet" />
+    <link href="~/assets/pages/css/NewStyle.css" rel="stylesheet" />
+
+    @*<script src="~/Scripts/js/EmployeeDetails.js"></script>*@
+    <script src="~/Scripts/angular.min.js"> </script>
+
+    <style>
+        .page-quick-sidebar-wrapper {
+            transition: right .3s;
+            z-index: 9999;
+            position: fixed;
+            top: 0px;
+            bottom: 0;
+            width: 320px;
+            right: -320px;
+            overflow: scroll;
+            overflow-x: hidden;
+            color: #99a8b5;
+            background: #21282e;
+        }
+
+        .modall {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 320px;
+            top: 35px;
+            width: 50%;
+            height: 95%;
+            overflow: auto;
+        }
+
+        .modall-content {
+            background-color: white;
+            margin: auto;
+            width: 95%;
+            height: 95%;
+            top: 0;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+            -webkit-background-clip: padding-box;
+            -moz-background-clip: padding-box;
+            background-clip: padding-box;
+        }
+
+        /* The Close Button */
+        .closeNew {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+            .closeNew:hover,
+            .closeNew:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+        .trashBin {
+            color: #E43A45;
+            border: 0px;
+            background-color: transparent;
+            padding: 8px;
+        }
+
+        .downFile {
+            color: #1BBC9B;
+            border: 0px;
+            background-color: transparent;
+            padding: 8px;
+        }
+
+        .pace.pace-inactive .pace-progress {
+            display: none;
+            height:0px;
+        }
+
+        .pace.pace-inactive {
+            display: none;
+            height:0px;
+        }
+
+        .msgIcon {
+            margin-left: 260px;
+            font-size: 20px;
+            margin-top: 15px;
+        }
+        .chatting{
+            z-index: 9999;
+            position: fixed;
+            top: 220px;
+            bottom: 0;
+            width: 300px;
+            left: 700px;
+            height: 400px;
+            overflow-y: auto;
+            color: #72c8d5;
+            background: #f5f5f5;
+            border: 2px solid #72c8d5;
+            border-radius: 15px;
+        }
+        .chattingHeader{
+            padding:10px;
+            background-color:white;
+            color:black;
+            font-size: 20px;
+        }
+        .chattingImg{
+            border-radius: 50%;
+            border: 1px solid #72c8d5;
+        }
+        .chattingtextbox{
+            width: 260px;
+            height: 40px;
+            color: black;
+            border: 1px solid black;
+            font-size: 15px;
+        }
+        .closeBtn{
+            float: right;
+            font-size: 20px;
+            margin-top: 10px;
+            color: black;
+        }
+
+        .iframe-style{
+            width: 100%;
+            height: 560px;
+            background-color: #eff3f7;
+            padding: 15px;
+        }
+    </style>
+
+</head>
+<!-- END HEAD -->
+<body class="page-container-bg-solid" ng-app="HomeApp" ng-cloak>
+    <div ng-controller="Homes" id="controllerID" ng-cloak>
+        <!-- BEGIN HEADER -->
+        <div class="page-header" style="height: 109px;">
+            <!-- BEGIN HEADER TOP -->
+            <div class="page-header-top" style="height: 58px;">
+                <div class="container">
+                    <!-- BEGIN LOGO -->
+                    <div class="page-logo" style="height: 56px;">
+                        <a href="../home/applicationhome">
+                            <img src="~/assets/layouts/layout3/img/impulse1.png" alt=" logo" class="logo-default" style=" width: 100px; margin-top: -2px;">
+                        </a>
+                    </div>
+                    <!-- END LOGO -->
+                    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                    <a onclick="showMenu()" class="menu-toggler"></a>
+                    <!-- END RESPONSIVE MENU TOGGLER -->
+                    <!-- BEGIN TOP NAVIGATION MENU -->
+                    <div class="top-menu" style=" margin-top: 0px">
+                        <ul class="nav navbar-nav pull-right">
+                            <!-- BEGIN NOTIFICATION DROPDOWN -->
+                            <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" @*data-hover="dropdown"*@ data-close-others="true">
+                                    <i class="icon-bell"></i>
+                                    <span class="badge badge-default">{{notiCount}}</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="external">
+                                        <h3>
+                                            You have
+                                            <strong>{{notiCount}} pending</strong> tasks
+                                        </h3>
+                                    </li>
+                                    <li>
+                                        <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                            <li ng-model="ss" id="{{noti.sl_no}}" value="{{noti.page_url}}" name="{{noti.page_name}}" sub_module_id="{{noti.page_id}}" onclick="DeleteNotifi(this)" ng-repeat="noti in notificationDeatils">
+                                                <a href="javascript:;">
+                                                    <span class="time">just now</span>
+                                                    <span class="details">
+                                                        <span class="label label-sm label-icon label-success">
+                                                            <i class="fa fa-plus"></i>
+                                                        </span> {{noti.type}}
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- END NOTIFICATION DROPDOWN -->
+                            <!-- BEGIN TODO DROPDOWN -->
+                            <li class="dropdown dropdown-extended dropdown-tasks dropdown-dark" id="header_task_bar">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    <i class="icon-calendar"></i>
+                                    <span class="badge badge-default">3</span>
+                                </a>
+                                <ul class="dropdown-menu extended tasks">
+                                    <li class="external">
+                                        <h3>
+                                            You have
+                                            <strong>12 pending</strong> tasks
+                                        </h3>
+                                        <a href="app_todo_2.html">view all</a>
+                                    </li>
+                                    <li>
+                                        <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <span class="task">
+                                                        <span class="desc">New release v1.2 </span>
+                                                        <span class="percent">30%</span>
+                                                    </span>
+                                                    <span class="progress">
+                                                        <span style="width: 40%;" class="progress-bar progress-bar-success" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">40% Complete</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <span class="task">
+                                                        <span class="desc">Application deployment</span>
+                                                        <span class="percent">65%</span>
+                                                    </span>
+                                                    <span class="progress">
+                                                        <span style="width: 65%;" class="progress-bar progress-bar-danger" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">65% Complete</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <span class="task">
+                                                        <span class="desc">Mobile app release</span>
+                                                        <span class="percent">98%</span>
+                                                    </span>
+                                                    <span class="progress">
+                                                        <span style="width: 98%;" class="progress-bar progress-bar-success" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">98% Complete</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <span class="task">
+                                                        <span class="desc">Database migration</span>
+                                                        <span class="percent">10%</span>
+                                                    </span>
+                                                    <span class="progress">
+                                                        <span style="width: 10%;" class="progress-bar progress-bar-warning" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">10% Complete</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <span class="task">
+                                                        <span class="desc">Web server upgrade</span>
+                                                        <span class="percent">58%</span>
+                                                    </span>
+                                                    <span class="progress">
+                                                        <span style="width: 58%;" class="progress-bar progress-bar-info" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">58% Complete</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <span class="task">
+                                                        <span class="desc">Mobile development</span>
+                                                        <span class="percent">85%</span>
+                                                    </span>
+                                                    <span class="progress">
+                                                        <span style="width: 85%;" class="progress-bar progress-bar-success" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">85% Complete</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <span class="task">
+                                                        <span class="desc">New UI release</span>
+                                                        <span class="percent">38%</span>
+                                                    </span>
+                                                    <span class="progress progress-striped">
+                                                        <span style="width: 38%;" class="progress-bar progress-bar-important" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">38% Complete</span>
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- END TODO DROPDOWN -->
+                            <li class="droddown dropdown-separator">
+                                <span class="separator"></span>
+                            </li>
+                            <!-- BEGIN INBOX DROPDOWN -->
+                            <li class="dropdown dropdown-extended dropdown-inbox dropdown-dark" id="header_inbox_bar">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    <span class="circle">3</span>
+                                    <span class="corner"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="external">
+                                        <h3>
+                                            You have
+                                            <strong>7 New</strong> Messages
+                                        </h3>
+                                        <a href="app_inbox.html">view all</a>
+                                    </li>
+                                    <li>
+                                        <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
+                                            <li>
+                                                <a href="#">
+                                                    <span class="photo">
+                                                        <img src="~/assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt="">
+                                                    </span>
+                                                    <span class="subject">
+                                                        <span class="from"> Lisa Wong </span>
+                                                        <span class="time">Just Now </span>
+                                                    </span>
+                                                    <span class="message"> Vivamus sed auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="photo">
+                                                        <img src="~/assets/layouts/layout3/img/avatar3.jpg" class="img-circle" alt="">
+                                                    </span>
+                                                    <span class="subject">
+                                                        <span class="from"> Richard Doe </span>
+                                                        <span class="time">16 mins </span>
+                                                    </span>
+                                                    <span class="message"> Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="photo">
+                                                        <img src="~/assets/layouts/layout3/img/avatar1.jpg" class="img-circle" alt="">
+                                                    </span>
+                                                    <span class="subject">
+                                                        <span class="from"> Bob Nilson </span>
+                                                        <span class="time">2 hrs </span>
+                                                    </span>
+                                                    <span class="message"> Vivamus sed nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="photo">
+                                                        <img src="~/assets/layouts/layout3/img/avatar2.jpg" class="img-circle" alt="">
+                                                    </span>
+                                                    <span class="subject">
+                                                        <span class="from"> Lisa Wong </span>
+                                                        <span class="time">40 mins </span>
+                                                    </span>
+                                                    <span class="message"> Vivamus sed auctor 40% nibh congue nibh... </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <span class="photo">
+                                                        <img src="~/assets/layouts/layout3/img/avatar3.jpg" class="img-circle" alt="">
+                                                    </span>
+                                                    <span class="subject">
+                                                        <span class="from"> Richard Doe </span>
+                                                        <span class="time">46 mins </span>
+                                                    </span>
+                                                    <span class="message"> Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- END INBOX DROPDOWN -->
+                            <!-- BEGIN USER LOGIN DROPDOWN -->
+                            <li class="dropdown dropdown-user dropdown-dark">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    <img alt="" class="img-circle" src="~/assets/layouts/layout3/img/avatar9.jpg" id="profile">
+                                    <span class="username username-hide-mobile" id="titleuname"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-default">
+                                    @*<li>
+                                        <a href="page_user_profile_1.html">
+                                            <i class="icon-user"></i> My Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="app_calendar.html">
+                                            <i class="icon-calendar"></i> My Calendar
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="app_inbox.html">
+                                            <i class="icon-envelope-open"></i> My Inbox
+                                            <span class="badge badge-danger"> 3 </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="app_todo_2.html">
+                                            <i class="icon-rocket"></i> My Tasks
+                                            <span class="badge badge-success"> 7 </span>
+                                        </a>
+                                    </li>*@
+                                    <li class="divider"> </li>
+                                    <li>
+                                        <a onclick="UserLock()">
+                                            <i class="icon-lock"></i> Lock Screen (Ctrl + Q)
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a onclick="userlogout()">
+                                            <i class="icon-key"></i> Log Out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- END USER LOGIN DROPDOWN -->
+                            <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                            <li class="dropdown dropdown-extended quick-sidebar-toggler">
+                                <span class="sr-only">Toggle Quick Sidebar</span>
+                                <i class="icon-logout" onclick="chatBox('show')"></i>
+                            </li>
+                            <!-- END QUICK SIDEBAR TOGGLER -->
+                        </ul>
+                    </div>
+                    <!-- END TOP NAVIGATION MENU -->
+                </div>
+            </div>
+            <!-- END HEADER TOP -->
+            <!-- BEGIN HEADER MENU -->
+            <div class="page-header-menu" id="menuShow">
+                <div class="container">
+                    <!-- BEGIN HEADER SEARCH BOX -->
+                    <form class="search-form hidden" id="searchkeyword" style="margin-left:40px;">
+                        <div class="input-group" style="background-color: gray;">
+                            <input type="text" class="form-control" id="searchBox" placeholder=&#128269; style="color: #0e0e0e;background-color: #f7f7f7; height: 35px; width: 200px; border-radius: 5px; cursor: text;">
+                            <span class="">
+                                @*<a href="javascript:;" class="btn submit">
+                                    <i class="icon-magnifier"></i>
+                                </a>*@
+                            </span>
+                        </div>
+                    </form>
+                    <div class="page-title" style=" padding: 10px 0; float: right;">
+                        <h3 id="pageName" style="margin: 6px;color: white;font-weight: 100;font-style: italic;"></h3>
+                    </div>
+                    <!-- END HEADER SEARCH BOX -->
+                    <!-- BEGIN MEGA MENU -->
+                    <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
+                    <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
+                    <div class="hor-menu">
+                        <ul class="nav navbar-nav" id="menus">
+                            
+                        </ul>
+                    </div>
+                    <!-- END MEGA MENU -->
+                </div>
+            </div>
+            <!-- END HEADER MENU -->
+        </div>
+        <!-- END HEADER -->
+        <!-- BEGIN CONTAINER -->
+        <div class="page-container" style="height:550px;">
+            <!-- BEGIN CONTENT -->
+            <div class="page-content-wrapper">
+
+                <div class="page-head" style="display: none">
+                    <div class="container" style="height: 30px;">
+
+                        <div class="page-title" style=" padding: 0px 0; float: right;">
+                            <h1 id="pageName" style="margin: 3px"></h1>
+                        </div>
+
+                        <ul class="page-breadcrumb breadcrumb" style="float: right; display: none">
+                            <br />
+                            <li>
+                                <a href="../Home/ApplicationHome">Home</a>
+                                <i class="fa fa-circle"></i>
+                            </li>
+                            <li>
+                                <span>Dashboard</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="page-content" style="padding: 0px 0;">
+                    <div>
+                        <!-- BEGIN PAGE BREADCRUMBS -->
+                        <!-- END PAGE BREADCRUMBS -->
+                        <div>
+                            <iframe src="" id="framecontent" class="iframe-style" frameborder="0" scrolling="auto"></iframe>
+                        </div>
+
+
+                    </div>
+                    <div id="myModal" class="modall">
+
+                        <div class="modall-content">
+                            <div class="col-md-12">
+                                <div class="col-md-4"></div>
+
+                                <p class="bold" style=" margin-top: 60px; margin-left: 200px; font-size: 20px;">Add Experience Details</p>
+
+                            </div>
+
+                            <div class="row" style=" margin-top: 15px;">
+
+                                <div class="col-md-2">
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Company name:</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="txtexpCmpName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-2">
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Location:</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="txtexpLoc">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-2">
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Experience Year(s):</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="txtexpYears">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-2">
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Position:</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="txtexpPos">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-2">
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Contact Person:</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="txtexpContname">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-2">
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="control-label">Contact Person Number:</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" id="txtexpContnumber">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="hidden" class="form-control" id="hdnExpID">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <label class="control-label col-md-4"></label>
+
+                                <div class="col-md-4" id="expDocUpload">
+
+                                    <label for="expDoc" class="form-control btn green">Upload</label>
+
+                                    <input type="file" id="expDoc" accept="*" style="display: none" onclick="chkFields()" onchange="readURL(this)">
+
+                                </div>
+
+                                <div class="col-md-10" id="expDocView">
+
+                                    <label class="control-label col-md-3"></label>
+
+                                    <div class="col-md-6">
+                                        <img id="expDocImg" src="../content/Image/pdf_icon.png" style="width:35px;" />
+                                        <label id="expDoclbl">File Name</label>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a id="expDocDown" class="fa fa-download downFile" style="font-size: 30px;" download></a>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <i class="fa fa-trash trashBin" style="font-size: 30px;" id="expDocDel" onclick="deleteDoc(this)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <br /><br />
+                            <div class="row">
+
+                                <div class="col-md-4">
+
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <span id="modClose1" class="btn green" onclick="saveExDocument()">Save</span>
+                                        @*<span class="btn red-color" id="modClose1">SAVE</span>*@
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <span id="modClose" class="btn red"> Cancel </span>
+                                        @*<span class="btn red" id="modClose">CLOSE</span>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="page-quick-sidebar-wrapper" id="chatBoxGrp" data-close-on-body-click="false">
+            <i class="icon-login msgIcon" onclick="chatBox('hide')"></i>
+            <div class="page-quick-sidebar">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="javascript:;" data-target="#quick_sidebar_tab_1" data-toggle="tab">
+                            Users
+                            <span class="badge badge-danger">2</span>
+                        </a>
+                    </li>
+                    @*<li>
+                        <a href="javascript:;" data-target="#quick_sidebar_tab_2" data-toggle="tab">
+                            Alerts
+                            <span class="badge badge-success">7</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                            More
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
+                                    <i class="icon-bell"></i> Alerts
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
+                                    <i class="icon-info"></i> Notifications
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
+                                    <i class="icon-speech"></i> Activities
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
+                                    <i class="icon-settings"></i> Settings
+                                </a>
+                            </li>
+                        </ul>
+                    </li>*@
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active page-quick-sidebar-chat" id="quick_sidebar_tab_1">
+                        <div class="page-quick-sidebar-chat-users" data-rail-color="#ddd" data-wrapper-class="page-quick-sidebar-list">
+                            <h3 class="list-heading">Chats</h3>
+                            <ul class="media-list list-items">
+                                <li class="media">
+                                    <div class="media-status">
+                                        <span class="badge badge-success">8</span>
+                                    </div>
+                                    <img class="media-object" src="~/assets/layouts/layout/img/avatar3.jpg" alt="...">
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Bob Nilson</h4>
+                                        <div class="media-heading-sub"> Project Manager </div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <img class="media-object" src="~/assets/layouts/layout/img/avatar1.jpg" id="userprofile" alt="...">
+                                    <div class="media-body">
+                                        <h4 class="media-heading" id="username">Nick Larson</h4>
+                                        <div class="media-heading-sub" id="designation"> Art Director </div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="media-status">
+                                        <span class="badge badge-danger">3</span>
+                                    </div>
+                                    <img class="media-object" src="~/assets/layouts/layout/img/avatar4.jpg" alt="...">
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Deon Hubert</h4>
+                                        <div class="media-heading-sub"> CTO </div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <img class="media-object" src="~/assets/layouts/layout/img/avatar2.jpg" alt="...">
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Ella Wong</h4>
+                                        <div class="media-heading-sub"> CEO </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <h3 class="list-heading">Chat Groups</h3>
+                            <ul class="media-list list-items">
+                                <li class="media">
+                                    <div class="media-status">
+                                        <span class="badge badge-warning">2</span>
+                                    </div>
+                                    <img class="media-object" src="~/assets/layouts/layout/img/avatar6.jpg" alt="...">
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Lara Kunis</h4>
+                                        <div class="media-heading-sub"> CEO, Loop Inc </div>
+                                        <div class="media-heading-small"> Last seen 03:10 AM </div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="media-status">
+                                        <span class="label label-sm label-success">new</span>
+                                    </div>
+                                    <img class="media-object" src="~/assets/layouts/layout/img/avatar7.jpg" alt="...">
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Ernie Kyllonen</h4>
+                                        <div class="media-heading-sub">
+                                            Project Manager,
+                                            <br> SmartBizz PTL
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <img class="media-object" src="~/assets/layouts/layout/img/avatar8.jpg" alt="...">
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Lisa Stone</h4>
+                                        <div class="media-heading-sub"> CTO, Keort Inc </div>
+                                        <div class="media-heading-small"> Last seen 13:10 PM </div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="media-status">
+                                        <span class="badge badge-success">7</span>
+                                    </div>
+                                    <img class="media-object" src="~/assets/layouts/layout/img/avatar9.jpg" alt="...">
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Deon Portalatin</h4>
+                                        <div class="media-heading-sub"> CFO, H&D LTD </div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <img class="media-object" src="~/assets/layouts/layout/img/avatar10.jpg" alt="...">
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Irina Savikova</h4>
+                                        <div class="media-heading-sub"> CEO, Tizda Motors Inc </div>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="media-status">
+                                        <span class="badge badge-danger">4</span>
+                                    </div>
+                                    <img class="media-object" src="~/assets/layouts/layout/img/avatar11.jpg" alt="...">
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Maria Gomez</h4>
+                                        <div class="media-heading-sub"> Manager, Infomatic Inc </div>
+                                        <div class="media-heading-small"> Last seen 03:10 AM </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    @*<div class="tab-pane page-quick-sidebar-alerts" id="quick_sidebar_tab_2">
+                        <div class="page-quick-sidebar-alerts-list">
+                            <h3 class="list-heading">General</h3>
+                            <ul class="feeds list-items">
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-info">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                            </div>
+                                            <div class="cont-col2">
+                                                <div class="desc">
+                                                    You have 4 pending tasks.
+                                                    <span class="label label-sm label-warning ">
+                                                        Take action
+                                                        <i class="fa fa-share"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="date"> Just now </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-success">
+                                                        <i class="fa fa-bar-chart-o"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc"> Finance Report for year 2013 has been released. </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 20 mins </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-danger">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <div class="cont-col2">
+                                                <div class="desc"> You have 5 pending membership that requires a quick review. </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="date"> 24 mins </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-info">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                </div>
+                                            </div>
+                                            <div class="cont-col2">
+                                                <div class="desc">
+                                                    New order received with
+                                                    <span class="label label-sm label-success"> Reference Number: DR23923 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="date"> 30 mins </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-success">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <div class="cont-col2">
+                                                <div class="desc"> You have 5 pending membership that requires a quick review. </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="date"> 24 mins </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-info">
+                                                    <i class="fa fa-bell-o"></i>
+                                                </div>
+                                            </div>
+                                            <div class="cont-col2">
+                                                <div class="desc">
+                                                    Web server hardware needs to be upgraded.
+                                                    <span class="label label-sm label-warning"> Overdue </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="date"> 2 hours </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-default">
+                                                        <i class="fa fa-briefcase"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc"> IPO Report for year 2013 has been released. </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 20 mins </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <h3 class="list-heading">System</h3>
+                            <ul class="feeds list-items">
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-info">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                            </div>
+                                            <div class="cont-col2">
+                                                <div class="desc">
+                                                    You have 4 pending tasks.
+                                                    <span class="label label-sm label-warning ">
+                                                        Take action
+                                                        <i class="fa fa-share"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="date"> Just now </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-danger">
+                                                        <i class="fa fa-bar-chart-o"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc"> Finance Report for year 2013 has been released. </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 20 mins </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-default">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <div class="cont-col2">
+                                                <div class="desc"> You have 5 pending membership that requires a quick review. </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="date"> 24 mins </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-info">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                </div>
+                                            </div>
+                                            <div class="cont-col2">
+                                                <div class="desc">
+                                                    New order received with
+                                                    <span class="label label-sm label-success"> Reference Number: DR23923 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="date"> 30 mins </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-success">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <div class="cont-col2">
+                                                <div class="desc"> You have 5 pending membership that requires a quick review. </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="date"> 24 mins </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col1">
+                                                <div class="label label-sm label-warning">
+                                                    <i class="fa fa-bell-o"></i>
+                                                </div>
+                                            </div>
+                                            <div class="cont-col2">
+                                                <div class="desc">
+                                                    Web server hardware needs to be upgraded.
+                                                    <span class="label label-sm label-default "> Overdue </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col2">
+                                        <div class="date"> 2 hours </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-info">
+                                                        <i class="fa fa-briefcase"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc"> IPO Report for year 2013 has been released. </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 20 mins </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-pane page-quick-sidebar-settings" id="quick_sidebar_tab_3">
+                        <div class="page-quick-sidebar-settings-list">
+                            <h3 class="list-heading">General Settings</h3>
+                            <ul class="list-items borderless">
+                                <li>
+                                    Enable Notifications
+                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                </li>
+                                <li>
+                                    Allow Tracking
+                                    <input type="checkbox" class="make-switch" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                </li>
+                                <li>
+                                    Log Errors
+                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="danger" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                </li>
+                                <li>
+                                    Auto Sumbit Issues
+                                    <input type="checkbox" class="make-switch" data-size="small" data-on-color="warning" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                </li>
+                                <li>
+                                    Enable SMS Alerts
+                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                </li>
+                            </ul>
+                            <h3 class="list-heading">System Settings</h3>
+                            <ul class="list-items borderless">
+                                <li>
+                                    Security Level
+                                    <select class="form-control input-inline input-sm input-small">
+                                        <option value="1">Normal</option>
+                                        <option value="2" selected>Medium</option>
+                                        <option value="e">High</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    Failed Email Attempts
+                                    <input class="form-control input-inline input-sm input-small" value="5" />
+                                </li>
+                                <li>
+                                    Secondary SMTP Port
+                                    <input class="form-control input-inline input-sm input-small" value="3560" />
+                                </li>
+                                <li>
+                                    Notify On System Error
+                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="danger" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                </li>
+                                <li>
+                                    Notify On SMTP Error
+                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="warning" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                </li>
+                            </ul>
+                            <div class="inner-content">
+                                <button class="btn btn-success">
+                                    <i class="icon-settings"></i> Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+       
+        <div class="chatting hidden">
+            <div style="color: black;height:40px;">
+                <div class="chattingHeader">
+                    <img class="chattingImg" src="~/assets/layouts/layout/img/avatar3.jpg" alt="...">
+                    &nbsp;&nbsp;&nbsp;&nbsp; Employee Name
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a><i class="fa fa-paperclip" style="font-size:20px;" aria-hidden="true"></i></a>
+                    <a class="closeBtn"><i class="fa fa-times" style="float:right;"></i></a>
+                </div>
+
+            </div>
+            <div style="margin-top:315px;background-color: white;">
+                <input class="chattingtextbox" type="text" id="messageTxt" onclick="changeBorderColor(this.id)" />
+                <a><i class="fa fa-paper-plane" style="font-size: 20px;padding: 2px;" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div style="width: 1170px;height: 12px;">
+                2019 &copy; ECESIS BPO SERVICES
+
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="modal custom-modal fade" id="attendance_info" role="dialog" style="display: none;margin: 0px auto;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Attendance Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card punch-status">
+                                <div class="card-body">
+                                    <h5 class="card-title">Timesheet <small class="text-muted">11 Mar 2019</small></h5>
+                                    <div class="punch-det">
+                                        <h6>Punch In at</h6>
+                                        <p>Wed, 11th Mar 2019 10.00 AM</p>
+                                    </div>
+                                    <div class="punch-info">
+                                        <div class="punch-hours">
+                                            <span>3.45 hrs</span>
+                                        </div>
+                                    </div>
+                                    <div class="punch-det">
+                                        <h6>Punch Out at</h6>
+                                        <p>Wed, 20th Feb 2019 9.00 PM</p>
+                                    </div>
+                                    <div class="statistics">
+                                        <div class="row">
+                                            <div class="col-md-6 col-6 text-center">
+                                                <div class="stats-box">
+                                                    <p>Break</p>
+                                                    <h6>1.21 hrs</h6>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-6 text-center">
+                                                <div class="stats-box">
+                                                    <p>Overtime</p>
+                                                    <h6>3 hrs</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card recent-activity">
+                                <div class="card-body">
+                                    <h5 class="card-title">Activity</h5>
+                                    <ul class="res-activity-list">
+                                        <li>
+                                            <p class="mb-0">Punch In at</p>
+                                            <p class="res-activity-time">
+                                                <i class="fa fa-clock-o"></i>
+                                                10.00 AM.
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="mb-0">Punch Out at</p>
+                                            <p class="res-activity-time">
+                                                <i class="fa fa-clock-o"></i>
+                                                11.00 AM.
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="mb-0">Punch In at</p>
+                                            <p class="res-activity-time">
+                                                <i class="fa fa-clock-o"></i>
+                                                11.15 AM.
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="mb-0">Punch Out at</p>
+                                            <p class="res-activity-time">
+                                                <i class="fa fa-clock-o"></i>
+                                                1.30 PM.
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="mb-0">Punch In at</p>
+                                            <p class="res-activity-time">
+                                                <i class="fa fa-clock-o"></i>
+                                                2.00 PM.
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p class="mb-0">Punch Out at</p>
+                                            <p class="res-activity-time">
+                                                <i class="fa fa-clock-o"></i>
+                                                7.30 PM.
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal custom-modal fade" id="employee_report" role="dialog" style="display: none;margin: 0px auto;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Employee Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="reportFrame" style="height: -webkit-fill-available;width: -webkit-fill-available;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <iframe id="lockFrame" class="hidden" style="height: -webkit-fill-available;width: -webkit-fill-available;"></iframe>
+
+    <input type="hidden" value="" id="hdnUserDetails1" />
+    <input type="hidden" value="" id="userrole" />
+    <div class="scroll-to-top">
+        <i class="icon-arrow-up"></i>
+    </div>
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/moment.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>
+    <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <script src="~/assets/pages/scripts/dashboard.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/layout3/scripts/layout.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+
+    <script>
+
+        function changeBorderColor(id) {
+            document.getElementById(id).style.borderColor = "cyan";
+        }
+
+        setInterval(function () {
+            angular.element(document.getElementById('controllerID')).scope().GetNotification(sRefNo, sRoleId);
+        }, 10000);
+
+
+    function showMenu() {
+        var cb = document.getElementById('menuShow');
+
+        if (cb.style.display == "") {
+            cb.style.display = "block";
+        }
+        else if (cb.style.display == "none") {
+            cb.style.display = "block";
+        }
+        else if (cb.style.display == "block") {
+            cb.style.display = "none";
+        }
+    }
+
+    var sRefNo, sUsername, sAccesslevel, sRoleId, sName, sEmployeeName;
+    var moduleID = "";
+    var mcnt = 0;
+    var mid = "";
+    var sEmpRefNo = 0, fileValidate = 0;
+
+    var documentName, documentPath;
+
+    function chatBox(action) {
+
+        var cb = document.getElementById('chatBoxGrp');
+
+        if (action == "show") {
+            cb.style.right = "0px";
+        }
+        else if (action == "hide") {
+            cb.style.right = "-320px";
+        }
+
+    }
+
+    function sample()
+    {
+        alert("worked");
+    }
+
+    function DeleteNotifi(obj) {
+
+        //var sCondition = "where sl_no=" + slNo + " and manager_ref_no = " + sRefNo;
+
+        var sCondition = "where sl_no = " + obj.id;
+
+        var StrJsonDatas = eval({
+            delete_status: 1
+        });
+
+        var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateNotification", sCondition);
+
+        if (Result != null || Result != "") {
+
+            var sub_module_url = obj.value;
+            if (sub_module_url == undefined || sub_module_url == "undefined" || sub_module_url == "" || sub_module_url == null)
+                sub_module_url = obj.getAttribute('value');
+
+            document.getElementById('pageName').innerHTML = obj.getAttribute('name');
+            document.getElementById('framecontent').src = sub_module_url;
+
+            if (obj.sub_module_id == "10010" || obj.sub_module_id == "10011") {
+                $('#searchkeyword').removeClass('hidden');
+            }
+            else {
+                $('#searchkeyword').addClass('hidden');
+
+                $('#searchBox').val("");
+            }
+        }
+
+
+    }
+
+    function UserLock() {
+
+        document.getElementById('lockFrame').src = "../Home/LockScreen";
+
+        $("#controllerID").addClass('hidden');
+        $("#lockFrame").removeClass('hidden');
+
+    }
+
+    var previousPath = document.getElementById('framecontent').src;
+
+    function userlogout() {
+
+        localStorage.setItem("islogin", 'off');
+        localStorage.setItem("cu", '');
+
+        $.ajax({
+            type: "POST",
+            url: 'LogoutUser',
+            success: function (data) {
+                var url = '@Url.Action("Index", "Home")';
+                window.location.href = url;
+            },
+            error: function (data) {
+
+            }
+        });
+
+        
+
+    }
+
+    var modal = document.getElementById("myModal");
+
+    var span = document.getElementById("modClose");
+
+    span.onclick = function () {
+        modal.style.display = "none";
+
+        resetValues();
+    }
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    function addExper(refNo, sEmpName) {
+
+        sEmpRefNo = refNo;
+
+        sEmployeeName = sEmpName;
+
+        modal.style.display = "block";
+
+    }
+
+    function deleteDoc(obj) {
+
+
+        var sCondition = "where emp_exp_det_id=" + $("#hdnExpID").val() + " and emp_ref_no = " + sEmpRefNo;
+
+        var StrJsonDatas = eval({
+            file_path: null,
+            file_name: null
+        });
+
+        var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeExperience", sCondition);
+
+        if (Result != null || Result != "") {
+
+            msgalert("Success", "Details Deleted Successfully", 1);
+
+            $('#expDocUpload').removeClass('hidden');
+
+            $('#expDocView').addClass('hidden');
+
+            // resetValues();
+        }
+
+    }
+
+    function chkFields() {
+
+        if ($('#txtexpCmpName').val() == "" || $('#txtexpCmpName').val() == null) {
+            fileValidate = 1;
+        }
+        if ($('#txtexpLoc').val() == "" || $('#txtexpLoc').val() == null) {
+            fileValidate = 1;
+        }
+        if ($('#txtexpYears').val() == "" || $('#txtexpYears').val() == null) {
+            fileValidate = 1;
+        }
+        if ($('#txtexpPos').val() == "" || $('#txtexpPos').val() == null) {
+            fileValidate = 1;
+        }
+        if ($('#txtexpContname').val() == "" || $('#txtexpContname').val() == null) {
+            fileValidate = 1;
+        }
+        if ($('#txtexpContnumber').val() == "" || $('#txtexpContnumber').val() == null) {
+
+            fileValidate = 1;
+        }
+
+    }
+
+    function saveExDocument() {
+
+        chkFields();
+
+        if (fileValidate == 1) {
+
+            msgalert("Warning", 'Please fill the Above fields', 2);
+
+            fileValidate = 0;
+
+            return;
+        }
+
+        var hdnID = $("#hdnExpID").val();
+
+        if (hdnID == "" || hdnID == null) {
+            var StrJsonDatas = eval({
+
+                emp_ref_no: sEmpRefNo,
+                company_name: $('#txtexpCmpName').val(),
+                location: $('#txtexpLoc').val(),
+                designation: $('#txtexpPos').val(),
+                experience: $('#txtexpYears').val(),
+                reference: $('#txtexpContname').val(),
+                phone_number: $('#txtexpContnumber').val(),
+                delete_status: 0,
+                file_path: documentPath,
+                file_name: documentName
+
+            });
+
+            var Result = oAPICall.InsertData(StrJsonDatas, 'CreateEmployeeExperience');
+
+            if (Result != null || Result != "") {
+
+                var sCondition = "where emp_ref_no=" + sEmpRefNo;
+
+                var StrJsonDatas = eval({
+                    is_fresher: 2
+                });
+
+                var Result1 = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeDetails", sCondition);
+
+                if (Result1 != null || Result1 != "") {
+
+                    msgalert("Success", "Your Details Saved Successfully", 1);
+
+                    modal.style.display = "none";
+
+                    resetValues();
+                }
+                else {
+                    msgalert("Error", "Error while save your Details", 3);
+                }
+
+            }
+        }
+        else {
+            var sCondition = "where emp_exp_det_id=" + $("#hdnExpID").val() + " and emp_ref_no = " + sEmpRefNo;
+
+            var StrJsonDatas = eval({
+                company_name: $('#txtexpCmpName').val(),
+                location: $('#txtexpLoc').val(),
+                designation: $('#txtexpPos').val(),
+                experience: $('#txtexpYears').val(),
+                reference: $('#txtexpContname').val(),
+                phone_number: $('#txtexpContnumber').val(),
+                delete_status: 0,
+                file_path: documentPath,
+                file_name: documentName
+            });
+
+            var Result1 = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeExperience", sCondition);
+
+            if (Result1 != null || Result1 != "") {
+
+                msgalert("Success", "Your Details Saved Successfully", 1);
+
+                modal.style.display = "none";
+
+                resetValues();
+            }
+        }
+
+
+
+    }
+
+    function resetValues() {
+
+        $('#txtexpCmpName').val("");
+        $('#txtexpLoc').val("");
+        $('#txtexpPos').val("");
+        $('#txtexpYears').val("");
+        $('#txtexpContname').val("");
+        $('#txtexpContnumber').val("");
+
+        $('#hdnExpID').val("");
+
+        var a = document.getElementById('expDocDown');
+
+        $('#expDocUpload').removeClass('hidden');
+
+        $('#expDocView').addClass('hidden');
+
+        $('#expDoclbl').text("");
+
+        a.href = null;
+
+        documentPath = null;
+
+        documentName = null;
+
+    }
+
+    function readURL(input) {
+
+
+        if (fileValidate == 1) {
+
+            msgalert("Warning", 'Please fill the Above fields', 2);
+
+            fileValidate = 0;
+
+            return;
+        }
+
+        var fileType = input.files[0].name.split('.').pop(), allowdtypes = 'jpeg,jpg,png,gif,pdf,JPEG,JPG,PNG,GIF,PDF';
+
+        if (input.files && input.files[0]) {
+            if (allowdtypes.indexOf(fileType) < 0) {
+                msgalert("Error", 'Invalid file format,Please select an image file', 3);
+                return false;
+            }
+
+            if (fileType != "pdf") {
+
+                var btnId = input.id;
+
+                btnId = '#' + btnId + 'Img';
+
+                $(btnId).attr('src', '../content/Image/image_icon.png');
+
+            }
+
+
+        }
+
+        var filePath = "../Content/Employee/EmployeeDocuments/EmployeeExperience";
+
+        var file = input.files[0].name;
+
+        var id = input.id;
+
+        fileName = id;
+
+        id = '#' + id;
+
+        var upDiv = '#' + fileName + 'Upload';
+
+        var delDiv = '#' + fileName + 'View';
+
+        var fName = '#' + fileName + 'lbl';
+
+        var link = fileName + 'Down';
+
+        var a = document.getElementById(link);
+
+        var newFilename;
+
+        var fileExName = sEmployeeName + '_' + sEmpRefNo + '_' + $('#txtexpCmpName').val();
+
+        // var filename = $('#employeeimg').prop("files")[0]['name'];
+        file = $(id).get(0).files[0];
+        var formData = new FormData();
+        formData.append("sessionid", fileName);
+        formData.append("empname", fileExName);
+        formData.append("expDocUp", file);
+        $.ajax({
+            type: "POST",
+            url: 'UploadDocument',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function (data) {
+                sImgFileNameEmp = data.fileName;
+                newFilename = data.fileName;
+
+                $(upDiv).addClass('hidden');
+
+                $(delDiv).removeClass('hidden');
+
+                $(fName).text(file.name);
+
+                var fullPath = filePath + newFilename
+
+                a.href = fullPath;
+
+                documentPath = filePath;
+
+                documentName = newFilename;
+
+            },
+            error: function (data) {
+
+            }
+        });
+    }
+
+    var oAPICall;
+
+    var sEmpRefNo;
+
+    $(document).ready(function () {
+
+        oAPICall = new APICall();
+
+        $('#employee').addClass('hidden');
+        $('#manager').addClass('hidden');
+        $('#accounts_hr').addClass('hidden');
+        $('#admin_ceo').addClass('hidden');
+
+        $('#expDocView').addClass('hidden');
+
+
+
+        document.getElementById('pageName').innerHTML = "Home";
+        document.getElementById('framecontent').src = "../Home/DefaultHome";
+
+
+        $.ajax({
+            url: "loadpage",
+            type: "POST",
+            success: function (data) {
+                //---------------------------Session values----------------------------------------------
+                $('#hdnUserDetails1').val(data.SessionData);
+                var s = data.EmployeeImagePath;
+                retdata = $('#hdnUserDetails1').val();
+                var b = retdata.replace(/'/g, '"'); var retdata = b.replace('(', ''); var retdata = retdata.replace(')', '');
+                var obj = JSON.parse(retdata);
+                var emp_name = JSON.parse(s);
+
+                sRefNo = obj.EmployeeId;
+                sUsername = obj.UserName;
+                sAccesslevel = obj.AccessLevel;
+                sRoleId = obj.RoleId;
+
+                var ModulesData = jQuery.parseJSON(data.ModuleData)
+
+                $('#menus').html("");
+
+                if (ModulesData != '' && ModulesData != null) {
+
+                    for (var i = 0; i < ModulesData.length; i++) {
+
+                        if (mid != ModulesData[i]["module_id"]) {
+                            mid = ModulesData[i]["module_id"]
+
+                            var active = "";
+                            var ram = "";
+                            var collaps = "collapse";
+                            if (ModulesData[i]["is_active"] == ModulesData[i]["module_id"]) {
+                                active = "active";
+                                collaps = "";
+                                moduleID = ModulesData[i]["module_id"];
+                                mcnt = i;
+                                ram = "activebg"
+                            }
+                            var imgclass = ModulesData[i]["module_image_class"];
+
+                            var toAppendModule = [];
+
+                            toAppendModule.push(
+                                "<li class='menu-dropdown classic-menu-dropdown'>",
+                                " <a href='javascript:;'>"+ ModulesData[i]["module_name"] +"<span class='arrow'></span></a>",
+                               "<ul class='nav dropdown-menu pull-left' module_id='" + ModulesData[i]["module_id"] + "_module' >",
+                                "</ul>",
+                                "</li>"
+                                );
+                            $('#menus').append(toAppendModule.join(""));
+                        }
+
+                        //-------------- Sub module-------------------------------
+                        var toAppendSubModule = [];
+                        var j = i;
+                        var sumarrycnt = "";
+
+                        toAppendSubModule.push(
+
+                            "<li  class=''><a class='nav-link' href='#' module_id='" + ModulesData[j]["module_id"] + " ' id='" + ModulesData[j]["sub_module_id"] +
+                            "'title='" + ModulesData[j]["module_name"] + "' onclick='SubModuleMenuClick(this)' sub_module_name='" + ModulesData[j]["sub_module_name"] +
+                            "' sub_module_url='" + ModulesData[j]["sub_module_url"] + "'>" + ModulesData[j]["sub_module_name"] + "</a></li>"
+                            );
+                        $('ul.nav').find("[module_id='" + ModulesData[j]["module_id"] + "_module']").append(toAppendSubModule.join(""));
+
+
+                        if (j == mcnt && ModulesData[j]["module_id"] == moduleID) {
+                            $("#" + ModulesData[j]["sub_module_id"] + "_sub_module_id").click();
+                        }
+                        //---------------------End Sub module---------------------------------------------
+                    }
+
+                }
+
+                $('#userrole').val(sRoleId);
+
+                if (emp_name[0].file_path === undefined) {
+                    emp_name[0].file_path = ""
+                }
+
+                if (emp_name[0].file_path != "") {
+                    $('#profile').attr('src', emp_name[0].file_path);
+                }
+                else {
+                    $('#profile').attr('src', "../Content/Employee/EmployeeImages/AdministratorECESIS_59887f8ca64d1.png");
+                }
+
+                sName = emp_name[0].full_name;
+
+                document.getElementById("titleuname").innerHTML = emp_name[0].full_name;
+
+                angular.element(document.getElementById('controllerID')).scope().GetNotification(sRefNo, sRoleId);
+
+            }
+        });
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                UserLock();
+            }
+        }
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        //ram();
+
+    });
+
+    function SubModuleMenuClick(obj)
+    {
+
+        var sub_module_url = obj.sub_module_url;
+        if (sub_module_url == undefined || sub_module_url == "undefined" || sub_module_url == "" || sub_module_url == null)
+            sub_module_url = obj.getAttribute('sub_module_url');
+
+        document.getElementById('pageName').innerHTML = obj.getAttribute('sub_module_name');
+        document.getElementById('framecontent').src = sub_module_url;
+
+        if (obj.id == "10010" || obj.id == "10011")
+        {
+            $('#searchkeyword').removeClass('hidden');
+        }
+        else
+        {
+            $('#searchkeyword').addClass('hidden');
+
+            $('#searchBox').val("");
+        }
+    }
+   
+     </script>
+
+    <script src="~/Scripts/angular.min.js"> </script>
+    <script src="~/Scripts/AngularController/HomeController.js"></script>
+
+</body>
+
+
+
+</html>

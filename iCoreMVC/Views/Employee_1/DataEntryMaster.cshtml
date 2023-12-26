@@ -1,0 +1,1033 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link href="~/Content/css/style.css" rel="stylesheet" />*@
+
+<style>
+    .col-width {
+        width: 17%;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    .select2-container--default.select2-container--disabled .select2-selection--single {
+        background-color: white;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        border-radius: 0;
+        border: 1px solid transparent;
+        margin-bottom: 10px;
+        background-color: #3289C8;
+        color: #FFF;
+    }
+
+    #loadingDiv {
+        position: absolute;
+        top: 150px;
+        right: -475px;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 10000000;
+        opacity: 0.4;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="CPD_Master" class="divbody">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">DataEntryUser Profile</span>
+
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+
+                        </strong>
+                        <a href="#" title="List">
+                            <i class="fa fa-list" id="btnDataEntryList"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnback"></i>
+                        </a>
+                    </div>
+                </div>
+                <div id="MainPage1">
+                    <div class="ibox-content" style="padding-top:15px">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Name<font color="red">*</font> :</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group ">
+                                        <div class="input-group-btn">
+                                            <select class="form-control" id="ddltitle" style="width:80px;">
+                                                <option value="1">Mr.</option>
+                                                <option value="2">Mrs.</option>
+                                                <option value="3">Ms.</option>
+                                            </select>
+                                        </div>
+                                        <input type="text" id="txtfullname" placeholder="Enter name here.." class="form-control">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Email Id<font color="red">*</font> :</label>
+                                <div class="col-sm-9"><input type="email" id="txtemailid" placeholder="Enter email id here.." class="form-control"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Gender:</label>
+                                <div class="col-sm-9">
+
+
+                                    <div class="input-group-btn">
+                                        <select class="form-control" id="ddlgender" style="width:100%;">
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">State:</label>
+                                <div class="col-sm-9">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlstate" data-placeholder="Choose a state...">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" style="display:none">
+                                <label class="col-sm-3 control-label">County:</label>
+                                <div class="col-sm-9">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlcounty" data-placeholder="Choose a county...">
+                                        <option></option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">City:</label>
+                                <div class="col-sm-9">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlcity" data-placeholder="Choose a city...">
+                                        <option></option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6" style="padding-right: 7px;">
+
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Address<font color="red">*</font> :</label>
+                                <div class="col-sm-9"><input type="text" id="txtaddress1" placeholder="Enter address1 here.." class="form-control"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">ZipCode<font color="red">*</font> :</label>
+                                <div class="col-sm-9"><input type="text" id="txtzipcode" maxlength="6" placeholder="Enter zipcode here.." required="" class="form-control" onkeypress="javascript:return isNumber(event)" /></div>
+
+                            </div>
+                            <div class="form-group" style="display:none">
+                                <label class="col-sm-3 control-label">Address Line 2:</label>
+                                <div class="col-sm-9"><input type="text" id="txtaddress2" placeholder="Enter address2 here.." class="form-control"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Mobile No:</label>
+                                <div class="col-sm-9"><input type="number" id="txtmobileno" placeholder="Enter mobile No here.." min="0" class="form-control"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Phone No:</label>
+                                <div class="col-sm-9"><input type="number" id="txtphoneno" placeholder="Enter phone No here.." min="0" class="form-control"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="MainPage2">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>&nbsp;</h5> <span class="label ">Login Profile</span>
+                        <div class="ibox-tools">
+                            <a class="collapse-link" title="Minimize">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="ibox-content" style="padding-top:15px;padding-right: 7px;">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">UserName<font color="red">*</font> :</label>
+                                <div class="col-sm-9"><input type="text" id="txtusername" placeholder="Enter username here.." class="form-control"></div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div style="padding-right:20px;">
+                            <div class="form-group">
+                                <input type="button" class="btn pull-right" value="Save Changes" onclick="InsertDataEntryMaster()" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="ListPage">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper">
+                        <table id="tblDataEntryListGrid"></table>
+                        <div id="pagerDataEntgrid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="hdnDataEntryId" />
+        <input type="hidden" id="hdnLatitude" />
+        <input type="hidden" id="hdnLongitude" />
+        <input type="hidden" id="hdntemppasswd" />
+        <div id="MailData" style="visibility: hidden">
+        </div>
+        <div id="loadingDiv" style="display: none;">
+            <img id="myImage" src="~/Content/Image/loading_spinner.gif">
+        </div><br>
+
+    </div>
+</form>
+<script>
+    localStorage.setItem("PageID", "DataEntryMaster");
+    var sPhotoghId = '';
+    function show() {
+        document.getElementById("loadingDiv").style.display = "block";
+        // setTimeout("hide()", 7000);  // 5 seconds
+    }
+    function hide() {
+        document.getElementById("loadingDiv").style.display = "none";
+    }
+
+    function BindState() {
+        $('#ddlstate').empty().append();
+        $('#ddlstate').append('<option></option>');
+        var Condition = "where delete_status=0";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsState");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlstate').append('<option value="' + Result[i]["state_id"] + '">' + Result[i]["state_name"] + '</option>');
+            }
+        }
+    }
+    function BindCounty() {
+        $('#ddlcounty').empty().append();
+        $('#ddlcounty').append('<option></option>');
+        var sStateId = $('#ddlstate').val();
+        var Condition = "where delete_status=0 and state_id=" + sStateId + "";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsCounty");
+
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlcounty').append('<option value="' + Result[i]["county_id"] + '">' + Result[i]["county_name"] + '</option>');
+            }
+        }
+    }
+    function BindCity() {
+        $('#ddlcity').empty().append();
+        $('#ddlcity').append('<option></option>');
+        var sStateId = $('#ddlstate').val();
+        var Condn = "where delete_status=0 and state_id=" + sStateId + "";
+        var strJsonDatas = eval({ strCondition: Condn, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsCity");
+
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlcity').append('<option value="' + Result[i]["city_id"] + '">' + Result[i]["city_name"] + '</option>');
+            }
+        }
+    }
+    function InsertDataEntryMaster() {
+
+        if (document.getElementById('txtfullname').value == "") {
+            document.getElementById('txtfullname').style.borderColor = "red";// this adds the error class
+            document.getElementById('txtfullname').focus();
+            msgalert('Warning', 'Please enter name and continue..!', 2);
+            return;
+        }
+        if (document.getElementById('txtemailid').value == "") {
+            document.getElementById('txtemailid').style.borderColor = "red";// this adds the error class
+            document.getElementById('txtemailid').focus();
+            msgalert('Warning', 'Please enter email id and continue..!', 2);
+            return;
+        }
+        var sEmail = $('#txtemailid').val();
+        if ($.trim(sEmail).length == 0) {
+            msgalert('Warning', 'Please enter valid email address!', 2);
+            return;
+        }
+        if (!validateEmail(sEmail)) {
+            msgalert('Warning', 'Invalid email address!', 2)
+            return;
+        }
+        if (document.getElementById('txtaddress1').value == "") {
+            document.getElementById('txtaddress1').style.borderColor = "red";// this adds the error class
+            msgalert('Warning', 'Please enter address and continue..!', 2);
+            document.getElementById('txtaddress1').focus();
+            return;
+        }
+        if (document.getElementById('txtzipcode').value == "") {
+            document.getElementById('txtzipcode').style.borderColor = "red";// this adds the error class
+            msgalert('Warning', 'Please enter zipcode and continue..!', 2);
+            document.getElementById('txtzipcode').focus();
+            return;
+        }
+        if (document.getElementById('txtusername').value == "") {
+            document.getElementById('txtusername').style.borderColor = "red";// this adds the error class
+            msgalert('Warning', 'Please enter username and continue..!', 2);
+            document.getElementById('txtusername').focus();
+            return;
+        }
+        var myVar = document.getElementById('txtfullname').value;
+        var myNum = +myVar;
+        if (!isNaN(myNum)) {
+            msgalert('Warning', 'Not allowed only numbers..', 2);
+            document.getElementById('txtfullname').style.borderColor = "red";
+            return;
+        }
+        var myVar1 = document.getElementById('txtusername').value;
+        var myNum = +myVar1;
+        if (!isNaN(myNum)) {
+            msgalert('Warning', 'Not allowed only numbers..', 2);
+            document.getElementById('txtusername').style.borderColor = "red";
+            return;
+        }
+        var myVar2 = document.getElementById('txtaddress1').value;
+        var myNum = +myVar2;
+        if (!isNaN(myNum)) {
+            msgalert('Warning', 'Not allowed only numbers..', 2);
+            document.getElementById('txtaddress1').style.borderColor = "red";
+            return;
+        }
+
+        var sDataId = $('#hdnDataEntryId').val();
+        if (sDataId <= 0 && sDataId == "") {
+
+            var ValidationSuccess = false;
+            var sEmailId = $.trim($("#txtemailid").val());
+            var sSplitEmail = sEmailId.split(qRegdata);
+            ValidationSuccess = ValidateForDuplicationMail(sSplitEmail[0], sSplitEmail[1], 'ChkDupClientEmailId', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'Email id already exist.. Try another', 3);
+                document.getElementById('txtemailid').style.borderColor = "red";
+                return false;
+            }
+            var ValidationSuccess = false;
+            var sUserName = $('#txtusername').val();
+            ValidationSuccess = ValidateForDuplication(sUserName, 'ChkDupClientUserName', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'Username already exist.. Try another', 3);
+                document.getElementById('txtusername').style.borderColor = "red";
+                return false;
+            }
+        }
+        show();
+        setTimeout(function () {
+            InsertDataEntryMasterDetails();
+        }, 1000);
+    }
+
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+
+    function PhotogrListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['Ref No.', 'Data Entry User', '', '', '', '', '', '', '', '', '', '', '','', '', '', '', '', ''],
+        colModel = [
+            { name: 'ref_no', index: 'ref_no', width: 80, align: "center", sorttype: "int", search: true },
+            { name: 'full_name', index: 'full_name', width: 150, align: "center", sorttype: false, search: true },
+            { name: 'title', index: 'title', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'gender', index: 'gender', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'state_id', index: 'state_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'county_id', index: 'county_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'city', index: 'city', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'mobile_no', index: 'mobile_no', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'phone_no', index: 'phone_no', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'email_id', index: 'email_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'address1', index: 'address1', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'address2', index: 'address2', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'dob', index: 'dob', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'b_address', index: 'b_address', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'b_state', index: 'b_state', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'zipcode', index: 'zipcode', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'username', index: 'username', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+        ];
+
+        var mydata = PopulateDataEntryDetails();
+
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblDataEntryListGrid', '#pagerDataEntgrid', 'Data Entry User List', 250, 10, false, mydata);
+
+    }
+
+    function PopulateDataEntryDetails() {
+        if (access_level == 1) {
+            var sCondition = " WHERE delete_status=0 and user_type=3 order by 1 desc";  //user_type=3 is DataEntry
+        }
+        else {
+            var sCondition = " WHERE delete_status=0 and client_id=" + EmpId + " order by 1 desc";
+        }
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectPhotographer");
+        if (Result != '' && Result != null) {
+            var sPhotoghrRt = [];
+            for (var i = 0; i < Result.length; i++) {
+                var sRefId = Result[i].ref_no;
+                var sPhtghrName = Result[i].full_name;
+
+                sPhotoghrRt[i] = {
+                    ref_no: sRefId, full_name: sPhtghrName, title: Result[i].title, gender: Result[i].gender, state_id: Result[i].state_id,
+                    county_id: Result[i].county_id, city: Result[i].city, mobile_no: Result[i].mobile_no, phone_no: Result[i].phone_no,
+                    address1: Result[i].address1, address2: Result[i].address2, zipcode: Result[i].zipcode,
+                    email_id: Result[i].email_id, dob: Result[i].dob
+                };
+            }
+            return sPhotoghrRt;
+
+        }
+    }
+
+
+    $(function () {
+
+        $("#btnSave").click(function () {
+
+            InsertDataEntryMaster();
+
+        });
+
+        $('#txtfullname').focusout(function () {
+            if (document.getElementById('txtfullname').value == "") {
+                document.getElementById('txtfullname').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtfullname').style.borderColor = "green";
+            }
+
+        });
+
+        $('#txtusername').focusout(function () {
+
+            if (document.getElementById('txtusername').value == "") {
+                document.getElementById('txtusername').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtusername').style.borderColor = "green";
+            }
+        });
+
+
+        $('#ddlstate').change(function () {
+            // BindCounty();
+            $('#ddlcounty').val('').change();
+            $('#ddlcity').val('').change();
+            BindCity();
+        });
+
+        $('#ddlcounty').change(function () {
+            BindCity();
+        });
+
+        $('#ddlcity').change(function () {
+            var sCity = $('#ddlcity option:selected').text();
+            var sAddress1 = $('#txtaddress1').val();
+            $.ajax({
+                url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + sAddress1 + sCity + "&sensor=false",
+                type: "POST",
+                success: function (res) {
+                    $('#hdnLatitude').val(res.results[0].geometry.location.lat);
+                    $('#hdnLongitude').val(res.results[0].geometry.location.lng);
+
+
+                }
+            });
+        });
+
+    });
+
+
+    function InsertDataEntryMasterDetails() {
+
+
+        var sDataId = $('#hdnDataEntryId').val();
+        var sLatitude = $('#hdnLatitude').val();
+        var sLongitude = $('#hdnLongitude').val();
+
+        if (sDataId <= 0 && sDataId == "") {              // Create Mode
+
+            var sIsclient = 3 // 3 is DataEntry;
+            var sMsgDesc = 'New DataEntry user  added successfully'
+            var StrJsonDatas = eval({
+                title: $('#ddltitle').val(),
+                full_name: $('#txtfullname').val(),
+                user_type: sIsclient,
+                gender: $('#ddlgender').val(),
+                email_id: $('#txtemailid').val(),
+                state_id: $('#ddlstate').val(),
+                county_id: $('#ddlcounty').val(),
+                city: $('#ddlcity').val(),
+                address1: $('#txtaddress1').val(),
+                address2: $('#txtaddress2').val(),
+                mobile_no: $('#txtmobileno').val(),
+                phone_no: $('#txtphoneno').val(),
+                zipcode: $('#txtzipcode').val(),
+                latitude: sLatitude,
+                longitude: sLongitude,
+                delete_status: 0,
+                created_by: CurrentUser,
+                created_date: new Date()
+
+            });
+            var Result = oAPICall.InsertData(StrJsonDatas, 'CreateCpdMaster');
+            if (Result != null && Result != '') {
+                sDataId = Result[0].IDENTITY;
+                $('#hdnDataEntryId').val(sDataId);
+                InsertUserDetails(sDataId);
+                SendEMail();
+                hide();
+
+                msgalert('Success', sMsgDesc, 1);
+
+            }
+        }
+        else {
+
+
+            var sIsclient = 3 // 3 is DataEntry;
+            var sMsgDesc = 'DataEntry user updated successfully'
+            var StrJsonDatas = eval({
+                title: $('#ddltitle').val(),
+                full_name: $('#txtfullname').val(),
+                user_type: sIsclient,
+                gender: $('#ddlgender').val(),
+                email_id: $('#txtemailid').val(),
+                state_id: $('#ddlstate').val(),
+                county_id: $('#ddlcounty').val(),
+                city: $('#ddlcity').val(),
+                address1: $('#txtaddress1').val(),
+                address2: $('#txtaddress2').val(),
+                mobile_no: $('#txtmobileno').val(),
+                phone_no: $('#txtphoneno').val(),
+                zipcode: $('#txtzipcode').val(),
+                latitude: sLatitude,
+                longitude: sLongitude,
+                delete_status: 0,
+                updated_by: CurrentUser,
+                updated_date: new Date()
+
+            });
+            var sCondition = "where ref_no=" + sDataId + "";
+            var Result = oAPICall.UpdateData(StrJsonDatas, 'UpdateCpdMaster', sCondition);
+            if (Result != null && Result != '') {
+                msgalert('Success', sMsgDesc, 1);
+
+                hide();
+
+            }
+        }
+    }
+
+    function InsertUserDetails(sDataId) {
+
+        var date = new Date(),
+                        yr = date.getFullYear() + 1,
+                        h = date.getHours(),
+                        m = date.getMinutes(),
+                        s = date.getSeconds(),
+                        month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
+                        day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(),
+                        sNextDate = parseFloat(month) + parseFloat(1) + '/' + day + '/' + yr;
+
+        var sInActiveDt = new Date(sNextDate);
+        var sPassword = encode64($('#hdntemppasswd').val().toString());
+
+        var StrJsonDatas = eval({
+            ref_no: sDataId, username: $('#txtusername').val(), password: sPassword, delete_status: 0,
+            active_date: new Date(), inactive_date: sInActiveDt, created_by: CurrentUser, created_date: new Date(),
+            company_code: 40, password_expiry: sInActiveDt, theme_preference: 1, is_first_login: 1, role_id: 4, access_level: 4 // DataEntry
+
+        });
+        var Result = oAPICall.InsertData(StrJsonDatas, 'CreateBtsUserMaster');
+        if (Result != null && Result != '') {
+            var sUSerId = Result[0].IDENTITY;
+        }
+
+    }
+
+
+    ///////////////////////////////////////////////////////////////Mail Code Start ///////////////////////////////////////////////////////////////////
+
+    function SendEMail() {
+        //loadingalert();
+        var sMailTo = $('#txtemailid').val();
+        var sMailBody = CreateMailBody();
+        var StrJsonDatas = eval({
+            mail_to: sMailTo,
+            mail_subject: 'DataEntry User Login Credentials Created Successfully',
+            mail_body: sMailBody
+
+        });
+
+        var Result = oAPICall.Sendmail(StrJsonDatas, 'sendmail');
+        if (Result != null || Result != '') {
+            CreateMailLog();
+        }
+    }
+
+
+    function CreateMailBody() {
+        var sName = $('#txtfullname').val();
+        var sUsername = $('#txtusername').val();
+        var sPasswd = $('#hdntemppasswd').val();
+        var sUserId = $('#hdnDataEntryId').val();
+        var appurl = '@(System.Configuration.ConfigurationManager.AppSettings["appurl"].ToString())'
+        var sNewURL = window.location.protocol + "//" + window.location.host + "/" + appurl + "";
+        //var sNewURL = window.location.protocol + "//" + window.location.host + "/" + "";
+        var Condition = ' where mail_type=2 '; // mail type 2  is New Photographer Creation
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectEmailTemplate");
+
+        if (Result != null || Result != '') {
+            var sMailData = Result[0].mail_body;
+
+            document.getElementById('MailData').innerHTML = sMailData;
+            document.getElementById('user_id').innerHTML = sName;
+            document.getElementById('user_name').innerHTML = sUsername;
+            document.getElementById('user_password').innerHTML = sPasswd;
+            document.getElementById('ref_no').innerHTML = sUserId;
+            document.getElementById('link').innerHTML = sNewURL;
+            document.getElementById('company_address').innerHTML = CompanyName;
+        }
+        return document.getElementById('MailData').innerHTML;
+    }
+
+    function CreateMailLog() {
+        var mail_type = "2"; // New Photographer Creation Mail type
+        var username = $('#txtusername').val();
+        var mail_from = "icorepioneertech@gmail.com";
+        var mail_to = $('#txtemailid').val();
+        var mail_cc = "";
+        var mail_bcc = "";
+        var mail_sub = 'DataEntry User Login Credentials Created Successfully';
+        var mail_body = CreateMailBody();
+        var mail_send_datetime = new Date();
+        var dt = dateFormat(dt, "isoDateTime");
+        var loginuser = CurrentUserName;
+        var mail_sendornot = 1; //set to 0 if mail not send
+        var mail_attachment = 1; //set to 0 if there is no attachment
+
+        var strJsonDatas = eval({
+            mail_temp_no: mail_type, mail_from: mail_from, mail_to: mail_to, mail_cc: mail_cc, mail_bcc: mail_bcc,
+            mail_sub: mail_sub, mail_body: mail_body, loginuser: CurrentUser, mail_send_datetime: mail_send_datetime, mail_send_by: CurrentUser,
+            mail_sendornot: mail_sendornot, mail_attachment: mail_attachment
+        });
+
+        var Result = oAPICall.InsertData(strJsonDatas, 'CreateEmailLog');
+
+    }
+
+
+
+
+    ///////////////////////////////////////////////////////////////Mail Code end ///////////////////////////////////////////////////////////////////
+
+
+    function processfunctiion(s) {
+        if (s == 1) {
+            msgalert("ECESIS-BTS", "", 1)
+        }
+        else {
+            msgalert("ECESIS-BTS", "", 3)
+        }
+    }
+
+    function Reset() {
+
+        $('#hdnDataEntryId').val('');
+        $('#txtfullname').val('');
+        $('#txtemailid').val('');
+        $('#ddlstate').val('').change();
+        $('#ddlcounty').val('').change();
+        $('#ddlcity').val('').change();
+        $('#txtaddress1').val('');
+        $('#txtaddress2').val('');
+        $('#txtmobileno').val('');
+        $('#txtphoneno').val('');
+        $('#txtusername').val('');
+        $('#txtzipcode').val('');
+        $("#txtusername").prop("disabled", false);
+    }
+
+    function DeleteConfirm() {
+
+        parent.swal({
+            title: "Are you sure to delete?",
+            //text: "" + text + "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+            closeOnCancel: true
+
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                RemovePhotogrpaher(checkbox_value);
+            }
+            else {
+                return
+            }
+        });
+        return
+
+    }
+
+    function LoadPhotoghrData(sPhotoghId) {
+        var Condition = " where ref_no=" + sPhotoghId + "";
+
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectClientPhtList");
+        if (Result != "" || Result != null) {
+
+
+            $('#MainPage1').show();
+            $('#MainPage2').show();
+            $('#ListPage').hide();
+            $('#hdnDataEntryId').val(Result[0].ref_no);
+            $('#txtusername').val(Result[0].username);
+            $('#txtfullname').val(Result[0].full_name);
+            $('#ddltitle').val(Result[0].title);
+            $('#txtemailid').val(Result[0].email_id);
+            $('#ddlgender').val(Result[0].gender);
+            var sStateId = Result[0].state_id;
+            $('#ddlstate').val("" + sStateId + "").change();
+            $('#ddlcounty').val("" + Result[0].county_id + "").change();
+            $('#ddlcity').val("" + Result[0].city + "").change();
+            $('#txtaddress1').val(Result[0].address1);
+            $('#txtaddress2').val(Result[0].address2);
+            $('#txtmobileno').val(Result[0].mobile_no);
+            $('#txtphoneno').val(Result[0].phone_no);
+            $('#txtzipcode').val(Result[0].zipcode);
+            $("#txtusername").prop("disabled", true);
+
+            $('#btnback').hide();
+            $('#btnDataEntryList').show();
+        }
+    }
+
+
+    $(document).ready(function () {
+
+        document.getElementById('txtfullname').focus();
+        Reset();
+        BindState();
+        BindCounty();
+        BindCity();
+        $('#btnback').hide();
+        $('#MainPage1').show();
+        $('#MainPage2').show();
+        $('#ListPage').hide();
+        var sWidth = $('.tab-content').width();
+        $('#tblDataEntryListGrid').setGridWidth(sWidth - 20);
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblDataEntryListGrid').setGridWidth(sWidth);
+
+        });
+
+        var sChange = "";
+        $("#txtaddress1").blur(function () {
+            var subaddress = $.trim($("#txtaddress1").val());
+            var n = subaddress.split(" ");
+            var zipcode = n[n.length - 1].split("-")
+            //return n[n.length - 1];
+
+            if (!isNaN(zipcode)) {
+                $("#txtzipcode").val(zipcode[0])
+                sChange = "ok";
+                $("#txtzipcode").trigger("change");
+            }
+            else {
+                msgalert('Warning', 'Zipcode is not valid in address please enter manually', 2);//sucess-1, warning-2, error-3
+                $('#txtzipcode').focus();
+                $("#txtzipcode").val("");
+                $("#ddlstate").val("").change();
+                $("#ddlcity").val("").change();
+                return;
+            }
+        });
+        $("#txtzipcode").change(function () {
+
+            if ($("#txtzipcode").val() != "") {
+                var Condition = "where zip_code=" + $("#txtzipcode").val() + "and delete_status =0";
+                var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+                var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsZipCodeMaster");
+                if (Result != "" && Result != null) {
+                    $("#ddlstate").val(Result[0]["state_id"]).change();
+                    $("#ddlcity").val(Result[0]["city_id"]).change();
+                }
+                else {
+                    $('#txtzipcode').focus();
+                    $("#ddlstate").val("").change();
+                    $("#ddlcity").val("").change();
+                    if (sChange == "ok") {
+                        $("#txtzipcode").val("");
+                        sChange = "";
+                        msgalert('Warning', 'Zipcode is not found contact vendor or Enter manually', 2);//sucess-1, warning-2, error-3
+                    }
+                    else {
+                        msgalert('Warning', 'Zipcode is not found contact vendor or continue with same', 2);//sucess-1, warning-2, error-3
+                    }
+
+                }
+            }
+            else {
+                $('#txtzipcode').focus();
+                $("#txtzipcode").val("");
+                $("#ddlstate").val("").change();
+                $("#ddlcity").val("").change();
+            }
+        });
+
+        $('#btnDataEntryList').click(function () {
+            $('#btnSave').hide();
+            $('#MainPage1').hide();
+            $('#MainPage2').hide();
+            $('#ListPage').show();
+            $('#btnback').show();
+            $('#btnDataEntryList').hide();
+            $('#tblDataEntryListGrid').jqGrid('GridUnload');
+            PhotogrListGrid();
+        });
+
+        $('#btnback').click(function () {
+            $('#btnSave').show();
+            $('#MainPage1').show();
+            $('#MainPage2').show();
+            $('#ListPage').hide();
+            $('#btnback').hide();
+            $('#btnDataEntryList').show();
+            $('#tblDataEntryListGrid').jqGrid('GridUnload');
+            PhotogrListGrid();
+            Reset();
+        });
+
+        $('#txtusername').focusout(function () {
+            var ValidationSuccess = false;
+            var sUserName = $('#txtusername').val();
+            ValidationSuccess = ValidateForDuplication(sUserName, 'ChkDupClientUserName', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'Username already exist.. Try another', 3);
+                document.getElementById('txtusername').style.borderColor = "red";
+                return false;
+            }
+
+        });
+        $('#txtemailid').focusout(function () {
+            if (document.getElementById('txtemailid').value == "") {
+                document.getElementById('txtemailid').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtemailid').style.borderColor = "green";
+            }
+            var ValidationSuccess = false;
+            var sEmailId = $.trim($("#txtemailid").val());
+            var sSplitEmail = sEmailId.split(qRegdata);
+            ValidationSuccess = ValidateForDuplicationMail(sSplitEmail[0], sSplitEmail[1], 'ChkDupClientEmailId', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'Email id already exist.. Try another', 3);
+                document.getElementById('txtemailid').style.borderColor = "red";
+                return false;
+            }
+        });
+
+
+
+        $(document).delegate('#tblDataEntryListGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblDataEntryListGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                $('#MainPage1').show();
+                $('#MainPage2').show();
+                $('#ListPage').hide();
+                $('#btnSave').show();
+                var sRefNo = $('#tblDataEntryListGrid').getCell(rowIds[rowid], 'ref_no');
+                $('#hdnDataEntryId').val(sRefNo);
+                $('#txtfullname').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'full_name'));
+                $('#ddltitle').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'title'));
+                $('#txtemailid').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'email_id'));
+                $('#ddlgender').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'gender'));
+                var sStateId = $('#tblDataEntryListGrid').getCell(rowIds[rowid], 'state_id');
+                $('#ddlstate').val("" + sStateId + "").change();
+                $('#ddlcounty').val("" + $('#tblDataEntryListGrid').getCell(rowIds[rowid], 'county_id') + "").change();
+                $('#ddlcity').val("" + $('#tblDataEntryListGrid').getCell(rowIds[rowid], 'city') + "").change();
+                $('#txtaddress1').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'address1'));
+                $('#txtaddress2').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'address2'));
+                $('#txtmobileno').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'mobile_no'));
+                $('#txtphoneno').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'phone_no'));
+                $('#txtzipcode').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'zipcode'));
+                $('#txtbusaddress').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'b_address'));
+                $('#ddlbusstate').val($('#tblDataEntryListGrid').getCell(rowIds[rowid], 'b_state'));
+                $('#btnback').hide();
+                $('#btnDataEntryList').show();
+                var Condition = " where ref_no=" + sRefNo + "";
+                var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+                var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsUserMaster");
+                if (Result != "" || Result != null) {
+                    $('#txtusername').val(Result[0].username);
+                    $("#txtusername").prop("disabled", true);
+                }
+
+            }
+            else {
+                /////////////////////////////delete code start////////////////////////
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    //text: "" + text + "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+
+                },
+              function (isConfirm) {
+                  if (isConfirm) {
+                      var sRefId = $('#tblDataEntryListGrid').getCell(rowIds[rowid], 'ref_no')
+                      var sStrJsonDatas = eval({ delete_status: 1 });
+                      var Condition = "where ref_no=" + sRefId;
+                      var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateCpdMaster', Condition);
+                      if (Result != "" || Result != null) {
+                          $('#tblDataEntryListGrid').jqGrid('delRowData', rowid);
+                          msgalert('Success', 'Successfully Deleted', 1);
+                          $('#tblDataEntryListGrid').jqGrid('GridUnload');
+                          PhotogrListGrid();
+                      }
+                  }
+                  else {
+                      return
+                  }
+              });
+                return
+                /////////////////////////////end////////////////////////
+
+            }
+        });
+
+        //////////////////////////////////////////////////////////Random password Start ///////////////////////////////////////////////
+
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+        var string_length = 8;
+        var randomstring = '';
+        var charCount = 0;
+        var numCount = 0;
+
+        for (var i = 0; i < string_length; i++) {
+            // If random bit is 0, there are less than 3 digits already saved, and there are not already 5 characters saved, generate a numeric value.
+            if ((Math.floor(Math.random() * 2) == 0) && numCount < 3 || charCount >= 5) {
+                var rnum = Math.floor(Math.random() * 10);
+                randomstring += rnum;
+                numCount += 1;
+            } else {
+                // If any of the above criteria fail, go ahead and generate an alpha character from the chars string
+                var rnum = Math.floor(Math.random() * chars.length);
+                randomstring += chars.substring(rnum, rnum + 1);
+                charCount += 1;
+            }
+
+        }
+        $('#hdntemppasswd').val(randomstring);
+
+        //////////////////////////////////////////////////////////Random password end ///////////////////////////////////////////////
+
+
+        ///////////////////////////////////////////////////////For Send Mail End///////////////////////////////////////////////////////////////////////
+        YAHOO.namespace("example.container");
+        YAHOO.example.container.wait = new YAHOO.widget.Panel("wait",
+                                                       {
+                                                           width: "240px",
+                                                           fixedcenter: true,
+                                                           close: false,
+                                                           draggable: false,
+                                                           zindex: 4,
+                                                           modal: true,
+                                                           visible: false
+                                                       }
+                                                       );
+        YAHOO.example.container.wait.setHeader("Loading, please wait...");
+        YAHOO.example.container.wait.setBody("<img src=\"http://us.i1.yimg.com/us.yimg.com/i/us/per/gr/gp/rel_interstitial_loading.gif\"/>");
+        YAHOO.example.container.wait.render(document.body);
+
+        ///////////////////////////////////////////////////////For Send Mail End///////////////////////////////////////////////////////////////////////
+    });
+
+</script>

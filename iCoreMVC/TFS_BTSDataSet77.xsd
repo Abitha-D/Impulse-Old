@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TFS_BTSDataSet77" targetNamespace="http://tempuri.org/TFS_BTSDataSet77.xsd" xmlns:mstns="http://tempuri.org/TFS_BTSDataSet77.xsd" xmlns="http://tempuri.org/TFS_BTSDataSet77.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="Connectioncontext" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="Connectioncontext (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.Connectioncontext.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="IM_VW_PENDING_APPROVALTableAdapter" GeneratorDataComponentClassName="IM_VW_PENDING_APPROVALTableAdapter" Name="IM_VW_PENDING_APPROVAL" UserDataComponentName="IM_VW_PENDING_APPROVALTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="Connectioncontext (Web.config)" DbObjectName="TFS_BTS.dbo.IM_VW_PENDING_APPROVAL" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT empName, empDate, empManag, empDesig, emp_ref_no, is_accept, salary_fill, delete_status, role_id, report_to_manager FROM dbo.IM_VW_PENDING_APPROVAL</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="empName" DataSetColumn="empName" />
+              <Mapping SourceColumn="empDate" DataSetColumn="empDate" />
+              <Mapping SourceColumn="empManag" DataSetColumn="empManag" />
+              <Mapping SourceColumn="empDesig" DataSetColumn="empDesig" />
+              <Mapping SourceColumn="emp_ref_no" DataSetColumn="emp_ref_no" />
+              <Mapping SourceColumn="is_accept" DataSetColumn="is_accept" />
+              <Mapping SourceColumn="salary_fill" DataSetColumn="salary_fill" />
+              <Mapping SourceColumn="delete_status" DataSetColumn="delete_status" />
+              <Mapping SourceColumn="role_id" DataSetColumn="role_id" />
+              <Mapping SourceColumn="report_to_manager" DataSetColumn="report_to_manager" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TFS_BTSDataSet77" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="TFS_BTSDataSet77" msprop:Generator_UserDSName="TFS_BTSDataSet77">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="IM_VW_PENDING_APPROVAL" msprop:Generator_TableClassName="IM_VW_PENDING_APPROVALDataTable" msprop:Generator_TableVarName="tableIM_VW_PENDING_APPROVAL" msprop:Generator_TablePropName="IM_VW_PENDING_APPROVAL" msprop:Generator_RowDeletingName="IM_VW_PENDING_APPROVALRowDeleting" msprop:Generator_RowChangingName="IM_VW_PENDING_APPROVALRowChanging" msprop:Generator_RowEvHandlerName="IM_VW_PENDING_APPROVALRowChangeEventHandler" msprop:Generator_RowDeletedName="IM_VW_PENDING_APPROVALRowDeleted" msprop:Generator_UserTableName="IM_VW_PENDING_APPROVAL" msprop:Generator_RowChangedName="IM_VW_PENDING_APPROVALRowChanged" msprop:Generator_RowEvArgName="IM_VW_PENDING_APPROVALRowChangeEvent" msprop:Generator_RowClassName="IM_VW_PENDING_APPROVALRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="empName" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnempName" msprop:Generator_ColumnPropNameInRow="empName" msprop:Generator_ColumnPropNameInTable="empNameColumn" msprop:Generator_UserColumnName="empName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="101" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="empDate" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnempDate" msprop:Generator_ColumnPropNameInRow="empDate" msprop:Generator_ColumnPropNameInTable="empDateColumn" msprop:Generator_UserColumnName="empDate" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="empManag" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnempManag" msprop:Generator_ColumnPropNameInRow="empManag" msprop:Generator_ColumnPropNameInTable="empManagColumn" msprop:Generator_UserColumnName="empManag" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="101" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="empDesig" msprop:Generator_ColumnVarNameInTable="columnempDesig" msprop:Generator_ColumnPropNameInRow="empDesig" msprop:Generator_ColumnPropNameInTable="empDesigColumn" msprop:Generator_UserColumnName="empDesig" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="500" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="emp_ref_no" msprop:Generator_ColumnVarNameInTable="columnemp_ref_no" msprop:Generator_ColumnPropNameInRow="emp_ref_no" msprop:Generator_ColumnPropNameInTable="emp_ref_noColumn" msprop:Generator_UserColumnName="emp_ref_no" type="xs:long" />
+              <xs:element name="is_accept" msprop:Generator_ColumnVarNameInTable="columnis_accept" msprop:Generator_ColumnPropNameInRow="is_accept" msprop:Generator_ColumnPropNameInTable="is_acceptColumn" msprop:Generator_UserColumnName="is_accept" type="xs:int" minOccurs="0" />
+              <xs:element name="salary_fill" msprop:Generator_ColumnVarNameInTable="columnsalary_fill" msprop:Generator_ColumnPropNameInRow="salary_fill" msprop:Generator_ColumnPropNameInTable="salary_fillColumn" msprop:Generator_UserColumnName="salary_fill" type="xs:int" minOccurs="0" />
+              <xs:element name="delete_status" msprop:Generator_ColumnVarNameInTable="columndelete_status" msprop:Generator_ColumnPropNameInRow="delete_status" msprop:Generator_ColumnPropNameInTable="delete_statusColumn" msprop:Generator_UserColumnName="delete_status" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="role_id" msprop:Generator_ColumnVarNameInTable="columnrole_id" msprop:Generator_ColumnPropNameInRow="role_id" msprop:Generator_ColumnPropNameInTable="role_idColumn" msprop:Generator_UserColumnName="role_id" type="xs:int" minOccurs="0" />
+              <xs:element name="report_to_manager" msprop:Generator_ColumnVarNameInTable="columnreport_to_manager" msprop:Generator_ColumnPropNameInRow="report_to_manager" msprop:Generator_ColumnPropNameInTable="report_to_managerColumn" msprop:Generator_UserColumnName="report_to_manager" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

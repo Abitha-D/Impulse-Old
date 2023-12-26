@@ -1,0 +1,1098 @@
+﻿@{
+    Layout = "~/Views/Shared/_ApplicationHome.cshtml";
+    ViewBag.Title = "BPO Tracking System - Powered By ECESIS";
+}
+<script src="../Scripts/js/plugins/pace/pace.min.js"></script>
+
+@Styles.Render("~/Content/icore_css")
+@Styles.Render("~/Content/plugin_css")
+
+@Scripts.Render("~/bundles/icore_js")
+
+@Scripts.Render("~/bundles/plugin_js")
+@Scripts.Render("~/bundles/icore_app_js")
+
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+<style>
+        .page-heading {
+            border-top: 0;
+            padding: 0 10px 0px 10px;
+        }
+
+        .wrapper-content {
+            padding: 8px 10px 40px;
+        }
+
+        .nav-header {
+            padding: 15px 25px;
+        }
+
+        .skin-setttings {
+            margin-left: 0px;
+        }
+
+        .navbar-right {
+            margin-right: -30px;
+        }
+
+        .scrollable {
+            -webkit-overflow-scrolling: touch;
+            max-height: 150px;
+            overflow-y: scroll;
+        }
+
+        .list-group {
+            border-radius: 1px;
+        }
+
+        #page-wrapper {
+            padding-right: 0px;
+        }
+
+        .count-info .label {
+            line-height: 12px;
+            padding: 2px 5px;
+            position: absolute;
+            right: 4px;
+            top: 9px;
+        }
+        /*.h_iframe {
+            position: relative;
+        }
+
+            .h_iframe .ratio {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+
+            .h_iframe iframe {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }*/
+        ul::-webkit-scrollbar {
+            width: 0px;
+        }
+
+       ul ::-webkit-scrollbar-track {
+            background-color: #eaeaea;
+            border-left: 1px solid #ccc;
+        }
+
+        ul::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+        }
+
+           ul ::-webkit-scrollbar-thumb:hover {
+                background-color: #aaa;
+            }
+
+           ul {
+      -ms-overflow-style: none;
+    }
+
+</style>
+<body>
+    @*Config Menu*@
+    <div>
+
+        @*Invoice Previw*@
+        <div id="myModalInvPreview" class="modal fade" role="dialog">
+            <div class="modal-dialog " style="width:75%;height:90%">
+                <div class="modal-content" style="height: 100%; padding: 0px;" >
+                    <!-- dialog title -->
+                    <div class=" modal-header">
+                        <div class="modal-title">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title"><span id="invcode">&nbsp;</span></h4>
+                        </div>
+                    </div>
+                    <!-- dialog body -->
+                    <div class="modal-body" id="divContent" style="height: 90%; padding: 0px; border-bottom:solid">
+                        <iframe src="" id="frmreport" style="width: 100%;height:100%" frameborder="0" scrolling="auto"></iframe>
+                    </div>
+                    <!-- dialog buttons -->
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-default col-sm-2" style="margin-bottom: 0;" id="dialogBtnReset">Reset</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-default" id="dialogBtnFilter">Filter</button>
+                        </div>*@
+                </div>
+            </div>
+
+        </div>
+
+        @*Invoice Previw*@
+
+        <div class="theme-config ">
+            <div class="theme-config-box hidden" id="theamconfig">
+                <div class="spin-icon">
+                    <i class="fa fa-cogs fa-spin"></i>
+                </div>
+                <div class="skin-setttings">
+                    <div class="title">Configuration</div>
+                    <div class="setings-item">
+                        <span>
+                            Collapse menu
+                        </span>
+                        <div class="switch">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="collapsemenu">
+                                <label class="onoffswitch-label" for="collapsemenu">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setings-item">
+                        <span>
+                            Fixed sidebar
+                        </span>
+                        <div class="switch">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="fixedsidebar" class="onoffswitch-checkbox" id="fixedsidebar">
+                                <label class="onoffswitch-label" for="fixedsidebar">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setings-item">
+                        <span>
+                            Top navbar
+                        </span>
+                        <div class="switch">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="fixednavbar" class="onoffswitch-checkbox" id="fixednavbar">
+                                <label class="onoffswitch-label" for="fixednavbar">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setings-item">
+                        <span>
+                            Top navbar v.2
+                            <br />
+                            <small>*Primary layout</small>
+                        </span>
+                        <div class="switch">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="fixednavbar2" class="onoffswitch-checkbox" id="fixednavbar2">
+                                <label class="onoffswitch-label" for="fixednavbar2">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setings-item">
+                        <span>
+                            Boxed layout
+                        </span>
+                        <div class="switch">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="boxedlayout" class="onoffswitch-checkbox" id="boxedlayout">
+                                <label class="onoffswitch-label" for="boxedlayout">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setings-item">
+                        <span>
+                            Fixed footer
+                        </span>
+                        <div class="switch">
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="fixedfooter" class="onoffswitch-checkbox" id="fixedfooter">
+                                <label class="onoffswitch-label" for="fixedfooter">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title">Skins</div>
+                    <div class="setings-item default-skin">
+                        <span class="skin-name ">
+                            <a href="#" class="s-skin-0">
+                                Default
+                            </a>
+                        </span>
+                    </div>
+                    <div class="setings-item blue-skin">
+                        <span class="skin-name ">
+                            <a href="#" class="s-skin-1">
+                                Blue light
+                            </a>
+                        </span>
+                    </div>
+                    <div class="setings-item yellow-skin">
+                        <span class="skin-name ">
+                            <a href="#" class="s-skin-3">
+                                Yellow/Purple
+                            </a>
+                        </span>
+                    </div>
+                    @*<div class="setings-item ultra-skin">
+                            <span class="skin-name ">
+                                <a target="_blank" href="md_skin/" class="md-skin">
+                                    Material Design
+                                </a>
+                            </span>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+        <script>
+            // Config box
+            // Enable/disable fixed top navbar
+            $('#fixednavbar').click(function () {
+                if ($('#fixednavbar').is(':checked')) {
+                    $(".navbar-static-top").removeClass('navbar-static-top').addClass('navbar-fixed-top');
+                    $("body").removeClass('boxed-layout');
+                    $("body").addClass('fixed-nav');
+                    $('#boxedlayout').prop('checked', false);
+                    if (localStorageSupport) {
+                        localStorage.setItem("boxedlayout", 'off');
+                    }
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixednavbar", 'on');
+                    }
+                } else {
+                    $(".navbar-fixed-top").removeClass('navbar-fixed-top').addClass('navbar-static-top');
+                    $("body").removeClass('fixed-nav');
+                    $("body").removeClass('fixed-nav-basic');
+                    $('#fixednavbar2').prop('checked', false);
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixednavbar", 'off');
+                    }
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixednavbar2", 'off');
+                    }
+                }
+            });
+            // Enable/disable fixed top navbar
+            $('#fixednavbar2').click(function () {
+                if ($('#fixednavbar2').is(':checked')) {
+                    $(".navbar-static-top").removeClass('navbar-static-top').addClass('navbar-fixed-top');
+                    $("body").removeClass('boxed-layout');
+                    $("body").addClass('fixed-nav').addClass('fixed-nav-basic');
+                    $('#boxedlayout').prop('checked', false);
+                    if (localStorageSupport) {
+                        localStorage.setItem("boxedlayout", 'off');
+                    }
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixednavbar2", 'on');
+                    }
+                } else {
+                    $(".navbar-fixed-top").removeClass('navbar-fixed-top').addClass('navbar-static-top');
+                    $("body").removeClass('fixed-nav').removeClass('fixed-nav-basic');
+                    $('#fixednavbar').prop('checked', false);
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixednavbar2", 'off');
+                    }
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixednavbar", 'off');
+                    }
+                }
+            });
+            // Enable/disable fixed sidebar
+            $('#fixedsidebar').click(function () {
+                if ($('#fixedsidebar').is(':checked')) {
+                    $("body").addClass('fixed-sidebar');
+                    $('.sidebar-collapse').slimScroll({
+                        height: '100%',
+                        railOpacity: 0.9
+                    });
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixedsidebar", 'on');
+                    }
+                } else {
+                    $('.sidebar-collapse').slimscroll({ destroy: true });
+                    $('.sidebar-collapse').attr('style', '');
+                    $("body").removeClass('fixed-sidebar');
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixedsidebar", 'off');
+                    }
+                }
+            });
+            // Enable/disable collapse menu
+            $('#collapsemenu').click(function () {
+                if ($('#collapsemenu').is(':checked')) {
+                    $("body").addClass('mini-navbar');
+                    SmoothlyMenu();
+                    if (localStorageSupport) {
+                        localStorage.setItem("collapse_menu", 'on');
+                    }
+                } else {
+                    $("body").removeClass('mini-navbar');
+                    SmoothlyMenu();
+                    if (localStorageSupport) {
+                        localStorage.setItem("collapse_menu", 'off');
+                    }
+                }
+            });
+            // Enable/disable boxed layout
+            $('#boxedlayout').click(function () {
+                if ($('#boxedlayout').is(':checked')) {
+                    $("body").addClass('boxed-layout');
+                    $('#fixednavbar').prop('checked', false);
+                    $('#fixednavbar2').prop('checked', false);
+                    $(".navbar-fixed-top").removeClass('navbar-fixed-top').addClass('navbar-static-top');
+                    $("body").removeClass('fixed-nav');
+                    $("body").removeClass('fixed-nav-basic');
+                    $(".footer").removeClass('fixed');
+                    $('#fixedfooter').prop('checked', false);
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixednavbar", 'off');
+                    }
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixednavbar2", 'off');
+                    }
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixedfooter", 'off');
+                    }
+                    if (localStorageSupport) {
+                        localStorage.setItem("boxedlayout", 'on');
+                    }
+                } else {
+                    $("body").removeClass('boxed-layout');
+                    if (localStorageSupport) {
+                        localStorage.setItem("boxedlayout", 'off');
+                    }
+                }
+            });
+            // Enable/disable fixed footer
+            $('#fixedfooter').click(function () {
+                if ($('#fixedfooter').is(':checked')) {
+                    $('#boxedlayout').prop('checked', false);
+                    $("body").removeClass('boxed-layout');
+                    $(".footer").addClass('fixed');
+                    if (localStorageSupport) {
+                        localStorage.setItem("boxedlayout", 'off');
+                    }
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixedfooter", 'on');
+                    }
+                } else {
+                    $(".footer").removeClass('fixed');
+                    if (localStorageSupport) {
+                        localStorage.setItem("fixedfooter", 'off');
+                    }
+                }
+            });
+            // SKIN Select
+            $('.spin-icon').click(function () {
+                $(".theme-config-box").toggleClass("show");
+            });
+            // Default skin
+            $('.s-skin-0').click(function () {
+                $("body").removeClass("skin-1");
+                $("body").removeClass("skin-2");
+                $("body").removeClass("skin-3");
+            });
+            // Blue skin
+            $('.s-skin-1').click(function () {
+                $("body").removeClass("skin-2");
+                $("body").removeClass("skin-3");
+                $("body").addClass("skin-1");
+            });
+            // Inspinia ultra skin
+            $('.s-skin-2').click(function () {
+                $("body").removeClass("skin-1");
+                $("body").removeClass("skin-3");
+                $("body").addClass("skin-2");
+            });
+            // Yellow skin
+            $('.s-skin-3').click(function () {
+                $("body").removeClass("skin-1");
+                $("body").removeClass("skin-2");
+                $("body").addClass("skin-3");
+            });
+            if (localStorageSupport) {
+                var collapse = localStorage.getItem("collapse_menu");
+                var fixedsidebar = localStorage.getItem("fixedsidebar");
+                var fixednavbar = localStorage.getItem("fixednavbar");
+                var fixednavbar2 = localStorage.getItem("fixednavbar2");
+                var boxedlayout = localStorage.getItem("boxedlayout");
+                var fixedfooter = localStorage.getItem("fixedfooter");
+                if (collapse == 'on') {
+                    $('#collapsemenu').prop('checked', 'checked')
+                }
+                if (fixedsidebar == 'on') {
+                    $('#fixedsidebar').prop('checked', 'checked')
+                }
+                if (fixednavbar == 'on') {
+                    $('#fixednavbar').prop('checked', 'checked')
+                }
+                if (fixednavbar2 == 'on') {
+                    $('#fixednavbar2').prop('checked', 'checked')
+                }
+                if (boxedlayout == 'on') {
+                    $('#boxedlayout').prop('checked', 'checked')
+                }
+                if (fixedfooter == 'on') {
+                    $('#fixedfooter').prop('checked', 'checked')
+                }
+            }
+        </script>
+
+    </div>
+    <div id="wrapper">
+
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <span>
+                                <img alt="image" class="img-circle" width="48px" height="48px" src="../Content/image/avatar.png" />
+                            </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs" id="titleuname">
+                                        <strong class="font-bold">&nbsp;</strong>
+                                    </span> <span class="text-muted text-xs block"><span id="titleuname_desig">System Admin</span><b class="caret"></b></span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="#" onclick="ProfileClick()">Profile</a></li>
+                                <li class="divider"></li>
+                                <li><a href="../Home/Logout" onclick="userlogout()">Logout</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            <img style="width:50%" src="~/Content/Image/logo_small.png" />
+                        </div>
+                    </li>
+                </ul>
+                <div class="" style="height:100px">
+
+                    <ul class="nav metismenu" id="navigation-bar"></ul>
+
+                    @*<ul class="nav metismenu" id="navigation-bar"><li class="active"> <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span> <span class="fa arrow"></span></a><ul class="nav nav-second-level " module_id="101_module"><li><a href="#" id="10001_sub_module_id" onclick="SubModuleMenuClick(this)">Active List<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10002_sub_module_id" onclick="SubModuleMenuClick(this)">Completed List<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10003_sub_module_id" onclick="SubModuleMenuClick(this)">Paid List<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10004_sub_module_id" onclick="SubModuleMenuClick(this)">Un Paid List<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10005_sub_module_id" onclick="SubModuleMenuClick(this)">Cancelled List<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10006_sub_module_id" onclick="SubModuleMenuClick(this)">Pending/Hold List<span class="label label-primary pull-right">10</span></a></li></ul></li><li class=""> <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label">Setup</span> <span class="fa arrow"></span></a><ul class="nav nav-second-level collapse" module_id="102_module"><li><a href="#" id="10007_sub_module_id" onclick="SubModuleMenuClick(this)">Client Master<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10008_sub_module_id" onclick="SubModuleMenuClick(this)">Photographer Master<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10009_sub_module_id" onclick="SubModuleMenuClick(this)">Portal Master<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10010_sub_module_id" onclick="SubModuleMenuClick(this)">State Master<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10011_sub_module_id" onclick="SubModuleMenuClick(this)">County Master<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10012_sub_module_id" onclick="SubModuleMenuClick(this)">City Master<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10013_sub_module_id" onclick="SubModuleMenuClick(this)">ZipCode Master<span class="label label-primary pull-right">10</span></a></li></ul></li><li class=""> <a href="#"><i class="fa fa-pie-chart"></i> <span class="nav-label">Process</span> <span class="fa arrow"></span></a><ul class="nav nav-second-level collapse" module_id="103_module"><li><a href="#" id="10014_sub_module_id" onclick="SubModuleMenuClick(this)">Create Order<span class="label label-primary pull-right">10</span></a></li></ul></li><li class=""> <a href="#"><i class="fa fa-tags"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span></a><ul class="nav nav-second-level collapse" module_id="104_module"><li><a href="#" id="10015_sub_module_id" onclick="SubModuleMenuClick(this)">User Settings<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10016_sub_module_id" onclick="SubModuleMenuClick(this)">Mail Template<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10017_sub_module_id" onclick="SubModuleMenuClick(this)">Password Reset<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10018_sub_module_id" onclick="SubModuleMenuClick(this)">User Master<span class="label label-primary pull-right">10</span></a></li><li><a href="#" id="10019_sub_module_id" onclick="SubModuleMenuClick(this)">Role Master<span class="label label-primary pull-right">10</span></a></li></ul></li></ul>*@
+
+                    @*<ul class="nav" id="navigation-bar"></ul>*@
+
+                </div>
+
+        </nav>
+        @*<div class="footer" style="background-color:#2f4050">
+                <div>
+                    <strong>Copyright</strong>
+                </div>
+            </div>*@
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        @*<form role="search" class="navbar-form-custom" action="http://webapplayers.com/inspinia_admin-v2.4/search_results.html">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                                </div>
+                            </form>*@
+                        @*<form role="search" class="navbar-form-custom" >*@
+
+                        @*</form>*@
+                    </div>
+
+
+                    <div class="navbar-header logo-element" style="font-size: 100%;padding: 7px;color: #337ab7;">
+
+                        @*<div class="form-group">class="logo-element"
+                                <label class="col-sm-5 control-label">SAMEER</label>
+                            </div>*@
+
+                        <ul class="nav ">
+                            <li class="">
+                                <div>
+                                    @*<span>
+                                            <img alt="image" class="img-circle" width="48px" height="48px" src="../Content/image/avatar.png" />
+                                        </span>*@
+                                    <div class="col-sm-12">
+
+                                        <div class="col-sm-3">
+                                            <i class="fa fa-user fa-3x" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-sm-9" style="margin-top:-3px">
+                                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                                <span class="clear">
+                                                    <span class="block m-t-xs" id="titleuname1">
+                                                        <strong class="font-bold">&nbsp;Super Admin</strong>
+                                                    </span> <span class="text-muted text-xs block"><span id="titleuname_desig1">System Admin</span><b class="caret"></b></span>
+                                                </span>
+                                            </a>
+                                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                                <li><a href="#" onclick="ProfileClick()">Profile</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="../Home/Logout" onclick="userlogout()">Logout</a></li>
+                                            </ul>
+
+                                            @*<img style="width:50%" src="~/Content/Image/logo_small.png" />*@
+                                        </div>
+                                    </div>
+                                    @*<div class="logo-element">
+                                        </div>*@
+                                </div>
+                            </li>
+                        </ul>
+
+
+
+
+
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            &nbsp;
+                        </li>
+                        <li>
+                            @*<span class="m-r-sm text-muted welcome-message">Welcome to ECESIS - BPO Tracker.</span>*@
+                            <span class="m-r-sm text-muted welcome-message"><img src="~/Content/Image/logo_single.png" style="width:65%;" class="animated fadeinright" /></span>
+                        </li>
+
+                        @*-----------------------------------------------NOTIFY----------------------------*@
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-bell"></i>  <span class="label label-primary notif-count" style="background-color: #ED5565;">&nbsp;</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="#">
+
+                                        <div>
+                                            <i class="fa fa-envelope fa-fw"></i>&nbsp;<span class="count-n notif-count text-success font-semibold">0</span> New Orders
+                                            <span class="pull-right text-muted small lastordertime" style="color: red;">0 minutes ago</span>
+
+                                        </div>
+                                    </a>
+
+                                    <div id="notification-container" class="list-group scrollable" style="padding: 1px 20px; ">
+                                    </div>
+
+                                </li>
+
+                                @*<li class="divider"></li>
+                                    <li>
+                                        <div class="text-center link-block">
+                                            <a href="#" onclick="document.getElementById('framecontent').src = '../Process/OrderList'">
+                                                <strong>See All Alerts</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </li>*@
+                            </ul>
+                        </li>
+                        @*-----------------------------------------------NOTIFY----------------------------*@
+
+
+                        <li>
+                            <a href="../Home/Logout" onclick="userlogout();">
+                                <i class="fa fa-sign-out"></i> Logout
+                                @*<i class="fa fa-cogs fa-spin"></i>*@
+                            </a>
+                        </li>
+                        <li>
+                            <a class="right-sidebar-toggle">
+                                <i class="fa fa-tasks"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="" onclick="showconfigbox()">
+                                <i class="fa fa-cogs fa-spin"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-9" style="margin-top: -13px;">
+                    @*<h2><a href="../Home/ApplicationHome"><i class="fa fa-home"></i></a>Home</h2>*@
+                    <h2 style="color:#337ab7"><strong><i class="fa fa-desktop" aria-hidden="true"></i>&nbsp;<span id="pagename">Active List</span></strong></h2>
+                </div>
+                <ol class="breadcrumb" style="margin-top:10px">
+                    <li>
+                        <a href="../Home/ApplicationHome"><i class="fa fa-home"></i>Home</a>
+                    </li>
+                    <li>
+                        <span id="ModuleTitle">Dashboard</span>
+                    </li>
+                    <li class="active">
+                        <strong><span id="SubModTitle"> Active List</span></strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight">
+
+                <div class="row">
+                    <iframe src="" id="framecontent" style="width: 100%" frameborder="0" scrolling="auto"></iframe>
+                    @*<div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content">
+
+
+                               </div>
+                            </div>
+                        </div>*@
+                </div>
+            </div>
+
+
+
+            <div class="footer">
+                <div>
+                    <strong>Copyright</strong> ECESIS Company &copy; 2016-2017
+                </div>
+            </div>
+
+        </div>
+
+        <div id="right-sidebar">
+            <div class="sidebar-container">
+
+                <ul class="nav nav-tabs navs-3">
+
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-1">
+                            Notes
+                        </a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#tab-2">
+                            Projects
+                        </a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#tab-3">
+                            Others
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+
+
+                    <div id="tab-1" class="tab-pane active">
+
+                        <div class="sidebar-title">
+                            <h3> <i class="fa fa-comments-o"></i> Latest Notes</h3>
+                            <small><i class="fa fa-tim"></i> Latest Notes</small>
+
+                        </div>
+                        <div id="adv_notes" class="list-group">
+                        </div>
+                        <div>
+
+                            @*<div class="sidebar-message">
+                                    <a href="#">
+                                        <div class="pull-left text-center">
+                                            <img alt="image" class="img-circle message-avatar" src="../Content/img/a1.jpg">
+
+                                            <div class="m-t-xs">
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+
+                                            There are many variations of passages of Lorem Ipsum available.
+                                            <br>
+                                            <small class="text-muted">Today 4:21 pm</small>
+                                        </div>
+                                    </a>
+                                </div>*@
+                        </div>
+
+                    </div>
+
+                    <div id="tab-2" class="tab-pane">
+
+                        <div class="sidebar-title">
+                            <h3> <i class="fa fa-cube"></i> Latest projects</h3>
+                            <small><i class="fa fa-tim"></i> Latest projects</small>
+                        </div>
+
+                        <ul class="sidebar-list">
+                            @*<li>
+                                    <a href="#">
+                                        <div class="small pull-right m-t-xs">9 hours ago</div>
+                                        <h4>Business valuation</h4>
+                                        It is a long established fact that a reader will be distracted.
+
+                                        <div class="small">Completion with: 22%</div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 22%;" class="progress-bar progress-bar-warning"></div>
+                                        </div>
+                                        <div class="small text-muted m-t-xs">Project end: 4:00 pm - 12.06.2014</div>
+                                    </a>
+                                </li>*@
+
+                        </ul>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script>
+        function PopulateOrder(sOrderNo) {
+            document.getElementById('framecontent').src = '../Process/OrderManagement?orderid=' + sOrderNo + '';
+            //window.location = 'OrderManagement'; //?qOrderIs=' + sOrderNo + '
+        }
+        function OrderList() {
+            window.frames("../Process/OrderList");
+            //  window.location = "../Process/OrderList";
+        }
+        function ProfileClick() {
+            // window.frames("../Setup/UserSettings");
+            document.getElementById('framecontent').src = '../Master/UserSettings';
+            //window.location = 'OrderManagement'; //?qOrderIs=' + sOrderNo + '
+        }
+
+        function BindNotificationContainer() {
+            $(".notif-count").text('');
+            var cudate = new Date();
+            cudate = dateFormat(cudate, "isoDateTime");
+
+            var sCondition = " WHERE delete_status=0 and order_status = 1 ";
+            if (access_level == 1) {
+                var sRtnCondition = " WHERE delete_status=0 and order_status = 1 order by 1 desc";
+            }
+            else if (access_level == 2) {
+                var sRtnCondition = sCondition + ' and order_posted_by = ' + EmpId + 'order by 1 desc';
+            }
+            else if (access_level == 3) {
+                var sRtnCondition = sCondition + ' and photographer_id = ' + EmpId + 'order by 1 desc';
+            }
+            else if (access_level == 4) {
+                var sRtnCondition = sCondition + ' and dataentry_id = ' + EmpId + 'order by 1 desc';
+            }
+        
+            var strJsonDatas = eval({ strCondition: sRtnCondition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsOrderList");
+            var NotifCount = 0;
+            $("#notification-container").html('');
+            if (Result != "" && Result != null && Result.length > 0) {
+
+                //var sLastTime = new Date(Result[0].order_date)
+                var sLastTime = Result[0].order_date;
+                var splitarray = new Array();
+                splitarray = sLastTime.split("T");
+
+                var sCtime = new Date(); // for now
+                sCtime.getHours(); // => 9
+                sCtime.getMinutes(); // =>  30
+                sCtime.getSeconds();
+
+                var lHrs = splitarray[1].split(":")
+
+                var sLst = (sCtime.getMinutes() - lHrs[1]);
+                var sDatetb = '';
+              
+                sLastTime = dateFormat(sLastTime, "isoDateTime");
+
+                if (parseInt(sCtime.getHours()) - parseInt(lHrs) > 1) {
+                    $(".lastordertime").text('One hours ago');
+                }
+                else {
+                    if (cudate > sLastTime) {             //parseInt(sCurDt) > parseInt(sltdt)
+                        $(".lastordertime").text('One hours ago');
+                    }
+                    else {
+                        if (sLst < 0)
+                            sLst = (sLst * (-1));
+                        $(".lastordertime").text(sLst + ' minutes ago');
+                    }
+                }
+                NotifCount = parseInt(Result.length);
+                $(".notif-count").text(NotifCount);
+                var toAppend = [];
+                toAppend.push(
+                "<header class='panel-heading'>",
+                "<strong>From Orders</strong>",
+                "</header>"
+                );
+
+                for (var i = 0; i < Result.length; i++) {
+                    var sOrderNo = Result[i].order_no;
+                    var sOrderCode = Result[i].order_code;
+                    toAppend.push(
+                      "<a href='#'  onclick='PopulateOrder(" + sOrderNo + ")' class='media list-group-item' data-title='New Order Creation'>",
+                    "" + sOrderCode + ' (' + Result[i].subject_address + ")",
+                    "</a>"
+                    );
+                }
+                $("#notification-container").append(toAppend.join(""));
+            }
+        }
+
+
+        function BindAdvNotes() {
+            var sCondition = " WHERE delete_status=0 ";
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsAdvNotes");
+            var NotifCount = 0;
+            $("#adv_notes").html('');
+            if (Result != "" && Result != null && Result.length > 0) {
+                NotifCount = parseInt(Result.length);
+                var toAppend = [];
+
+                for (var i = 0; i < Result.length; i++) {
+                    var EntryID = Result[i].ref_no;
+                    toAppend.push(
+                    "<a href='#'  onclick='openModalDialog(this);' class='media list-group-item' data-title='Notes' data-url=''>",
+                    "" + Result[i].notes + "",
+                    "</a>"
+                    );
+                }
+                $("#adv_notes").append(toAppend.join(""));
+            }
+        }
+
+        function userlogout() {
+            localStorage.setItem("islogin", 'off');
+            localStorage.setItem("cu", '');
+        }
+
+        $(function () {
+            var newheight = $(window).height() - 158;
+            $('#framecontent').css({ height: newheight + 'px' });
+        });
+
+        $(window).resize(function () {
+            var newheight = $(window).height() - 158;
+            $('#framecontent').css({ height: newheight + 'px' });
+        });
+
+        function FirstTimePage() {
+
+            var sCondition = " WHERE ref_no=" + EmpId + " and is_first_login = 1";
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsUserList");
+            if (Result != "" && Result != null) {
+                document.getElementById('framecontent').src = '../Master/UserSettings';
+                var StrJsonDatas = eval({ is_first_login: 2 });
+                var sCondition = " WHERE ref_no=" + EmpId + "";
+                var Result1 = oAPICall.UpdateData(StrJsonDatas, 'UpdateBtsUserMaster', sCondition);
+            }
+            else {
+                document.getElementById('framecontent').src = '../Process/OrderList?PageId=1';
+            }
+        }
+
+
+        $(document).ready(function () {
+            
+            var appurl = '@(System.Configuration.ConfigurationManager.AppSettings["appurl"].ToString())'
+            var sNewURL = window.location.protocol + "//" + window.location.host + "/" + appurl + "";
+            //alert(sNewURL);
+            //$(window).unload(function () {
+            //    localStorage.setItem("islogin", 'off');
+            //});
+
+            getsessiondata();
+
+            setTimeout(function () {
+
+                if (CurrentUserName == "" || CurrentUserName == undefined) {
+                    localStorage.setItem("islogin", 'off');
+                    window.location = "" + sNewURL + "";
+                    return;
+                }
+                document.getElementById("titleuname").innerHTML = CurrentUserName
+                document.getElementById("titleuname1").innerHTML = CurrentUserName
+                FirstTimePage();
+                if (access_level != 5 && access_level != 1) {
+                    BindNotificationContainer();
+                }
+               
+                BindNavigationBar();
+
+                BindDesignation();
+
+                localStorage.setItem("islogin", 'on');
+                localStorage.setItem("cu", CurrentUserName);
+                //alert(CurrentUserName);
+                //toastr.options = {
+                //    closeButton: true,
+                //    progressBar: true,
+                //    showMethod: 'slideDown',
+                //    timeOut: 4000
+                //};
+                //toastr.success('Welcome to ECESIS - BPO Tracking System', 'BTS');
+
+            }, 1300);
+
+            BindAdvNotes();
+            setInterval(function () {
+
+                var Condition = "where user_id=" + CurrentUser + "";
+                var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+                var Result = oAPICall.SelectData(strJsonDatas, "Selectpassword");
+                if (Result != "" && Result != null) {
+                    if (Result[0]["password"] != localStorage.getItem("loginpwd")) {
+                        userlogout();
+                    }
+                }
+
+                if (access_level != 5 && access_level != 1) {
+                    BindNotificationContainer();
+                }
+              
+                $('.sweet-alert p').css('color', '#797979');
+                if (localStorage.getItem("islogin") == "off") {
+                    //alert(CurrentUserName);
+                    window.location = "" + sNewURL + "";
+                }
+            }, 55000);
+
+            setInterval(function () {
+                if (CurrentUserName == "" || CurrentUserName == undefined) {
+                    window.location = "" + sNewURL + "";
+                    return;
+                }
+            }, 10000);
+        });
+
+        function showconfigbox() {
+            $('#theamconfig').removeClass("hidden")
+            $('#theamconfig').toggleClass("show")
+        }
+
+    </script>
+    @*Menu script*@
+    <script>
+        var SubModulePageAccessFlag = false;
+
+        function BindDesignation() {
+            var Condition = ' WHERE role_id=' + access_level + '';
+            var strJsonDatas = eval({ strSessionID: UserSession, strCondition: Condition, strFieldNames: "" });
+            var Result = oAPICall.SelectData(strJsonDatas, 'SelectRoleAccessType');
+            if (Result != null && Result.length > 0) {
+                document.getElementById("titleuname_desig").innerHTML = Result[0]["role_name"];
+                document.getElementById("titleuname_desig1").innerHTML = Result[0]["role_name"];
+            }
+        }
+
+
+        function BindNavigationBar() {
+            var strRoleID = "1";
+            var moduleID = "";
+            var Condition = ' WHERE user_id=' + CurrentUser + '';
+            var strJsonDatas = eval({ strSessionID: UserSession, strCondition: Condition, strFieldNames: FieldNames });
+            var Result = oAPICall.SelectData(strJsonDatas, 'SelectBtsUserMaster');
+            if (Result != null && Result.length > 0) {
+                strRoleID = Result[0]["role_id"];
+            }
+            var FieldNames = 'DISTINCT is_active,module_image_class,display_value,module_id';
+            var Condition = 'WHERE role_id=' + strRoleID + ' ORDER BY module_id';
+            var strJsonDatas = eval({ strSessionID: UserSession, strCondition: Condition, strFieldNames: FieldNames });
+            var Modules = oAPICall.SelectData(strJsonDatas, 'SelectMainModules');
+            $('#navigation-bar').html("");
+
+            if (Modules != '' && Modules != null) {
+                for (var i = 0; i < Modules.length; i++) {
+                    var active = "";
+                    var collaps = "collapse";
+                    if (Modules[i]["is_active"] == Modules[i]["module_id"]) {
+                        active = "active";
+                        collaps = "";
+                        moduleID = Modules[i]["module_id"];
+                    }
+                    var imgclass = Modules[i]["module_image_class"];
+
+                    var toAppendModule = [];
+                    toAppendModule.push(
+                        "<li class=" + active + ">",
+                        " <a href='#'><i class='" + imgclass + "'></i> <span class='nav-label'>" + Modules[i]["display_value"] + "</span> <span class='fa arrow'></span></a>",
+                       "<ul style='overflow-y: scroll;max-height:300px;' class='nav nav-second-level " + collaps + "'  module_id='" + Modules[i]["module_id"] + "_module' >",
+                        "</ul>",
+                        "</li>"
+                        );
+                    $('#navigation-bar').append(toAppendModule.join(""));
+
+                    //Submodule bind
+
+                    //var FieldNames = 'DISTINCT sub_module_id, sub_module_name, sub_module_url ';
+                    var FieldNames = 'DISTINCT sub_module_id, sub_display_value, sub_module_src,list_priority,module_id';
+                    //var Condition = 'WHERE module_id=' + Modules[i]["module_id"] + ' AND menu_id=' + menu_id + ' AND language_code=' + CompanyLanguage + ' AND ( role_id in (' + strRoleID + ') OR role_id=' + CurrentUser + ')' + 'AND permission_id = 4 AND is_enabled = 1' + ' ORDER BY sub_module_id';
+                    var Condition = 'WHERE module_id=' + Modules[i]["module_id"] + ' AND role_id=' + strRoleID + ' ORDER BY list_priority';
+                    var strJsonDatas = eval({ strSessionID: UserSession, strCondition: Condition, strFieldNames: FieldNames });
+                    var SubModules = oAPICall.SelectData(strJsonDatas, 'SelectMainModules');
+                    for (var j = 0; j < SubModules.length; j++) {
+                        var toAppendSubModule = [];
+                        toAppendSubModule.push(
+
+                            "<li><a class='sub_module' href='#' id='" + SubModules[j]["sub_module_id"] + "_sub_module_id" + "'title='" + Modules[i]["display_value"] + "' onclick='SubModuleMenuClick(this)' sub_module_url='" + SubModules[j]["sub_module_src"] + "'>" + SubModules[j]["sub_display_value"] + "<span class='pull-right id='" + SubModules[j]["sub_module_id"] + "_subtotal" + "'>&nbsp;</span></a></li>"
+
+                                //"<li><a class='menu-item' id='" + SubModules[j]["sub_module_id"] + "_sub_module_id" + "' onclick='SubModuleMenuClick(this)' href='#' sub_module_url='" + SubModules[j]["sub_module_url"] + "'>" + SubModules[j]["sub_module_name"] + "</a></li>"
+                            );
+                        $('ul.nav').find("[module_id='" + Modules[i]["module_id"] + "_module']").append(toAppendSubModule.join());
+                        if (j == 0 && SubModules[j]["module_id"] == moduleID) {
+                            $("#" + SubModules[j]["sub_module_id"] + "_sub_module_id").click();
+                        }
+                    }
+                }
+
+
+            }
+            $.getScript('../Scripts/js/plugins/metisMenu/jquery.metisMenu.js');
+
+            $('#navigation-bar').metisMenu();
+
+        }
+
+        function SubModuleMenuClick(menu_item) {
+            //SubModulePageAccess(menu_item.id.split("_sub_module_id")[0]);
+            //if (!SubModulePageAccessFlag) {
+            //    alert("You do not have access to this page !\nContact the Administrator.");
+            //    return;
+            //}
+            var sub_module_url = menu_item.sub_module_url;
+            if (sub_module_url == undefined || sub_module_url == "undefined" || sub_module_url == "" || sub_module_url == null)
+                sub_module_url = menu_item.getAttribute('sub_module_url');
+
+            $("#ModuleTitle").text(menu_item.title);
+            $("#SubModTitle").text(menu_item.innerText);
+            $("#pagename").text(menu_item.innerText);
+            $(".sub_module").removeAttr('style');
+            $("#" + menu_item.id).css("color", "white");
+
+            $("#myModalLoadmenu").modal({                    // wire up the actual modal functionality and show the dialog
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true                     // ensure the modal is shown immediately
+
+            });
+            document.getElementById('framecontent').src = sub_module_url;
+
+        }
+    </script>
+
+</body>

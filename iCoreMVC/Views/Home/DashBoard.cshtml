@@ -1,0 +1,511 @@
+﻿@{
+    ViewBag.Title = "DashBoard";
+}
+<style>
+    .chart-legend {
+        margin-left: -7%;
+        margin-top: 5px;
+    }
+
+        .chart-legend li span {
+            display: inline-block;
+            width: 15px;
+            height: 12px;
+            margin-right: 8px;
+        }
+
+        .chart-legend li {
+            list-style-type: none;
+        }
+
+    ul li {
+        display: inline;
+        margin-left: 30px;
+    }
+</style>
+<div class="wrapper wrapper-content animated fadeInRight" style="padding-right:10px;padding-left:10px;padding-top:10px;">
+    <div class="row">
+        <div class="col-sm-2" style="display:none;">
+            <label class="col-sm-3 control-label">From&nbsp;</label>
+            <div class="col-sm-3">
+                <div class="input-group date txtfromdt">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="text" id="txtfromdt" class="form-control" readonly="readonly" style="background-color:white; width:100px">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2" style="display:none;">
+            <center><label class="col-sm-3 control-label" style="padding-left: 20px;">To</label></center>
+            <div class="col-sm-6">
+                <div class="input-group date txttodt" style="width:140px">
+                    <span class="input-group-addon" id="divtxtdob"><i class="fa fa-calendar"></i></span>
+                    <input type="text" id="txttodt" class="form-control" value="" readonly="readonly" style="background-color:white">
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-sm-4" id="sDivOrderCount">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Order Count</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <div id="doughnutChart_legend" class="chart-legend"></div>
+                        <canvas id="doughnutChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4" id="sDivOrderDue">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Order Due on Day</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <div id="Pie-legend" class="chart-legend"></div>
+                        <canvas id="PieChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="col-sm-4">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Claim Rated Scale</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="text-center">
+                                <canvas id="polarChart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">*@
+
+        @*<div class="col-sm-4" id="allowancescale">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Allowance Scale </h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div>
+                            <canvas id="doughnutChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+        @*</div>
+            <div class="row">*@
+
+    </div>
+    <div class="row">
+        <div class="col-sm-10" id="sDivClientWisechart">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Client Wise Order</h5>
+                </div>
+                <div class="ibox-content">
+                    <div>
+                        <div id="bar_legend" class="chart-legend"></div>
+                        <canvas id="barChart" height="200" width=""></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/js/Chart.min.js"></script>
+
+@*<script src="../Scripts/App_js/chartjs-demo.js"></script>*@
+<script>
+    function setFilterdates() {
+        var cudt = new Date();
+        //cudt.setDate(cudt.getDate() + 3);
+        $('.input-group.date.txtfromdt').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false
+
+            //startDate: '-6m'
+            //startDate: new Date(),
+        });
+
+        $(".input-group.date.txttodt").datepicker("setDate", cudt);
+        $('.input-group.date.txttodt').datepicker("setEndDate", cudt);
+
+
+        $('.input-group.date.txttodt').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false,
+            //startDate: '-2m',
+            //startDate: new Date(),
+        });
+
+        var d = new Date($("#txttodt").val());
+        d.setDate(d.getDate() - 70);
+        $(".input-group.date.txtfromdt").datepicker("setDate", new Date(d));
+
+    }
+    function formatLabel(str, maxwidth) {
+        var sections = [];
+        var words = str.split(" ");
+        var temp = "";
+
+        words.forEach(function (item, index) {
+            if (temp.length > 0) {
+                var concat = temp + ' ' + item;
+
+                if (concat.length > maxwidth) {
+                    sections.push(temp);
+                    temp = "";
+                }
+                else {
+                    if (index == (words.length - 1)) {
+                        sections.push(concat);
+                        return;
+                    }
+                    else {
+                        temp = concat;
+                        return;
+                    }
+                }
+            }
+
+            if (index == (words.length - 1)) {
+                sections.push(item);
+                return;
+            }
+
+            if (item.length < maxwidth) {
+                temp = item;
+            }
+            else {
+                sections.push(item);
+            }
+
+        });
+
+        return sections;
+    }
+
+    //-----------------------------------------------------doughnutChart:Order Count (Fresh & DE)--------------------------------------------------
+
+    function OrderCountDetails() {
+        var sData1 = [], sData2 = [], sData3 = [], sData4 = [], sData5 = [], sData6 = [];
+        var sBDate = $('#txtfromdt').val();
+        var sEDate = $('#txttodt').val();
+        var strJsonData = eval({ sBdate: sBDate, sEdate: sEDate, sRoleId: access_level });
+        var Result = "";
+        $.ajax({
+            url: "GetDashBoardDetailPageLoad",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(strJsonData),
+            success: function (data) {
+                //  for (var i = 0; i < Result.length; i++) {
+                var Result = jQuery.parseJSON(data.strDashBoard1);
+                var Result1 = jQuery.parseJSON(data.strDashBoard2);
+                var Result3 = jQuery.parseJSON(data.strDashBoard3);
+                sData1.push(Result[0].FRESH_ORDERS);
+                sData2.push(Result[0].DE_ORDERS);
+                sData3 = parseFloat(sData1) + parseFloat(sData2);
+                // }
+                Chart.pluginService.register({
+                    beforeDraw: function (chart) {
+                        var width = chart.chart.width,
+                            height = chart.chart.height,
+                            ctx = chart.chart.ctx,
+                            type = chart.config.type;
+
+                        if (type == 'doughnut') {
+                            var percent = Math.round((chart.config.data.datasets[0].data[0] * 100) /
+                                        (chart.config.data.datasets[0].data[0] +
+                                        chart.config.data.datasets[0].data[1]));
+                            var oldFill = ctx.fillStyle;
+                            var fontSize = ((height - chart.chartArea.top) / 100).toFixed(2);
+
+                            ctx.restore();
+                            ctx.font = 1.5 + "em sans-serif";
+                            ctx.textBaseline = "middle"
+
+                            var text = 'Total: ' + sData3,
+                                textX = Math.round((width - ctx.measureText(text).width) / 2),
+                                textY = (height + chart.chartArea.top) / 2;
+
+                            ctx.fillStyle = chart.config.data.datasets[0].backgroundColor[0];
+                            ctx.fillText(text, textX, textY);
+                            ctx.fillStyle = oldFill;
+                            ctx.save();
+                        }
+                    }
+                });
+                var doughnutData = {
+                    labels: ['Fresh Order', 'Data Ready'],
+                    datasets: [{
+                        //label: ['Male', 'Female'],
+                        data: [sData1, sData2],
+                        backgroundColor: ['#5df0c7', '#b5b8cf']
+
+                    }],
+
+                };
+
+                var doughnutOptions = {
+                    responsive: true,
+                    legend: {
+                        display: false
+                    },
+                };
+
+
+                var ctx4 = document.getElementById("doughnutChart").getContext("2d");
+                var myChart = new Chart(ctx4, { type: 'doughnut', data: doughnutData, options: doughnutOptions });
+
+                document.getElementById('doughnutChart_legend').innerHTML = myChart.generateLegend();
+
+                // -------------------------------------------------------Dashboard 2 ----------------------------------------------------------
+
+                for (var i = 0; i < Result1.length; i++) {
+                    //
+                    var sCustName = Result1[i].TCUSTNAME.substring(0, 5);
+                    sData4.push(formatLabel(sCustName, 6));
+                    sData5.push(Result1[i].TREOrder);
+                    sData6.push(Result1[i].TDEOrder);
+                    //sTotal = Result1[i].TTotOrd;
+                }
+                Chart.defaults.groupableBar = Chart.helpers.clone(Chart.defaults.bar);
+
+                var helpers = Chart.helpers;
+                Chart.controllers.groupableBar = Chart.controllers.bar.extend({
+                    calculateBarX: function (index, datasetIndex) {
+                        // position the bars based on the stack index
+                        var stackIndex = this.getMeta().stackIndex;
+                        return Chart.controllers.bar.prototype.calculateBarX.apply(this, [index, stackIndex]);
+                    },
+
+                    hideOtherStacks: function (datasetIndex) {
+                        var meta = this.getMeta();
+                        var stackIndex = meta.stackIndex;
+
+                        this.hiddens = [];
+                        for (var i = 0; i < datasetIndex; i++) {
+                            var dsMeta = this.chart.getDatasetMeta(i);
+                            if (dsMeta.stackIndex !== stackIndex) {
+                                this.hiddens.push(dsMeta.hidden);
+                                dsMeta.hidden = true;
+                            }
+                        }
+                    },
+
+                    unhideOtherStacks: function (datasetIndex) {
+                        var meta = this.getMeta();
+                        var stackIndex = meta.stackIndex;
+
+                        for (var i = 0; i < datasetIndex; i++) {
+                            var dsMeta = this.chart.getDatasetMeta(i);
+                            if (dsMeta.stackIndex !== stackIndex) {
+                                dsMeta.hidden = this.hiddens.unshift();
+                            }
+                        }
+                    },
+
+                    calculateBarY: function (index, datasetIndex) {
+                        this.hideOtherStacks(datasetIndex);
+                        var barY = Chart.controllers.bar.prototype.calculateBarY.apply(this, [index, datasetIndex]);
+                        this.unhideOtherStacks(datasetIndex);
+                        return barY;
+                    },
+
+                    calculateBarBase: function (datasetIndex, index) {
+                        this.hideOtherStacks(datasetIndex);
+                        var barBase = Chart.controllers.bar.prototype.calculateBarBase.apply(this, [datasetIndex, index]);
+                        this.unhideOtherStacks(datasetIndex);
+                        return barBase;
+                    },
+
+                    getBarCount: function () {
+                        var stacks = [];
+
+                        // put the stack index in the dataset meta
+                        Chart.helpers.each(this.chart.data.datasets, function (dataset, datasetIndex) {
+                            var meta = this.chart.getDatasetMeta(datasetIndex);
+                            if (meta.bar && this.chart.isDatasetVisible(datasetIndex)) {
+                                var stackIndex = stacks.indexOf(dataset.stack);
+                                if (stackIndex === -1) {
+                                    stackIndex = stacks.length;
+                                    stacks.push(dataset.stack);
+                                }
+                                meta.stackIndex = stackIndex;
+                            }
+                        }, this);
+
+                        this.getMeta().stacks = stacks;
+                        return stacks.length;
+                    },
+                });
+
+                var barData = {
+                    labels: sData4,
+                    datasets: [{
+                        label: "Fresh", data: sData5,
+                        backgroundColor: '#5df0c7'
+
+                    },
+                   {
+                       label: "Data Entry", data: sData6,
+                       backgroundColor: '#b5b8cf'
+
+                   },
+                    ]
+                };
+
+                var ctx = document.getElementById("barChart").getContext("2d");
+                var myChart = new Chart(ctx, {
+                    type: 'horizontalBar',//horizontalBar
+                    data: barData,
+                    options: {
+                        legend: {
+                            labels: {
+                                generateLabels: function (chart) {
+                                    return Chart.defaults.global.legend.labels.generateLabels.apply(this, [chart]).filter(function (item, i) {
+                                        return i <= 2;
+                                    });
+                                }
+                            },
+                            display: false
+                        },
+                        responsive: true,
+                        scales:
+                             {
+                                 xAxes: [{
+                                     stacked: true,
+                                     ticks: {
+                                         beginAtZero: true,
+                                         userCallback: function (label, index, labels) {
+                                             // when the floored value is the same as the value we have a whole number
+                                             if (Math.floor(label) === label) {
+                                                 return label;
+                                             }
+
+                                         },
+                                     }
+                                 }],
+                                 yAxes: [{
+                                     display: true,
+                                     ticks: {
+                                         autoSkip: false,
+                                         fontSize: 10,
+                                         fontWeight: 'Bold',
+                                         maxRotation: 180,
+                                         minRotation: 0
+                                     }
+
+                                 }]
+                             },
+                        tooltips: {
+                            enabled: true
+                        }
+                    },
+
+                });
+                document.getElementById('bar_legend').innerHTML = myChart.generateLegend();
+
+                //---------------------------------------------------END-----------------------------------------------
+                var sData7 = [], sData8 = [], sData9 = [], sData10 = [], sData11 = [], sData12 = [];
+                if (Result3.length > 2) {
+                    //var implied_decimal = Result[i].implied_decimal;
+                    //var expenses = parseFloat(Result[i].expenses);
+                    //sData7.push(Result3[i].TsCurDte);
+                    sData10.push(Result3[0].TsCurDte);
+                    sData11.push(Result3[1].TsCurDte);
+                    sData12.push(Result3[2].TsCurDte);
+
+                    sData7.push(Result3[0].TsTotOrder);
+                    sData8.push(Result3[1].TsTotOrder);
+                    sData9.push(Result3[2].TsTotOrder);
+                    // sData2.push(expenses.toFixed(implied_decimal));
+
+
+                    //sData4 = Result[0].rejected_leave;
+
+                }
+
+                var pieData = {
+                    labels: [sData10, sData11, sData12],
+                    datasets: [
+                         {
+
+                             data: [sData7, sData8, sData9],
+                             backgroundColor: ['#e80615', '#5df0c7', '#b5b8cf'],
+                             width: '2px',
+                             fill: false
+
+                         },
+                    ]
+                };
+
+                var PieOptions = {
+
+                    responsive: true,
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        enabled: true
+                    }
+                };
+
+                var ctx = document.getElementById("PieChart").getContext("2d");
+
+                var myChart = new Chart(ctx, { type: 'pie', data: pieData, options: PieOptions });
+
+                document.getElementById('Pie-legend').innerHTML = myChart.generateLegend();
+
+            }
+
+
+        });
+
+
+    }
+    //-----------------------------------------------------PieChart:Order Due on Day--------------------------------------------------
+
+
+    function doc_keyUp(e) {
+
+        if (e.ctrlKey && e.keyCode == 81) {
+            parent.UserLock();
+        }
+    }
+
+    document.addEventListener('keyup', doc_keyUp, false);
+
+    $(document).ready(function () {
+        retdata = parent.$('#hdnUserDetails').val();
+        var userConfig = new UserConfig();
+        userConfig.InitilizeUserConfig(retdata);
+
+        $("#sDivOrderDue").show();
+        $("#sDivOrderCount").show();
+        $("#sDivClientWisechart").show();
+        setFilterdates();
+        OrderCountDetails();
+
+    });
+</script>

@@ -1,0 +1,236 @@
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\iCoreMVC.dll.config
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\iCoreMVC.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\iCoreMVC.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\Antlr3.Runtime.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\BussinessLayer.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\Excel.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\ICSharpCode.SharpZipLib.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\LoginFrameWork.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\Microsoft.Web.Infrastructure.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\Newtonsoft.Json.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Net.Http.Formatting.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.Helpers.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.Http.WebHost.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.Mvc.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.Optimization.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.Razor.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.WebPages.Deployment.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.WebPages.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.WebPages.Razor.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\WebGrease.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\BussinessLayer.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\LoginFrameWork.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\Excel.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\Newtonsoft.Json.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Net.Http.Formatting.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.Helpers.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.Http.WebHost.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.Mvc.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.Razor.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.WebPages.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.WebPages.Deployment.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.WebPages.Razor.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\System.Web.Optimization.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\Antlr3.Runtime.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\obj\Release\iCoreMVC.csprojResolveAssemblyReference.cache
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\obj\Release\iCoreMVC.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\obj\Release\iCoreMVC.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\EntityFramework.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\EntityFramework.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\obj\Release\RdlCompile.cache
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\obj\Release\RdlCompile.compiled
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\iCoreMVC.dll.config
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\iCoreMVC.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\iCoreMVC.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\Antlr3.Runtime.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\BussinessLayer.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\EntityFramework.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\Excel.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\ICSharpCode.SharpZipLib.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\LoginFrameWork.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\Microsoft.QualityTools.Testing.Fakes.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\Microsoft.Web.Infrastructure.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\Newtonsoft.Json.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Net.Http.Formatting.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.Helpers.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.Http.WebHost.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.Mvc.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.Optimization.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.Razor.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.WebPages.Deployment.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.WebPages.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.WebPages.Razor.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\WebGrease.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\BussinessLayer.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\LoginFrameWork.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\EntityFramework.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\Excel.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\Newtonsoft.Json.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Net.Http.Formatting.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.Helpers.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.Http.WebHost.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.Mvc.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.Razor.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.WebPages.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.WebPages.Deployment.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.WebPages.Razor.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\System.Web.Optimization.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\bin\Antlr3.Runtime.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\obj\Release\iCoreMVC.csprojResolveAssemblyReference.cache
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\obj\Release\RdlCompile.cache
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\obj\Release\RdlCompile.compiled
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\obj\Release\iCoreMVC.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn - Copy\iCoreMVC\obj\Release\iCoreMVC.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCore_BTS-svn\iCoreMVC\bin\Microsoft.QualityTools.Testing.Fakes.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\iCoreMVC.dll.config
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\iCoreMVC.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\iCoreMVC.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\Antlr3.Runtime.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\BussinessLayer.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\LoginFrameWork.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\Microsoft.QualityTools.Testing.Fakes.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\Microsoft.Web.Infrastructure.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\Newtonsoft.Json.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Net.Http.Formatting.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.Helpers.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.Http.WebHost.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.Mvc.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.Optimization.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.Razor.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.WebPages.Deployment.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.WebPages.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.WebPages.Razor.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\WebGrease.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\ICSharpCode.SharpZipLib.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\BussinessLayer.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\LoginFrameWork.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\Excel.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\Newtonsoft.Json.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Net.Http.Formatting.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.Helpers.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.Http.WebHost.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.Mvc.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.Razor.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.WebPages.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.WebPages.Deployment.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.WebPages.Razor.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\System.Web.Optimization.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\bin\Antlr3.Runtime.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\obj\Release\iCoreMVC.csprojResolveAssemblyReference.cache
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\obj\Release\RdlCompile.cache
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\obj\Release\RdlCompile.compiled
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\obj\Release\iCoreMVC.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\iCoreMVC\obj\Release\iCoreMVC.pdb
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\iCoreMVC.dll.config
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\iCoreMVC.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\iCoreMVC.pdb
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\Antlr3.Runtime.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\BussinessLayer.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\LoginFrameWork.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\Microsoft.QualityTools.Testing.Fakes.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\Microsoft.Web.Infrastructure.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\Newtonsoft.Json.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Net.Http.Formatting.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.Helpers.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.Http.WebHost.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.Mvc.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.Optimization.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.Razor.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Deployment.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.WebPages.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Razor.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\WebGrease.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\BussinessLayer.pdb
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\LoginFrameWork.pdb
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\Newtonsoft.Json.xml
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Net.Http.Formatting.xml
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.Helpers.xml
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.Http.WebHost.xml
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.Mvc.xml
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.Razor.xml
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.WebPages.xml
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Deployment.xml
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Razor.xml
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\System.Web.Optimization.xml
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\bin\Antlr3.Runtime.pdb
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\obj\Release\iCoreMVC.csprojResolveAssemblyReference.cache
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\obj\Release\RdlCompile.cache
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\obj\Release\RdlCompile.compiled
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\obj\Release\iCoreMVC.dll
+E:\Projects\ECESIS\TFS_OM\iCoreMVC\obj\Release\iCoreMVC.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\iCoreMVC.dll.config
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\iCoreMVC.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\iCoreMVC.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\Antlr3.Runtime.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\BussinessLayer.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\LoginFrameWork.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\Microsoft.Web.Infrastructure.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\Newtonsoft.Json.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Net.Http.Formatting.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.Helpers.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.Http.WebHost.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.Mvc.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.Optimization.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.Razor.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Deployment.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.WebPages.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Razor.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\WebGrease.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\BussinessLayer.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\LoginFrameWork.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\Newtonsoft.Json.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Net.Http.Formatting.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.Helpers.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.Http.WebHost.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.Mvc.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.Razor.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.WebPages.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Deployment.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Razor.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\System.Web.Optimization.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\bin\Antlr3.Runtime.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\obj\Release\iCoreMVC.csprojResolveAssemblyReference.cache
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\obj\Release\RdlCompile.cache
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\obj\Release\RdlCompile.compiled
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\obj\Release\iCoreMVC.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\iCoreMVC\obj\Release\iCoreMVC.pdb
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\Content\ReportsData\ReportViewer.aspx
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\Content\ReportsData\ReportViewer.aspx.cs
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\Content\ReportsData\ReportViewer.aspx.designer.cs
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\iCoreMVC.dll.config
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\iCoreMVC.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\iCoreMVC.pdb
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\Antlr3.Runtime.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\BussinessLayer.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\LoginFrameWork.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\Microsoft.QualityTools.Testing.Fakes.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\Microsoft.Web.Infrastructure.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\Newtonsoft.Json.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Net.Http.Formatting.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.Helpers.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.Http.WebHost.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.Mvc.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.Optimization.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.Razor.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Deployment.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.WebPages.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Razor.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\WebGrease.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\BussinessLayer.pdb
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\LoginFrameWork.pdb
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\Newtonsoft.Json.xml
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Net.Http.Formatting.xml
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.Helpers.xml
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.Http.WebHost.xml
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.Mvc.xml
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.Razor.xml
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.WebPages.xml
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Deployment.xml
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.WebPages.Razor.xml
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\System.Web.Optimization.xml
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\bin\Antlr3.Runtime.pdb
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\obj\Release\iCoreMVC.csprojResolveAssemblyReference.cache
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\obj\Release\RdlCompile.cache
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\obj\Release\RdlCompile.compiled
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\obj\Release\iCoreMVC.dll
+D:\Projects\TFSOMV2\TFS_OM\iCoreMVC\obj\Release\iCoreMVC.pdb

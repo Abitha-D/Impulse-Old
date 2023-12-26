@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "YearlyReport";
+}
+
+<style>
+    .control-label {
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: right;
+    }
+
+    div.RoundedBox {
+        border-radius: 5px;
+        border: 1px solid Peru;
+        margin: auto;
+        overflow: hidden;
+        width: auto;
+        height: auto;
+    }
+</style>
+<div class="col-sm-12" style="padding-right:10px">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>&nbsp;</h5> <span class="label ">Report Credentials</span>
+
+            <div class="ibox-tools">
+
+
+                <strong>
+                    <a href="#">
+                        <i class="fa fa-arrow-left" id="btnSave" onclick="BackToFilter()" title="Back to Filter Report"></i>
+                    </a>
+                </strong>
+                <a class="collapse-link" title="Minimize">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div id="divcred">
+                <div class="col-sm-12" style="padding-top:10px">
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-5 control-label">Year:</label>
+                            <div class="input-group-btn">
+                                <select class="form-control" id="ddlYear" style="width:100%;">
+                                  
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary" id="genreport" onclick="GenerateReport()">
+                            <font color="white"><i style="color:white" class="fa fa-play" title=" Generate Report"></i></font> Generate Report
+
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-sm-12 hidden" id="divframe">
+                <div class="wrapper wrapper-content animated fadeInRight">
+
+                    <div class="row">
+
+                        <iframe src="" id="frmreport" style="width: 100%" frameborder="0" scrolling="auto"></iframe>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function BindYear() {
+
+        var cudt = new Date();
+        var year = cudt.getFullYear();
+
+        for (var i = year - 5; i <= year; i++) {
+            $("#ddlYear").append('<option  value="' + i + '">' + i + '</option>');
+
+        }
+
+    }
+    function BackToFilter() {
+        $('#divframe').addClass("hidden");
+        $('#divcred').removeClass("hidden");
+        var iframe = document.getElementById("frmreport");
+        iframe.src = "";
+    }
+    function GenerateReport() {
+        $('#divframe').removeClass("hidden")
+        $('#divcred').addClass("hidden")
+
+
+        var report_id = "18"; var report_codition = "";
+
+        var year = $('#ddlYear').val();
+        
+        if (year != "") {
+            report_codition = "where order_year=" + year + " order by order_month asc";
+        }
+        var paramNames = [], paramValues = [];
+        paramNames.push('sClientId');
+        paramValues.push(EmpId);
+        var strJsonDatas = eval({ strSessionID: UserSession, ProcParameters: paramNames, ProcInputData: paramValues });
+        var result = eval(oAPICall.SelectData(strJsonDatas, "GetMonthlyRpt"));
+
+        document.getElementById('frmreport').src = '';
+        document.getElementById('frmreport').src = '../Content/ReportsData/ReportViewer.aspx?report_id=' + report_id + '&report_codition=' + report_codition;
+
+    }
+
+
+    var sCurDate;
+    var date = new Date(), yr = date.getFullYear(),
+                    h = date.getHours(),
+                    m = date.getMinutes(),
+                    s = date.getSeconds(),
+                    month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
+                    day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(),
+                    sCurDate = month + '-' + day + '-' + yr;
+
+    function setYear() {
+        $('#ddlYear').val(yr);
+    }
+
+    $(document).ready(function () {
+        BindYear();
+        setYear();
+    })
+
+    $(function () {
+        var newheight = $(window).height() - 55;
+        $('#frmreport').css({ height: newheight + 'px' });
+    });
+
+    $(window).resize(function () {
+        var newheight = $(window).height() - 55;
+        $('#frmreport').css({ height: newheight + 'px' });
+    });
+
+</script>
+

@@ -1,0 +1,1309 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+@model iCoreMVC.Models.Process
+<link href="~/Content/css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+<link href="~/Content/css/plugins/fileupload/jquery.fileupload.css" rel="stylesheet" />
+<link href="~/Content/css/plugins/fileupload/jquery.fileupload-ui.css" rel="stylesheet" />
+<script src="~/Scripts/js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+<style>
+    .col-width {
+        width: 17%;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    .fan {
+        font-size: medium;
+        color: #f4f4f4;
+    }
+
+    .ui-state-highlight {
+        background: #c4e3fa !important;
+    }
+
+    .ui-jqgrid tr.ui-row-ltr td {
+        border-color: #c7c2c2;
+    }
+
+    .cvteste1 {
+        background-color: darkblue;
+        font-weight: bold;
+    }
+
+    #loadingDiv {
+        position: absolute;
+        top: 150px;
+        right: -475px;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 10000000;
+        opacity: 0.4;
+    }
+
+
+
+    /*textarea {
+        width: 400px;
+        height: 100px;
+    }*/
+
+    #WrData table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #WrData td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    #WrData tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+
+<body>
+
+    <div id="CPD_Master" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">Bulk Order Info</span>
+
+                    <div class="ibox-tools">
+                        <div class="col-sm-4">
+                            <strong><b><font color="blue">(Note: To assign bulk order download template >>)</font></b></strong>
+                        </div>
+                        <div class="col-sm-6">
+
+                            <a href="../Content/Template/Bulk Order.xlsx">
+                                <i class="fa fa-download text-md"></i>&nbsp;
+                                <span style="color:blue;">Download Template</span>
+
+                            </a>
+                        </div>
+
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+                        </strong>
+                        <a href="#" title="Refresh">
+                            <i class="fa fa-refresh" id="btnRefresh"></i>
+                        </a>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <div id="MainPage">
+
+
+                        <div class="form-group">
+
+
+                            @*@using (Html.BeginForm("Import", "Process", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {*@
+                            <div class="form-group" id="sDivClient" style="display:none;">
+                                <label class="col-sm-1 control-label">Client<font color="red">*</font> :</label>
+                                <div class="col-sm-2" style=" margin-top: -5px">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlclient" data-placeholder="Choose a client..." name="sClient">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" id="sDivSubClient" style="display:none;">
+                                <label class="col-sm-1 control-label">SubClient:</label>
+                                <div class="col-sm-2" style=" margin-top: -5px">
+                                    <select style="width:100%" class="form-control" id="ddlsubclient" data-placeholder="Choose a subclient..." name="sSubClient"></select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">Portal<font color="red">*</font> :</label>
+                                <div class="col-sm-2" style=" margin-top: -5px">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlPortal" data-placeholder="Choose a portal..." name="sPortal">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" id="sDivddlPht" style="display:none;">
+                                <label class="col-sm-1 control-label">Photographer:</label>
+                                <div class="col-sm-2" style=" margin-top: -5px">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlPhtghr" data-placeholder="Choose a photographer..." name="sPht">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" id="sDivdOrderVal" style="display:none;">
+                                <div class="col-sm-1">
+                                    <label class="control-label">OrderValue</label>
+
+                                </div>
+                                <div class="col-sm-1" style=" margin-top: -5px">
+                                    <input type="text" id="txtordervalue" placeholder="0.00" class="form-control" min="1" onkeypress="return isNumber(event)">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <br />
+                                @*<textarea class="col-sm-12" rows="11" cols="60" name="inputText" id="table-code-input" title="Paste cells from a spreadsheet here"></textarea>*@
+                                <div id="excelTextArea" class="">
+                                    <p><b>Paste excel data here</b></p>
+                                    <textarea class="col-sm-6" name="excel_data" style="height:200px" id="excel_data"></textarea><br>
+                                </div>
+                                <div id="excelWrongData">
+                                    <div class="col-sm-6" id="excel_table" style="height:200px;overflow-y:scroll">
+                                    </div>
+                                    @*<div class="col-sm-6">
+                                            <div>&nbsp;Reson</div><br />
+                                            <div>* Date Mismatch</div><br />
+                                            <div>* Blank Data</div>
+                                        </div>*@
+                                </div>
+                            </div>
+                            <div class="col-sm-12 form-group">
+                                <div class="col-sm-6">
+                                    <button type="button" class="btn btn-primary start" title="Start Upload Excel" id="Upload" onclick="javascript:generateTable()" value="Upload"><i class="fa fan fa-upload"></i><span>&nbsp;Upload</span></button>
+                                    <button type="button" class="btn btn-info start" title="Clear Excel Data" id="Reset" onclick="javascript:( location.reload())" value="Reset"><i class="fa fan fa-repeat"></i><span>&nbsp;Reset</span></button>
+                                    <button type="button" class="btn btn-warning start" title="Clear Excel Data" id="Cancel" onclick="javascript:(document.getElementById('excel_data').value = '')" value="Cancel"><i class="fa fan fa-ban"></i><span>&nbsp;Cancel</span></button>
+                                </div>
+                            </div>
+
+                            @*}*@
+
+                        </div>
+
+                    </div>
+                    <div id="ListPage">
+                        <div class="col-sm-12">
+
+                            <div class="jqGrid_wrapper">
+                                <table id="tblOrderListGrid"></table>
+                                <div id="pagerOrdergrid"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <input type="hidden" id="hdnOrderId" />
+        <div id="loadingDiv" style="display: none;">
+            <img id="myImage" src="~/Content/Image/loading_spinner.gif">
+        </div><br>
+        <div id="MailData" style="visibility: hidden">
+        </div>
+
+
+    </div>
+    <input type="hidden" id="customInput" data-value="@ViewBag.Error" />
+    <input type="hidden" id="custalert" data-value="@ViewBag.alert" />
+
+    @{
+        var jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+        var userInfoJson = jss.Serialize(ViewBag.ListProcess);
+    //var custaert = ViewBag.alert;
+    }
+</body>
+
+<script>
+
+    var alertmsg = @ViewBag.alert;
+    var sLengthSub=[];
+    var sClient;
+    var sPortalId;
+    var sGsubClientRslt=[];
+
+    function generateTable() {
+        var data = $('textarea[name=excel_data]').val();
+        var sClientId = $('#ddlclient').val();
+        if(data=="")
+        {
+            msgalert('Error', 'Paste your Excel Template Data and continue..', 3);
+            return
+        }
+        if(sClientId==0)
+        {
+            msgalert('Error', 'Select a client and Continue', 3);
+            return
+        }
+        $('#Cancel').addClass("hidden");
+        $('#excelTextArea').addClass("hidden");
+        $('#Upload').addClass("hidden")
+
+
+
+        PopulateOrderListGrid1();
+    }
+
+    function PopulateOrderListGrid1(sExcelData) {
+        var table = $('<table id="WrData" />');
+        var cnt=0;
+        var ncnt=0;
+        var data = $('textarea[name=excel_data]').val();
+        var rows = data.split("\n");
+        var sOrderList = [];
+        var list=[];
+        var notinsert=[];
+        var nList=[];
+        for(var y in rows) {
+            var cells = rows[y].split("\t");
+            if(cells[0]!=""){
+                for(var x in cells){
+                    if(parseInt(x)==1)
+                    {
+                        try {
+                            //cells[x]= cells[x].replace("-", "/");
+                            var xdate=cells[x].split("/")
+                            if(xdate.length==1){
+                                xdate=cells[x].split("-")
+                            }
+
+                            if(xdate.length==3){
+                                if(!isNaN(xdate[0]) && !isNaN(xdate[1]) && !isNaN(xdate[2]))
+                                {
+                                    if(xdate[0]<13){
+                                        list[x]= cells[x];
+                                        nList[x]=cells[x];
+                                    }
+                                    else{
+                                        list[x]= "";
+                                        nList[x]=cells[x];
+                                    }
+                                }
+                                else{
+                                    list[x]= "";
+                                    nList[x]=cells[x];
+                                }
+
+                            }
+                            else{
+                                list[x]= "";
+                                nList[x]=cells[x];
+                            }
+
+
+
+                        }
+                        catch(err){
+                            list[x]= "";
+                            nList[x]=cells[x];
+                        }
+
+                    }
+                    else{
+                        list[x]= cells[x];
+                        nList[x]=cells[x];
+                    }
+                }
+
+                if($('#txtordervalue').val()==""){
+                    var order_value='0.00'
+                }
+                else{
+                    var order_value=$('#txtordervalue').val();
+                }
+
+                if(list[0]!="" && list[1]!="" && list[2]!=""){
+                    sOrderList[cnt] = {
+                        order_id: cnt+1, subject_address: list[2], order_type: list[0], due_date: list[1],order_value:order_value,
+                        subclient_id: $('#ddlsubclient').val(),photographer_id: $('#ddlPhtghr').val()
+                    }
+                    cnt++;
+                }
+                else{
+                    notinsert[ncnt]={
+                        slno:ncnt+1,type:nList[0],dueDate:nList[1],portal:nList[2]
+                    }
+                    ncnt++;
+                }
+
+            }
+        }
+        if(notinsert.length!=0){
+            table.append('<tr style="background-color: red;color: white;"><th colspan=4><span id="ncnt">'+notinsert.length+'</span>&nbsp;Datas Not Imported to Grid; Mismach Found</th></tr>');
+            table.append('<tr style="background-color: blue;color: white;"><th>#</th><th>ORDER_TYPE</th><th>DUE_DATE (MM/DD/YYYY)</th><th>SUB_ADDRESS</th></tr>');
+        }
+        else{
+            $('#excelWrongData').addClass("hidden");
+        }
+
+        for(var i=0;i<notinsert.length;i++){
+            var row = $('<tr />');
+            row.append('<td>'+notinsert[i]["slno"]+'</td>');
+            row.append('<td>'+notinsert[i]["type"]+'</td>');
+            row.append('<td>'+notinsert[i]["dueDate"]+'</td>');
+            row.append('<td>'+notinsert[i]["portal"]+'</td>');
+            table.append(row);
+        }
+        $('#excel_table').html(table);
+        CreateBulkOrderGrid1(sOrderList);
+        return
+
+    }
+
+
+
+    function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57) && (iKeyCode != 13))
+            return false;
+
+        return true;
+    }
+
+    function BindClient() {
+        $('#ddlclient').empty().append();
+        $('#ddlclient').append('<option></option>');
+        var Condition = "where delete_status=0 and user_type=1";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectMasterClient");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlclient').append('<option value="' + Result[i]["ref_no"] + '">' + Result[i]["full_name"] + '</option>');
+            }
+        }
+        if (access_level == 2) {
+            $('#ddlclient').val(EmpId).change();
+            document.getElementById('sDivClient').style.display = "none";
+        }
+        else{
+            document.getElementById('sDivClient').style.display = "block";
+        }
+    }
+    function BindSubClient() {
+        try{
+            $('#ddlsubclient').empty().change();
+        }
+        catch(e){
+
+        }
+        var sClientId = $('#ddlclient').val();
+        var Condition = "where delete_status=0 and client_ref_id="+  sClientId +"";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsSubClient");
+
+        if (Result != "" && Result != null) {
+            if(Result.length >= 2){
+                sGsubClientRslt =Result;
+
+                $('#ddlsubclient').append('<option value="null">-Choose Subclient-</option>');
+                document.getElementById('sDivSubClient').style.display = "block";
+
+            }
+
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlsubclient').append('<option value="' + Result[i]["ref_no"] + '">' + Result[i]["full_name"] + '</option>');
+            }
+        }
+
+    }
+    function BindPortal() {
+        $('#ddlPortal').empty().change();
+        $('#ddlPortal').append('<option></option>');
+        var sClientId = $('#ddlclient').val();
+        var sCondition = " WHERE client_id =" + sClientId + " order by 1 desc";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectClientPortalList");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlPortal').append('<option value="' + Result[i]["portal_id"] + '">' + Result[i]["portal_name"] + '</option>');
+            }
+        }
+    }
+
+    function BindDropPhotographer() {
+
+        document.getElementById('sDivddlPht').style.display = "block";
+        document.getElementById('sDivdOrderVal').style.display = "block";
+
+        $('#ddlPhtghr').empty().append();
+        $('#ddlPhtghr').append('<option></option>');
+        //var sClientId = localStorage.getItem('GetClientId');
+        var sClientId=$('#ddlclient').val()
+        var sCondition = " WHERE delete_status=0 and client_id=" + sClientId + "";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectClientPhtMapList");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlPhtghr').append('<option value="' + Result[i]["photographer_id"] + '">' + Result[i]["full_name"] + '</option>');
+            }
+        }
+    }
+
+    var PhotographerList = [];
+    function getphotographer(){
+        PhotographerList = [];
+        var sClientId = $('#ddlclient').val();
+        var sCondition = " WHERE delete_status=0 and client_id=" + sClientId + "";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: 'photographer_id,full_name', strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectClientPhtMapList");
+
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                PhotographerList[i] = {
+                    photographer_id: Result[i]["photographer_id"].toString(),
+                    full_name:Result[i]["full_name"].toString()
+                };
+            }
+        }
+    }
+
+
+
+    function BindPhotographer() {
+
+        var item = '0' + ':' + '-- Select Photographer --';
+
+        if (PhotographerList.length != 0) {
+            for (var i = 0; i < PhotographerList.length; i++) {
+                var sPht_id = PhotographerList[i]["photographer_id"].toString();
+                var sPht_Desc = PhotographerList[i]["full_name"].toString();
+                if (item != null && item != '') {
+                    item = item + ';';
+                }
+                item = item + sPht_id + ':' + sPht_Desc;
+            }
+            return item;
+        }
+
+    }
+
+
+    var SubClientList = [];
+    function getsubclient(){
+        SubClientList = [];
+        var sClientId = $('#ddlclient').val();
+        var Condition = "where delete_status=0 and client_ref_id="+  sClientId +"";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames:  'ref_no,full_name', strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsSubClient");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                SubClientList[i] = {
+                    ref_no:  Result[i]["ref_no"].toString(),
+                    full_name:Result[i]["full_name"].toString()
+                };
+            }
+        }
+
+    }
+    function BindSubClientGD() {
+        var item = '0' + ':' + '-- Select Sub Client --';
+
+        if (SubClientList.length != 0) {
+            for (var i = 0; i < SubClientList.length; i++) {
+                var sRefNo = SubClientList[i]["ref_no"].toString();
+                var sFullName = SubClientList[i]["full_name"].toString();
+                if (item != null && item != '') {
+                    item = item + ';';
+                }
+                item = item + sRefNo + ':' + sFullName;
+            }
+            sLengthSub = SubClientList;
+            return item;
+
+        }
+    }
+
+
+    function CreateBulkOrderGrid1(Data) {
+        var oJQGridFunctions = new JQGridFunctions();
+        colNames = ['SI.No', 'Subject Address', 'Order Date', 'Due Date', '', 'Order Type', 'Client', 'PhotoGrapher', 'Sub Client','Status', 'Pic Available', 'ClientId', 'ClientParentId', 'PortalId','Order Value'];
+        colModel = [
+         { name: 'order_id', index: 'order_id', width: 30, sorttype: "string", search: false,  align: 'center' },
+          { name: 'subject_address', index: 'subject_address', width: 160, sorttype: "string", search: false },
+            { name: 'order_date', index: 'order_date', width: 70, sorttype: "string", hidden: true },
+            { name: 'due_date', index: 'due_date', width: 70, sorttype: "string", search: false },
+            { name: 'photo_due_date', index: 'photo_due_date', width: 70, sorttype: "string", hidden: true, formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y (h:i A)" } },
+            { name: 'order_type', index: 'order_type', width: 50, sorttype: "string", search: false, align: 'center' },
+            { name: 'client_id', index: 'client_id', width: 70, sorttype: "string", hidden: true },
+            {
+                name: 'photographer_id', index: 'photographer_id', width: 70, search: false, editable: true, edittype: "select", formatter: "select", classes: 'cvteste1',
+                editoptions: { value: BindPhotographer() }
+            },
+             {
+                 name: 'subclient_id', index: 'subclient_id', width: 60, search: false,editable: true, edittype: "select", formatter: "select", classes: 'cvteste1',
+                 editoptions: { value: BindSubClientGD() }
+             },
+            { name: 'status', index: 'status', width: 70, sorttype: "string", hidden: true, align: 'center' },
+            { name: 'pic_available', index: 'pic_available', width: 70, sorttype: "string", hidden: true },
+            { name: 'ClientId', index: 'ClientId', width: 7, sorttype: "string", hidden: true },
+            { name: 'ClientParentId', index: 'ClientParentId', width: 7, sorttype: "string", hidden: true },
+            { name: 'PortalId', index: 'PortalId', width: 7, sorttype: "string", hidden: true },
+            { name: 'order_value', index: 'order_value', width: 35, sorttype: "string", search: false,editable:true }
+
+        ];
+
+        var mydata = '';
+        mydata = Data;
+        var sLength=100;
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblOrderListGrid', '#pagerOrdergrid', 'Bulk Order List', 280, sLength, true, mydata, true);
+
+        $("#tblOrderListGrid").jqGrid('setGridParam',
+                  {
+                      cellsubmit: 'clientArray',
+                      onCellSelect: function (rowid, iCol/*,cellcontent,e*/) {
+                          if ($('#jqg_tblOrderListGrid_' + rowid.toString()).is(':checked')) {
+                              var ids = $(this).jqGrid('getDataIDs');
+                              //  $(this).jqGrid("resetSelection");
+                              // $(this).jqGrid("setSelection", null);
+                          }
+                      }
+                  });
+        if( sLengthSub.length >=2){
+            $("#tblOrderListGrid").showCol("subclient_id");
+        }
+        else{
+            $("#tblOrderListGrid").hideCol("subclient_id");
+        }
+
+
+        //  $("#tblOrderListGrid").jqGrid ('setLabel', 'subject_address', '', {'align':'center'}, {'title':'My ToolTip for the product name column header'});
+    }
+
+    function CreateBulkOrderGrid(sExcelData) {
+        var oJQGridFunctions = new JQGridFunctions();
+        colNames = ['SI.No', 'Subject Address', 'Order Date', 'Due Date', '', 'Order Type', 'Client', 'PhotoGrapher', 'Sub Client','Status', 'Pic Available', 'ClientId', 'ClientParentId', 'PortalId','Order Value'];
+        colModel = [
+         { name: 'order_id', index: 'order_id', width: 30, sorttype: "string", search: false,  align: 'center' },
+          { name: 'subject_address', index: 'subject_address', width: 160, sorttype: "string", search: false },
+            { name: 'order_date', index: 'order_date', width: 70, sorttype: "string", hidden: true },
+            { name: 'due_date', index: 'due_date', width: 70, sorttype: "string", search: false },
+            { name: 'photo_due_date', index: 'photo_due_date', width: 70, sorttype: "string", hidden: true, formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y (h:i A)" } },
+            { name: 'order_type', index: 'order_type', width: 50, sorttype: "string", search: false, align: 'center' },
+            { name: 'client_id', index: 'client_id', width: 70, sorttype: "string", hidden: true },
+            {
+                name: 'photographer_id', index: 'photographer_id', width: 70, search: false, editable: true, edittype: "select", formatter: "select", classes: 'cvteste1',
+                editoptions: { value: BindPhotographer() }
+            },
+             {
+                 name: 'subclient_id', index: 'subclient_id', width: 60, search: false,editable: true, edittype: "select", formatter: "select", classes: 'cvteste1',
+                 editoptions: { value: BindSubClientGD() }
+             },
+            { name: 'status', index: 'status', width: 70, sorttype: "string", hidden: true, align: 'center' },
+            { name: 'pic_available', index: 'pic_available', width: 70, sorttype: "string", hidden: true },
+            { name: 'ClientId', index: 'ClientId', width: 7, sorttype: "string", hidden: true },
+            { name: 'ClientParentId', index: 'ClientParentId', width: 7, sorttype: "string", hidden: true },
+            { name: 'PortalId', index: 'PortalId', width: 7, sorttype: "string", hidden: true },
+            { name: 'order_value', index: 'order_value', width: 35, sorttype: "string", search: false,editable:true }
+
+        ];
+
+        var mydata = '';
+        mydata = PopulateOrderListGrid(sExcelData);
+        var sLength=100;
+        if(sExcelData != null)
+            sLength = sExcelData.length;
+
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblOrderListGrid', '#pagerOrdergrid', 'Bulk Order List', 280, sLength, true, mydata, true);
+
+        $("#tblOrderListGrid").jqGrid('setGridParam',
+                  {
+                      cellsubmit: 'clientArray',
+                      onCellSelect: function (rowid, iCol/*,cellcontent,e*/) {
+                          if ($('#jqg_tblOrderListGrid_' + rowid.toString()).is(':checked')) {
+                              var ids = $(this).jqGrid('getDataIDs');
+                              //  $(this).jqGrid("resetSelection");
+                              // $(this).jqGrid("setSelection", null);
+                          }
+                      }
+                  });
+        if( sLengthSub.length >=2){
+            $("#tblOrderListGrid").showCol("subclient_id");
+        }
+        else{
+            $("#tblOrderListGrid").hideCol("subclient_id");
+        }
+
+
+        //  $("#tblOrderListGrid").jqGrid ('setLabel', 'subject_address', '', {'align':'center'}, {'title':'My ToolTip for the product name column header'});
+    }
+
+
+    function PopulateOrderListGrid(sExcelData) {
+
+        if (sExcelData != '' && sExcelData != null) {
+            var sOrderList = [];
+            BindDropPhotographer();
+            BindSubClient();
+            for (var i = 0; i < sExcelData.length; i++) {
+                var sSubject = sExcelData[i].SUB_ADDRESS;
+                var sOrderType = sExcelData[i].ORDER_TYPE;
+                var sOrderDueDt = sExcelData[i].DUE_DATE;
+                var sOrderValue = sExcelData[i].order_value;
+                if(sOrderValue == null)
+                    sOrderValue= '0.00'
+                sClient = sExcelData[i].sClient;
+
+                sPortalId = sExcelData[i].PORTAL;
+
+                $('#ddlclient').val(sClient).change();
+                $('#ddlPortal').val(sPortalId).change();
+                var sSubClientId =  $('#ddlsubclient').val();
+
+                sOrderList[i] = {
+                    order_id: i + 1, subject_address: sSubject, order_type: sOrderType, due_date: sOrderDueDt,order_value:sOrderValue,
+                    subclient_id:sSubClientId
+
+                };
+                hide();
+            }
+            return sOrderList;
+        }
+
+    }
+
+
+
+    function SaveBulkOrder(sClientId) {
+
+        var Rowids = $("#tblOrderListGrid").getGridParam('selarrrow');
+        //var cudate = new Date();
+        //cudate = FormatCurrentDate("yyyy-mm-dd", cudate);
+        //dt = cudate.split("-");
+        //var cdt = dt[1] + "/" + dt[2] + "/" + dt[0];
+        //var time = FormatTimeAMPM(new Date());
+        var cudate = oAPICall.GetServerDateOm();
+
+        var Condition = "where client_id=" + sClientId + " order by 1 desc";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsClientFee");
+        var sDataExtFee = 0;
+        var sDataIntFee = 0;
+        var sQaFee = 0;
+        var sPhtFee = 0;
+        var sPhtIntFee = 0;
+        var sPhtExtFee = 0;
+        var sDataFee = 0;
+        if (Result != "" && Result != null) {
+            sDataExtFee = Result[0]["data_ext_fee"];
+            sDataIntFee = Result[0]["data_int_fee"];
+            sPhtIntFee = Result[0]["photo_int_fee"];
+            sPhtExtFee = Result[0]["photo_ext_fee"];
+            sQaFee = Result[0]["qa_fee"];
+        }
+        var sPhtghrId = [];
+        var sSubAddress = [];
+        var sMasterAccNo="";
+        var sCondition = " WHERE CM_DELETESTATUS=0 and bts_client_id=" + sClientId + "";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectClientTFS");
+        if (Result != '' && Result != null) {
+            sMasterAccNo = Result[0].CM_CUSTOMER_ID;
+        }
+        // var sPht_SubAddress = [];
+        for (var i = 0; i < Rowids.length; i++) {
+            var RowData = $("#tblOrderListGrid").getRowData(Rowids[i]);
+            var sOrderDueDate =  $.trim(RowData["due_date"]);
+            //sOrderDueDate = new Date(sOrderDueDate);
+            //sOrderDueDate = FormatCurrentDate("yyyy-mm-dd", sOrderDueDate);
+            var dt=[];
+            dt = sOrderDueDate.split("-");
+            if(dt.length==1){
+                dt=sOrderDueDate.split("/")
+            }
+            var sOrdDuecdt = dt[0] + "/" + dt[1] + "/" + dt[2];
+            var sOrderDuetime = "22:00:00.000"
+            //  var sPhtDueDate = RowData["photo_due_date"];
+            var sSubaddress = $.trim(RowData["subject_address"]);
+            var sOrderTypeDesc = $.trim(RowData["order_type"]);
+            var sOrderType = 1;
+            if (sOrderTypeDesc == 'INT' || sOrderTypeDesc == 'Interior'  || sOrderTypeDesc == 'int' || sOrderTypeDesc == 'Int') {
+                sOrderType = 1;
+                sDataFee = sDataIntFee;
+                sPhtFee = sPhtIntFee;
+            }
+            else if(sOrderTypeDesc == 'EXT' || sOrderTypeDesc == 'Exterior'  || sOrderTypeDesc == 'ext' || sOrderTypeDesc == 'Ext') {
+                sOrderType = 2;
+                sDataFee = sDataExtFee;
+                sPhtFee = sPhtExtFee;
+            }
+            else if(sOrderTypeDesc == 'RNT' || sOrderTypeDesc == 'rnt' || sOrderTypeDesc == 'Rental' || sOrderTypeDesc == 'Rnt' || sOrderTypeDesc == 'rental') {
+                sOrderType = 3;
+            }
+            else if(sOrderTypeDesc == 'MMR/PCR' || sOrderTypeDesc == 'PCR' || sOrderTypeDesc == 'MMR'  || sOrderTypeDesc == 'mmr'  || sOrderTypeDesc == 'pcr' || sOrderTypeDesc == 'Pcr') {
+                sOrderType = 4;
+            }
+            else if(sOrderTypeDesc == 'INP' || sOrderTypeDesc == 'Inspection' || sOrderTypeDesc == 'inp' || sOrderTypeDesc == 'Inp') {
+                sOrderType = 5  ;
+            }
+            else if(sOrderTypeDesc == 'COM' || sOrderTypeDesc == 'Commercial' || sOrderTypeDesc == 'Com'|| sOrderTypeDesc == 'com') {
+                sOrderType = 6;
+            }
+            else if(sOrderTypeDesc == 'Other') {
+                sOrderType = 7;
+            }
+            else if(sOrderTypeDesc == 'INT + RNT' || sOrderTypeDesc == 'INT+RNT') {
+                sOrderType = 8;
+            }
+            else if(sOrderTypeDesc == 'INT + RNT + INP' || sOrderTypeDesc == 'INT+RNT+INP') {
+                sOrderType = 9;
+            }
+            else if(sOrderTypeDesc == 'INT + INP' || sOrderTypeDesc == 'INT+INP') {
+                sOrderType = 10;
+            }
+            else if(sOrderTypeDesc == 'EXT + RNT' || sOrderTypeDesc == 'EXT+RNT') {
+                sOrderType = 11;
+            }
+            else if(sOrderTypeDesc == 'EXT + RNT + INP' || sOrderTypeDesc == 'EXT+RNT+INP') {
+                sOrderType = 12;
+            }
+            else if(sOrderTypeDesc == 'EXT + INP' || sOrderTypeDesc =='EXT+INP') {
+                sOrderType = 13;
+            }
+            else if(sOrderTypeDesc == 'INT PI' || sOrderTypeDesc == 'INTPI') {
+                sOrderType = 14;
+            }
+            else if(sOrderTypeDesc == 'INT PP' || sOrderTypeDesc == 'INTPP') {
+                sOrderType = 15;
+            }
+            else if(sOrderTypeDesc == 'INT OC' || sOrderTypeDesc == 'INTOC') {
+                sOrderType = 16;
+            }
+            else if(sOrderTypeDesc == 'EXT PC' || sOrderTypeDesc =='EXTPC') {
+                sOrderType = 17;
+            }
+            else if(sOrderTypeDesc == 'EXT PI' || sOrderTypeDesc =='EXTPI') {
+                sOrderType = 18;
+            }
+
+            var n = sSubaddress.split(" ");
+            var sZipcode = n[n.length - 1].split("-")
+            var sStateId = '';
+            var sCountyId = '';
+            var sCityId = '';
+            if (!isNaN(sZipcode)) {
+                var Condition = "where zip_code=" + sZipcode + "";
+                var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+                var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsZipCode");
+                if (Result != "" && Result != null) {
+                    sStateId = Result[0]["state_id"];
+                    sCountyId = Result[0]["county_id"];
+                    sCityId = Result[0]["city_id"];
+                    sZipcode = Result[0]["zip_code"];
+                }
+            }
+            else {
+                sZipcode = '';
+            }
+            var sPhotographerid = RowData["photographer_id"];
+            sPhtghrId.push(RowData["photographer_id"]);
+            sSubAddress.push(RowData["subject_address"]);
+            //  sPht_SubAddress = eval({ sphtid: sPhtghrId, saddress: sSubAddress });
+            var sSubClientId=RowData["subclient_id"];
+            var sHierarchyId = null;
+            if(sSubClientId != "" && sSubClientId != null){
+                sSubClientId = $('#ddlsubclient').val();
+
+                var sCondition = " WHERE CM_DELETESTATUS=0 and bts_sub_client_id=" + sSubClientId + "";
+                var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+                var Result = oAPICall.SelectData(strJsonDatas, "SelectClientTFS");
+                if (Result != '' && Result != null) {
+                    sHierarchyId = Result[0].CM_CUSTOMER_ID;
+                }
+            }
+            if (sPhotographerid != "") {
+                var sStrJsonDatas = eval({
+                    order_code: '', order_posted_by: sClientId, order_date: cudate,
+                    order_due_date: sOrderDueDate + " " + sOrderDuetime, photo_due_date: sOrderDueDate + " " + sOrderDuetime,
+                    subject_address: RowData["subject_address"], state_id: sStateId, city_id: sCityId, zip_code: sZipcode,
+                    county_id: sCountyId, portal_id: $('#ddlPortal').val(), photographer_id: RowData["photographer_id"],
+                    order_type: sOrderType, order_status: 1, is_entry_comp: 0, is_paid: 0,is_bulk_order: 1,
+                    delete_status: 0, count_photo_upload: 0, count_file_upoad: 0, is_photo_upload: 0, created_by: CurrentUser,
+                    created_date: cudate, data_fee: sDataFee, qa_fee: sQaFee, photo_fee: sPhtFee, dataentry_id: 2, qa_id: 2,
+                    subclient_id: sSubClientId, order_value: RowData["order_value"]
+                });
+                var Result = oAPICall.InsertData(sStrJsonDatas, 'CreateOrder');
+                if (Result != null && Result != '') {
+                    var sOrderId =Result[0].IDENTITY;
+                    $('#hdnOrderId').val(sOrderId);
+
+
+                    var StrJsonDatasom = eval({
+                        order_date: cudate,  master_account_no: sMasterAccNo, hierarchy_id: sHierarchyId,
+                        subject_address:RowData["subject_address"],state_id: sStateId, order_type: sOrderType,
+                        order_urgency: "1", order_priority: "2",  clarification_status: "0",
+                        photo_req_status: "0",status_id: "1", status_reason_id: "11", emp_ref_no: "-1",
+                        delete_status: 0, site_ref_no: $('#ddlPortal').val(),
+                        mls_site_ref_no: "0", is_review_checked: "0", due_date: sOrderDueDate + " " + sOrderDuetime,
+                        priority_param_id: 11, bts_order_id: sOrderId, is_from_bts: 1,photo_req_status: 1
+                    });
+                    var Result_om = oAPICall.InsertData(StrJsonDatasom, 'CreateOrderom');
+
+                }
+            }
+        }
+        if (Result != null && Result != '') {
+            //loader(0);
+
+            SendMail(sPhtghrId, sSubAddress);
+            loader(0);
+            //  hide();
+            Reset();
+
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblOrderListGrid').setGridWidth(sWidth - 5);
+            setTimeout(function () {
+                msgalert('Success', 'Successfully Created', 1);
+                location.reload();
+            }, 500);
+
+
+        }
+        else{
+            setTimeout(function () {
+                loader(0);
+                msgalert('Error', 'Not saved, please recheck the bulk data', 3);
+       
+            }, 500);
+        }
+    }
+
+
+    ///////////////////////////////////////////////////////////////Mail Code Start ///////////////////////////////////////////////////////////////////
+
+    function SendMail(sPhtghrId, sSubAddress) {
+
+        //For Photographer mail
+
+        var sPhtId = '';
+        for (var i = 0; i < sPhtghrId.length; i++) {
+
+            sPhtId += sPhtghrId[i] + ',';
+        }
+        var sPhtName = ""; var sPhtEmailId = ""; var sRefNo = "";
+        var Condition = 'Where ref_no in (' + sPhtId.replace(/,\s*$/, "") + ')';
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "Selectformcpdmaster");
+
+        if (Result != "" && Result != null) {
+            var rowID = $("#tblOrderListGrid").getGridParam('selarrrow');
+            var k = 1;
+            for (var i = 0; i < Result.length; i++) {
+                sRefNo = Result[i]["ref_no"];
+                sPhtName = Result[i]["full_name"];
+                sPhtEmailId = Result[i]["email_id"];
+                var sFinalSub = [];
+                sFinalSub.push(["Sl No.", "Subject Address", "Order Type","Order Due Date"])
+                for (var j = 0; j < rowID.length; j++) {
+                    var sPhId = $('#tblOrderListGrid').getCell(rowID[j], 'photographer_id');
+                    var sSubAd = $('#tblOrderListGrid').getCell(rowID[j], 'subject_address');
+                    var sOrderType = $('#tblOrderListGrid').getCell(rowID[j], 'order_type');
+                    var sDueDt = $('#tblOrderListGrid').getCell(rowID[j], 'due_date');
+                    //  var sPhId = sPht_SubAddress[j]["sPhtghrId"];
+                    // var sSubAd = sPht_SubAddress[j]["sSubAddress"];
+
+                    if (sPhId == sRefNo) {
+
+                        sFinalSub.push([k++, sSubAd, sOrderType,sDueDt]);
+                        //sFinalSub += sSubAd +'   '+ ' and Order Type is  ' + sOrderType + ' and Due date is ' + sDueDt + '</br>';
+                    }
+                }
+
+
+                // sFinalSub = sFinalSub.replace(/,\s*$/, "");
+                SendMailBulkOrder(sPhtEmailId, sFinalSub, sPhtName);
+                sFinalSub = '';
+
+            }
+
+        }
+
+        //For Data Entry
+        var sSubAd = [];
+        var p=1;
+        sSubAd.push(["Sl No.", "Subject Address", "Order Type","Order Due Date"])
+        var rowID = $("#tblOrderListGrid").getGridParam('selarrrow');
+
+        for (var j = 0; j < rowID.length; j++) {
+            var sPhId = $('#tblOrderListGrid').getCell(rowID[j], 'photographer_id');
+            var sSubAddrs = $('#tblOrderListGrid').getCell(rowID[j], 'subject_address');
+            var sOrderType = $('#tblOrderListGrid').getCell(rowID[j], 'order_type');
+            var sDueDt = $('#tblOrderListGrid').getCell(rowID[j], 'due_date');
+            sSubAd.push([p++, sSubAddrs, sOrderType,sDueDt]);
+            //  sSubAd += sSubAddrs + '   ' + ' and Order Type is  ' + sOrderType +'  and Due date is'+ sDueDt +'</br>';
+        }
+
+        var sDeName = ""; var sDeEmailId = ""; var sRefNo = "";
+        var Condition = 'Where user_type=3';//Data Entry type
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "Selectformcpdmaster");
+        if (Result != "" && Result != null) {
+            sRefNo = Result[0]["ref_no"];
+            sDeName = Result[0]["full_name"];
+            sDeEmailId = Result[0]["email_id"];
+        }
+        SendMailBulkOrder(sDeEmailId, sSubAd, sDeName);
+
+    }
+
+
+    function SendMailBulkOrder(sPhtEmailId, sFinalSub, sPhtName) {
+
+
+        sMailBody = CreateMailBody_neworder(sFinalSub, sPhtName);
+        StrJsonDatas = eval({
+            mail_to: sPhtEmailId,
+            mail_subject: 'Bulk Order Created',
+            mail_body: sMailBody
+        });
+        var Result = oAPICall.Sendmail(StrJsonDatas, 'sendmailwithoutattachment');
+    }
+
+    function CreateMailBody_neworder(sFinalSub, sPhtName) {
+        var sMailBody = "<b>New Bulk Order Created</b>";
+        var table = document.createElement("TABLE");
+        table.border = "1";
+        var row = table.insertRow(-1);
+        for (var m = 0; m< 4; m++) {
+            var headerCell = document.createElement("TH");
+            headerCell.innerHTML = sFinalSub[0][m];
+            row.appendChild(headerCell);
+        }
+        for (var i = 1; i < sFinalSub.length; i++) {
+            row = table.insertRow(-1);
+            for (var j = 0; j < 4; j++) {
+                var cell = row.insertCell(-1);
+                cell.innerHTML = sFinalSub[i][j];
+            }
+        }
+
+        document.getElementById('MailData').innerHTML = "";
+
+        var Condition = ' where mail_type=9 '; // mail type 3  is Bulk order Creation
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectEmailTemplate");
+
+        if (Result != null || Result != '') {
+            var sMailData = Result[0].mail_body;
+
+            document.getElementById('MailData').innerHTML = sMailData;
+            document.getElementById('destiname').innerHTML = sPhtName;
+            var dvTable = document.getElementById("dvBulkTable");
+            dvTable.innerHTML = "";
+            dvTable.appendChild(table);
+
+            //  document.getElementById('address').innerHTML = sFinalSub;
+            document.getElementById('company_address').innerHTML = CompanyName;
+
+        }
+        return document.getElementById('MailData').innerHTML;
+    }
+
+
+    function CreateMailLog() {
+        var mail_type = "9"; // mail type 9  is Bulk Order
+        var username = UserName;
+        var mail_from = "icorepioneertech@gmail.com";
+        var mail_to = $('#hdnEmailId').val();
+        var mail_cc = "";
+        var mail_bcc = "";
+        var mail_sub = 'E-mail Verification Code';
+        var mail_body = CreateMailBody();
+        var mail_send_datetime = new Date();
+        var dt = dateFormat(dt, "isoDateTime");
+        var loginuser = UserName;
+        var mail_sendornot = 1; //set to 0 if mail not send
+        var mail_attachment = 1; //set to 0 if there is no attachment
+
+        var strJsonDatas = eval({
+            mail_temp_no: mail_type, mail_from: mail_from, mail_to: mail_to, mail_cc: mail_cc, mail_bcc: mail_bcc,
+            mail_sub: mail_sub, mail_body: mail_body, loginuser: CurrentUser, mail_send_datetime: mail_send_datetime, mail_send_by: CurrentUser,
+            mail_sendornot: mail_sendornot, mail_attachment: mail_attachment
+        });
+
+        var Result = oAPICall.InsertData(strJsonDatas, 'CreateEmailLog');
+
+    }
+
+    ///////////////////////////////////////////////////////////////Mail Code end ///////////////////////////////////////////////////////////////////
+
+    function show() {
+        document.getElementById("loadingDiv").style.display = "block";
+        // setTimeout("hide()", 7000);  // 5 seconds
+    }
+    function hide() {
+        document.getElementById("loadingDiv").style.display = "none";
+    }
+
+    function Reset() {
+        $('#ddlclient').val('').change();
+        $('#ddlPortal').val('').change();
+        $('#ddlPhtghr').val('').change();
+        BindClient();
+        BindPortal();
+        var sExcelData = '';
+        $('#hdnOrderId').val('');
+        $('#tblOrderListGrid').jqGrid('GridUnload');
+        //CreateBulkOrderGrid(sExcelData);
+    }
+
+
+    $(document).ready(function () {
+
+        var sLoader ='@ViewBag.alert';
+        if(sLoader == "1"){
+            loader(0);
+        }
+        BindClient();
+
+
+
+        //var clipText = window.clipboardData.getData('Text');
+        $('#ddlclient').change(function () {
+            BindPortal();
+            var sClient = $('#ddlclient').val();
+
+            getphotographer();
+            getsubclient();
+            //localStorage.setItem('GetClientId', sClient);
+            //localStorage.setItem('GetPClientId', sClient);
+
+            $('#ddlPhtghr').empty().change();
+            //if (sExcelData != '' && sExcelData != null) {
+            BindDropPhotographer();
+            BindSubClient();
+            //}
+        });
+
+        @*var customVal = $("#customInput").data("value");
+
+        if (customVal != undefined && customVal != '') {
+            msgalert('Warning', customVal, 2);
+        }
+
+        var sExcelData = JSON.parse('@Html.Raw(userInfoJson)');*@
+        //CreateBulkOrderGrid(sExcelData);
+
+        //var sWidth = $('.jqGrid_wrapper').width();
+        //$('#tblOrderListGrid').setGridWidth(sWidth - 5);
+
+        setTimeout(function () {
+            if (access_level == 2) {
+
+                $('#ddlclient').val(EmpId).change();
+
+                $('#ddlclient').attr('disabled', true);
+                $('#ddlPortal').val(sPortalId).change();
+                document.getElementById('sDivClient').style.display = "none";
+            }
+            else{
+                document.getElementById('sDivClient').style.display = "block";
+            }
+            $('.ui-pg-selbox').hide();
+
+        }, 1000);
+
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblOrderListGrid').setGridWidth(sWidth);
+
+        });
+        $("#btnRefresh").click(function () {
+            Reset();
+        });
+
+
+        $("#PhotoUpload").change(function () {
+            var sClient = $('#ddlclient').val();
+            if (sClient > 0) {
+                var exefilename = $('#PhotoUpload').val().split('\\');
+
+                document.getElementById("sfilename").innerHTML = "  " + exefilename[2] + " ";
+            }
+            else {
+                msgalert('Warning', 'Please choose a client first..', 2);
+                $('#PhotoUpload').val('');
+                return;
+            }
+
+        });
+
+        $("#PhotoUpload").click(function (e) {
+
+            var sClient = $('#ddlclient').val();
+
+            if (sClient > 0) { }
+            else {
+                e.preventDefault();
+                msgalert('Warning', 'Please choose a client first..', 2);
+                $('#PhotoUpload').val('');
+                return false;
+            }
+        });
+
+        $('#ddlPhtghr').change(function () {
+            try{
+                var Rowids = $("#tblOrderListGrid").getGridParam('selarrrow');
+
+                if (Rowids.length <= 0) {
+                    var rowID = $('#tblOrderListGrid').jqGrid('getDataIDs');
+                    for (var i = 0, len = rowID.length; i < len; i++) {
+                        var currRow = rowID[i];
+                        var sOrderId = parseFloat($('#tblOrderListGrid').getCell(currRow, 'order_id'));
+                        $('#tblOrderListGrid').setCell(currRow, 'photographer_id', this.value);
+
+                    }
+                }
+                else {
+                    for (var i = 0, len = Rowids.length; i < len; i++) {
+                        var currRow = Rowids[i];
+                        var sOrderId = parseFloat($('#tblOrderListGrid').getCell(currRow, 'order_id'));
+                        $('#tblOrderListGrid').setCell(currRow, 'photographer_id', this.value);
+
+                    }
+                }
+            }
+            catch(e){}
+        });
+        $('#txtordervalue').change(function () {
+            try{
+                var Rowids = $("#tblOrderListGrid").getGridParam('selarrrow');
+
+                if (Rowids.length <= 0) {
+
+                    var rowID = $('#tblOrderListGrid').jqGrid('getDataIDs');
+                    for (var i = 0, len = rowID.length; i < len; i++) {
+                        var currRow = rowID[i];
+                        var sOrderId = parseFloat($('#tblOrderListGrid').getCell(currRow, 'order_id'));
+                        $('#tblOrderListGrid').setCell(currRow, 'order_value', this.value);
+
+                    }
+                }
+                else {
+
+                    for (var i = 0, len = Rowids.length; i < len; i++) {
+                        var currRow = Rowids[i];
+                        var sOrderId = parseFloat($('#tblOrderListGrid').getCell(currRow, 'order_id'));
+                        $('#tblOrderListGrid').setCell(currRow, 'order_value',this.value);
+
+                    }
+                }
+                if(  $('#txtordervalue').val() == ''){
+                    var rowID = $('#tblOrderListGrid').jqGrid('getDataIDs');
+                    for (var i = 0, len = rowID.length; i < len; i++) {
+                        var currRow = rowID[i];
+                        var sOrderId = parseFloat($('#tblOrderListGrid').getCell(currRow, 'order_id'));
+                        $('#tblOrderListGrid').setCell(currRow, 'order_value', '0.00');
+
+                    }
+                }
+            }
+            catch(e){}
+        });
+
+        $('#ddlsubclient').change(function () {
+            try{
+                var Rowids = $("#tblOrderListGrid").getGridParam('selarrrow');
+
+                if (Rowids.length <= 0) {
+                    var rowID = $('#tblOrderListGrid').jqGrid('getDataIDs');
+                    for (var i = 0, len = rowID.length; i < len; i++) {
+                        var currRow = rowID[i];
+                        var sOrderId = parseFloat($('#tblOrderListGrid').getCell(currRow, 'order_id'));
+                        $('#tblOrderListGrid').setCell(currRow, 'subclient_id', this.value);
+
+                    }
+                }
+                else {
+                    for (var i = 0, len = Rowids.length; i < len; i++) {
+                        var currRow = Rowids[i];
+                        var sOrderId = parseFloat($('#tblOrderListGrid').getCell(currRow, 'order_id'));
+                        $('#tblOrderListGrid').setCell(currRow, 'subclient_id', this.value);
+
+                    }
+                }
+            }
+            catch(e){}
+        });
+
+        $('#btnSave').click(function () {
+            // loader(1);
+
+            var sClientId = $('#ddlclient').val();
+            if (sClientId == "") {
+                document.getElementById('ddlclient').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please choose client..', 2);
+                return;
+            }
+            if ($('#ddlPortal').val() == "") {
+                document.getElementById('ddlPortal').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please choose portal..', 2);
+                return;
+            }
+            var Rowids = $("#tblOrderListGrid").getGridParam('selarrrow');
+
+            if (Rowids.length <= 0) {
+                msgalert('Warning', 'Select atleast one order to continue..', 2);
+                return;
+            }
+            else {
+                for (var i = 0; i < Rowids.length; i++) {
+                    var RowData = $("#tblOrderListGrid").getRowData(Rowids[i]);
+                    var sPhtId = RowData["photographer_id"];
+                    var sSubCtId = RowData["subclient_id"];
+                    var sOrderValue = RowData["order_value"];
+                    if (sOrderValue == '0.00' || sOrderValue <= 0) {
+                        // $('#tblOrderListGrid').jqGrid('setRowData', Rowids[i], false, { color: 'black', weightfont: 'bold', background: 'red' });//f1bb69
+                        msgalert('Error', 'Enter a order value of Row No: ' + Rowids[i] + ' and continue..', 3);
+                        return;
+                    }
+                    if (sPhtId == "" || sPhtId == 0) {
+                        // $('#tblOrderListGrid').jqGrid('setRowData', Rowids[i], false, { color: 'black', weightfont: 'bold', background: 'red' });//f1bb69
+                        msgalert('Error', 'Choose a Photogrpaher of Row No: ' + Rowids[i] + ' and continue..', 3);
+                        return;
+                    }
+                    if(sLengthSub.length >= 2){
+                        if (sSubCtId == "" || sSubCtId == 0) {
+                            msgalert('Error', 'Choose a SubClient of Row No: ' + Rowids[i] + ' and continue..', 3);
+                            return;
+                        }
+                    }
+                }
+            }
+            if (sClientId != "") {  //Create Mode
+                //show();
+                loader(1);
+                setTimeout(function () {
+                    SaveBulkOrder(sClientId);
+
+                }, 1000);
+
+            }
+        });
+
+        //if (ListP != null) {
+        //    var model = JSON.parse(ViewBag.ListProcess);
+        //    //var json = $.parseJSON(ListP);
+        //}
+
+
+    });
+
+</script>

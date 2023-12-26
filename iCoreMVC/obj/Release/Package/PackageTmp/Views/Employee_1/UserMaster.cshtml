@@ -1,0 +1,780 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link href="~/Content/css/style.css" rel="stylesheet" />*@
+
+<style>
+    /*.col-width {
+        width: 17%;
+    }*/
+</style>
+<style>
+
+    .capitalize {
+        text-transform: uppercase;
+    }
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    .select2-container--default.select2-container--disabled .select2-selection--single {
+        background-color: white;
+    }
+
+    /*
+        new style
+        */
+    select::-webkit-select-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    .select2-container {
+        font-size: 12px;
+    }
+
+    textarea::-webkit-input-placeholder {
+        font-size: 13px;
+        line-height: 2;
+    }
+
+    .setbackgroundcolor a {
+        color: green !important;
+    }
+
+    .DivBorder {
+        border: 1px solid grey;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="UserMaster" class="divbody">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">User Profile</span>
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+
+                        </strong>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-file-o" id="btnNew" onclick="parent.document.getElementById('framecontent').src = '../master/UserMaster'" title="New"></i>
+                            </a>
+                        </strong>
+                        <a href="#" title="Edit">
+                            <i class="fa fa-list" id="btnUserList"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnback"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" style="padding-top:15px">
+                    <div style="padding-top:15px" id="MainPage">
+                        <div class="col-sm-12">
+                            <!--Dividing col 6-->
+                            <div class="col-sm-6">
+
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Employee<font color="red">*</font> :</label>
+                                    <div class="col-sm-6">
+                                        <div class="input-group-btn">
+                                            <select style="width:100%" class="select2_demo_3 form-control" id="ddlEmployeeName" data-placeholder="Choose a Employee...">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">UserName<font color="red">*</font> :</label>
+                                    <div class="col-sm-6"><input type="text" id="txtusername" placeholder="Enter username here.." class="form-control capitalize"></div>
+                                </div>
+                                 
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Password<font color="red">*</font> :</label>
+                                    <div class="col-sm-6 input-group">
+                                        <input type="password" id="txtpassword" placeholder="Enter password here.." class="form-control" onkeyup="CheckPasswordStrength(this.value)">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default reveal" type="button"><i class="glyphicon glyphicon-eye-open"></i></button>
+                                        </span>
+                                    </div>
+
+
+                                </div>
+                                <!--Edit Status-->
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label"></label>
+                                    <div class="col-sm-6 input-group">
+                                        <span id="password_strength" style="padding-left:100px;"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Confirm Password<font color="red">*</font> :</label>
+                                    <div class="col-sm-6 input-group">
+                                        <input type="password" id="txtconfirmpassword" placeholder="Enter confirm password here.." class="form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default reveal1" type="button"><i class="glyphicon glyphicon-eye-open"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="data_1">
+                                    <label class="col-sm-6 control-label">Active Date:</label>
+                                    <div class="col-sm-6">
+                                        <div class="input-group date txtactivedate">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" id="txtactivedate" class="form-control" readonly="readonly" style="background-color:white;">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="data_1">
+                                    <label class="col-sm-6 control-label">InActive Date:</label>
+                                    <div class="col-sm-6">
+                                        <div class="input-group date txtinactivedate">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" id="txtinactivedate" class="form-control" readonly="readonly" style="background-color:white;">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!--Diving col -6 -->
+                            </div>
+
+                            <div class="col-sm-5">
+                                <!--Access Level Type-->
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Access Level Type<font color="red">*</font> :</label>
+                                    <div class="col-sm-6">
+                                        <div class="input-group-btn">
+                                            <select class="select2_demo_3 form-control" id="ddlacessLeveltype" data-placeholder="Choose access level type..." style="width:100%;">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Access Role ddl-->
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Role Type<font color="red">*</font> :</label>
+                                    <div class="col-sm-6">
+                                        <div class="input-group-btn">
+                                            <select class="select2_demo_3 form-control" id="ddlacessRoletype" data-placeholder="Choose access role type..." style="width:100%;">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+
+                    </div>
+                    <div id="ListPage">
+                        <div class="col-sm-12">
+                            <div class="ibox-content">
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblUserlistGrid"></table>
+                                    <div id="pagerUsergrid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <input type="hidden" id="hdnUserId" />
+    </div>
+</form>
+
+<script>
+    var ResultName = [];
+    var sIsEdit = 0;
+    //Date picker
+    function SetFilterDates() {
+        $('.input-group.date').datepicker({
+            //todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "dd/mm/yyyy",
+            todayHighlight: false,
+            //startDate: cudt,
+            // endDate: cudt
+        });
+        $('.input-group.date.txtactivedate').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+
+            //startDate: cudt,
+            // endDate: cudt
+        });
+        $('.input-group.date.txtinactivedate').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+        });
+       
+
+        var d = new Date();
+        $(".input-group.date.txtactivedate").datepicker("setDate", d);
+        d.setYear(d.getFullYear() + 10);
+        $(".input-group.date.txtinactivedate").datepicker("setDate", d);
+
+
+        
+    }
+   // Function Load TOdays date on load
+    //function LoadTodayDate() {
+    //    var d = new Date();
+    //    var strDate = d.getDate() + "/" + (d.getMonth() + 1) + d.getFullYear();
+    //    document.getElementById("txtactivedate").value = strDate;
+    //}
+    //function ExpireDate() {
+    //    var d = new Date();
+    //    var strDate = d.getDate() + "/" + (d.getMonth() + 1) + "/" + (d.getFullYear() + 10);
+    //    document.getElementById("txtinactivedate").value = strDate;
+    //}
+    //function ChangeResponsiveDate()
+    //{
+    //    var ad = document.getElementById("txtactivedate").value;
+    //    var strDate = (ad.getMonth() + 1) + "/" + ad.getDate() + "/" + (ad.getFullYear() + 10);
+    //    document.getElementById("txtinactivedate").value = strDate;
+    //}
+
+    // Function BIndFields on Page Load
+
+    function UserMasterPageLoad() {
+        var sData1 = [], sData2 = [];
+        // var Result = "";
+        $.ajax({
+            url: "GetUserMasterPageLoad",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(),
+            success: function (data) {
+                ResultName = jQuery.parseJSON(data.strEmployeeName);
+                var ResultRole = jQuery.parseJSON(data.strRole);
+                var ResultLevel = jQuery.parseJSON(data.strLevel);
+                // ----------------------------------- EMPLOYEE NAME --------------------------
+                if (ResultName != "" && ResultName != null) {
+                    $('#ddlEmployeeName').empty().append();
+                    $('#ddlEmployeeName').append('<option></option>');
+                    for (var i = 0; i < ResultName.length; i++) {
+                        $('#ddlEmployeeName').append('<option value="' + ResultName[i]["EM_EMPLOYEE_ID"] + '">' + ResultName[i]["EM_EMPLOYEE_NAME"] + " " + ResultName[i]["EM_EMP_FULL_NAME"] + '</option>');
+                    }
+                }
+                // ----------------------------------- ROLE TYPE --------------------------
+                if (ResultRole != "" && ResultRole != null) {
+                    $('#ddlacessRoletype').empty().append();
+                    $('#ddlacessRoletype').append('<option></option>');
+                    for (var i = 0; i < ResultRole.length; i++) {
+                        $('#ddlacessRoletype').append('<option value="' + ResultRole[i]["role_id"] + '">' + ResultRole[i]["role_name"] + '</option>');
+                    }
+                }
+                // ----------------------------------- ACCESS LEVEL --------------------------
+                if (ResultLevel != "" && ResultLevel != null) {
+                    $('#ddlacessLeveltype').empty().append();
+                    $('#ddlacessLeveltype').append('<option></option>');
+                    for (var i = 0; i < ResultLevel.length; i++) {
+                        $('#ddlacessLeveltype').append('<option value="' + ResultLevel[i]["value"] + '">' + ResultLevel[i]["display_value"] + '</option>');
+                    }
+                }
+            }
+        });
+    }
+
+    $(".reveal").on('click', function () {
+        var $pwd = $("#txtpassword");
+        if ($pwd.attr('type') === 'password') {
+            $pwd.attr('type', 'text');
+        } else {
+            $pwd.attr('type', 'password');
+        }
+    });
+    $(".reveal1").on('click', function () {
+        var $pwd = $("#txtconfirmpassword");
+        if ($pwd.attr('type') === 'password') {
+            $pwd.attr('type', 'text');
+        } else {
+            $pwd.attr('type', 'password');
+        }
+    });
+    var passwordStrength;
+    localStorage.setItem("PageID", "UserMaster");
+
+    // Binding EMployee name to ddlEMployee name
+
+    //function Bind Employee Name
+
+    //    function BindEmployeeName() {
+    //        var Condition = "where user_status='True'";
+    //        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+    //        var Result = oAPICall.SelectData(strJsonDatas, "SelectEmployeeName");
+    //        if (Result != "" && Result != null) {
+    //            for (var i = 0; i < Result.length; i++) {
+    //                $('#ddlEmployeeName').append('<option value="' + Result[i]["user_id"] + '">' + Result[i]["EM_EMPLOYEE_NAME"] +" "+ Result[i]["EM_EMP_FULL_NAME"] + '</option>');
+    //            }
+    //        }
+    //    }
+
+    ////function Bind Access Role type
+
+    //    function BindAcessRoleType() {
+    //        var Condition = "where delete_status=0";
+    //        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+    //        var Result = oAPICall.SelectData(strJsonDatas, "SelectRoleAccessType");
+    //        if (Result != "" && Result != null) {
+    //            for (var i = 0; i < Result.length; i++) {
+    //                $('#ddlacessRoletype').append('<option value="' + Result[i]["role_id"] + '">' + Result[i]["role_name"] + '</option>');
+    //            }
+    //        }
+    //    }
+
+    ////function Bind Access level type
+
+    //    function BindAcessLevelType() {
+    //        var Condition = "where enumeration_key='Access_Value'";
+    //        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+    //        var Result = oAPICall.SelectData(strJsonDatas, "SelectLevelAccessType");
+    //        if (Result != "" && Result != null) {
+    //            for (var i = 0; i < Result.length; i++) {
+    //                $('#ddlacessLeveltype').append('<option value="' + Result[i]["value"] + '">' + Result[i]["display_value"] + '</option>');
+    //            }
+    //        }
+    //    }
+
+    function UserListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = [ 'User Name', 'Employee Name', 'Role name', '', '', '', '', '', '', '', '', '',''],
+        colModel = [
+           
+            { name: 'username', index: 'username', width: 110, align: "center", sorttype: false, search: true },
+            { name: 'EM_EMPLOYEE_NAME', index: 'EM_EMPLOYEE_NAME', width: 110, align: "center", sorttype: false, search: true },
+            { name: 'role_name', index: 'role_name', width: 110, align: "center", sorttype: false, search: true },
+            { name: 'password', index: 'password', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'EM_EMPLOYEE_ID', index: 'EM_EMPLOYEE_ID', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'active_date', index: 'active_date', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'inactive_date', index: 'inactive_date', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'ref_no', index: 'ref_no', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'role_id', index: 'role_id', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'user_id', index: 'user_id', width: 30, align: "center", sorttype: "int", hidden: true },
+            { name: 'access_level', index: 'access_level', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+        ];
+        var mydata = '';
+        mydata = PopulateUserListData();
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblUserlistGrid', '#pagerUsergrid', 'User List', 290, 14, false, mydata);
+
+    }
+    function PopulateUserListData() {
+
+        var sCondition = " WHERE delete_status=0 and username !='" + null + "'";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsUserMaster");
+        var sUserDt = [];
+        var sRoleId = $('#hdnRoleId').val();
+
+        if (Result != '' && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                var sUserId = Result[i].user_id;
+                var sUserName = Result[i].username;
+                var sEmployeeName = Result[i].EM_EMPLOYEE_NAME + " " + Result[i].EM_EMP_FULL_NAME;
+                var sRole = Result[i].role_name;
+                var sPassword = Result[i].password;
+                var sEmpId = Result[i].EM_EMPLOYEE_ID;
+                sPassword = decodeBase64(sPassword);
+                var sRoleId = Result[i].role_id;
+                var sRefID = Result[i].ref_no;
+                var sLevelType = Result[i].access_level;
+
+                var sActiveDt = Result[i].active_date;
+                if (sActiveDt != '' && sActiveDt != null) {
+                    sActiveDt = dateFormat(new Date(sActiveDt), 'dd/mm/yyyy');
+                }
+               // var sActiveDt = Result[i].active_date;
+                var sInActiveDt = Result[i].inactive_date;
+                if (sInActiveDt != '' && sActiveDt != null) {
+                    sInActiveDt = dateFormat(new Date(sInActiveDt), 'dd/mm/yyyy');
+                }
+               // var sInActiveDt = Result[i].inactive_date;
+                sUserDt[i] = {
+                    user_id: sUserId, EM_EMPLOYEE_ID: sEmpId, access_level: sLevelType, username: sUserName, EM_EMPLOYEE_NAME: sEmployeeName, role_name: sRole, password: sPassword, role_id: sRoleId, active_date: sActiveDt,
+                    inactive_date: sInActiveDt, company_code: 40, password_expiry: sInActiveDt, theme_preference: 1
+                };
+            }
+            return sUserDt;
+        }
+    }
+
+
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+    function EmpCodeBind() {
+        var sEmployID = $('#ddlEmployeeName').val();
+        for (var i = 0; i < ResultName.length; i++) {
+
+            if (ResultName[i]["EM_EMPLOYEE_ID"] == sEmployID && sIsEdit == 0) {
+                var sUserId = ResultName[i]["user_id"];
+                if (sUserId == null) {
+                    $('#txtusername').val(ResultName[i]["EM_EMPLOYEE_CODE"]);
+                    $("#btnSave").show();
+                }
+                else {
+                    msgalert('Error', 'User alerady exist..', 3);
+                    $("#btnSave").hide();
+                    document.getElementById("txtusername").value = "";
+                    document.getElementById("txtpassword").value = "";
+                    document.getElementById("txtconfirmpassword").value = "";
+                    $('#ddlacessLeveltype').val(0).change();
+                    $('#ddlacessRoletype').val(0).change();
+                  // LoadTodayDate();
+                  //  ExpireDate();
+                    return;
+
+                }
+            }
+        }
+    }
+
+    // Editing
+
+    function RefreshControls()
+    {
+        document.getElementById("txtusername").style.borderColor = "";
+        document.getElementById("txtpassword").style.borderColor = "";
+        document.getElementById("txtconfirmpassword").style.borderColor = "";
+        $('#ddlEmployeeName').val(0).change();
+        document.getElementById("hdnUserId").value = "";
+        document.getElementById("txtusername").value = "";
+        document.getElementById("txtpassword").value = "";
+        document.getElementById("txtconfirmpassword").value = "";
+        $('#ddlacessLeveltype').val(0).change();
+        $('#ddlacessRoletype').val(0).change();
+      // LoadTodayDate();
+      // ExpireDate();
+    }
+    $(document).ready(function () {
+
+       SetFilterDates();
+      // LoadTodayDate();
+      //  ExpireDate();
+       
+        //$('#btnNew').click(function () {
+
+
+        //    //   document.getElementById("ddlEmployeeName").selectedIndex = 0;
+        //   // $('#ddlEmployeeName').val(0).change();
+        //    document.getElementById("hdnUserId").value = "";
+        //    document.getElementById("txtusername").value = "";
+        //    $("#txtusername").prop("disabled", false);
+        //    document.getElementById("txtpassword").value = "";
+        //    document.getElementById("txtconfirmpassword").value = "";
+        //    $('#ddlacessLeveltype').val(0).change();
+        //    $('#ddlacessRoletype').val(0).change();
+        //    sIsEdit = 0;
+        //   // LoadTodayDate();
+        //   // ExpireDate();
+        //});
+        // Binding ddl values functions
+        //  BindEmployeeName();
+        // BindAcessRoleType();
+        // BindAcessLevelType();
+        UserMasterPageLoad();
+
+        //Bind EmployeeCode
+        $('#ddlEmployeeName').change(function () {
+            EmpCodeBind();
+        });
+
+        $('#btnback').hide();
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblUserlistGrid').setGridWidth(sWidth);
+
+        });
+
+        $('#btnUserList').click(function () {
+            $('#btnSave').hide();
+            $('#ListPage').show();
+            $('#MainPage').hide();
+            $('#btnback').show();
+            $('#btnUserList').hide();
+            $('#btnNew').hide();
+            $('#tblUserlistGrid').jqGrid('GridUnload');
+            UserListGrid();
+        });
+
+        $('#btnback').click(function () {
+            $('#btnSave').show();
+            $('#ListPage').hide();
+            $('#MainPage').show();
+            $('#btnback').hide();
+            $('#btnNew').show();
+            $('#btnUserList').show();
+            //$('#txtpassword').val('');
+            //$('#txtconfirmpassword').val('');
+            //$('#txtusername').val('');
+            // $('#password_strength').val('');
+           // document.getElementById(password_strength).innerText = "";
+           // $('#ddlacessRoletype').val("" + 1 + "").change();
+            RefreshControls();
+            sIsEdit = 0;
+            $("#txtusername").prop("disabled", false);
+        });
+
+        $('#txtusername').focusout(function () {
+            var ValidationSuccess = false;
+            var sUserName = $('#txtusername').val();
+            ValidationSuccess = ValidateForDuplication(sUserName, 'ChkDupUsername', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'This Username is already exist.. Try another', 3);
+                $('#txtusername').val("");
+                return false;
+            }
+
+        });
+
+        $('#txtpassword').focusout(function () {
+
+            if (document.getElementById('txtpassword').value == "") {
+                document.getElementById('txtpassword').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtpassword').style.borderColor = "green";
+            }
+        });
+        $('#txtconfirmpassword').focusout(function () {
+
+            if (document.getElementById('txtconfirmpassword').value == "") {
+                document.getElementById('txtconfirmpassword').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtconfirmpassword').style.borderColor = "green";
+            }
+        });
+
+        // button Save
+
+        $('#btnSave').click(function () {
+
+            var sUserId = $('#hdnUserId').val();
+            var EmployeeName = document.getElementById("ddlEmployeeName").value;
+            var AccessLevel = document.getElementById("ddlacessLeveltype").value;
+            var AccessRole = document.getElementById("ddlacessRoletype").value;
+
+            if (EmployeeName <= 0) {
+                document.getElementById("ddlEmployeeName").style.borderColor = "Red";// this adds the error class
+                document.getElementById("ddlEmployeeName").focus();
+                msgalert('Warning', 'Please select an employee name.', 2);
+                return;
+            }
+
+            if (document.getElementById('txtusername').value == "") {
+                document.getElementById('txtusername').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter mandatory fields', 2);
+                return;
+            }
+            if (document.getElementById('txtconfirmpassword').value == "") {
+                document.getElementById('txtconfirmpassword').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter mandatory fields', 2);
+                return;
+            }
+            if (document.getElementById('txtconfirmpassword').value != document.getElementById('txtpassword').value) {
+                document.getElementById('txtconfirmpassword').style.borderColor = "red";
+                document.getElementById('txtpassword').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Password do not match!..', 2);
+                return;
+            }
+            if ($("#password_strength").html() == "Weak" || $("#password_strength").html() == "Good") {
+                msgalert('Warning', 'Password strength must strong and continue..', 2);
+                return;
+            }
+            if (AccessLevel <= 0) {
+                document.getElementById('ddlacessLeveltype').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please select an access level.', 2);
+                return;
+            }
+            if (AccessRole <= 0) {
+                document.getElementById('ddlacessRoletype').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please select an access role.', 2);
+                return;
+            }
+            //  var ValidationSuccess = false;
+            var sUserName = $('#txtusername').val();
+            //Checking
+
+            //ValidationSuccess = ValidateForDuplication(sUserName, 'ChkDupUsername', '', '');
+            //if (!ValidationSuccess) {
+            //    msgalert('Error', 'Username alerady exist.. Try another', 3);
+            //    $('#txtusername').val("");
+            //    return false;
+            //}
+            if (sUserId <= 0 && sUserId == "") {
+                //var sActiveDt = $('#txtactivedate').val();
+                //sActiveDt = new Date(sActiveDt);
+
+
+                var sActiveDt = $("#txtactivedate").val();
+                sActiveDt = formatedatetoDB(sActiveDt);
+               // var sInActiveDt = $('#txtinactivedate').val();
+               // sInActiveDt = new Date(sInActiveDt);
+
+
+                var sInActiveDt = $("#txtinactivedate").val();
+                sInActiveDt = formatedatetoDB(sInActiveDt);
+                var sPassword = encode64($('#txtpassword').val().toString());
+                // Editing
+                var StrJsonDatas = eval({
+                    username: $('#txtusername').val(), ref_no: $('#ddlEmployeeName').val(), password: sPassword, role_id: $('#ddlacessRoletype').val(),
+                    active_date: sActiveDt, inactive_date: sInActiveDt, created_by: CurrentUser, created_date: new Date(), delete_status: 0, access_level: $('#ddlacessLeveltype').val(),
+                    company_code: 40, password_expiry: sInActiveDt, theme_preference: 1
+
+                });
+                var Result = oAPICall.InsertData(StrJsonDatas, 'CreateBtsUserMaster');
+                if (Result != null && Result != '') {
+                    var sUserId = Result[0].IDENTITY;
+                    $('#hdnUserId').val(sUserId);
+                    msgalert('Success', 'User details added successfully', 1);
+                }
+            }
+            else {
+                var sActiveDt = $("#txtactivedate").val();
+                sActiveDt = formatedatetoDB(sActiveDt);
+
+                var sInActiveDt = $("#txtinactivedate").val();
+                sInActiveDt = formatedatetoDB(sInActiveDt);
+                var sPassword = encode64($('#txtpassword').val().toString());
+
+                var sStrJsonDatas = eval({
+                    username: $('#txtusername').val(), ref_no: $('#ddlEmployeeName').val(), password: sPassword, role_id: $('#ddlacessRoletype').val(),
+                    active_date: sActiveDt, inactive_date: sInActiveDt, created_by: CurrentUser,updated_by:CurrentUser,updated_date:new Date(), created_date: new Date(), delete_status: 0, access_level: $('#ddlacessLeveltype').val(),
+                    company_code: 40, password_expiry: sInActiveDt, theme_preference: 1
+
+                });
+                var Condition = "where user_id=" + sUserId;
+                var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateBtsUserMaster', Condition);
+                if (Result != null && Result != '') {
+                    $('#btnNew').show();
+                    msgalert('Success', 'User details Updated successfully', 1);
+                }
+            }
+        });
+
+
+        $(document).delegate('#tblUserlistGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblUserlistGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                sIsEdit = 1;
+                $('#MainPage').show();
+                $('#ListPage').hide();
+                
+                $('#hdnUserId').val($('#tblUserlistGrid').getCell(rowIds[rowid], 'user_id'));
+                //Test
+                $('#ddlEmployeeName').val("" + $('#tblUserlistGrid').getCell(rowIds[rowid], 'EM_EMPLOYEE_ID') + "").change();
+
+                $('#txtusername').val($('#tblUserlistGrid').getCell(rowIds[rowid], 'username'));
+                var sPassword = $('#tblUserlistGrid').getCell(rowIds[rowid], 'password');
+                $('#txtpassword').val(sPassword);
+                $('#txtconfirmpassword').val(sPassword);
+                $('#ddlacessLeveltype').val("" + $('#tblUserlistGrid').getCell(rowIds[rowid], 'access_level') + "").change();
+                $('#ddlacessRoletype').val("" + $('#tblUserlistGrid').getCell(rowIds[rowid], 'role_id') + "").change();
+//Editing
+                var sActiveDt = $('#tblUserlistGrid').getCell(rowIds[rowid], 'active_date');
+
+                $('#txtactivedate').val(sActiveDt);
+
+                var sInActiveDt = $('#tblUserlistGrid').getCell(rowIds[rowid], 'inactive_date');
+
+                $('#txtinactivedate').val(sInActiveDt);
+                $("#txtusername").prop("disabled", true);
+                $('#btnback').hide();
+                $('#btnUserList').show();
+                $('#btnSave').show();
+                $('#btnNew').show();
+                document.getElementById("txtusername").style.borderColor = "";
+                document.getElementById("txtpassword").style.borderColor = "";
+                document.getElementById("txtconfirmpassword").style.borderColor = "";
+               
+            }
+            else {
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    //text: "" + text + "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              var sUserId = $('#tblUserlistGrid').getCell(rowIds[rowid], 'user_id')
+              var sStrJsonDatas = eval({ delete_status: 1 });
+              var Condition = "where user_id=" + sUserId;
+              var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateBtsUserMaster', Condition);
+              if (Result != "" || Result != null) {
+                  $('#tblUserlistGrid').jqGrid('delRowData', rowid);
+                  msgalert('Success', 'Successfully Deleted', 1);
+                  $('#tblUserlistGrid').jqGrid('GridUnload');
+                  UserListGrid();
+              }
+          }
+          else {
+              return
+          }
+      });
+                return
+
+
+            }
+        });
+    });
+
+</script>

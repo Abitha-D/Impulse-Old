@@ -1,0 +1,287 @@
+﻿@{
+    ViewBag.Title = "Role";
+
+}
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+</style>
+<form method="get" class="form-horizontal">
+
+    <div id="CPD_Master" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">Role Master</span>
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+                        </strong>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-file-o" id="btnNew" title="Reset"></i>
+                            </a>
+
+                        </strong>
+                        <a href="#" title="List">
+                            <i class="fa fa-list" id="btnRoleLists"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnback"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div style="padding-top:15px" id="MainPage">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-8">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" id="lblrolecode">Role Code :</label>
+                            <div class="col-sm-8"><input type="text" id="txtrolecode" style="background-color:white;" placeholder=" Autogenerate Code Here.." required="" class="form-control" readonly></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" id="lblrolename">Role Name<font color="red">*</font> :</label>
+                            <div class="col-sm-8"><input type="text" id="txtrolename" placeholder="Enter Role Name Here.." required="" class="form-control"></div>
+                        </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+                    </div>
+                    <div id="ListPage">
+                        <div class="col-sm-12">
+                            <div class="ibox-content">
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblRoleLists"></table>
+                                    <div id="pagerRoleLists"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <input type="hidden" id="hdnroleid" />
+       
+    </div>
+</form>
+<script>
+
+    function RoleMasterListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+        colNames = ['Role Code', 'Role Name', '', '', ''],
+        colModel = [
+                { name: 'role_code', index: 'role_code', width: 80, align: "center", search: true },
+                { name: 'role_name', index: 'role_name', width: 120, align: "center", search: true },
+                { name: 'role_id', index: 'role_id', width: 40, align: "center", hidden: true },
+                { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+                { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+
+        ];
+        var mydata = '';
+        mydata = PopulateRoleMasterListGrid();
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblRoleLists', '#pagerRoleLists', 'Role List', 290, 14, false, mydata);
+    }
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+    function PopulateRoleMasterListGrid() {
+        var sCondition = " where delete_status=0 ";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectRole");
+        var Datas = [];
+        if (Result != '' && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                Datas[i] = {
+                    role_code: Result[i].role_code, role_id: Result[i].role_id, role_name: Result[i].role_name
+                };
+            }
+            return Datas;
+        }
+    }
+    function ResetFields() {
+        $("#txtrolecode").val("");
+        $("#txtrolename").val("");
+        $("#hdnroleid").val("");
+       
+    }
+
+    $(document).ready(function () {
+        $("#ListPage").hide();
+        $("#btnRoleLists").show();
+        $("#btnback").hide();
+        ResetFields();
+        // Test field
+       // var testField = "true";
+
+        var sWidth = $('.tab-content').width();
+        $('#tblRoleLists').setGridWidth(sWidth - 20);
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblRoleLists').setGridWidth(sWidth);
+
+        });
+        $("#btnNew").click(function () {
+            ResetFields();
+            $("#btnback").hide();
+            $("#btnSave").show();
+            $("#btnRoleLists").show();
+            $("#MainPage").show();
+            $("#ListPage").hide();
+            $("#btnNew").show();
+
+        });
+        //Insertion and updation
+        $("#btnSave").click(function () {
+            var sRoleName = $("#txtrolename").val();
+            var sRoleId = $("#hdnroleid").val();
+            var sRoleCode = $("#txtrolecode").val();
+            var condition = "where delete_status=0";
+            var ValidationSuccess = false;
+            var stoday = new Date();
+
+            if (sRoleName == "") {
+                msgalert('warning', 'Enter a role name to countinue', 2);
+                document.getElementById('txtrolename').style.borderColor = "red";
+                $("#txtrolename").focus();
+                return false;
+            }
+
+            ValidationSuccess = ValidateForDuplicationwithcondition(sRoleName, 'chkDupRoleName', condition);
+
+
+
+            if (!ValidationSuccess) {
+                msgalert("Error", 'Role name already exists..Try another', 3);
+                document.getElementById("txtrolename").style.borderColor = "red";
+                $("#txtrolename").focus();
+
+                return false;
+            }
+            if (sRoleId == "" || sRoleId <= 0) {
+
+
+                var strJsonDatas = eval({
+                    role_code: sRoleCode, role_name: sRoleName, created_by: CurrentUser, created_date: stoday, updated_by: null, updated_date: null,
+                    delete_status: 0
+                });
+
+
+                var Result = oAPICall.InsertData(strJsonDatas, "CreateRole");
+                // test 
+               // document.getElementById("txtTest").value = Result;
+                if (Result != "") {
+                    msgalert('Success', 'Role is added successfully', 1);
+                    $("#txtrolename").val("");
+                }
+            }
+                //update
+            else {
+                var strJsonDatas = eval({
+                    role_name: sRoleName, updated_by: CurrentUser, updated_date: stoday, delete_status: 0
+                });
+                var Condition = "where delete_status=0 and role_id='" + sRoleId + "'";
+                var Result = oAPICall.UpdateData(strJsonDatas, "UpdateRole", Condition);
+                if (Result != "") {
+                    msgalert("SUCCESS", 'Role name updated succesfully', 1);
+                }
+            }
+
+            $("#btnRoleLists").show();
+        });
+        $('#txtrolename').focusout(function () {
+            if (document.getElementById('txtrolename').value == "") {
+                document.getElementById('txtrolename').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtrolename').style.borderColor = "green";
+            }
+
+        });
+        $("#btnback").click(function () {
+            $("#MainPage").show();
+            $("#ListPage").hide();
+            ResetFields();
+            $("#btnback").hide();
+            $("#btnSave").show();
+            $("#btnRoleLists").show();
+            $("#btnNew").show();
+        });
+        //list country details
+        $("#btnRoleLists").click(function () {
+            $("#btnSave").hide();
+            $("#btnback").show();
+            $("#MainPage").hide();
+            $("#ListPage").show();
+
+            $("#btnNew").hide();
+            $("#btnRoleLists").hide();
+            $("#tblRoleLists").jqGrid("GridUnload");
+            RoleMasterListGrid();
+        });
+        $(document).delegate('#tblRoleLists .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblRoleLists').jqGrid('getDataIDs');
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                $("#btnNew").show();
+                $('#MainPage').show();
+                $('#ListPage').hide();
+                $("#btnback").hide();
+                $("#btnSave").show();
+                $("#btnRoleLists").show();
+                $("#hdnroleid").val($("#tblRoleLists").getCell(rowIds[rowid], 'role_id'));
+                $("#txtrolecode").val($("#tblRoleLists").getCell(rowIds[rowid], 'role_code'));
+                $("#txtrolename").val($("#tblRoleLists").getCell(rowIds[rowid], 'role_name'));
+
+            }
+            else {
+                swal({
+                    title: "Are you sure to delete?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+function (isConfirm) {
+    if (isConfirm) {
+        var sRoleId = $('#tblRoleLists').getCell(rowIds[rowid], 'role_id')
+        var sStrJsonDatas = eval({ delete_status: 1 });
+        var Condition = "where role_id=" + sRoleId;
+        var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateRole', Condition);
+        if (Result != "" || Result != null) {
+            $('#tblRoleLists').jqGrid('delRowData', rowid);
+            msgalert('Success', 'Successfully Deleted', 1);
+            $('#tblRoleLists').jqGrid('GridUnload');
+            RoleMasterListGrid();
+        }
+    }
+    else {
+        return
+    }
+});
+                return
+            }
+        });
+    });
+
+</script>
+
+
+

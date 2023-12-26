@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "DashBoard";
+}
+<style>
+    .chart-legend {
+        margin-left: -7%;
+        margin-top: 5px;
+    }
+
+        .chart-legend li span {
+            display: inline-block;
+            width: 15px;
+            height: 12px;
+            margin-right: 8px;
+        }
+
+        .chart-legend li {
+            list-style-type: none;
+        }
+
+    ul li {
+        display: inline;
+        margin-left: 30px;
+    }
+
+</style>
+<div id="map" style="width: 850px; height: 470px; padding-left:200px;"></div>
+<script src="~/Scripts/js/raphael.js"></script>
+<script src="~/Scripts/js/jquery.usmap.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#map').usmap({
+            useAllLabels: true,
+            stateSpecificStyles: {
+                'MD': { fill: 'yellow' },
+                'TX': { fill: 'red' },
+                'CL': { fill: 'lightgreen' },
+                'LA': { fill: 'green' },
+                'GA': { fill: 'blue' },
+                'FL': { fill: 'teal' },
+                'MT': { fill: 'yellow' },
+                'WY': { fill: 'lightgray' },
+                'NA': { fill: 'lightgreen' },
+                'NM': { fill: 'green' },
+                'AZ': { fill: 'blue' },
+                'CA': { fill: 'brown' },
+                'NY': { fill: 'lightgreen' },
+                'IA': { fill: 'blue' },
+                'IL': { fill: '#ababf2' },
+                'MN': { fill: '#31e284' },
+                'IA': { fill: '#e8a878' },
+                'MO': { fill: '#8abde8' },
+                'AR': { fill: '#b3e86f' },
+                'MS': { fill: '#8abde8' },
+                'AL': { fill: '#bc83e2' },
+                'GA': { fill: '#b3e86f' },
+                'SC': { fill: '#8abde8' },
+                'AZ': { fill: '#ababf2' },
+                'UT': { fill: '#d1c62b' },
+                'ID': { fill: '#84d4e8' },
+                'ND': { fill: '#f48f22' },
+                'SD': { fill: '#8abde8' },
+                'NE': { fill: '#d1c62b' },
+                'WA': { fill: '#31e284' },
+                'OR': { fill: '#31e284' },
+                'NV': { fill: '#92b798' },
+                'PA': { fill: '#9df74f' },
+                'WI': { fill: '#9df74f' },
+                'KY': { fill: '#b3e86f' },
+                'TN': { fill: '#dd6674' },
+                'NC': { fill: '#92b798' },
+
+                'MI': { fill: '#ef6258' },
+                'OH': { fill: '#8abde8' },
+                'WV': { fill: '#dd6674' },
+
+                'CO': { fill: '#9df74f' },
+                'KS': { fill: '#ef6258' },
+                'ME': { fill: '#8abde8' },
+
+                'AK': { fill: '#31e284' }
+
+
+            }
+        });
+       
+    });
+</script>

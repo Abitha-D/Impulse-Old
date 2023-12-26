@@ -1,0 +1,241 @@
+﻿@{
+    ViewBag.Title = "ModifyOrder";
+}
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    select::-webkit-select-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    .select2-container {
+        font-size: 12px;
+    }
+
+    textarea::-webkit-input-placeholder {
+        font-size: 13px;
+        line-height: 2;
+    }
+
+    .setbackgroundcolor a {
+        color: green !important;
+    }
+
+    .DivBorder {
+        border: 1px solid grey;
+    }
+</style>
+<form method="get" class="form-horizontal">
+    <div id="MasterOrder" class="">
+        <div class="col-sm-12">
+            <div class="col-sm-12">
+                @*<strong>
+                    <a href="#" id="bar">
+                        <i class="fa fa-calendar"></i>
+                    </a>
+                </strong>*@
+                <label id="lblModifyOrder" class="control-label" style="font-size:18px;font-weight:bold;">Modify Order</label>
+            </div>
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title DivBorder">
+
+                    <!--iboxtitle-->
+                    <span class="label" style="font-size:16px ; font-weight:bold;">Add/Edit Order ID :<label id="lblCode" style="font-size:16px ; font-weight:bold;"></label> </span>
+                    <!-- List button-->
+                    <div class="ibox-tools">
+                        <!-- Button Back-->
+                        <strong>
+                            <a href="#" id="btnBack" title="Back">
+                                <i class="fa fa-backward"></i>
+                            </a>
+                        </strong>
+
+                        <!-- List button-->
+                        <strong>
+                            <a href="#" title="List" id="btnList">
+                                <i class="fa fa-list">
+
+                                </i>
+                            </a>
+                        </strong>
+                    </div>
+
+                    <!--CloseIboxtitle-->
+                </div>
+                <div class="ibox-content" style="padding-top:15px">
+                    <div id="MainPage">
+                        <!--LeftDiv-->
+                        <!-- place for Order Information div -->
+                        <div class="col-sm-12 ibox-heading" style="border-left: 2px solid grey; border-right: 2px solid grey; border-top: 1px solid grey; ">
+                            <span style="font-weight:bold;">Order Information</span>
+                        </div>
+                        <div class="col-sm-12 DivBorder">
+                            <div class="col-sm-4" style="padding-top:15px">
+
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblOrderDate">Order Date :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <input type="text" id="txtOrderDate" class="form-control" placeholder="Order date" title="Order date" style="background-color:white" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblOrderID">Order ID :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <input type="text" id="txtOrderID" class="form-control" placeholder="Order ID" title="Order ID" style="background-color:white" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblOrderDueDate">Due Date :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <input type="text" id="txtOrderDueDate" class="form-control" placeholder="Due Date" title="Due date" style="background-color:white" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblOrderDate">Order Type :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlOrderType" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose order type.." title="Order Type"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblSubjectAddress">Subject Address :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <input type="text" id="txtSubjectAddress" class="form-control" placeholder="Subject Address" title="Subject Address" style="background-color:white" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-2" style="padding-top:15px"></div>
+
+                            <!--RightDiv-->
+                            <!--LeftDiv-->
+                            <div class="col-sm-4" style="padding-top:15px">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblClient">Client :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlClient" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose client.." title="Client"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblParentClient">Parent Client :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlParentClient" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose parent client.." title="Parent Client"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblState">State :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlState" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose state.." title="State"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblPortal">Portal :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlPortal" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose portal.." title="Portal"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblMLS">MLS :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlMLS" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose MLS.." title="MLS"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="padding-top:15px"></div>
+                        </div>
+                        <!-- place for Service Information div -->
+                        <div class="col-sm-12 ibox-heading" style="border-left: 2px solid grey; border-right: 2px solid grey;">
+                            <span style="font-weight:bold;">Service Information</span>
+                        </div>
+                        <div class="col-sm-12 DivBorder" style="padding-bottom:15px">
+                            <!--Bottom Left Div-->
+                            <div class="col-sm-4" style="padding-top:15px">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblAssignee">Assignee :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlAssignee" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose assignee.." title="Assignee"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblUrgency">Urgency :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlUrgency" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose urgency.." title="Urgency"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblPriority">Priority :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlPriority" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose priority.." title="Priority"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblPictureStatus">Picture Status :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlPictureStatus" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose picture status.." title="Picture Status"></select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-2" style="padding-top:15px"></div>
+
+                            <!--Bottom Right Div-->
+                            <div class="col-sm-4" style="padding-top:15px;">
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblRecheck">ReCheck :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6 ">
+                                        <div class="" style="display:inline;">
+                                            <input type="checkbox" class="" style="width: 1em; height: 1em;" id="chkRecheck" title="Recheck" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblStatus">Status :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlStatus" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose status.." title="Status"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblCurrenttatus">Current Status :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select style="width:100%" id="ddlCurrentStatus" class="form-control select2_demo_3" data-placeholder="Choose current status.." title="Current Status"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label" id="lblClarificationStatus">Clarification Status :</label>
+                                    <!--Hoding content for rest col-->
+                                    <div class="col-sm-6">
+                                        <select id="ddlClarificationStatus" style="width:100%" class="form-control select2_demo_3" data-placeholder="Choose Clarification.." title="Clarification Status"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

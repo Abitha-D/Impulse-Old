@@ -1,0 +1,1932 @@
+﻿@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/Content/css/plugins/datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/datetimepicker/jquery.timeentry.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+    <link href="~/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script src="~/Scripts/App_js/Common/APICall.js"></script>
+    <style>
+        .switch {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 50px;
+            text-align: center;
+            background: #00bc9c;
+            transition: all 0.2s ease;
+            border-radius: 25px;
+        }
+
+            .switch span {
+                position: absolute;
+                width: 20px;
+                height: 4px;
+                top: 50%;
+                left: 50%;
+                margin: -2px 0px 0px -4px;
+                background: #fff;
+                display: block;
+                transform: rotate(-45deg);
+                transition: all 0.2s ease;
+            }
+
+                .switch span:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 4px;
+                    height: 12px;
+                    margin-top: -8px;
+                    background: #fff;
+                    transition: all 0.2s ease;
+                }
+
+        input[type=radio] {
+            display: none;
+        }
+
+        .switch label {
+            cursor: pointer;
+            color: rgba(0,0,0,0.2);
+            width: 60px;
+            line-height: 50px;
+            transition: all 0.2s ease;
+        }
+
+        label[for=yes] {
+            position: absolute;
+            left: 0px;
+            height: 20px;
+        }
+
+        label[for=no] {
+            position: absolute;
+            right: 0px;
+        }
+
+        #no:checked ~ .switch {
+            background: #eb4f37;
+        }
+
+            #no:checked ~ .switch span {
+                background: #fff;
+                margin-left: -8px;
+            }
+
+                #no:checked ~ .switch span:after {
+                    background: #fff;
+                    height: 20px;
+                    margin-top: -8px;
+                    margin-left: 8px;
+                }
+
+        #yes:checked ~ .switch label[for=yes] {
+            color: #fff;
+        }
+
+        #no:checked ~ .switch label[for=no] {
+            color: #fff;
+        }
+        body {
+            background-color: #eff3f8;
+        }
+    </style>
+</head>
+<!-- END HEAD -->
+<body class="page-container-bg-solid" ng-app="Employeedetails">
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container" ng-controller="Employees" id="controllerID" ng-cloak>
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <!-- BEGIN CONTENT BODY -->
+            <!-- BEGIN PAGE HEAD-->
+            <!-- END PAGE HEAD-->
+            <!-- BEGIN PAGE CONTENT BODY -->
+            <div class="" style="min-height: 485px !important; background: #eff3f8; padding: 15px 0;">
+                <div class="container">
+
+                    <!-- BEGIN PAGE CONTENT INNER -->
+                    <div class="page-content-inner">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="tabbable-line boxless tabbable-reversed">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_basic" data-toggle="tab"> Basic Info </a>
+                                        </li>
+                                        @*<li>
+                                                <a href="#tab_educ" data-toggle="tab"> Educational Info </a>
+                                            </li>
+                                            <li>
+                                                <a href="#tab_exp" data-toggle="tab"> Experience Info </a>
+                                            </li>*@
+                                        <li>
+                                            <a href="#tab_cmp" data-toggle="tab"> Company Info </a>
+                                        </li>
+
+                                    </ul>
+                                    <div class="tab-content">
+
+                                        <div class="tab-pane active" id="tab_basic">
+                                            <div class="portlet box blue">
+                                                <div class="portlet-title">
+                                                    <div class="caption">
+                                                        <i class="fa fa-gift"></i>Basic Info
+                                                    </div>
+                                                </div>
+                                                <div class="portlet-body form" style="overflow-y: scroll; height: 300px;">
+                                                    <!-- BEGIN FORM-->
+                                                    <form class="form-horizontal">
+                                                        <div class="form-body">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">First Name: <font color="red">*</font></label>
+                                                                        <div class="col-md-9">
+                                                                            <input type="text" class="form-control" placeholder="Enter First Name...." id="txtFirstname">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Last Name: <font color="red">*</font></label>
+                                                                        <div class="col-md-9">
+                                                                            <input type="text" class="form-control" placeholder="Enter Last Name...." id="txtLastName">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                            </div>
+                                                            <!--/row-->
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Gender<font color="red">*</font></label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddlGender">
+                                                                                <option value="-1">Choose Gender</option>
+                                                                                <option value="1">Male</option>
+                                                                                <option value="2">Female</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Date of Birth: <font color="red">*</font></label>
+                                                                        <div class="col-md-9">
+                                                                            <div class="date-picker input-daterange" data-date="10/11/2012" data-date-format="dd/mm/yyyy">
+                                                                                <span>
+                                                                                    <input type="text" class="form-control" name="from" id="txtDOB" autocomplete="off" onkeypress="return validateNumberAndForwardSlash(event);" placeholder="&#xf073;" style=" font-family: Arial, FontAwesome;text-align: left;" id="Datecalendar">
+
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                            </div>
+                                                            <!--/row-->
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Blood Group<font color="red">*</font></label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" data-placeholder="Choose Blood Group" tabindex="1" id="ddlbloodgrp"></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3"><font color="red">*</font>E-Mail</label>
+                                                                        <div class="col-md-9">
+                                                                            <div class="input-group">
+                                                                                <span class="input-group-addon">
+                                                                                    <i class="fa fa-envelope font-blue-steel"></i>
+                                                                                </span>
+                                                                                <input type="text" class="form-control" id="txtEmail" placeholder="xyz@zyx.com"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" id="marital">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Marital Status<font color="red">*</font></label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" data-placeholder="Choose Marital Status" tabindex="1" id="ddlMarital">
+                                                                                <option value="-1"> Choose Status </option>
+                                                                                <option value="2"> Married </option>
+                                                                                <option value="1"> UnMarried </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 hidden" id="near">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Nearest Bus Stop<font color="red">*</font></label>
+                                                                        <div class="col-md-9">
+                                                                            <input type="text" class="form-control" placeholder="Enter Nearest Bust Stop" id="txtbustops">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Contact No<font color="red">*</font></label>
+                                                                        <div class="col-md-9">
+                                                                            <input type="number" class="form-control" id="txtcontact" placeholder="10 digit number">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                            </div>
+                                                            <div class="row" id="spouseDIV">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Spouse Name:<font color="red">*</font></label>
+                                                                        <div class="col-md-9">
+                                                                            <input type="text" class="form-control" placeholder="Enter Spouse Name...." id="txtSpouseName">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Spouse Contact No:<font color="red">*</font></label>
+                                                                        <div class="col-md-9">
+                                                                            <input type="number" class="form-control" placeholder="Contact No...." id="txtSpousecontact">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div id="address">
+                                                                <h3 class="form-section">Address</h3>
+                                                                <!--/row-->
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Address 1<font color="red">*</font></label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Door No, Street Name" id="txtAddr1">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Address 2</label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Landmark" id="txtAddr2">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">City<font color="red">*</font></label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter City.." id="txtCity">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/span-->
+                                                                    <div class="col-md-6" id="marital">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">State<font color="red">*</font></label>
+                                                                            <div class="col-md-9">
+                                                                                <select class="form-control" data-placeholder="Choose Marital Status" id="ddlState">
+                                                                                    <option value="-1">Choose State</option>
+                                                                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                                                                    <option value="Goa">Goa</option>
+                                                                                    <option value="Karnataka">Karnataka</option>
+                                                                                    <option value="Kerala">Kerala</option>
+                                                                                    <option value="Puducherry">Puducherry</option>
+                                                                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                                                                    <option value="Telangana">Telangana</option>
+                                                                                </select>
+                                                                                @*<input type="text" class="form-control" placeholder="Enter State.." id="txtState">*@
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/span-->
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Pin Code<font color="red">*</font></label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" id="txtPincode">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/span-->
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Country<font color="red">*</font></label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" id="txtCountry" value="India">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/span-->
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Nearest Bus Stop<font color="red">*</font></label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter Nearest Bust Stop" id="txtbustop">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/span-->
+                                                                </div>
+                                                            </div>
+                                                            <div id="identities">
+                                                                <h3 class="form-section">Account Details</h3>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Bank Account No</label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter Bank Account No" id="txtBankNo">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">PAN No:</label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter PAN No" id="txtPANNo">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/span-->
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Passport No </label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter Passport No" id="txtPassportNo">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Aadhaar No</label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter Aadhaar No" id="txtAadhaarNo">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/span-->
+                                                                </div>
+                                                            </div>
+                                                            <div id="emergency">
+                                                                <h3 class="form-section">In case of Emergency </h3>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Name 1:<font color="red">*</font></label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter Name...." id="txtEMName1">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Address:<font color="red">*</font></label>
+                                                                            <div class="col-md-9" style="display: inline-flex;">
+                                                                                <input type="text" class="form-control" placeholder="Enter Address...." id="txtEMAddr1"> &nbsp;&nbsp;
+                                                                                <input type="checkbox" onclick="addressfill()" style="margin: auto;" title="Same as above" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Relationship:<font color="red">*</font></label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter Relation...." id="txtEMRelation1">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Contact No:<font color="red">*</font></label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="number" class="form-control" placeholder="Contact No...." id="txtEMnumber1">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/span-->
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Name 2: </label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter Name...." id="txtEMName2">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Address:</label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter Address...." id="txtEMAddr2">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Relationship: </label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="text" class="form-control" placeholder="Enter Relation...." id="txtEMRelation2">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-3">Contact No: </label>
+                                                                            <div class="col-md-9">
+                                                                                <input type="number" class="form-control" placeholder="Contact No...." id="txtEMnumber2">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/span-->
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </form>
+                                                    <!-- END FORM-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="tab_cmp">
+                                            <div class="portlet box blue">
+                                                <div class="portlet-title">
+                                                    <div class="caption">
+                                                        <i class="fa fa-gift"></i>Our Company Role
+                                                    </div>
+                                                </div>
+                                                <div class="portlet-body form" style="overflow-y: scroll; height: 300px;">
+                                                    <!-- BEGIN FORM-->
+                                                    <form class="form-horizontal">
+                                                        <div class="form-body">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Company<font color="red">*</font> :</label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddlcmp">
+                                                                                
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Location<font color="red">*</font> :</label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddlcmploc">
+                                                                                <option value="-1">Select Location</option>
+                                                                                <option value="1">Nagercoil</option>
+                                                                                <option value="2">Trivandrum</option>
+                                                                                <option value="5">Mathandam</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Division<font color="red">*</font> :</label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddldivision">
+                                                                               
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Level Classification :</label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddllevel">
+                                                                                <option value="-1">Select Level</option>
+                                                                                <option value="1">Manager</option>
+                                                                                <option value="2">Others</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                            </div>
+                                                            <!--/row-->
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Date of Joining<font color="red">*</font> :</label>
+                                                                        <div class="col-md-9">
+                                                                            <input type="text" class="form-control" placeholder="dd/mm/yyyy" id="txtjoiningdt">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Designation<font color="red">*</font> :</label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddldesignation"></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                            </div>
+                                                            <!--/row-->
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Notice Period<font color="red">*</font> :</label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddlnoticeperiod">
+                                                                                <option value="-1">Select Notice Period</option>
+                                                                                <option value="1">1 Month</option>
+                                                                                <option value="2">2 Months</option>
+                                                                                <option value="3">3 Months</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">First Review<font color="red">*</font> :</label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddlfreview">
+                                                                                <option value="-1">Select First Review</option>
+                                                                                <option value="1">3 Months</option>
+                                                                                <option value="2">6 Months</option>
+                                                                                <option value="3">12 Months</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                            </div>
+                                                            <div class="row hidden" id="mechDiv">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Shift<font color="red">*</font> :</label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddlShift">
+                                                                                <option value="-1">Select Shift</option>
+                                                                                <option value="1"> Morning </option>
+                                                                                <option value="2"> Evening </option>
+                                                                                <option value="3"> Rotational </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Work Hours<font color="red">*</font> :</label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddlShiftTime">
+                                                                                <option value="-1">Select Work Hours</option>
+                                                                                <option value="1"> 8 + 1 Hrs </option>
+                                                                                <option value="2"> 9 + 1 Hrs </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Employee Code :</label>
+                                                                        <div class="col-md-9">
+                                                                            <input type="text" class="form-control" id="txtEmpcode">
+                                                                            <input type="text" class="hidden" id="hdnpasswd" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--/span-->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-3">Reporting Manager<font color="red">*</font> :</label>
+                                                                        <div class="col-md-9">
+                                                                            <select class="form-control" id="ddlrptTomgr"></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/row-->
+                                                        </div>
+                                                        <div class="form-actions">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="row">
+                                                                        <div class="col-md-offset-3 col-md-9">
+                                                                            <button type="button" class="btn green" onclick="SaveData()">Save</button>
+                                                                            <button type="button" class="btn default">Cancel</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6"> </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <!-- END FORM-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END PAGE CONTENT INNER -->
+                </div>
+            </div>
+            <!-- END PAGE CONTENT BODY -->
+            <!-- END CONTENT BODY -->
+        </div>
+        <input type="text" class="hidden" id="searchBox" placeholder="Search" style="width:30%;">
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+    <!--[if lt IE 9]>
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="~/assets/pages/scripts/form-samples.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="~/assets/layouts/layout3/scripts/layout.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <!-- END THEME LAYOUT SCRIPTS -->
+
+
+    <script>
+
+
+        var addressFill = 0;
+
+        function addressfill()
+        {
+            if(addressFill == 0)
+            {
+                $('#txtEMAddr1').val($('#txtAddr1').val());
+
+                addressFill = 1;
+            }
+            else if(addressFill == 1)
+            {
+                $('#txtEMAddr1').val('');
+
+                addressFill = 0;
+            }
+        }
+
+        function validateNumberAndForwardSlash(event) {
+            var key = window.event ? event.keyCode : event.which;
+
+            if ((event.keyCode >= 48 && event.keyCode <= 57) || event.keyCode == 191) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        function validateEmailId(emailField)
+        {
+            var reg = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+            if (reg.test(emailField.value) == false)
+            {
+                return "Error";
+            }
+            return "Success";
+
+        }
+
+        function GenerateRandomPassword() {
+            //////////////////////////////////////////////////////////Random password Start ///////////////////////////////////////////////
+
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+            var string_length = 8;
+            var randomstring = '';
+            var charCount = 0;
+            var numCount = 0;
+
+            for (var i = 0; i < string_length; i++) {
+                // If random bit is 0, there are less than 3 digits already saved, and there are not already 5 characters saved, generate a numeric value.
+                if ((Math.floor(Math.random() * 2) == 0) && numCount < 3 || charCount >= 5) {
+                    var rnum = Math.floor(Math.random() * 10);
+                    randomstring += rnum;
+                    numCount += 1;
+                } else {
+                    // If any of the above criteria fail, go ahead and generate an alpha character from the chars string
+                    var rnum = Math.floor(Math.random() * chars.length);
+                    randomstring += chars.substring(rnum, rnum + 1);
+                    charCount += 1;
+                }
+
+            }
+
+            $('#hdnpasswd').val(randomstring);
+
+            //////////////////////////////////////////////////////////Random password end ///////////////////////////////////////////////
+
+        }
+
+        function readURL(input) {
+
+            var fileType = input.files[0].name.split('.').pop(), allowdtypes = 'jpeg,jpg,png,gif,pdf,JPEG,JPG,PNG,GIF,PDF';
+
+            if (input.files && input.files[0]) {
+                if (allowdtypes.indexOf(fileType) < 0) {
+                    alert("Error", 'Invalid file format,Please select an image file', 3);
+                    return false;
+                }
+            }
+
+            var file = input.files[0].name;
+
+            var id = input.id;
+
+            id = '#' + id;
+
+            var newFilename;
+            // var filename = $('#employeeimg').prop("files")[0]['name'];
+            file = $(id).get(0).files[0];
+            var formData = new FormData();
+            formData.append("sessionid", id);
+            formData.append("empname", $("#txtFirstname").val() +'_' +$("#txtexcmp").val());
+            formData.append("expDocUp", file);
+            $.ajax({
+                type: "POST",
+                url: 'UploadDocument',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                success: function (data) {
+                    sImgFileNameEmp = data.fileName;
+                    newFilename = data.fileName;
+
+                    alert("Success");
+
+                    //var strJsonDatas = eval({
+                    //    file_path: "../Content/Employee/EmployeeDocuments/" + newFilename,
+                    //    file_name: newFilename
+                    //});
+                    //var sCondition = "where emp_ref_no=" + sHiddenEmpId + "";
+                    //var ResultEmp = oAPICall.UpdateData(strJsonDatas, 'UpdateTfsEmployeeMaster', sCondition);
+
+                    //if (ResultEmp != "" && ResultEmp != null) {
+
+                    //}
+
+                    return sImgFileNameEmp;
+
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+
+        $("#ddlrptTomgr").change(function (){
+
+            var newCode, length, str, nCode;
+
+            if ($("#ddlcmp").val() == 2)
+            {
+                length = ResCare.length;
+
+                code = ResCare[length - 1].emp_ref_code;
+
+                str = code.split('/');
+
+                nCode = parseInt(str [str.length - 1]) + 1;
+
+                if (nCode < 100) {
+
+                    newCode = "ECESISCARE/TVM/HR/2018/" + '0' + nCode;
+                }
+                else {
+
+                    newCode = "ECESISCARE/TVM/HR/2018/" + nCode;
+                }
+            }
+            else
+            {
+                if ($('#ddlcmploc').val() == 1)  // cmploc 1 NGL
+                {
+                    length = ResNGL.length;
+
+                    code = ResNGL[length - 1].emp_ref_code;
+
+                    str = code.split('/');
+
+                    nCode = parseInt(str[str.length - 1]) + 1;
+
+
+                    if (nCode < 100) {
+
+                        newCode = "ECESIS/NGL/HR/" + '0' + nCode;
+                    }
+                    else {
+
+                        newCode = "ECESIS/NGL/HR/" + nCode;
+                    }
+                }
+                else if ($('#ddlcmploc').val() == 2)  // cmploc 2 TVM
+                {
+                    length = ResTVM.length;
+
+                    code = ResTVM[length - 1].emp_ref_code;
+
+                    str = code.split('/');
+
+                    nCode = parseInt(str[str.length - 1]) + 1;
+
+
+                    if (nCode < 100) {
+
+                        newCode = "ECESIS/TVM/HR/" + '0' + nCode;
+                    }
+                    else {
+
+                        newCode = "ECESIS/TVM/HR/" + nCode;
+                    }
+
+                }
+            }
+
+            //$("#txtEmpcode").val(newCode);
+
+        });
+
+        $("#ddlcmp").change(function () {
+
+            var company = $('#ddlcmp').val();
+
+            if ( company == 1 || company == 2) {
+
+                $('#ddlcmploc').empty().append();
+
+                $('#ddlcmploc').append('<option value="-1">Select Location</option>');
+                $('#ddlcmploc').append('<option value="1">Nagercoil</option>');
+                $('#ddlcmploc').append('<option value="2">Trivandrum</option>');
+                $('#ddlcmploc').append('<option value="5">Mathandam</option>');
+                
+                
+            }
+            else if ($('#ddlcmp').val() == 3) {
+               
+                $('#ddlcmploc').empty().append();
+
+                $('#ddlcmploc').append('<option value="-1">Select Location</option>');
+                $('#ddlcmploc').append('<option value="3">Chennai</option>');
+                $('#ddlcmploc').append('<option value="4">Kolar</option>');
+                
+                $('#mechDiv').removeClass('hidden');
+
+            }
+            //alert();
+
+        });
+
+        $("#ddlMarital").change(function(){
+
+            if ($('#ddlMarital').val() == 2) {
+                $('#spouseDIV').removeClass('hidden');
+            }
+            else
+            {
+                $('#spouseDIV').addClass('hidden');
+            }
+            //alert();
+
+        });
+
+        $("#ddldivision").change(function(){
+
+            $('#ddllevel').val(-1);
+            $('#ddldesignation').empty().append();
+
+        });
+
+        $("#ddllevel").change(function () {
+
+            var deptId = $("#ddldivision").val();
+
+            var level = $("#ddllevel").val();
+
+            var sCondition;
+
+            if(level == 1)
+            {
+                if (deptId == 1)
+                {
+                    sCondition = "where department_id in(1,2) and role_id = 2 order by designation_id asc";
+                }
+                else if (deptId == 6)
+                {
+                    sCondition = "where department_id in(6) and designation_id = 1 order by designation_id asc";
+                }
+                else
+                {
+                    sCondition = "where department_id =" + deptId + " and role_id = 2 order by designation_id asc";
+                }
+            }
+            else if( level == 2)
+            {
+                if (deptId == 1)
+                {
+                    sCondition = "where department_id in(1,2) and role_id != 2 order by designation_id asc";
+                }
+                else if (deptId == 6)
+                {
+                    sCondition = "where department_id in(6) and designation_id != 1 order by designation_id asc";
+                }
+                else
+                {
+                    sCondition = "where department_id =" + deptId + " and role_id != 2 order by designation_id asc";
+                }
+            }
+
+
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: null });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectDesignation");
+
+            $('#ddldesignation').empty().append();
+
+            $('#ddldesignation').append('<option value="-1">Select Designation</option>');
+
+            if (Result != "" && Result != null) {
+
+                var  s = 100;
+
+                for (var i = 0; i < Result.length; i++) {
+                    $('#ddldesignation').append('<option value="' + Result[i]["designation_id"] + '" id="'+Result[i]["role_id"]+'">' + Result[i]["display_value"] + '</option>');
+
+                    s++;
+                }
+            }
+
+        });
+
+        function addRow() {
+            var table = document.getElementById('exptbl');
+
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+
+            var cell1 = row.insertCell(0);
+            var element1 = document.createElement("input");
+            element1.type = "text";
+            element1.id = "txtexcmp";
+            cell1.appendChild(element1);
+
+            var cell2 = row.insertCell(1);
+            var element2 = document.createElement("input");
+            element2.type = "text";
+            element2.id = "txtexloc";
+            cell2.appendChild(element2);
+
+            var cell3 = row.insertCell(2);
+            var element3 = document.createElement("input");
+            element3.type = "text";
+            element3.id = "txtexyears";
+            element3.style.width = "20px";
+            cell3.appendChild(element3);
+
+            var cell4 = row.insertCell(3);
+            var element4 = document.createElement("input");
+            element4.type = "text";
+            element4.id = "txtexpos";
+            cell4.appendChild(element4);
+
+            var cell5 = row.insertCell(4);
+            var element5 = document.createElement("input");
+            element5.type = "text";
+            element5.id = "txtexcname";
+            cell5.appendChild(element5);
+
+            var cell6 = row.insertCell(5);
+            var element6 = document.createElement("input");
+            element6.type = "text";
+            element6.id = "txtexcnum";
+            element6.style.width = "80px";
+            cell6.appendChild(element6);
+
+            var cell7 = row.insertCell(6);
+            var element7 = document.createElement("a");
+            element7.innerHTML = "Save";
+            element7.style.width = "50px";
+            cell7.appendChild(element7);
+
+            var cell8 = row.insertCell(7);
+            var element8 = document.createElement("a");
+            element8.innerHTML = "Cancel";
+            element8.style.width = "50px";
+            cell8.appendChild(element8);
+
+        }
+
+        $('input[type=radio][name=rdo]').change(function () {
+            if (this.id == 'yes') {
+                $('#exprdetails').addClass('hidden');
+                $('#fresher').removeClass('hidden');
+                fresher = 1;
+            }
+            else if (this.id == 'no') {
+                $('#exprdetails').removeClass('hidden');
+                $('#fresher').addClass('hidden');
+
+                fresher = 2;
+            }
+        });
+
+        function bindManager(refNo) {
+
+            //var Condition = "WHERE delete_status=0 and role_id in(1,2,12) order by emp_full_name asc";
+            ////var Condition = "WHERE order_no = " + orderid + " order by 1 desc";//Anoop
+            //var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            var paramNames = [], paramValues = [];
+
+            paramNames.push('refNo');
+
+            paramValues.push(refNo);
+
+            paramNames.push('type');
+
+            paramValues.push(3);
+
+            var strJsonDatas = eval({ strSessionID: '', ProcParameters: paramNames, ProcInputData: paramValues });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectEmployeeLists");
+
+            $('#ddlrptTomgr').empty().append();
+
+            $('#ddlrptTomgr').append('<option value="-1">Select Manager</option>');
+
+            if (Result != "" && Result != null) {
+                for (var i = 0; i < Result.length; i++) {
+                    $('#ddlrptTomgr').append('<option value="' + Result[i]["emp_ref_no"] + '">' + Result[i]["emp_full_name"] + '</option>');
+                }
+            }
+
+            var Condition1 = "WHERE emp_ref_code like '%ECESISCARE%'";
+            //var Condition = "WHERE order_no = " + orderid + " order by 1 desc";//Anoop
+            var strJsonDatas1 = eval({ strCondition: Condition1, strFieldNames: null, strSessionID: null });
+
+            ResCare = oAPICall.SelectData(strJsonDatas1, "SelectEmployeeDetails");
+
+            var Condition2 = "WHERE emp_ref_code like '%ECESIS/tvm%'";
+            //var Condition = "WHERE order_no = " + orderid + " order by 1 desc";//Anoop
+            var strJsonDatas2 = eval({ strCondition: Condition2, strFieldNames: null, strSessionID: null });
+
+            ResTVM = oAPICall.SelectData(strJsonDatas2, "SelectEmployeeDetails");
+
+            var Condition3 = "WHERE emp_ref_code like '%ECESIS/ngl%'";
+            //var Condition = "WHERE order_no = " + orderid + " order by 1 desc";//Anoop
+            var strJsonDatas3 = eval({ strCondition: Condition3, strFieldNames: null, strSessionID: null });
+
+            ResNGL = oAPICall.SelectData(strJsonDatas3, "SelectEmployeeDetails");
+
+        }
+
+        function getDateFormat()
+        {
+            var sd = $("#txtDOB").val();
+
+            var s = sd.split('/');
+
+            var dd = s[1] + '-' + s[0] + '-' + s[2]
+
+            //var d = new Date(dd);
+
+            return dd;
+        }
+
+        function SaveData() {
+
+            if(role == 1 || role == 9 || role == 10 || role == 27 || role == 29 || role == 30)
+            {
+                var busStop = $('#txtbustop').val();
+
+                if ($('#ddlMarital').val() < 0) {
+
+                    msgalert("Error","Please Choose Marital Status",3);
+                    return;
+                }
+
+                if ($('#ddlMarital').val() == 2) {
+
+                    if ($('#txtSpouseName').val() == "" || $('#txtSpouseName').val() == null) {
+
+                        msgalert("Error","Please Enter Spouse Name",3);
+                        return;
+                    }
+                    if ($('#txtSpousecontact').val() == "" || $('#txtSpousecontact').val() == null) {
+
+                        msgalert("Error","Please Enter Spouse Contact",3);
+                        return;
+                    }
+                }
+
+                if ($('#txtAddr1').val() == "" || $('#txtAddr1').val() == null) {
+
+                    msgalert("Error","Please Enter Address",3);
+                    return;
+                }
+
+                if ($('#txtAddr1').val() == "" || $('#txtAddr1').val() == null) {
+
+                    msgalert("Error","Please Enter Address 1",3);
+                    return;
+                }
+                if ($('#txtCity').val() == "" || $('#txtCity').val() == null) {
+
+                    msgalert("Error","Please Enter City",3);
+                    return;
+                }
+                if ($('#ddlState').val() == -1 ) {
+
+                    msgalert("Error","Please Choose State",3);
+                    return;
+                }
+                if ($('#txtCountry').val() == "" || $('#txtCountry').val() == null) {
+
+                    msgalert("Error","Please Enter Country",3);
+                    return;
+                }
+                if ($('#txtPincode').val() == "" || $('#txtPincode').val() == null) {
+
+                    msgalert("Error","Please Enter Pincode",3);
+                    return;
+                }
+
+                if ($('#txtEMName1').val() == "" || $('#txtEMName1').val() == null) {
+
+                    msgalert("Error","Please Enter Emergency Contact Name 1",3);
+                    return;
+                }
+                if ($('#txtEMnumber1').val() == "" || $('#txtEMnumber1').val() == null) {
+
+                    msgalert("Error","Please Enter Emergency Contact Number 1",3);
+                    return;
+                }
+                if ($('#txtEMAddr1').val() == "" || $('#txtEMAddr1').val() == null) {
+
+                    msgalert("Error","Please Enter Emergency Contact Address 1",3);
+                    return;
+                }
+                if ($('#txtEMRelation1').val() == "" || $('#txtEMRelation1').val() == null) {
+
+                    msgalert("Error","Please Enter Emergency Contact Relationship 1",3);
+                    return;
+                }
+
+                if(roleId == 27)
+                {
+                    if ($('#ddlShift').val() == -1) {
+
+                        msgalert("Error","Please Choose Shift Status",3);
+                        return;
+                    }
+
+                    if ($('#ddlShiftTime').val() == -1) {
+
+                        msgalert("Error","Please Choose Shift time ",3);
+                        return;
+                    }
+                }
+
+                
+
+                //if ($('#txtBankNo').val() == "" || $('#txtBankNo').val() == null) {
+
+                //    msgalert("Error","Please Enter Bank Account Number",3);
+                //    return;
+                //}
+                //if ($('#txtPANNo').val() == "" || $('#txtPANNo').val() == null) {
+
+                //    msgalert("Error","Please Enter PAN Number",3);
+                //    return;
+                //}
+                //if ($('#txtAadhaarNo').val() == "" || $('#txtAadhaarNo').val() == null) {
+
+                //    msgalert("Error","Please Enter Aadhaar Number",3);
+                //    return;
+                //}
+            }
+            else
+            {
+                var busStop = $('#txtbustops').val();
+
+            }
+
+            if ($('#txtFirstname').val() == "" || $('#txtFirstname').val() == null) {
+
+                msgalert("Error","Please Enter First Name",3);
+
+                $('#txtFirstname').focus();
+
+                return;
+            }
+            if ($('#txtLastName').val() == "" || $('#txtLastName').val() == null) {
+
+                msgalert("Error","Please Enter Last Name",3);
+                $('#txtLastName').focus();
+                return;
+
+            }
+            if ($('#txtEmail').val() == "" || $('#txtEmail').val() == null) {
+
+                msgalert("Error","Please Enter Email",3);
+                $('#txtEmail').focus();
+                return;
+
+            }
+            else
+            {
+                var data = document.getElementById('txtEmail');
+                var s = validateEmailId(data);
+
+                if(s == "Error")
+                {
+                    msgalert("Error","Invalid Email Format",3);
+
+                    return;
+                }
+            }
+            
+            if ($('#ddlcmp').val() < 0) {
+
+                msgalert("Error","Please Choose Company",3);
+                $('#ddlcmp').focus();
+                return;
+
+            }
+            if ($('#ddlcmploc').val() < 0) {
+
+                msgalert("Error","Please Choose Location",3);
+                $('#ddlcmploc').focus();
+                return;
+
+            }
+            if ($('#ddldivision').val() < 0) {
+
+                msgalert("Error","Please Choose Division",3);
+                $('#ddldivision').focus();
+                return;
+
+            }
+            if ($('#ddllevel').val() < 0) {
+
+                msgalert("Error","Please Choose Level",3);
+                $('#ddllevel').focus();
+                return;
+
+            }
+            if ($('#ddldesignation').val() < 0) {
+
+                msgalert("Error","Please Choose Desination",3);
+                $('#ddldesignation').focus();
+                return;
+
+            }
+            if ($('#ddlfreview').val() < 0) {
+
+                msgalert("Error","Please Choose Review Months",3);
+                $('#ddlfreview').focus();
+                return;
+
+            }
+            if ($('#ddlnoticeperiod').val() < 0 ) {
+
+                msgalert("Error","Please Choose Notice Period",3);
+                $('#ddlnoticeperiod').focus();
+                return;
+
+            }
+            if ($('#ddlrptTomgr').val() < 0 ) {
+
+                msgalert("Error","Please Choose Report to Manager",3);
+                $('#ddlrptTomgr').focus();
+                return;
+
+            }
+            if ($('#txtjoiningdt').val() == "" || $('#txtjoiningdt').val() == null) {
+
+                msgalert("Error","Please Enter Joining Date",3);
+                return;
+
+            }
+
+            if (busStop == "" || busStop == null) {
+
+                msgalert("Error","Please Enter Nearest Bus Stop",3);
+                return;
+
+            }
+
+            if ($('#txtDOB').val() == "" || $('#txtDOB').val() == null) {
+
+                msgalert("Error","Please Enter Date of Birth",3);
+                return;
+
+            }
+
+            if ($('#ddlbloodgrp').val() < 0) {
+
+                msgalert("Error","Please Choose Blood Group",3);
+                return;
+
+            }
+
+            if ($('#ddlGender').val() < 0) {
+
+                msgalert("Error","Please Choose Gender",3);
+                return;
+
+            }
+
+            if ($('#txtcontact').val() == "" || $('#txtcontact').val() == null) {
+
+                msgalert("Error","Please Enter Contact Number",3);
+                return;
+
+            }
+
+            var empCode = $("#txtEmpcode").val();
+
+            var Condition = "where delete_status = 0 AND emp_ref_code = '" + empCode +"'";
+
+            var strJsonDatas1 = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            var Result1 = oAPICall.SelectData(strJsonDatas1, "SelectEmployeeDetailsMaster");
+
+            if( Result1 != "")
+            {
+                msgalert("Error","Employee Code Already Exists",3);
+                return;
+            }
+
+            var curDate =  formatDate(new Date());
+
+            var roleId = $('#ddldesignation').children(":selected").attr("id");
+
+            if(role == 1 || role == 9 || role == 10 || role == 27 || role == 29 || role == 30)
+            {
+                var StrJsonDatas = eval({
+
+                    emp_first_name: $("#txtFirstname").val(),
+                    emp_last_name: $("#txtLastName").val(),
+                    email_id: $("#txtEmail").val(),
+                    company_id: $("#ddlcmp").val(),
+                    emp_comp_id: $("#ddlcmploc").val(),
+                    emp_department: $("#ddldivision").val(),
+                    emp_level: $("#ddllevel").val(),
+                    emp_desgination: $("#ddldesignation").val(),
+                    emp_notice_period: $("#ddlnoticeperiod").val(),
+                    emp_first_review: $("#ddlfreview").val(),
+                    report_to_manager:  $("#ddlrptTomgr").val(),
+                    emp_ref_code: $("#txtEmpcode").val(),
+                    emp_joining_date: $("#txtjoiningdt").val(),
+                    delete_status: 0,
+                    is_accept: 0,
+                    created_by: refNo,
+                    created_date: new Date(),
+                    role_id: roleId,
+                    nearest_bus_stop: busStop,
+                    date_of_birth: getDateFormat(),
+                    salary_fill: 0,
+                    blood_group: $('#ddlbloodgrp').val(),
+                    gender: $('#ddlGender').val(),
+                    maritial_status: $('#ddlMarital').val(),
+                    spouse_name: $('#txtSpouseName').val(),
+                    spouse_contact: $('#txtSpousecontact').val(),
+                    mobile_number: $('#txtcontact').val(),
+                    local_street: $('#txtAddr1').val(),
+                    local_level: $('#txtAddr2').val(),
+                    local_unit: $('#txtCity').val(),
+                    local_state: $('#ddlState').val(),
+                    local_country: $('#txtCountry').val(),
+                    local_postal_code: $('#txtPincode').val(),
+                    emrergency_contact_name: $('#txtEMName1').val(),
+                    emrergency_contact_number: $('#txtEMnumber1').val(),
+                    emrergency_contact_address: $('#txtEMAddr1').val(),
+                    emergency_contact_relationship: $('#txtEMRelation1').val(),
+                    emergency_contact_name1: $('#txtEMName2').val(),
+                    emergency_contact_number1: $('#txtEMnumber2').val(),
+                    emergency_contact_address1: $('#txtEMAddr2').val(),
+                    emergency_contact_relationship1: $('#txtEMRelation2').val(),
+                    passport_number:$('#txtPassportNo').val(),
+                    bank_account_no: $('#txtBankNo').val(),
+                    pan_card_no: $('#txtPANNo').val(),
+                    aadhar_no: $('#txtAadhaarNo').val()
+                });
+
+                if(role == 27)
+                {
+                    var StrJsonDatas = eval({
+
+                        emp_first_name: $("#txtFirstname").val(),
+                        emp_last_name: $("#txtLastName").val(),
+                        email_id: $("#txtEmail").val(),
+                        company_id: $("#ddlcmp").val(),
+                        emp_comp_id: $("#ddlcmploc").val(),
+                        emp_department: $("#ddldivision").val(),
+                        emp_level: $("#ddllevel").val(),
+                        emp_desgination: $("#ddldesignation").val(),
+                        emp_notice_period: $("#ddlnoticeperiod").val(),
+                        emp_first_review: $("#ddlfreview").val(),
+                        report_to_manager:  $("#ddlrptTomgr").val(),
+                        emp_ref_code: $("#txtEmpcode").val(),
+                        emp_joining_date: $("#txtjoiningdt").val(),
+                        delete_status: 0,
+                        is_accept: 0,
+                        created_by: refNo,
+                        created_date: new Date(),
+                        role_id: roleId,
+                        nearest_bus_stop: busStop,
+                        date_of_birth: getDateFormat(),
+                        salary_fill: 0,
+                        blood_group: $('#ddlbloodgrp').val(),
+                        gender: $('#ddlGender').val(),
+                        maritial_status: $('#ddlMarital').val(),
+                        spouse_name: $('#txtSpouseName').val(),
+                        spouse_contact: $('#txtSpousecontact').val(),
+                        mobile_number: $('#txtcontact').val(),
+                        local_street: $('#txtAddr1').val(),
+                        local_level: $('#txtAddr2').val(),
+                        local_unit: $('#txtCity').val(),
+                        local_state: $('#ddlState').val(),
+                        local_country: $('#txtCountry').val(),
+                        local_postal_code: $('#txtPincode').val(),
+                        emrergency_contact_name: $('#txtEMName1').val(),
+                        emrergency_contact_number: $('#txtEMnumber1').val(),
+                        emrergency_contact_address: $('#txtEMAddr1').val(),
+                        emergency_contact_relationship: $('#txtEMRelation1').val(),
+                        emergency_contact_name1: $('#txtEMName2').val(),
+                        emergency_contact_number1: $('#txtEMnumber2').val(),
+                        emergency_contact_address1: $('#txtEMAddr2').val(),
+                        emergency_contact_relationship1: $('#txtEMRelation2').val(),
+                        passport_number:$('#txtPassportNo').val(),
+                        bank_account_no: $('#txtBankNo').val(),
+                        pan_card_no: $('#txtPANNo').val(),
+                        aadhar_no: $('#txtAadhaarNo').val(),
+                        emp_shift: $('#ddlShift').val(),
+                        emp_shift_time: $('#ddlShiftTime').val(),
+                    });
+                }
+
+                var Result = oAPICall.InsertData(StrJsonDatas, 'CreateEmployeeMaster');
+
+                if (Result != null && Result != '') {
+
+                    var Condition = "order by emp_ref_no asc";
+
+                    var strJsonDatas1 = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+                    var Result1 = oAPICall.SelectData(strJsonDatas1, "SelectEmployeeDetailsMaster");
+
+                    var nRefNo = Result1[Result1.length - 1]['emp_ref_no'];
+
+                    var nEmpCode = Result1[Result1.length - 1]['emp_ref_code'];
+
+                    var StrJsonDatas2 = eval({
+
+                        ref_no: nRefNo, is_filled: 0
+                    });
+
+                    var Result3 = oAPICall.InsertData(StrJsonDatas2, 'CreateEmployeeEducationDetails');
+
+                    if (Result3 != "" && Result3 != null) {
+
+                        CreateUserLogin(nRefNo,nEmpCode,roleId);
+
+                        CreateEmployeeDocuments(nRefNo);
+
+                        CreateLeaveSchedule(nRefNo);
+
+                        CreateSalaryDetails(nRefNo);
+
+                        msgalert("Success", 'Employee Created Successfully', 1);
+
+                        window.location.reload();
+                    }
+                }
+            }
+            else
+            {
+                sPcBulkData = $("#txtFirstname").val() + '~' + $("#txtLastName").val() + '~' + $("#txtEmail").val() + '~' + $("#ddlcmp").val() + '~' + $("#ddlcmploc").val() + '~' +
+                       $("#ddldivision").val() + '~' + $("#ddllevel").val() + '~' + $("#ddldesignation").val() + '~' + $("#ddlnoticeperiod").val() + '~' +
+                       $("#ddlfreview").val() + '~' + $("#ddlrptTomgr").val() + '~' + $("#txtEmpcode").val() + '~' + $("#txtjoiningdt").val()  + '~' + refNo + '~'+ roleId + '~' +
+                       busStop  + '~' + getDateFormat()  + '~' + $("#ddlbloodgrp").val()  + '~'+ $("#ddlGender").val()  + '~'+ $("#txtcontact").val()  + '~';
+
+
+                var paramNames = [], paramValues = [];
+                paramNames.push('sProcBulkData');
+                paramValues.push(sPcBulkData);
+                var strJsonDatas = eval({ strSessionID: '', ProcParameters: paramNames, ProcInputData: paramValues });
+
+                var Result = eval(oAPICall.SelectData(strJsonDatas, "ProcInsertEmployeeDetails"));
+
+                // var Result = oAPICall.SelectData(strJsonDatas, "ProcInsertEmployeeDetails");
+
+                if (Result != "" && Result != null) {
+
+                    var nRefNo = Result[0].emp_ref_no;
+
+                    var nEmpCode = Result[0].emp_ref_code;
+
+                    CreateUserLogin(nRefNo,nEmpCode,roleId);
+
+                    CreateLeaveSchedule(nRefNo);
+
+                    CreateEmployeeDocuments(nRefNo);
+
+                    CreateSalaryDetails(nRefNo);
+
+                    msgalert("Success", 'Employee Created Successfully', 1);
+
+                    window.location.reload();
+
+                }
+            }
+
+        }
+
+        function CreateSalaryDetails(ref)
+        {
+
+            var StrJsonDatas = eval({
+                ref_no: ref, delete_status: 0
+            });
+
+            var Result = oAPICall.InsertData(StrJsonDatas, 'CreateEmployeeSalary');
+
+            if (Result != "" && Result != null) {
+
+                angular.element(document.getElementById('controllerID')).scope().Notification(ref,"1");//type 1 for HR
+
+            }
+        }
+
+        function CreateEmployeeDocuments(ref)
+        {
+            var StrJsonDatas = eval({
+
+                emp_ref_no: ref, delete_status: 0
+            });
+
+            var Result = oAPICall.InsertData(StrJsonDatas, 'CreateEmployeeDouments');
+        }
+
+        function CreateLeaveSchedule(ref)
+        {
+            var d = new Date();
+
+            var cYear = d.getFullYear();
+
+            var nYear = cYear + 1 ;
+
+            var gender = $('#ddlGender').val();
+
+            if(gender == 1)
+            {
+                var StrJsonDatas = eval({
+
+                    emp_ref_no: ref, year: cYear, PL_taken: 0, CL_taken: 0,Half: 0, CompOff: 0, LossofPay: 0, LossofPay_Half: 0,
+                    Maternity: 0, Medical: 0, py_taken: 0, paternity_taken: 0, PL_total: 12, CL_total: 12, py_balance: 0, paternity_total: 5
+                });
+            }
+            else
+            {
+                var StrJsonDatas = eval({
+                    emp_ref_no: ref, year: cYear, PL_taken: 0, CL_taken: 0,Half: 0, CompOff: 0, LossofPay: 0, LossofPay_Half: 0,
+                    Maternity: 0, Medical: 0, py_taken: 0, PL_total: 12, CL_total: 12, py_balance: 0
+                });
+            }
+
+            
+
+            var Result = oAPICall.InsertData(StrJsonDatas, 'CreateLeaveSchedule');
+
+            if (Result != "" && Result != null) {
+
+                if(gender == 1)
+                {
+                    var StrJsonDatas1 = eval({
+
+                        emp_ref_no: ref, year: nYear, PL_taken: 0, CL_taken: 0,Half: 0, CompOff: 0, LossofPay: 0, LossofPay_Half: 0,
+                        Maternity: 0, Medical: 0, py_taken: 0, paternity_taken: 0, PL_total: 12, CL_total: 12, py_balance: 0, paternity_total: 5
+                    });
+                }
+                else
+                {
+                    var StrJsonDatas1 = eval({
+                        emp_ref_no: ref, year: nYear, PL_taken: 0, CL_taken: 0,Half: 0, CompOff: 0, LossofPay: 0, LossofPay_Half: 0,
+                        Maternity: 0, Medical: 0, py_taken: 0, PL_total: 12, CL_total: 12, py_balance: 0
+                    });
+                }
+                
+                var Result1 = oAPICall.InsertData(StrJsonDatas1, 'CreateLeaveSchedule');
+
+                if (Result1 != "" && Result1 != null) {
+
+
+                }
+            }
+        }
+
+        function CreateUserLogin(newRefNo,newEmpCode,roleId) {
+
+            GenerateRandomPassword();
+
+            var sPassword = encode64($('#hdnpasswd').val().toString());
+
+            var div = $('#ddldivision').val();
+
+            var compCode;
+
+            if(div == 5 || div == 8)  // 5-HR, 8-Digital Marketing
+            {
+                compCode = 30;
+            }
+            else
+            {
+                compCode = 40;
+            }
+
+            var dt = new Date();
+            var year = dt.getFullYear();
+            var month = dt.getMonth();
+            var day = dt.getDate();
+
+            var expDate = new Date(year + 10, month, day)
+
+            var StrJsonDatas = eval({
+
+                ref_no: newRefNo, username: newEmpCode, password: sPassword,created_by:refNo,role_id:roleId, company_code:compCode,
+                created_date: new Date(), password_expiry: expDate, delete_status: 0,theme_preference:1, inactive_date:expDate,active_date:new Date(),access_level:4
+            });
+            var Result = oAPICall.InsertData(StrJsonDatas, 'CreateEmployeeLoginInfo');
+
+            if (Result != "" && Result != null) {
+
+
+            }
+
+        }
+
+        function BindFields() {
+            var Condition = "WHERE enumeration_key in ('Graduation','POST_Graduation','Syllabus','Blood_group')";
+            //var Condition = "WHERE order_no = " + orderid + " order by 1 desc";//Anoop
+            var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectMandatoryValues");
+
+            $('#ddlbloodgrp').empty().append();
+            $('#ddlGraduate').empty().append();
+            $('#ddlPGraduate').empty().append();
+            $('#ddlsslcsyllabus').empty().append();
+            $('#ddltwelthsyllabus').empty().append();
+
+            if (Result != "" && Result != null) {
+
+                for (var i = 0; i < Result.length; i++) {
+
+                    var sEnukey = Result[i]["enumeration_key"];
+                    var sEnuValue = Result[i]["value"];
+                    var sEnuDispValue = Result[i]["display_value"];
+                    if (sEnukey == 'Blood_Group') {
+                        $('#ddlbloodgrp').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+                    else if (sEnukey == 'Graduation') {
+                        $('#ddlGraduate').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+                    else if (sEnukey == 'Post_Graduation') {
+                        $('#ddlPGraduate').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+                    else if (sEnukey == 'Syllabus') {
+                        $('#ddlsslcsyllabus').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        $('#ddltwelthsyllabus').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+
+                }
+            }
+
+        }
+
+        var oAPICall;
+
+        var fresher;
+
+        var refNo, ResCare, ResNGL, ResTVM, role;
+
+        function edit() {
+
+            $('#labelcmp').addClass('hidden');
+            $('#txtexcmp').val($('#labelcmp').text());
+            $('#txtexcmp').removeClass('hidden');
+
+            $('#labelloc').addClass('hidden');
+            $('#txtexloc').val($('#labelloc').text());
+            $('#txtexloc').removeClass('hidden');
+
+            $('#labelyears').addClass('hidden');
+            $('#txtexyears').val($('#labelyears').text());
+            $('#txtexyears').removeClass('hidden');
+
+            $('#labelpos').addClass('hidden');
+            $('#txtexpos').val($('#labelpos').text());
+            $('#txtexpos').removeClass('hidden');
+
+            $('#labelcname').addClass('hidden');
+            $('#txtexcname').val($('#labelcname').text());
+            $('#txtexcname').removeClass('hidden');
+
+            $('#labelcnum').addClass('hidden');
+            $('#txtexcnum').val($('#labelcnum').text());
+            $('#txtexcnum').removeClass('hidden');
+
+            $('#linkedit').addClass('hidden');
+
+            $('#linkdelete').addClass('hidden');
+
+            $('#linksave').removeClass('hidden');
+
+            $('#linkcancel').removeClass('hidden');
+
+
+        }
+
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [day, month, year].join('/');
+        }
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        $(document).ready(function () {
+
+            oAPICall = new APICall();
+
+            $('#spouseDIV').addClass('hidden');
+
+            $('#exprdetails').addClass('hidden');
+
+            $('#txtexcmp').addClass('hidden');
+            $('#txtexloc').addClass('hidden');
+            $('#txtexyears').addClass('hidden');
+            $('#txtexpos').addClass('hidden');
+            $('#txtexcname').addClass('hidden');
+            $('#txtexcnum').addClass('hidden');
+            $('#txtexdoc').addClass('hidden');
+            $('#btnupload').addClass('hidden');
+
+            $('#linksave').addClass('hidden');
+
+            $('#linkcancel').addClass('hidden');
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+            role = sUserDetails.RoleId;
+
+            bindManager(refNo);
+
+            var date = formatDate(new Date());
+
+            $('#txtjoiningdt').val(date);
+
+            BindFields();
+
+            if(role == 1 || role == 2)
+            {
+                $('#address').addClass('hidden');
+
+                $('#emergency').addClass('hidden');
+
+                $('#identities').addClass('hidden');
+
+                $('#near').removeClass('hidden');
+
+                $('#marital').addClass('hidden');
+
+            }
+            if(role == 1)
+            {
+                $('#ddlcmp').empty().append();
+
+                $('#ddlcmp').append('<option value="-1">Select Company</option>');
+                $('#ddlcmp').append('<option value="1">ECESIS BPO</option>');
+                $('#ddlcmp').append('<option value="2">ECESIS CARE</option>');
+                $('#ddlcmp').append('<option value="3">Ecesis Engineering</option>');
+
+                $('#ddldivision').empty().append();
+
+                $('#ddldivision').append('<option value="-1">Select Division</option>');
+                $('#ddldivision').append('<option value="1">BPO</option>');
+                $('#ddldivision').append('<option value="4">Software</option>');
+                $('#ddldivision').append('<option value="8">Digital Marketing</option>');
+                $('#ddldivision').append('<option value="5">HR</option>');
+                $('#ddldivision').append('<option value="6">Accounts</option>');
+                $('#ddldivision').append('<option value="7">Admin</option>');
+                $('#ddldivision').append('<option value="10">Field Service</option>');
+            }
+            else if(role == 9 || role == 10 || role == 29 || role == 30) //for Ecesis HR
+            {
+                $('#ddlcmp').empty().append();
+
+                $('#ddlcmp').append('<option value="-1">Select Company</option>');
+                $('#ddlcmp').append('<option value="1">ECESIS BPO</option>');
+                $('#ddlcmp').append('<option value="2">ECESIS CARE</option>');
+                
+                $('#ddldivision').empty().append();
+
+                $('#ddldivision').append('<option value="-1">Select Division</option>');
+                $('#ddldivision').append('<option value="1">BPO</option>');
+                $('#ddldivision').append('<option value="4">Software</option>');
+                $('#ddldivision').append('<option value="8">Digital Marketing</option>');
+                $('#ddldivision').append('<option value="5">HR</option>');
+                $('#ddldivision').append('<option value="6">Accounts</option>');
+                $('#ddldivision').append('<option value="7">Admin</option>');                
+
+            }
+            else if(role == 27) //for Mechanical HR
+            {
+                $('#ddlcmp').empty().append();
+
+                $('#ddlcmp').append('<option value="-1">Select Company</option>');
+                $('#ddlcmp').append('<option value="3">Ecesis Engineering</option>');
+
+                $('#ddldivision').empty().append();
+
+                $('#ddldivision').append('<option value="-1">Select Division</option>');
+                $('#ddldivision').append('<option value="10">Field Service</option>');
+            }
+        });
+
+
+
+    </script>
+</body>
+
+</html>
+<script src="~/assets/pages/scripts/components-date-time-pickers.min.js"></script>
+<script src="~/assets/pages/scripts/components-date-time-pickers.js"></script>
+<script src="~/Scripts/angular.min.js"> </script>
+<script src="~/Scripts/AngularController/EmployeeController.js"></script>

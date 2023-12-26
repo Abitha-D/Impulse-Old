@@ -1,0 +1,239 @@
+﻿@{
+    ViewBag.Title = "OrderReports";
+}
+@*<iframe id="frmreport" width="100%" height="450px" src="~/Content/ReportsData/ReportViewer.aspx?ReportID=EmpListReport"></iframe>*@
+
+@*@Html.Partial("ReportViewer")*@
+<style>
+    .control-label {
+        padding-top: 7px;
+        margin-bottom: 0;
+        text-align: right;
+    }
+</style>
+<div class="col-sm-12" style="padding-right:10px">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>&nbsp;</h5> <span class="label ">Report Credentials</span>
+
+            <div class="ibox-tools">
+
+
+                <strong>
+                    <a href="#">
+                        <i class="fa fa-arrow-left" id="btnSave" onclick="backtocred()" title="Back to Filter Report"></i>
+                    </a>
+                </strong>
+                <a class="collapse-link" title="Minimize">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div id="divcred">
+                <div class="col-sm-12" style="padding-top:10px">
+                    <div class="col-sm-6">
+                        <div class="form-group ">
+                            <label class="col-sm-3 control-label">From Date:</label>
+                            <div class="col-sm-5">
+                                <div class="input-group date txtfromdt">
+                                    <span class="input-group-addon" ><i class="fa fa-calendar"></i></span>
+                                    <input type="text" id="txtfromdt" class="form-control" value="" readonly="readonly">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">To Date:<font color="red">*</font> :</label>
+                            <div class="col-sm-5">
+                                <div class="input-group date txttodt">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" id="txttodt" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12" style="padding-top:10px">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Order Status:</label>
+                            <div class="col-sm-5">
+                                <div class="input-group-btn">
+                                    <select class="form-control" id="ddlStatus" style="width:100%;"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+
+                    </div>
+                </div>
+                <div class="col-sm-10" style="padding-top:10px;padding-left:68%;">
+                    <button type="button" class="btn btn-primary" id="genreport" onclick="getreport()">
+                        <font color="white"><i style="color:white" class="fa fa-play" title=" Generate Report"></i></font> Generate Report
+
+                    </button>
+                </div>
+            </div>
+            <div class="col-sm-12 hidden" id="divframe">
+                <div class="wrapper wrapper-content animated fadeInRight">
+
+                    <div class="row">
+                        @*<iframe src="" id="framecontent" style="width: 100%" frameborder="0" scrolling="auto"></iframe>*@
+                        <iframe src="" id="frmreport" style="width: 100%" frameborder="0" scrolling="auto"></iframe>
+                        @*<div class="col-lg-12">
+                                <div class="ibox float-e-margins">
+                                    <div class="ibox-content">
+
+
+                                   </div>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+@*<div id="partialpage">@Html.Partial("ReportViewer");</div>*@
+@*<iframe id="frmreport" width="100%" height="450px" src=""></iframe>*@
+
+<script>
+    function backtocred() {
+        $('#divframe').addClass("hidden")
+        $('#divcred').removeClass("hidden")
+    }
+    function getreport() {
+        $('#divframe').removeClass("hidden")
+        $('#divcred').addClass("hidden")
+        //$.ajax({
+        //    type: "POST",
+        //    url: "loadviewer",
+        //    dataType:"html",
+        //    //data: { parm1: val1 },
+        //    success: function (result) {
+        //        renderMyView(result);
+        //    }
+
+        //});
+        //return false;
+
+        //var StrJsonDatas = eval({
+        //    report_id: "1",
+        //    report_condition: ''
+        //});
+      
+        var report_id = "1"; var report_codition = "";
+        if ($('#ddlStatus').val() != "") {
+            report_codition = "where order_status = " + $('#ddlStatus').val() + ""
+        }
+        var sFromDt = new Date($('#txtfromdt').val());
+        var sToDt = new Date($('#txttodt').val());
+        if (sFromDt != "" && sToDt != "") {
+            report_codition =  "where order_status = " + $('#ddlStatus').val() + " and  order_date>= '" + $('#txtfromdt').val() + "'and order_date<='" + $('#txttodt').val() + " 23:59:59.599'";
+        }
+        //var Result = oAPICall.Sendmail(StrJsonDatas, 'sendmail');
+        document.getElementById('frmreport').src = '';
+        //var filters = jQuery.param(StrJsonDatas);
+        document.getElementById('frmreport').src = '../Content/ReportsData/ReportViewer.aspx?report_id=' + report_id + '&report_codition=' + report_codition;
+
+    }
+
+    function renderMyView(result) {
+        $('#partialpage').append(result);
+    }
+
+    function loadsrc() {
+        document.getElementById('frmreport').src = '../Content/ReportsData/ReportViewer.aspx';
+    }
+
+    function BindOrderStatus() {
+        var Condition = "where enumeration_key='Order_Status' order by value asc";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsStatus");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlStatus').append('<option value="' + Result[i]["value"] + '">' + Result[i]["short_display"] + '</option>');
+            }
+        }
+    }
+
+    var sCurDate;
+    var date = new Date(), yr = date.getFullYear(),
+                    h = date.getHours(),
+                    m = date.getMinutes(),
+                    s = date.getSeconds(),
+                    month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
+                    day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(),
+                    sCurDate = month + '-' + day + '-' + yr;
+
+    function setFilterdates() {
+        var cudt = new Date();
+        $('.input-group.date.txttodt').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false,
+            //startDate: '-2m',
+            //startDate: new Date(),
+        });
+
+        $(".input-group.date.txttodt").datepicker("setDate", cudt);
+        $('.input-group.date.txttodt').datepicker("setEndDate", cudt);
+
+
+        $('.input-group.date.txtfromdt').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false,
+            //startDate: '-2m',
+            //startDate: new Date(),
+        });
+
+        var d = new Date($("#txttodt").val());
+        d.setMonth(d.getMonth() - 1);
+        $(".input-group.date.txtfromdt").datepicker("setDate", new Date(d));
+
+        //$('.input-group.date.txtfromdt').datepicker("setEndDate", cudt);
+        //$('.input-group.date.txtfromdt').datepicker("setStartDate", d);
+    }
+
+    $(document).ready(function () {
+        //loadsrc();
+        BindOrderStatus();
+        setFilterdates();
+        $('#txtfromdt').change(function () {
+            var dt = new Date($("#txtfromdt").val());
+            dt.setMonth(dt.getMonth() + 1);
+
+            $('.input-group.date.txttodt').datepicker("setEndDate", dt);
+          //  $('.input-group.date.txtfromdt').datepicker("setStartDate", dt);
+            $(".input-group.date.txttodt").datepicker("setDate", dt);
+          
+        })
+    })
+
+    $(function () {
+        var newheight = $(window).height() - 55;
+        $('#frmreport').css({ height: newheight + 'px' });
+    });
+
+    $(window).resize(function () {
+        var newheight = $(window).height() - 55;
+        $('#frmreport').css({ height: newheight + 'px' });
+    });
+
+</script>

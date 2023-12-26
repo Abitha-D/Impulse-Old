@@ -1,0 +1,2874 @@
+﻿@model List<Impulse.Models.Employee>
+@{
+    ViewBag.Title = "EmployeeDetails1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <meta charset="utf-8" />
+    <title>Ecesis Impulse</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/assets/pages/css/NewStyle.css" rel="stylesheet" />
+
+    <link href="~/assets/pages/css/Select2.min.css" rel="stylesheet" />
+
+    @*<link href="../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+        <link href="../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/pages/css/lock.min.css" rel="stylesheet" type="text/css" />*@
+
+    <link rel="shortcut icon" href="favicon.ico" />
+
+
+    @*@Scripts.Render("~/assets/assetsCSS")*@
+
+    <style>
+        .closer {
+            margin-top: -25px;
+            float: right;
+            width: 25px;
+            border-radius: 50%;
+            border: 2px solid #204d9e;
+            padding-left: 1px;
+            height: 25px;
+            outline: 0;
+            background: transparent;
+            color: #204d9e;
+        }
+
+        .listContainer {
+            background-color: #fff;
+            border: 1px solid #ededed;
+            border-radius: 4px;
+            margin: 25px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 260px;
+            height: 180px;
+        }
+
+        .profile-img {
+            cursor: pointer;
+            height: 80px;
+            margin: 0 auto;
+            position: relative;
+            width: 80px;
+        }
+
+            .profile-img .avatar {
+                font-size: 24px;
+                height: 80px;
+                line-height: 80px;
+                margin: 0;
+                width: 80px;
+            }
+
+        .avatar {
+            background-color: #aaa;
+            border-radius: 50%;
+            color: #fff;
+            display: inline-block;
+            font-weight: 500;
+            height: 38px;
+            line-height: 38px;
+            margin: 0 10px 0 0;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            vertical-align: middle;
+            width: 38px;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .dropdown.profile-action {
+            position: absolute;
+            right: 5px;
+            text-align: right;
+            top: 10px;
+        }
+
+        .action-icon {
+            color: #777;
+            font-size: 18px;
+            display: inline-block;
+        }
+
+        .dropdown-menu {
+            font-size: 13px;
+        }
+
+        .dropdown-menu {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            transform-origin: left top 0;
+            box-shadow: inherit;
+            background-color: #fff;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: .25rem 1.5rem;
+            clear: both;
+            font-weight: 400;
+            color: #212529;
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .text-ellipsis {
+            display: block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .user-name {
+            color: #333;
+        }
+
+        .m-t-10 {
+            margin-top: 10px !important;
+        }
+
+        .text-muted {
+            color: #8e8e8e !important;
+        }
+
+        .small, small {
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        .listContainer .user-name > a {
+            color: #333 !important;
+            font-weight: bold;
+        }
+
+        .stuck {
+            position: fixed;
+            width: 100%;
+            z-index: 1;
+            height: 50px;
+            background-color: #f7f7f7;
+            margin-top: -6px;
+        }
+
+        .button1 {
+            width: 50px;
+            height: 50px;
+            margin-right: 14PX;
+            font-family: 'Roboto', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-weight: 500;
+            color: #fff;
+            background-color: #2ee59d;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+            outline: none;
+        }
+
+            .button1:hover {
+                background-color: #2EE59D;
+                box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+                color: #fff;
+                transform: translateY(-7px);
+            }
+
+        .switch {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 50px;
+            text-align: center;
+            background: #00bc9c;
+            transition: all 0.2s ease;
+            border-radius: 25px;
+        }
+
+            .switch span {
+                position: absolute;
+                width: 20px;
+                height: 4px;
+                top: 50%;
+                left: 50%;
+                margin: -2px 0px 0px -4px;
+                background: #fff;
+                display: block;
+                transform: rotate(-45deg);
+                transition: all 0.2s ease;
+            }
+
+                .switch span:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 4px;
+                    height: 12px;
+                    margin-top: -8px;
+                    background: #fff;
+                    transition: all 0.2s ease;
+                }
+
+        input[type=radio] {
+            display: none;
+        }
+
+        .switch label {
+            cursor: pointer;
+            color: rgba(0,0,0,0.2);
+            width: 60px;
+            line-height: 50px;
+            transition: all 0.2s ease;
+        }
+
+        label[for=yes] {
+            position: absolute;
+            left: 0px;
+            height: 20px;
+        }
+
+        label[for=no] {
+            position: absolute;
+            right: 0px;
+        }
+
+        #no:checked ~ .switch {
+            background: #eb4f37;
+        }
+
+            #no:checked ~ .switch span {
+                background: #fff;
+                margin-left: -8px;
+            }
+
+                #no:checked ~ .switch span:after {
+                    background: #fff;
+                    height: 20px;
+                    margin-top: -8px;
+                    margin-left: 8px;
+                }
+
+        .font_class {
+            font-size: 15px;
+            padding-left: 15px;
+            color: black;
+        }
+
+        #yes:checked ~ .switch label[for=yes] {
+            color: #fff;
+        }
+
+        #no:checked ~ .switch label[for=no] {
+            color: #fff;
+        }
+
+        .noborder {
+            border: 0px;
+        }
+
+        select[disabled] {
+            background-color: blue;
+        }
+
+        .trashBin {
+            color: #E43A45;
+            border: 0px;
+            background-color: transparent;
+            padding: 8px;
+        }
+
+        .downFile {
+            color: #1BBC9B;
+            border: 0px;
+            background-color: transparent;
+            padding: 8px;
+        }
+
+        .avatar-upload {
+            position: relative;
+            max-width: 205px;
+        }
+
+            .avatar-upload .avatar-edit {
+                position: absolute;
+                right: 12px;
+                z-index: 1;
+                top: 10px;
+            }
+
+                .avatar-upload .avatar-edit input {
+                    display: none;
+                }
+
+                    .avatar-upload .avatar-edit input + label {
+                        display: inline-block;
+                        width: 34px;
+                        height: 34px;
+                        margin-bottom: 0;
+                        border-radius: 100%;
+                        background: #ffffff;
+                        border: 1px solid transparent;
+                        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+                        cursor: pointer;
+                        font-weight: normal;
+                        transition: all 0.2s ease-in-out;
+                    }
+
+                        .avatar-upload .avatar-edit input + label:hover {
+                            background: #f1f1f1;
+                            border-color: #d6d6d6;
+                        }
+
+                        .avatar-upload .avatar-edit input + label:after {
+                            content: "\f040";
+                            font-family: "FontAwesome";
+                            color: #757575;
+                            position: absolute;
+                            top: 10px;
+                            left: 0;
+                            right: 0;
+                            text-align: center;
+                            margin: auto;
+                        }
+
+            .avatar-upload .avatar-preview {
+                width: 192px;
+                height: 192px;
+                position: relative;
+                border-radius: 100%;
+                border: 6px solid #f8f8f8;
+                box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+            }
+
+                .avatar-upload .avatar-preview > div > div > img {
+                    width: 192px;
+                    height: 192px;
+                    border-radius: 100%;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                }
+
+        .labelclass {
+            color: #2679e0 !important;
+            margin-top: -15px;
+            margin-left: -15px;
+        }
+
+        .labelclass1 {
+            color: #2679e0 !important;
+            margin-top: -15px;
+        }
+
+        .modal1.fade:not(.in).right .modal1-dialog {
+            -webkit-transform: translate3d(25%, 0, 0);
+            transform: translate3d(25%, 0, 0);
+        }
+
+        .scrollbar {
+            background: #F5F5F5;
+            overflow-y: scroll;
+        }
+
+        .force-overflow {
+            min-height: 450px;
+        }
+
+        #style-15::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+            background-color: #F5F5F5;
+            border-radius: 10px;
+        }
+
+        #style-15::-webkit-scrollbar {
+            width: 7px;
+            background-color: #F5F5F5;
+        }
+
+        #style-15::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #FFF;
+            background-image: -webkit-gradient(linear, 40% 0%, 75% 84%, from(#4297dc), to(#4297dc), color-stop(0.6,#bce7fe));
+        }
+
+        .dollar {
+            display: inline-block;
+            position: relative;
+        }
+
+            .dollar input {
+                padding-left: 20px;
+            }
+
+            .dollar:before {
+                position: absolute;
+                content: "₹";
+                left: 10px;
+                top: 10px;
+                font-size: 20px;
+            }
+
+        .border-styles {
+            font-size: 20px;
+            height: 44px;
+            margin-left: 5px;
+            border: .3px solid #d6d6d6;
+            color: #716c6c;
+        }
+
+        button {
+            width: 65px;
+            height: 40px;
+            background: linear-gradient(to bottom, #4eb5e5 0%,#389ed5 100%); /* W3C */
+            border: none;
+            border-radius: 5px;
+            position: relative;
+            border-bottom: 4px solid #2b8bc6;
+            color: #fbfbfb;
+            font-weight: 600;
+            font-family: 'Open Sans', sans-serif;
+            text-shadow: 1px 1px 1px rgba(0,0,0,.4);
+            font-size: 15px;
+            text-align: left;
+            text-indent: 5px;
+            box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2);
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        buttonr {
+            width: 65px;
+            height: 40px;
+            background: linear-gradient(to bottom, #4eb5e5 0%,#389ed5 100%); /* W3C */
+            border: none;
+            border-radius: 5px;
+            position: relative;
+            border-bottom: 4px solid #2b8bc6;
+            color: #fbfbfb;
+            font-weight: 600;
+            font-family: 'Open Sans', sans-serif;
+            text-shadow: 1px 1px 1px rgba(0,0,0,.4);
+            font-size: 15px;
+            text-align: left;
+            text-indent: 5px;
+            /*box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2);*/
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 20px;
+        }
+
+        button.back {
+            text-align: center;
+            font-size: 30px;
+            box-sizing: border-box;
+        }
+
+            button.back:after {
+                content: "";
+                width: 0;
+                height: 0;
+                display: block;
+                border-top: 20px solid #187dbc;
+                border-bottom: 20px solid #187dbc;
+                border-right: 16px solid transparent;
+                border-left: 20px solid #187dbc;
+                position: absolute;
+                opacity: 0.6;
+                left: 0;
+                top: 0;
+                border-radius: 5px 0 0 5px;
+            }
+
+        .Nborder {
+            height: 44px;
+            font-size: 15px;
+            margin-left: 0px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: rgb(227, 227, 227);
+            border-image: initial;
+            border-radius: 4px;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+            color: #888;
+        }
+
+        .save-icon {
+            font-size: 18px;
+        }
+
+        .labelclass {
+            color: #2679e0 !important;
+            margin-top: -15px;
+            margin-left: -15px;
+        }
+
+        .labelclass1 {
+            color: #2679e0 !important;
+            margin-top: -15px;
+        }
+
+        .handCursor:hover {
+            cursor: pointer;
+        }
+
+        .btn-print {
+            border: 1px solid #fd686f;
+            margin-left: 50px;
+            height: 36px;
+            color: #fc6372;
+        }
+
+            .btn-print:hover {
+                background-color: #fd686f;
+                color: white;
+            }
+
+        .lbl-print {
+            font-family: 'Montserrat', sans-serif;
+            margin-left: 10px;
+            font-size: 20px;
+        }
+
+        .fa-times {
+            color: red;
+        }
+
+        .fa-check {
+            color: green;
+        }
+
+        .profile-boxes {
+            min-height: 420px;
+        }
+
+        .custom-modal .modal-body {
+            padding: 10px;
+        }
+
+        .card-boxs {
+            background-color: #f7f7f7;
+            border: 1px solid #f7f7f7;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            padding: 20px;
+            position: relative;
+            min-height: 100%;
+        }
+
+        .back-icon {
+            background-color: #fff;
+            border: 1px solid #00dfff;
+            border-radius: 24px;
+            color: #72c8d3;
+            float: right;
+            font-size: 12px;
+            line-height: 24px;
+            min-height: 26px;
+            text-align: center;
+            width: 26px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+
+<body style="background-color:#f7f7f7;">
+    <div>
+
+        <div id="first" class="">
+
+            @foreach (var row in Model)
+            {
+                <div class="listContainer col-md-3">
+                    <div class="profile-img">
+                        <a href="" class="avatar"><img class="avatar" src="@row.filePath" /></a>
+                    </div>
+                    <div class="dropdown profile-action">
+                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-pencil" id="@row.refNo" onclick="GetInfo(this.id)"></i>
+
+                        </a><br />
+                        <a data-target="#DeleteModal" data-toggle="modal" href="#" class="action-icon dropdown-toggle" id="DeleteEmployee">
+                            <i class="fa fa-trash" id="@row.refNo"></i>
+                        </a>
+                    </div>
+                    <h4 class="user-name m-t-10 mb-0 text-ellipsis" style="font-size:1.5rem">
+                        <a id="@row.refNo" onclick="GetInfo(this.id)">@row.Empname</a>
+                    </h4>
+                    <div class="small text-muted">@row.employeeCode</div>
+                    <div class="small text-muted">@row.Department</div>
+                </div>
+            }
+        </div>
+        
+    </div>
+
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+
+    <script>
+
+        function swapDiv(type)
+        {
+            if(type == 0)
+            {
+                $('#docView').addClass('hidden');
+                $('#docEdit').removeClass('hidden');
+            }
+            else if (type == 1)
+            {
+                $('#docView').removeClass('hidden');
+                $('#docEdit').addClass('hidden');
+            }
+
+        }
+
+        function openPrintModal()
+        {
+            parent.$("#emp_details_print").modal({
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true
+
+            });
+        }
+
+        $("#txtsslcper").keypress(function(event) {
+            // Allow only backspace, delete, and percent sign
+            if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 37) {
+                // let it happen, don't do anything
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (event.keyCode < 48 || event.keyCode > 57) {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        $("#txttwelthper").keypress(function(event) {
+            // Allow only backspace, delete, and percent sign
+            if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 37) {
+                // let it happen, don't do anything
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (event.keyCode < 48 || event.keyCode > 57) {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        var exCount = 1;
+
+        function EmployeeExperience(id,type)
+        {
+            angular.element(document.getElementById('controllerID')).scope().saveEmployeeExperience(id,type);
+        }
+
+        function addExp()
+        {
+
+            var cardBox = document.createElement('div');
+
+            cardBox.className = "card-box";
+
+            //Header
+
+            var row1 = document.createElement('div');
+
+            row1.className = 'row';
+
+            var cardTitle = document.createElement('h3');
+
+            cardTitle.className = "card-title";
+
+            cardTitle.style.cssFloat = "right";
+
+            var saveIcon = document.createElement('a');
+
+            saveIcon.className = "save-icon";
+
+            //saveIcon.onclick = "EmployeeExperience("+exCount+",1)";
+
+            saveIcon.setAttribute("onclick","EmployeeExperience("+exCount+",1)");
+
+            //saveIcon.setAttribute("ng-click","saveEmployeeExperience("+exCount+",1)");
+
+            saveIcon.style.color = "green";
+
+            saveIcon.href = "#";
+
+            var faSave = document.createElement('i');
+
+            faSave.className = "fa fa-save";
+
+            saveIcon.appendChild(faSave);
+
+            cardTitle.appendChild(saveIcon);
+
+            row1.appendChild(cardTitle);
+
+            cardBox.appendChild(row1);
+
+            //first row
+
+            var row2 = document.createElement('div');
+
+            row2.className = "row";
+
+            //comapanyName
+
+            var col1 = document.createElement('div');
+
+            col1.className = "col-md-6";
+
+            var formGrp1 = document.createElement('div');
+
+            formGrp1.className ="form-group form-focus focused";
+
+            var textCmp = document.createElement('input');
+
+            textCmp.type = "text";
+
+            textCmp.className = "form-control floating";
+
+            textCmp.id= "txtCompany" + exCount;
+
+            var lblCmp = document.createElement('label');
+
+            lblCmp.className = "focus-label";
+
+            lblCmp.innerText = "Company Name";
+
+            formGrp1.appendChild(textCmp);
+
+            formGrp1.appendChild(lblCmp);
+
+            col1.appendChild(formGrp1);
+
+            row2.appendChild(col1);
+
+            //Location
+
+            var col2 = document.createElement('div');
+
+            col2.className = "col-md-6";
+
+            var formGrp2 = document.createElement('div');
+
+            formGrp2.className ="form-group form-focus focused";
+
+            var textLoc = document.createElement('input');
+
+            textLoc.type = "text";
+
+            textLoc.className = "form-control floating";
+
+            textLoc.id= "txtLocation" + exCount;
+
+            var lblLoc = document.createElement('label');
+
+            lblLoc.className = "focus-label";
+
+            lblLoc.innerText = "Location";
+
+            formGrp2.appendChild(textLoc);
+
+            formGrp2.appendChild(lblLoc);
+
+            col2.appendChild(formGrp2);
+
+            row2.appendChild(col2);
+
+            //Experience
+
+            var col3 = document.createElement('div');
+
+            col3.className = "col-md-6";
+
+            var formGrp3 = document.createElement('div');
+
+            formGrp3.className ="form-group form-focus focused";
+
+            var textExp = document.createElement('input');
+
+            textExp.type = "number";
+
+            textExp.className = "form-control floating";
+
+            textExp.id= "txtExp" + exCount;
+
+            var lblExp = document.createElement('label');
+
+            lblExp.className = "focus-label";
+
+            lblExp.innerText = "Experience Years";
+
+            formGrp3.appendChild(textExp);
+
+            formGrp3.appendChild(lblExp);
+
+            col3.appendChild(formGrp3);
+
+            row2.appendChild(col3);
+
+            //Position
+
+            var col4 = document.createElement('div');
+
+            col4.className = "col-md-6";
+
+            var formGrp4 = document.createElement('div');
+
+            formGrp4.className ="form-group form-focus focused";
+
+            var textPos = document.createElement('input');
+
+            textPos.type = "text";
+
+            textPos.className = "form-control floating";
+
+            textPos.id= "txtDesi" + exCount;
+
+            var lblPos = document.createElement('label');
+
+            lblPos.className = "focus-label";
+
+            lblPos.innerText = "Job Position";
+
+            formGrp4.appendChild(textPos);
+
+            formGrp4.appendChild(lblPos);
+
+            col4.appendChild(formGrp4);
+
+            row2.appendChild(col4);
+
+            //Reference
+
+            var col5 = document.createElement('div');
+
+            col5.className = "col-md-6";
+
+            var formGrp5 = document.createElement('div');
+
+            formGrp5.className ="form-group form-focus focused";
+
+            var textRef = document.createElement('input');
+
+            textRef.type = "text";
+
+            textRef.className = "form-control floating";
+
+            textRef.id= "txtReference" + exCount;
+
+            var lblRef = document.createElement('label');
+
+            lblRef.className = "focus-label";
+
+            lblRef.innerText = "Company Contact Person";
+
+            formGrp5.appendChild(textRef);
+
+            formGrp5.appendChild(lblRef);
+
+            col5.appendChild(formGrp5);
+
+            row2.appendChild(col5);
+
+            //Contact
+
+            var col6 = document.createElement('div');
+
+            col6.className = "col-md-6";
+
+            var formGrp6 = document.createElement('div');
+
+            formGrp6.className ="form-group form-focus focused";
+
+            var textCon = document.createElement('input');
+
+            textCon.type = "number";
+
+            textCon.className = "form-control floating";
+
+            textCon.id= "txtPhonenumber" + exCount;
+
+            var lblCon = document.createElement('label');
+
+            lblCon.className = "focus-label";
+
+            lblCon.innerText = "Company Contact Number";
+
+            formGrp6.appendChild(textCon);
+
+            formGrp6.appendChild(lblCon);
+
+            col6.appendChild(formGrp6);
+
+            row2.appendChild(col6);
+
+            cardBox.appendChild(row2);
+
+            document.getElementById('experienceModal').appendChild(cardBox);
+
+            // document.getElementById('experienceModal').appendChild(myvar);
+
+            exCount = exCount + 1;
+        }
+
+        function ModalClass(id)
+        {
+
+            var id = "#" + id;
+
+            $(id).removeClass('hidden');
+        }
+
+        function classActive(id)
+        {
+            if(id== "profile")
+            {
+                $("#profile").addClass("active");
+                $("#bankstat").removeClass("active");
+                $("#personalDoc").removeClass("active");
+            }
+            else if( id == "bankstat")
+            {
+                $("#bankstat").addClass("active");
+                $("#profile").removeClass("active");
+                $("#personalDoc").removeClass("active");
+            }
+            else if( id == "personalDoc")
+            {
+                $("#personalDoc").addClass("active");
+                $("#bankstat").removeClass("active");
+                $("#profile").removeClass("active");
+            }
+        }
+
+        function CalculatePF () {
+
+            var tax = $("#hdntax").val();
+
+            if(tax == "")
+            {
+                tax = 12;
+            }
+
+            basic = $("#txtSalBasic").val();
+            hra = $("#txtSalHRA").val();
+            living = $("#txtSalLiving").val();
+            conveyance = $("#txtSalConveyance").val();
+            production = $("#txtSalProduction").val();
+            medical = $("#txtSalMedical").val();
+            incentive = $("#txtSalIncentive").val();
+            gratuity = $("#txtSalGratuity").val();
+            Annual = $("#txtSalAnnual").val();
+            pension = $("#txtSalPension").val();
+            others = $("#txtSalOthers").val();
+            incomeTax = $("#txtSalIncometax").val();
+            proftax = $("#txtSalProftax").val();
+            NetPay = $("#txtSalNetPay").val();
+            TotalCost = $("#txtSalTotalCost").val();
+
+
+            if (basic == "" || basic == null) {
+
+                basic = 0;
+            }
+
+            if (hra == "" || hra == null) {
+
+                hra = 0;
+            }
+            if (living == "" || living == null) {
+
+                living = 0;
+            }
+            if (conveyance == "" || conveyance == null) {
+
+                conveyance = 0;
+            }
+            if (production == "" || production == null) {
+
+                production = 0;
+            }
+            if (medical == "" || medical == null) {
+
+                medical = 0;
+            }
+            if (incentive == "" || incentive == null) {
+
+                incentive = 0;
+            }
+            if (gratuity == "" || gratuity == null) {
+
+                gratuity = 0;
+            }
+            if (Annual == "" || Annual == null) {
+
+                Annual = 0;
+            }
+            if (pension == "" || pension == null) {
+
+                pension = 0;
+            }
+            if (others == "" || others == null) {
+
+                others = 0;
+            }
+            if (incomeTax == "" || incomeTax == null) {
+
+                incomeTax = 0;
+            }
+            if (proftax == "" || proftax == null) {
+
+                proftax = 0;
+            }
+
+            if (NetPay == "" || NetPay == null) {
+
+                NetPay = 0;
+            }
+
+            var GrossPay = parseInt(basic) + parseInt(living) + parseInt(conveyance) + parseInt(production) + parseInt(medical) + parseInt(others);
+
+            pf = (parseInt(GrossPay) - parseInt(hra)) * parseInt(tax) / 100;
+
+            esi = parseInt(GrossPay) * (1.75 / 100);
+
+            ESIemp = parseInt(GrossPay) * (4.75 / 100);
+
+            var ptax = parseInt(basic) * 6;
+
+            if (ptax > 12000 && ptax < 17999) {
+                proftax = 120;
+            }
+            else if (ptax > 18000 && ptax < 29999) {
+                proftax = 180;
+            }
+            else if (ptax > 30000 && ptax < 44999) {
+                proftax = 300;
+            }
+            else if (ptax > 45000 && ptax < 59999) {
+                proftax = 450;
+            }
+            else if (ptax > 60000 && ptax < 74999) {
+                proftax = 600;
+            }
+            else if (ptax > 75000 && ptax < 99999) {
+                proftax = 750;
+            }
+            else if (ptax > 100000 && ptax < 124999) {
+                proftax = 1000;
+            }
+            else if (ptax > 125000) {
+                proftax = 1250;
+            }
+
+            NetPay = parseInt(GrossPay) - (parseInt(pf) + parseInt(ESIemp) + parseInt(proftax) + parseInt(incomeTax) + parseInt(others));
+
+            TotalCost = parseInt(GrossPay) + parseInt(pf) + parseInt(ESIemp) + parseInt(gratuity) + parseInt(Annual);
+
+            $("#txtSalGrossPay").val(GrossPay);
+
+            $("#txtSalPF").val(pf);
+
+            $("#txtSalPFemp").val(pf);
+
+            $("#txtSalESI").val(esi);
+
+            $("#txtSalESIemp").val(ESIemp);
+
+            $("#txtSalTotalCost").val(TotalCost);
+
+            $("#txtSalNetPay").val(NetPay);
+
+            $("#txtSalProftax").val(proftax);
+
+            $("#txtSalBasic").val(basic);
+            $("#txtSalHRA").val(hra);
+            $("#txtSalLiving").val(living);
+            $("#txtSalConveyance").val(conveyance);
+            $("#txtSalProduction").val(production);
+            $("#txtSalMedical").val(medical);
+            $("#txtSalIncentive").val(incentive);
+            $("#txtSalGratuity").val(gratuity);
+            $("#txtSalAnnual").val(Annual);
+            $("#txtSalPension").val(pension);
+            $("#txtSalOthers").val(others);
+            $("#txtSalIncometax").val(incomeTax);
+            $("#txtSalProftax").val(proftax);
+            $("#txtSalNetPay").val(NetPay);
+            $("#txtSalTotalCost").val(TotalCost);
+
+            a_basic = 12 * parseInt(basic);
+            a_hra = 12 * parseInt(hra);
+            a_living = 12 * parseInt(living);
+            a_conveyance = 12 * parseInt(conveyance);
+            a_production = 12 * parseInt(production);
+            a_medical = 12 * parseInt(medical);
+            a_incentive = 12 * parseInt(incentive);
+            a_gratuity = 12 * parseInt(gratuity);
+            a_Annual = 12 * parseInt(Annual);
+            a_pension = 12 * parseInt(pension);
+            a_incomeTax = 12 * parseInt(incomeTax);
+            a_others = 12 * parseInt(others);
+            a_proftax = 12 * parseInt(proftax);
+            a_GrossPay = 12 * parseInt(GrossPay);
+            a_pf = 12 * parseInt(pf);
+            a_esi = 12 * parseInt(esi);
+            a_NetPay = 12 * parseInt(NetPay);
+            a_PFemp = 12 * parseInt(pf);
+            a_ESIemp = 12 * parseInt(ESIemp);
+            a_TotalCost = 12 * parseInt(TotalCost);
+
+        }
+
+        function formatDate(date)
+        {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            return [month, day, year].join('/');
+        }
+
+        function ExpDelete(obj)
+        {
+            var table = document.getElementById('exptbl');
+
+            var rows = obj.parentElement.parentElement.rowIndex;
+
+            var exID = table.rows[rows].cells[6].innerText;
+
+            var sCondition = "where emp_exp_det_id=" + exID + " and emp_ref_no = " + sEmpRefNo;
+
+            var StrJsonDatas = eval({
+                delete_status: 1
+            });
+
+            var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeExperience", sCondition);
+
+            if(Result != null || Result != "")
+            {
+                msgalert("Success","Experience Detail Deleted Successfully",1);
+
+                window.location.reload();
+            }
+
+        }
+
+        function empDetails()
+        {
+            var refN = $("#ddlEmployee").val();
+
+            var empName = $("#ddlEmployee option:selected").text();
+
+            var Result = parent.addExper(refN,empName);
+        }
+
+        function chkFields(object)
+        {
+
+            var id = object.id;
+
+            if(id == "sslcDoc"){
+
+                if ($('#txtsslcper').val() == "" || $('#txtsslcper').val() == null)
+                {
+                    fileValidate = 1;
+                }
+                if ($('#ddlsslcsyllabus').val() < 0 )
+                {
+                    fileValidate = 1;
+                }
+                if ($('#txtsslcyop').val() == "" || $('#txtsslcyop').val() == null)
+                {
+                    fileValidate = 1;
+                }
+
+            }
+            else if(id == "twelthDoc"){
+
+                if ($('#txttwelthper').val() == "" || $('#txttwelthper').val() == null)
+                {
+                    fileValidate = 1;
+                }
+                if ($('#ddltwelthsyllabus').val() < 0 )
+                {
+                    fileValidate = 1;
+                }
+                if ($('#txttwelthyop').val() == "" || $('#txttwelthyop').val() == null)
+                {
+
+                    fileValidate = 1;
+                }
+
+            }
+            else if(id == "gradDoc"){
+
+                if ($('#ddlGraduate').val() < 0 )
+                {
+
+                    fileValidate = 1;
+                }
+                if ($('#txtgradyop').val() == "" || $('#txtgradyop').val() == null)
+                {
+
+                    fileValidate = 1;
+                }
+
+            }
+            else if(id == "pgradDoc"){
+
+                if ($('#ddlPGraduate').val() < 0 )
+                {
+                    fileValidate = 1;
+                }
+                if ($('#txtpgradyop').val() == "" || $('#txtpgradyop').val() == null)
+                {
+
+                    fileValidate = 1;
+                }
+            }
+        }
+
+        function readImage(input)
+        {
+
+            var fileType = input.files[0].name.split('.').pop(), allowdtypes = 'jpeg,jpg,png,gif,pdf,PDF,JPEG,JPG,PNG,GIF';
+            //if (allowdtypes.indexOf(fileType) < 0) {
+            //    msgalert("Error", 'Invalid file format,Please select an image file', 3);
+            //    return false;
+            //}
+            if (input.files && input.files[0]) {
+                if (allowdtypes.indexOf(fileType) < 0) {
+                    msgalert("Error", 'Invalid file format,Please select an image file', 3);
+                    return false;
+                }
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imagePreview')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+            var sHiddenEmpId = $("#hdnempid").val();
+            var newFilename;
+            var filename = $('#imageUpload').prop("files")[0]['name'];
+            file = $("#imageUpload").get(0).files[0];
+            var formData = new FormData();
+            formData.append("sessionid", UserSession);
+            formData.append("empname", $("#txtFirstName").val() + $("#txtLastName").val() + sEmpRefNo);
+            formData.append("employeeimg", file);
+            $.ajax({
+                type: "POST",
+                url: 'UploadProfilePic',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                success: function (data) {
+                    sImgFileNameEmp = data.fileName;
+                    newFilename = data.fileName;
+
+
+                    var strJsonDatas = eval({
+                        file_path: "../Content/Employee/EmployeeProfileImages/" + newFilename,
+                        file_name: newFilename
+                    });
+                    var sCondition = "where emp_ref_no=" + sEmpRefNo ;
+                    var ResultEmp = oAPICall.UpdateData(strJsonDatas, 'UpdateEmployeeDetails', sCondition);
+
+                    if (ResultEmp != "" && ResultEmp != null) {
+
+                    }
+
+                    return sImgFileNameEmp;
+
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+
+        function readURL(input)
+        {
+
+            isUploadEdu = "Yes";
+
+            if( fileValidate == 1 ){
+
+                msgalert("Warning", 'Please fill the Above fields', 2);
+
+                fileValidate = 0;
+
+                return;
+            }
+
+            var userRef = input.name;
+
+            var fileType = input.files[0].name.split('.').pop(), allowdtypes = 'jpeg,jpg,png,gif,pdf,JPEG,JPG,PNG,GIF,PDF';
+
+            if (input.files && input.files[0])
+            {
+                if (allowdtypes.indexOf(fileType) < 0)
+                {
+                    msgalert("Error", 'Invalid file format,Please select an image file', 3);
+
+                    return false;
+                }
+
+                if(fileType !="pdf")
+                {
+
+                    var btnId = input.id;
+
+                    btnId = '#' + btnId + 'Img';
+
+                    $(btnId).attr('src', '../content/Image/image_icon.png');
+
+                }
+
+
+            }
+
+            var file = input.files[0].name;
+
+            var id = input.id;
+
+            fileName = id;
+
+            id = '#' + id;
+
+            var filePath = "../Content/Employee/EmployeeDocuments/";
+
+            var upDiv ='#'+ fileName + 'Upload' ;
+
+            var delDiv = '#' + fileName  + 'View' ;
+
+            var fName = '#' + fileName + 'lbl' ;
+
+            var link = fileName + 'Down' ;
+
+            var a = document.getElementById(link); //or grab it by tagname etc
+
+            var newFilename;
+
+            var fileExName = $("#txtFirstName").val() + '_'+ userRef ;
+
+            // var filename = $('#employeeimg').prop("files")[0]['name'];
+            file = $(id).get(0).files[0];
+            var formData = new FormData();
+            formData.append("sessionid", fileName);
+            formData.append("empname", fileExName);
+            formData.append("expDocUp", file);
+            $.ajax({
+                type: "POST",
+                url: 'UploadDocument',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                success: function (data) {
+
+                    sImgFileNameEmp = data.fileName;
+
+                    newFilename = data.fileName;
+
+                    $(upDiv).addClass('hidden');
+
+                    $(delDiv).removeClass('hidden');
+
+                    $(fName).text(file.name);
+
+                    var fullPath = filePath + newFilename
+
+                    a.href = fullPath;
+
+                    //var res =  InsertEmployeeEduDetails(fileName,fullPath);
+
+                    //if(res == "Success")
+                    //{
+                    //    msgalert("Success","Details Added Successfully",1);
+                    //}
+                    //else
+                    //{
+                    //    msgalert("Error","Problem while Adding your Details",3);
+                    //}
+
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+
+        function readURL1(input)
+        {
+
+            var userRef = input.name;
+
+            var fileType = input.files[0].name.split('.').pop(), allowdtypes = 'jpeg,jpg,png,gif,pdf,JPEG,JPG,PNG,GIF,PDF';
+
+            if (input.files && input.files[0])
+            {
+                if (allowdtypes.indexOf(fileType) < 0)
+                {
+                    msgalert("Error", 'Invalid file format,Please select an image file', 3);
+
+                    return false;
+                }
+
+                if(fileType !="pdf")
+                {
+
+                    var btnId = input.id;
+
+                    btnId = '#' + btnId + 'Img';
+
+                    $(btnId).attr('src', '../content/Image/image_icon.png');
+
+                }
+
+
+            }
+
+            var file = input.files[0].name;
+
+            var id = input.id;
+
+            fileName = id;
+
+            id = '#' + id;
+
+            var filePath = "../Content/Employee/EmployeeDocuments/";
+
+            var upDiv ='#'+ fileName + 'Upload' ;
+
+            var delDiv = '#' + fileName  + 'View' ;
+
+            var fName = '#' + fileName + 'lbl' ;
+
+            var link = fileName + 'Down' ;
+
+            var a = document.getElementById(link); //or grab it by tagname etc
+
+            var newFilename;
+
+            var fileExName = $("#txtFirstName").val() + '_'+ userRef ;
+
+            // var filename = $('#employeeimg').prop("files")[0]['name'];
+            file = $(id).get(0).files[0];
+            var formData = new FormData();
+            formData.append("sessionid", fileName);
+            formData.append("empname", fileExName);
+            formData.append("expDocUp", file);
+            $.ajax({
+                type: "POST",
+                url: 'UploadDocument',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                success: function (data) {
+
+                    sImgFileNameEmp = data.fileName;
+
+                    newFilename = data.fileName;
+
+                    $(upDiv).addClass('hidden');
+
+                    $(delDiv).removeClass('hidden');
+
+                    $(fName).text(file.name);
+
+                    var fullPath = filePath + newFilename
+
+                    a.href = fullPath;
+
+                    var sCondition = "where emp_ref_no = " + userRef;
+
+                    if(fileName == "interviewForm")
+                    {
+                        StrJsonDatas = eval({
+                            interview_form: fullPath
+                        });
+                    }
+                    else if(fileName == "cvForm")
+                    {
+                        StrJsonDatas = eval({
+                            cv: fullPath
+                        });
+                    }
+                    else if(fileName == "idForm")
+                    {
+                        StrJsonDatas = eval({
+                            id_proof: fullPath
+                        });
+                    }
+                    else if(fileName == "sslcForm")
+                    {
+                        StrJsonDatas = eval({
+                            sslc_certificate: fullPath
+                        });
+                    }
+                    else if(fileName == "puForm")
+                    {
+                        StrJsonDatas = eval({
+                            pu_certificate: fullPath
+                        });
+                    }
+                    else if(fileName == "ugForm")
+                    {
+                        StrJsonDatas = eval({
+                            ug_certificate: fullPath
+                        });
+                    }
+                    else if(fileName == "pgForm")
+                    {
+                        StrJsonDatas = eval({
+                            pg_certificate: fullPath
+                        });
+                    }
+                    else if(fileName == "otherForm")
+                    {
+                        StrJsonDatas = eval({
+                            other_certificate: fullPath
+                        });
+                    }
+                    else if(fileName == "experienceForm")
+                    {
+                        StrJsonDatas = eval({
+                            experience_certificate: fullPath
+                        });
+                    }
+                    else if(fileName == "salaryForm")
+                    {
+                        StrJsonDatas = eval({
+                            salary_certificate: fullPath
+                        });
+                    }
+                    else if(fileName == "releivingForm")
+                    {
+                        StrJsonDatas = eval({
+                            releiving_certificate: fullPath
+                        });
+                    }
+                    else if(fileName == "referenceForm")
+                    {
+                        StrJsonDatas = eval({
+                            reference_check: fullPath
+                        });
+                    }
+                    else if(fileName == "appoinmentForm")
+                    {
+                        StrJsonDatas = eval({
+                            appoinment_letter: fullPath
+                        });
+                    }
+                    else if(fileName == "nondisclosureForm")
+                    {
+                        StrJsonDatas = eval({
+                            non_disclosure_agreement: fullPath
+                        });
+                    }
+                    else if(fileName == "epfForm")
+                    {
+                        StrJsonDatas = eval({
+                            form_11: fullPath
+                        });
+                    }
+                    else if(fileName == "gratuityForm")
+                    {
+                        StrJsonDatas = eval({
+                            form_f: fullPath
+                        });
+                    }
+                    else if(fileName == "esiForm")
+                    {
+                        StrJsonDatas = eval({
+                            form_1: fullPath
+                        });
+                    }
+
+                    //var res =  InsertEmployeeEduDetails(fileName,fullPath);
+
+                    var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeDocuments", sCondition);
+
+                    if(Result !=null || Result != "")
+                    {
+                        msgalert("Success","Documents Uploaded Successfully",1);
+
+                        //$(upDiv).removeClass('hidden');
+
+                        //$(delDiv).addClass('hidden');
+                    }
+
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+
+        function deleteDocs(obj)
+        {
+
+            var id = obj.id ;
+
+            var sCondition = "where emp_ref_no = "+sEmpRefNo;
+
+            var StrJsonDatas;
+
+            var percentage, course, passYear,inputID;
+
+            if(id == "interviewFormDel"){
+
+                inputID = "interviewForm";
+
+                StrJsonDatas = eval({
+                    interview_form: null
+                });
+            }
+            else if(id == "cvFormDel")
+            {
+                inputID = "cvForm";
+
+                StrJsonDatas = eval({
+                    cv: null
+                });
+            }
+            else if(id == "idFormDel")
+            {
+                inputID = "idForm";
+
+                StrJsonDatas = eval({
+                    id_proof: null
+                });
+            }
+            else if(id == "sslcFormDel")
+            {
+                inputID = "sslcForm";
+
+                StrJsonDatas = eval({
+                    sslc_certificate: null
+                });
+            }
+            else if(id == "puFormDel")
+            {
+                inputID = "puForm";
+
+                StrJsonDatas = eval({
+                    pu_certificate: null
+                });
+            }
+            else if(id == "ugFormDel")
+            {
+                inputID = "ugForm";
+
+                StrJsonDatas = eval({
+                    ug_certificate: null
+                });
+            }
+            else if(id == "otherFormDel")
+            {
+                inputID = "otherForm";
+
+                StrJsonDatas = eval({
+                    other_certificate: null
+                });
+            }
+            else if(id == "experienceFormDel")
+            {
+                inputID = "experienceForm";
+
+                StrJsonDatas = eval({
+                    experience_certificate: null
+                });
+            }
+            else if(id == "salaryFormDel")
+            {
+                inputID = "salaryForm";
+
+                StrJsonDatas = eval({
+                    salary_certificate: null
+                });
+            }
+            else if(id == "releivingFormDel")
+            {
+                inputID = "releivingFormDel";
+
+                StrJsonDatas = eval({
+                    releiving_certificate: null
+                });
+            }
+            else if(id == "referenceFormDel")
+            {
+                inputID = "referenceForm";
+
+                StrJsonDatas = eval({
+                    reference_check: null
+                });
+            }
+            else if(id == "appoinmentFormDel")
+            {
+                inputID = "appoinmentForm";
+
+                StrJsonDatas = eval({
+                    appoinment_letter: null
+                });
+            }
+            else if(id == "nondisclosureFormDel")
+            {
+                inputID = "nondisclosureForm";
+
+                StrJsonDatas = eval({
+                    non_disclosure_agreement: null
+                });
+            }
+            else if(id == "epfFormDel")
+            {
+                inputID = "epfForm";
+
+                StrJsonDatas = eval({
+                    form_11: null
+                });
+            }
+            else if(id == "gratuityFormDel")
+            {
+                inputID = "gratuityForm";
+
+                StrJsonDatas = eval({
+                    form_f: null
+                });
+            }
+            else if(id == "esiFormDel")
+            {
+                inputID = "esiForm";
+
+                StrJsonDatas = eval({
+                    form_1: null
+                });
+            }
+
+            var upDiv ='#'+ inputID + 'Upload' ;
+
+            var delDiv = '#' + inputID  + 'View' ;
+
+            var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeDocuments", sCondition);
+
+            if(Result !=null || Result != "")
+            {
+                msgalert("Success","Details Deleted Successfully",1);
+
+                $(upDiv).removeClass('hidden');
+
+                $(delDiv).addClass('hidden');
+            }
+
+        }
+
+        function Educationwithoutdocuments()
+        {
+            var sCondition = "where ref_no = "+sEmpRefNo;
+
+            var StrJsonDatas;
+
+            StrJsonDatas = eval({
+                sslc_mark: $('#txtsslcper').val(),
+                sslc_syllabus: $('#ddlsslcsyllabus').val(),
+                sslc_pass_year: $('#txtsslcyop').val(),
+                twelth_mark: $('#txttwelthper').val(),
+                twelth_syllabus: $('#ddltwelthsyllabus').val(),
+                twelth_pass_year: $('#txttwelthyop').val(),
+                graduation: $('#ddlGraduate').val(),
+                graduation_year: $('#txtgradyop').val(),
+                post_graduation: $('#ddlPGraduate').val(),
+                post_graduation_year: $('#txtpgradyop').val(),
+                is_filled: 1
+            });
+
+            var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeEducationDetails", sCondition);
+
+            if(Result !=null || Result != "")
+            {
+                return "Success";
+            }
+            else{
+                return "Error" ;
+            }
+        }
+
+        function InsertEmployeeEduDetails(id,file)
+        {
+            var sCondition = "where ref_no = "+sEmpRefNo;
+
+            var StrJsonDatas;
+
+            var percentage, course, passYear;
+
+            if(id == "sslcDoc"){
+
+                percentage =  $('#txtsslcper').val() ;
+
+                course = $('#ddlsslcsyllabus').val() ;
+
+                passYear = $('#txtsslcyop').val() ;
+
+                StrJsonDatas = eval({
+                    sslc_mark: percentage,
+                    sslc_syllabus: course,
+                    sslc_pass_year: passYear,
+                    sslc_doc: file,
+                    is_filled: 1
+                });
+            }
+            else if(id == "twelthDoc"){
+
+                percentage =  $('#txttwelthper').val() ;
+
+                course = $('#ddltwelthsyllabus').val() ;
+
+                passYear = $('#txttwelthyop').val() ;
+
+                StrJsonDatas = eval({
+                    twelth_mark: percentage,
+                    twelth_syllabus: course,
+                    twelth_pass_year: passYear,
+                    twelth_doc: file,
+                    is_filled: 1
+                });
+
+            }
+            else if(id == "gradDoc"){
+
+                course = $('#ddlGraduate').val() ;
+
+                passYear = $('#txtgradyop').val() ;
+
+                StrJsonDatas = eval({
+                    graduation: course,
+                    graduation_year: passYear,
+                    graduation_doc: file,
+                    is_filled: 1
+                });
+            }
+            else if(id == "pgradDoc"){
+
+                course = $('#ddlPGraduate').val() ;
+
+                passYear = $('#txtpgradyop').val() ;
+
+                StrJsonDatas = eval({
+                    post_graduation: course,
+                    post_graduation_year: passYear,
+                    post_graduation_doc: file,
+                    is_filled: 1
+                });
+
+            }
+
+            var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeEducationDetails", sCondition);
+
+            if(Result !=null || Result != "")
+            {
+                return "Success";
+            }
+            else{
+                return "Error" ;
+            }
+        }
+
+        $("#ddlcmp").change(function ()
+        {
+
+            if ($('#ddlcmp').val() == 1) {
+
+                $('#ddlcmploc').attr('disabled', false);
+            }
+            else {
+                $('#ddlcmploc').val(2).change();
+                $('#ddlcmploc').attr('disabled', true);
+            }
+
+        });
+
+        $("#marital").change(function()
+        {
+
+            if ($('#marital').val() == 2) {
+                $('#spouseDIV').removeClass('hidden');
+            }
+            else
+            {
+                $('#spouseDIV').addClass('hidden');
+            }
+
+        });
+
+        function bindMaritalStatus(maritals){
+
+
+            if (maritals == 1) {
+
+                $('#spouseDIV').addClass('hidden');
+                $('#spouseDIVView').addClass('hidden');
+            }
+            else {
+                $('#spouseDIV').removeClass('hidden');
+                $('#spouseDIVView').removeClass('hidden');
+            }
+        }
+
+        $("#EmpDepartment").change(function(){
+
+            $('#EmpLevel').val(-1);
+            $('#EmpDesignation').empty().append();
+
+        });
+
+        function bindDesignation(design)
+        {
+
+            var sCondition;
+
+            if ($("#ddllevel").val() == 1) {
+                if ($("#ddldivision").val() == 1) {
+                    sCondition = "where department_id in(1,2) and role_id IN (2,12) order by designation_id asc";
+                }
+                else if ($("#ddldivision").val() == 6)
+                {
+                    sCondition = "where department_id in(6) and designation_id = 1 order by designation_id asc";
+                }
+                else {
+                    sCondition = "where department_id =" + $("#ddldivision").val() + " and role_id IN (2,12) order by designation_id asc";
+                }
+            }
+            else if ($("#ddllevel").val() == 2) {
+                if ($("#ddldivision").val() == 1) {
+                    sCondition = "where department_id in(1,2) and role_id NOT IN (2,12) order by designation_id asc";
+                }
+                else if ($("#ddldivision").val() == 6)
+                {
+                    sCondition = "where department_id in(6) and designation_id != 1 order by designation_id asc";
+                }
+                else {
+                    sCondition = "where department_id =" + $("#ddldivision").val() + " and role_id NOT IN (2,12) order by designation_id asc";
+                }
+            }
+
+
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: null });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectDesignation");
+
+            $('#ddldesignation').empty().append();
+
+            $('#ddldesignation').append('<option value="-1">Select Designation</option>');
+
+            if (Result != "" && Result != null) {
+
+                for (var i = 0; i < Result.length; i++)
+                {
+                    $('#ddldesignation').append('<option value="' + Result[i]["designation_id"] + '" id="' + Result[i]["role_id"] + '">' + Result[i]["display_value"] + '</option>');
+                }
+            }
+
+            $("#ddldesignation").val(design).change();
+
+        }
+
+        function bindManager(manager)
+        {
+            var Condition = "WHERE delete_status=0 and role_id in(1,2,12) order by emp_full_name asc";
+
+            var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectManagerandEmployee");
+
+            $('#ddlrptTomgr').empty().append();
+
+            if (Result != "" && Result != null) {
+                for (var i = 0; i < Result.length; i++) {
+
+                    $('#ddlrptTomgr').append('<option value="' + Result[i]["emp_ref_no"] + '">' + Result[i]["emp_full_name"] + '</option>');
+
+                }
+            }
+            $("#ddlrptTomgr").val(manager).change();
+
+        }
+
+        function freshers(isFresh)
+        {
+            if (isFresh == 1)
+            {
+                $('#exprdetails').addClass('hidden');
+                $('#fresher').removeClass('hidden');
+
+                $('#exprdetailsview').addClass('hidden');
+                $('#fresherView').removeClass('hidden');
+                fresher = 1;
+            }
+            else if (isFresh == 2) {
+
+                $('#exprdetails').removeClass('hidden');
+                $('#fresher').addClass('hidden');
+
+                $('#exprdetailsview').removeClass('hidden');
+                $('#fresherView').addClass('hidden');
+
+                $('#yesFresher').addClass('hidden');
+
+                fresher = 2;
+            }
+        }
+
+        $('input[type=radio][name=rdo]').change(function ()
+        {
+            if (this.id == 'yes') {
+                $('#exprdetails').addClass('hidden');
+                $('#fresher').removeClass('hidden');
+                fresher = 1;
+            }
+            else if (this.id == 'no') {
+                $('#exprdetails').removeClass('hidden');
+                $('#fresher').addClass('hidden');
+
+                fresher = 2;
+            }
+        });
+
+        var ResultEducation;
+
+        function BindFields()
+        {
+            var Condition = "WHERE enumeration_key in ('Graduation','POST_Graduation','Syllabus','Blood_group')";
+            //var Condition = "WHERE order_no = " + orderid + " order by 1 desc";//Anoop
+            var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            ResultEducation = oAPICall.SelectData(strJsonDatas, "SelectMandatoryValues");
+
+            $('#ddlBlood').empty().append();
+            $('#ddlGraduate').empty().append();
+            $('#ddlPGraduate').empty().append();
+            $('#ddlsslcsyllabus').empty().append();
+            $('#ddltwelthsyllabus').empty().append();
+
+
+            $('#ddlsslcsyllabus').append('<option value=-1>Select Syllabus</option>');
+
+            $('#ddltwelthsyllabus').append('<option value=-1>Select Syllabus</option>');
+
+            $('#ddlBlood').append('<option value=-1>Select Blood Group</option>');
+
+            $('#ddlGraduate').append('<option value=-1>Select Graduate</option>');
+
+            $('#ddlPGraduate').append('<option value=-1>Select Post Graduate</option>');
+
+
+            if (ResultEducation != "" && ResultEducation != null) {
+
+                for (var i = 0; i < ResultEducation.length; i++) {
+
+                    var sEnukey = ResultEducation[i]["enumeration_key"];
+                    var sEnuValue = ResultEducation[i]["value"];
+                    var sEnuDispValue = ResultEducation[i]["display_value"];
+                    if (sEnukey == 'Blood_Group') {
+                        $('#ddlBlood').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+                    else if (sEnukey == 'Graduation') {
+                        $('#ddlGraduate').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+                    else if (sEnukey == 'Post_Graduation') {
+                        $('#ddlPGraduate').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+                    else if (sEnukey == 'Syllabus') {
+
+                        $('#ddlsslcsyllabus').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        $('#ddltwelthsyllabus').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                    }
+
+                }
+            }
+
+        }
+
+        function EduDivShow(id, filePath)
+        {
+            var fileType = filePath.split('.');
+
+            var imageType, imgID, lblID,downLinkID,divID,EimgID, ElblID,EdivID;
+
+
+            if(fileType[fileType.length - 1] != "pdf")
+            {
+                imageType = "../content/Image/image_icon.png";
+            }
+            else
+            {
+                imageType = "../content/Image/pdf_icon.png";
+            }
+
+            divID = "#" + id + "View"
+
+            EdivID = "#" + id + "ViewV"
+
+            imgID = "#" + id + "Img";
+
+            EimgID = "#" + id + "ImgV";
+
+            lblID = "#" + id + "lbl";
+
+            ElblID = "#" + id + "lblV";
+
+            downLinkID = id + "Down";
+
+            $(imgID).attr('src', imageType);
+
+            $(EimgID).attr('src', imageType);
+
+            var a = document.getElementById(downLinkID);
+
+            a.href = filePath;
+
+            var fileName = filePath.split('_');
+
+            $(lblID).text(fileName[fileName.length - 1]);
+
+            $(ElblID).text(fileName[fileName.length - 1]);
+
+            $(divID).removeClass('hidden');
+
+            id ='#' + id + 'Upload' ;
+
+            $(id).addClass('hidden');
+
+            $(EdivID).removeClass('hidden');
+
+        }
+
+        $("#EmpLevel").change(function ()
+        {
+            var deptId = $("#EmpDepartment").val();
+
+            var level = $("#EmpLevel").val();
+
+            var sCondition;
+
+            if(level == 1)
+            {
+                if (deptId == 1)
+                {
+                    sCondition = "where department_id in(1,2) and role_id in (2,12,18,19) order by designation_id asc";
+                }
+                else
+                {
+                    sCondition = "where department_id =" + deptId + " and role_id in (2,12,18,19) order by designation_id asc";
+                }
+            }
+            else if( level == 2)
+            {
+                if (deptId == 1)
+                {
+                    sCondition = "where department_id in(1,2) and role_id NOT IN (2,12,18,19) order by designation_id asc";
+                }
+                else
+                {
+                    sCondition = "where department_id =" + deptId + " and role_id NOT IN (2,12,18,19) order by designation_id asc";
+                }
+            }
+
+
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: null });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectDesignation");
+
+            $('#EmpDesignation').empty().append();
+
+            $('#EmpDesignation').append('<option value="-1">Select Designation</option>');
+
+            if (Result != "" && Result != null) {
+
+                var  s = 100;
+
+                for (var i = 0; i < Result.length; i++) {
+                    $('#EmpDesignation').append('<option value="' + Result[i]["designation_id"] + '" id="'+Result[i]["role_id"]+'">' + Result[i]["display_value"] + '</option>');
+
+                    s++;
+                }
+            }
+
+        });
+
+        function deleteDoc(obj)
+        {
+
+            var id = obj.id ;
+
+            var sCondition = "where ref_no = "+sEmpRefNo;
+
+            var StrJsonDatas;
+
+            var percentage, course, passYear,inputID;
+
+            if(id == "sslcDocDel"){
+
+                inputID = "sslcDoc";
+
+                percentage =  $('#txtsslcper').val() ;
+
+                course = $('#ddlsslcsyllabus').val() ;
+
+                passYear = $('#txtsslcyop').val() ;
+
+                StrJsonDatas = eval({
+                    sslc_mark: percentage,
+                    sslc_syllabus: course,
+                    sslc_pass_year: passYear,
+                    sslc_doc: null,
+                    is_filled: 1
+                });
+            }
+            else if(id == "twelthDocDel"){
+
+                inputID = "twelthDoc";
+
+                percentage =  $('#txttwelthper').val() ;
+
+                course = $('#ddltwelthsyllabus').val() ;
+
+                passYear = $('#txttwelthyop').val() ;
+
+                StrJsonDatas = eval({
+                    twelth_mark: percentage,
+                    twelth_syllabus: course,
+                    twelth_pass_year: passYear,
+                    twelth_doc: null,
+                    is_filled: 1
+                });
+
+            }
+            else if(id == "gradDocDel"){
+
+                inputID = "gradDoc";
+
+                course = $('#ddlGraduate').val() ;
+
+                passYear = $('#txtgradyop').val() ;
+
+                StrJsonDatas = eval({
+                    graduation: course,
+                    graduation_year: passYear,
+                    graduation_doc: null,
+                    is_filled: 1
+                });
+            }
+            else if(id == "pgradDocDel"){
+
+                inputID = "pgradDoc";
+
+                course = $('#ddlPGraduate').val() ;
+
+                passYear = $('#txtpgradyop').val() ;
+
+                StrJsonDatas = eval({
+                    post_graduation: course,
+                    post_graduation_year: passYear,
+                    post_graduation_doc: null,
+                    is_filled: 1
+                });
+
+            }
+
+            var upDiv ='#'+ inputID + 'Upload' ;
+
+            var delDiv = '#' + inputID  + 'View' ;
+
+            var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeEducationDetails", sCondition);
+
+            if(Result !=null || Result != "")
+            {
+                msgalert("Success","Details Deleted Successfully",1);
+
+                $(upDiv).removeClass('hidden');
+
+                $(delDiv).addClass('hidden');
+            }
+
+        }
+
+        function BindEducationDetails(sEmpRef)
+        {
+            sEmpRefNo = sEmpRef;
+
+            var Condition = "WHERE ref_no =" +sEmpRef;
+
+            var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectEmployeeEducationDetails");
+
+            if(Result != null || Result != "")
+            {
+
+                if(Result[0]["is_filled"]!=0)
+                {
+
+                    if(Result[0]["sslc_doc"] === undefined){
+                        Result[0]["sslc_doc"] = "";
+                    }
+
+                    if(Result[0]["twelth_doc"] === undefined){
+                        Result[0]["twelth_doc"] = "";
+                    }
+
+                    if(Result[0]["graduation_doc"] === undefined){
+                        Result[0]["graduation_doc"] = "";
+                    }
+
+                    if(Result[0]["post_graduation_doc"] === undefined){
+                        Result[0]["post_graduation_doc"] = "";
+                    }
+
+                    if(Result[0]["sslc_syllabus"] === undefined){
+
+                        Result[0]["sslc_syllabus"] = -1;
+
+                    }
+                    if(Result[0]["twelth_syllabus"] === undefined){
+
+                        Result[0]["twelth_syllabus"] = -1;
+
+                    }
+                    if(Result[0]["graduation"] === undefined){
+
+                        Result[0]["graduation"] = -1;
+
+                    }
+                    if(Result[0]["post_graduation"] === undefined){
+
+                        Result[0]["post_graduation"] = -1;
+
+                    }
+
+                    $("#txtsslcper").val(Result[0]["sslc_mark"]);
+
+                    $("#ddlsslcsyllabus").val(Result[0]["sslc_syllabus"]).change();
+
+                    $("#txtsslcyop").val(Result[0]["sslc_pass_year"]);
+
+                    if(Result[0]["sslc_doc"] != '')
+                    {
+                        EduDivShow("sslcDoc",Result[0]["sslc_doc"]);
+                    }
+
+                    $("#txttwelthper").val(Result[0]["twelth_mark"]);
+
+                    $("#ddltwelthsyllabus").val(Result[0]["twelth_syllabus"]).change();
+
+                    $("#txttwelthyop").val(Result[0]["twelth_pass_year"]);
+
+                    if(Result[0]["twelth_doc"] != '')
+                    {
+                        EduDivShow("twelthDoc",Result[0]["twelth_doc"]);
+                    }
+
+                    $("#ddlGraduate").val(Result[0]["graduation"]).change();
+
+                    $("#txtgradyop").val(Result[0]["graduation_year"]);
+
+                    if( Result[0]["graduation_doc"] != '')
+                    {
+                        EduDivShow("gradDoc",Result[0]["graduation_doc"]);
+                    }
+
+
+                    $("#ddlPGraduate").val(Result[0]["post_graduation"]).change();
+
+                    $("#txtpgradyop").val(Result[0]["post_graduation_year"]);
+
+                    if(Result[0]["post_graduation_doc"] != '')
+                    {
+                        EduDivShow("pgradDoc",Result[0]["post_graduation_doc"]);
+                    }
+
+
+                }
+            }
+        }
+
+        function Saves()
+        {
+            alert(y);
+        }
+
+        function CancelForm()
+        {
+            window.location.reload();
+        }
+
+        function SaveData()
+        {
+
+            if ($('#txtFirstname').val() == "" || $('#txtFirstname').val() == null) {
+
+                msgalert("Error","Please Enter First Name",3);
+
+                $('#txtFirstname').focus();
+
+                return;
+            }
+            if ($('#txtLastname').val() == "" || $('#txtLastname').val() == null) {
+
+                msgalert("Error","Please Enter Last Name",3);
+                $('#txtLastname').focus();
+                return;
+
+            }
+            if ($('#txtEmail').val() == "" || $('#txtEmail').val() == null) {
+
+                msgalert("Error","Please Enter Email",3);
+                $('#txtEmail').focus();
+                return;
+
+            }
+            if ($('#ddlcmp').val() < 0) {
+
+                msgalert("Error","Please Choose Company",3);
+                $('#ddlcmp').focus();
+                return;
+
+            }
+            if ($('#ddlcmploc').val() < 0) {
+
+                msgalert("Error","Please Choose Location",3);
+                $('#ddlcmploc').focus();
+                return;
+
+            }
+            if ($('#ddldivision').val() < 0) {
+
+                msgalert("Error","Please Choose Division",3);
+                $('#ddldivision').focus();
+                return;
+
+            }
+            if ($('#ddllevel').val() < 0) {
+
+                msgalert("Error","Please Choose Level",3);
+                $('#ddllevel').focus();
+                return;
+
+            }
+            if ($('#ddldesignation').val() < 0) {
+
+                msgalert("Error","Please Choose Desination",3);
+                $('#ddldesignation').focus();
+                return;
+
+            }
+            if ($('#ddlreview').val() < 0) {
+
+                msgalert("Error","Please Choose Review Months",3);
+                $('#ddlreview').focus();
+                return;
+
+            }
+            if ($('#ddlnotice').val() < 0 ) {
+
+                msgalert("Error","Please Choose Notice Period",3);
+                $('#ddlnotice').focus();
+                return;
+
+            }
+            if ($('#ddlrptTomgr').val() < 0 ) {
+
+                msgalert("Error","Please Choose Report to Manager",3);
+                $('#ddlrptTomgr').focus();
+                return;
+
+            }
+            if ($('#txtjoindt').val() == "" || $('#txtjoindt').val() == null) {
+
+                msgalert("Error","Please Enter Joining Date",3);
+                return;
+
+            }
+
+            if ($('#txtBustop').val() == "" || $('#txtBustop').val() == null) {
+
+                msgalert("Error","Please Enter Nearest Bus Stop",3);
+                return;
+
+            }
+
+            if ($('#txtDOB').val() == "" || $('#txtDOB').val() == null) {
+
+                msgalert("Error","Please Enter Date of Birth",3);
+                return;
+
+            }
+
+            if($("#ddlGender").val() < 0)
+            {
+                msgalert("Error","Please fill All fields",3);
+
+                return;
+            }
+
+            var sRoleId = $('#ddldesignation').children(":selected").attr("id");
+
+            var sCondition = "Where emp_ref_no="+ sEmpRefNo;
+
+            var StrJsonDatas = eval({
+                emp_first_name: $("#txtFirstname").val(),
+                emp_last_name: $("#txtLastname").val(),
+                email_id: $("#txtEmail").val(),
+                blood_group: $("#ddlBlood").val(),
+                date_of_birth: $("#txtDOB").val(),
+                gender: $("#ddlGender").val(),
+                maritial_status: $("#ddlMarital").val(),
+                spouse_name: $("#txtSpouseName").val(),
+                spouse_contact: $("#txtSpouseContact").val(),
+                mobile_number: $("#txtContact").val(),
+                local_postal_code: $("#txtPincode").val(),
+                local_country: $("#txtCountry").val(),
+                local_state: $("#txtState").val(),
+                local_street: $("#txtAddr1").val(),
+                local_level: $("#txtAddr2").val(),
+                local_unit: $("#txtCity").val(),
+                emrergency_contact_name: $("#txtEmcname1").val(),
+                emrergency_contact_number: $("#txtEmccont1").val(),
+                emrergency_contact_address: $("#txtEmcaddr1").val(),
+                emergency_contact_relationship: $("#txtEmcrel1").val(),
+                emergency_contact_name1: $("#txtEmcname2").val(),
+                emergency_contact_number1: $("#txtEmccont2").val(),
+                emergency_contact_address1: $("#txtEmcaddr2").val(),
+                emergency_contact_relationship1: $("#txtEmcrel2").val(),
+                nearest_bus_stop: $("#txtBustop").val(),
+                is_fresher: fresher,
+                reference_name: $("#txtRefname").val(),
+                reference_contact: $("#txtRefcontact").val(),
+                company_id: $("#ddlcompany").val(),
+                emp_comp_id: $("#ddllocation").val(),
+                emp_department: $("#ddldivision").val(),
+                emp_level: $("#ddllevel").val(),
+                emp_desgination: $("#ddldesignation").val(),
+                emp_notice_period: $("#ddlnotice").val(),
+                emp_first_review: $("#ddlreview").val(),
+                report_to_manager: $("#ddlrptTomgr").val(),
+                emp_joining_date: $("#txtjoindt").val(),
+                aadhar_no: $("#txtAadhaar").val(),
+                pan_card_no: $("#txtPAN").val(),
+                passport_number: $("#txtPassport").val(),
+                bank_account_no: $("#txtBankAc").val(),
+                identity_number: $("#txtUAN").val(),
+                updated_date: new Date(),
+                updated_by: refNo,
+                role_id: sRoleId
+
+            });
+
+            var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeDetails", sCondition);
+
+            // var Result = oAPICall.SelectData(strJsonDatas, "ProcInsertEmployeeDetails");
+
+            if (Result != "" && Result != null) {
+
+                if(roleId == 1 || roleId == 9 || roleId == 10)
+                {
+                    if(roleId == 9 && sRoleId == 2)
+                    {
+
+                    }
+                    else
+                    {
+                        InsertSalaryDetails(sEmpRefNo);
+                    }
+                }
+
+
+                if(isUploadEdu == "No")
+                {
+                    var resul =  Educationwithoutdocuments();
+
+                    if(resul == "Success")
+                    {
+                        msgalert("Success","Employee Details Updated Successfully",1);
+                    }
+                }
+                else
+                {
+                    msgalert("Success","Employee Details Updated Successfully",1);
+                }
+
+                window.location.reload();
+
+            }
+        }
+
+        function InsertSalaryDetails(sRef)
+        {
+
+            var basic = $("#txtBasic").val();
+            var a_basic = $("#txtaBasic").val();
+            var hra = $("#txtHRA").val();
+            var a_hra = $("#txtaHRA").val();
+            var living = $("#txtLiving").val();
+            var a_living = $("#txtaLiving").val();
+            var conveyance = $("#txtConveyance").val();
+            var a_conveyance = $("#txtaConveyance").val();
+            var special = $("#txtSpecial").val();
+            var a_special = $("#txtaSpecial").val();
+            var pf = $("#txtPF").val();
+            var a_pf = $("#txtaPF").val();
+            var esi = $("#txtESI").val();
+            var a_esi = $("#txtaESI").val();
+            var pfEmployer = $("#txtPFemployer").val();
+            var a_pfEmployer = $("#txtaPFemployer").val();
+            var esiEmployer = $("#txtESIemployer").val();
+            var a_esiEmployer = $("#txtaESIemployer").val();
+            var gratuity = $("#txtGratuity").val();
+            var a_gratuity = $("#txtaGratuity").val();
+            var annual = $("#txtAnnualBonus").val();
+            var a_annual = $("#txtaAnnualBonus").val();
+            var gross = $("#txtGrossPay").val();
+            var a_gross = $("#txtaGrossPay").val();
+            var net = $("#txtNetPay").val();
+            var a_net = $("#txtaNetPay").val();
+            var total = $("#txtCostCompany").val();
+            var a_total = $("#txtaCostCompany").val();
+
+            if(basic == "" || basic == null)
+            {
+                msgalert("Error","Please Fill Salary",3);
+
+                return;
+            }
+
+            var sCondition = "Where ref_no="+ sRef;
+
+            var StrJsonDatas = eval({
+                basic: $("#txtBasic").val(),
+                HRA: $("#txtHRA").val(),
+                living_allowance: $("#txtLiving").val(),
+                conveyance_allowance: $("#txtConveyance").val(),
+                special_allowance: $("#txtSpecial").val(),
+                gross_pay: $("#txtGrossPay").val(),
+                PF: $("#txtPF").val(),
+                ESI: $("#txtESI").val(),
+                net_pay: $("#txtNetPay").val(),
+                PF_employer: $("#txtPFemployer").val(),
+                ESI_employer: $("#txtESIemployer").val(),
+                gratuity: $("#txtGratuity").val(),
+                annual_bonus: $("#txtAnnualBonus").val(),
+                total_cost_company: $("#txtCostCompany").val(),
+                a_basic: $("#txtaBasic").val(),
+                a_HRA: $("#txtaHRA").val(),
+                a_living_allowance: $("#txtaLiving").val(),
+                a_conveyance_allowance: $("#txtaConveyance").val(),
+                a_special_allowance: $("#txtaSpecial").val(),
+                a_gross_pay: $("#txtaGrossPay").val(),
+                a_PF: $("#txtaPF").val(),
+                a_ESI: $("#txtaESI").val(),
+                a_net_pay: $("#txtaNetPay").val(),
+                a_PF_employer: $("#txtaPFemployer").val(),
+                a_ESI_employer: $("#txtaESIemployer").val(),
+                a_gratuity: $("#txtaGratuity").val(),
+                a_annual_bonus: $("#txtaAnnualBonus").val(),
+                a_total_cost_company: $("#txtaCostCompany").val(),
+                updated_date: new Date(),
+                updated_by: refNo
+
+            });
+
+            var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateSalaryDetails", sCondition);
+
+            if (Result != "" && Result != null) {
+
+                var sCondition = "Where emp_ref_no="+ sRef;
+
+                var StrJsonDatas = eval({
+
+                    salary_fill: 1
+
+                });
+
+                var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateEmployeeDetails", sCondition);
+
+            }
+
+        }
+
+        function GetInfo(ref)
+        {
+            var role;
+
+            sEmpRefNo = ref;
+
+            var Condition = "WHERE emp_ref_no =" +ref;
+
+            var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: null });
+
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectEmployeeDetails");
+
+            if (Result != "" || Result != null)
+            {
+                role = Result[0]["role_id"];
+            }
+
+            if(roleId == 9 && role == 2)
+            {
+                $("#salary").addClass('hidden');
+
+                $("#salaryEdit").addClass('hidden');
+            }
+
+            angular.element(document.getElementById('controllerID')).scope().BindValues(ref);
+        }
+
+        function PaymentMethodChange()
+        {
+            var s = $("#paymentMethod").val();
+
+            if(s == 1)
+            {
+                $("#bankName").removeClass("hidden");
+            }
+            else
+            {
+                $("#bankName").addClass("hidden");
+            }
+        }
+
+        var oAPICall;
+
+        var fresher;
+
+        var refNo, sEmpRefNo,roleId;
+
+        var fileValidate = 0 , isUploadEdu = "No";
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        $("#txtsslcper").keypress(function(event) {
+            // Allow only backspace, delete, and percent sign
+            if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 37) {
+                // let it happen, don't do anything
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (event.keyCode < 48 || event.keyCode > 57) {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        $("#txttwelthper").keypress(function(event) {
+            // Allow only backspace, delete, and percent sign
+            if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 37) {
+                // let it happen, don't do anything
+            }
+            else {
+                // Ensure that it is a number and stop the keypress
+                if (event.keyCode < 48 || event.keyCode > 57) {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        $(document).ready(function () {
+
+            oAPICall = new APICall();
+
+            $('#spouseDIV').addClass('hidden');
+            $('#spouseDIVView').addClass('hidden');
+
+            $('#exprdetails').addClass('hidden');
+
+            $('#exprdetailsView').addClass('hidden');
+
+            $('#sslcDocView').addClass('hidden');
+            $('#twelthDocView').addClass('hidden');
+            $('#gradDocView').addClass('hidden');
+            $('#pgradDocView').addClass('hidden');
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+            roleId = sUserDetails.RoleId;
+
+            if(roleId == 1 || roleId == 9 || roleId == 10)
+            {
+                $("#salary").removeClass('hidden');
+
+                $("#bankStatutory").removeClass('hidden');
+
+                $("#salaryEdit").removeClass('hidden');
+            }
+
+            if(roleId != 1)
+            {
+                $("#DeleteEmployee").addClass('hidden');
+            }
+
+        });
+
+    </script>
+
+</body>

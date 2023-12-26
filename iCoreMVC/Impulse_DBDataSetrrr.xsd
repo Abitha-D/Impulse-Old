@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Impulse_DBDataSetrrr" targetNamespace="http://tempuri.org/Impulse_DBDataSetrrr.xsd" xmlns:mstns="http://tempuri.org/Impulse_DBDataSetrrr.xsd" xmlns="http://tempuri.org/Impulse_DBDataSetrrr.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="Connectioncontext" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="Connectioncontext (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.Connectioncontext.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="IM_VW_EMPLOYEE_SETTLEMENTTableAdapter" GeneratorDataComponentClassName="IM_VW_EMPLOYEE_SETTLEMENTTableAdapter" Name="IM_VW_EMPLOYEE_SETTLEMENT" UserDataComponentName="IM_VW_EMPLOYEE_SETTLEMENTTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="Connectioncontext (Web.config)" DbObjectName="Impulse_DB.dbo.IM_VW_EMPLOYEE_SETTLEMENT" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT emp_ref_no, emp_ref_code, emp_full_name, location_name, emp_joining_date, resign_submitted_date, resigning_date, settlement_date, notice_period, days_served, excess_notice, days_worked, no_of_days_worked, delete_status, basic, hra, living, production, pf, esi, conveyance, total_dedcution, netpay, gross_pay, remarks, total_days_in_month, designation, department, medical FROM dbo.IM_VW_EMPLOYEE_SETTLEMENT</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="emp_ref_no" DataSetColumn="emp_ref_no" />
+              <Mapping SourceColumn="emp_ref_code" DataSetColumn="emp_ref_code" />
+              <Mapping SourceColumn="emp_full_name" DataSetColumn="emp_full_name" />
+              <Mapping SourceColumn="location_name" DataSetColumn="location_name" />
+              <Mapping SourceColumn="emp_joining_date" DataSetColumn="emp_joining_date" />
+              <Mapping SourceColumn="resign_submitted_date" DataSetColumn="resign_submitted_date" />
+              <Mapping SourceColumn="resigning_date" DataSetColumn="resigning_date" />
+              <Mapping SourceColumn="settlement_date" DataSetColumn="settlement_date" />
+              <Mapping SourceColumn="notice_period" DataSetColumn="notice_period" />
+              <Mapping SourceColumn="days_served" DataSetColumn="days_served" />
+              <Mapping SourceColumn="excess_notice" DataSetColumn="excess_notice" />
+              <Mapping SourceColumn="days_worked" DataSetColumn="days_worked" />
+              <Mapping SourceColumn="no_of_days_worked" DataSetColumn="no_of_days_worked" />
+              <Mapping SourceColumn="delete_status" DataSetColumn="delete_status" />
+              <Mapping SourceColumn="basic" DataSetColumn="basic" />
+              <Mapping SourceColumn="hra" DataSetColumn="hra" />
+              <Mapping SourceColumn="living" DataSetColumn="living" />
+              <Mapping SourceColumn="production" DataSetColumn="production" />
+              <Mapping SourceColumn="pf" DataSetColumn="pf" />
+              <Mapping SourceColumn="esi" DataSetColumn="esi" />
+              <Mapping SourceColumn="conveyance" DataSetColumn="conveyance" />
+              <Mapping SourceColumn="total_dedcution" DataSetColumn="total_dedcution" />
+              <Mapping SourceColumn="netpay" DataSetColumn="netpay" />
+              <Mapping SourceColumn="gross_pay" DataSetColumn="gross_pay" />
+              <Mapping SourceColumn="remarks" DataSetColumn="remarks" />
+              <Mapping SourceColumn="total_days_in_month" DataSetColumn="total_days_in_month" />
+              <Mapping SourceColumn="designation" DataSetColumn="designation" />
+              <Mapping SourceColumn="department" DataSetColumn="department" />
+              <Mapping SourceColumn="medical" DataSetColumn="medical" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Impulse_DBDataSetrrr" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="Impulse_DBDataSetrrr" msprop:Generator_UserDSName="Impulse_DBDataSetrrr">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="IM_VW_EMPLOYEE_SETTLEMENT" msprop:Generator_TableClassName="IM_VW_EMPLOYEE_SETTLEMENTDataTable" msprop:Generator_TableVarName="tableIM_VW_EMPLOYEE_SETTLEMENT" msprop:Generator_TablePropName="IM_VW_EMPLOYEE_SETTLEMENT" msprop:Generator_RowDeletingName="IM_VW_EMPLOYEE_SETTLEMENTRowDeleting" msprop:Generator_RowChangingName="IM_VW_EMPLOYEE_SETTLEMENTRowChanging" msprop:Generator_RowEvHandlerName="IM_VW_EMPLOYEE_SETTLEMENTRowChangeEventHandler" msprop:Generator_RowDeletedName="IM_VW_EMPLOYEE_SETTLEMENTRowDeleted" msprop:Generator_UserTableName="IM_VW_EMPLOYEE_SETTLEMENT" msprop:Generator_RowChangedName="IM_VW_EMPLOYEE_SETTLEMENTRowChanged" msprop:Generator_RowEvArgName="IM_VW_EMPLOYEE_SETTLEMENTRowChangeEvent" msprop:Generator_RowClassName="IM_VW_EMPLOYEE_SETTLEMENTRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="emp_ref_no" msprop:Generator_ColumnVarNameInTable="columnemp_ref_no" msprop:Generator_ColumnPropNameInRow="emp_ref_no" msprop:Generator_ColumnPropNameInTable="emp_ref_noColumn" msprop:Generator_UserColumnName="emp_ref_no" type="xs:long" />
+              <xs:element name="emp_ref_code" msprop:Generator_ColumnVarNameInTable="columnemp_ref_code" msprop:Generator_ColumnPropNameInRow="emp_ref_code" msprop:Generator_ColumnPropNameInTable="emp_ref_codeColumn" msprop:Generator_UserColumnName="emp_ref_code" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="emp_full_name" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnemp_full_name" msprop:Generator_ColumnPropNameInRow="emp_full_name" msprop:Generator_ColumnPropNameInTable="emp_full_nameColumn" msprop:Generator_UserColumnName="emp_full_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="101" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="location_name" msprop:Generator_ColumnVarNameInTable="columnlocation_name" msprop:Generator_ColumnPropNameInRow="location_name" msprop:Generator_ColumnPropNameInTable="location_nameColumn" msprop:Generator_UserColumnName="location_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="emp_joining_date" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnemp_joining_date" msprop:Generator_ColumnPropNameInRow="emp_joining_date" msprop:Generator_ColumnPropNameInTable="emp_joining_dateColumn" msprop:Generator_UserColumnName="emp_joining_date" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="resign_submitted_date" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnresign_submitted_date" msprop:Generator_ColumnPropNameInRow="resign_submitted_date" msprop:Generator_ColumnPropNameInTable="resign_submitted_dateColumn" msprop:Generator_UserColumnName="resign_submitted_date" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="resigning_date" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnresigning_date" msprop:Generator_ColumnPropNameInRow="resigning_date" msprop:Generator_ColumnPropNameInTable="resigning_dateColumn" msprop:Generator_UserColumnName="resigning_date" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="settlement_date" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnsettlement_date" msprop:Generator_ColumnPropNameInRow="settlement_date" msprop:Generator_ColumnPropNameInTable="settlement_dateColumn" msprop:Generator_UserColumnName="settlement_date" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="notice_period" msprop:Generator_ColumnVarNameInTable="columnnotice_period" msprop:Generator_ColumnPropNameInRow="notice_period" msprop:Generator_ColumnPropNameInTable="notice_periodColumn" msprop:Generator_UserColumnName="notice_period" type="xs:int" minOccurs="0" />
+              <xs:element name="days_served" msprop:Generator_ColumnVarNameInTable="columndays_served" msprop:Generator_ColumnPropNameInRow="days_served" msprop:Generator_ColumnPropNameInTable="days_servedColumn" msprop:Generator_UserColumnName="days_served" type="xs:int" minOccurs="0" />
+              <xs:element name="excess_notice" msprop:Generator_ColumnVarNameInTable="columnexcess_notice" msprop:Generator_ColumnPropNameInRow="excess_notice" msprop:Generator_ColumnPropNameInTable="excess_noticeColumn" msprop:Generator_UserColumnName="excess_notice" type="xs:int" minOccurs="0" />
+              <xs:element name="days_worked" msprop:Generator_ColumnVarNameInTable="columndays_worked" msprop:Generator_ColumnPropNameInRow="days_worked" msprop:Generator_ColumnPropNameInTable="days_workedColumn" msprop:Generator_UserColumnName="days_worked" type="xs:int" minOccurs="0" />
+              <xs:element name="no_of_days_worked" msprop:Generator_ColumnVarNameInTable="columnno_of_days_worked" msprop:Generator_ColumnPropNameInRow="no_of_days_worked" msprop:Generator_ColumnPropNameInTable="no_of_days_workedColumn" msprop:Generator_UserColumnName="no_of_days_worked" type="xs:int" minOccurs="0" />
+              <xs:element name="delete_status" msprop:Generator_ColumnVarNameInTable="columndelete_status" msprop:Generator_ColumnPropNameInRow="delete_status" msprop:Generator_ColumnPropNameInTable="delete_statusColumn" msprop:Generator_UserColumnName="delete_status" type="xs:short" minOccurs="0" />
+              <xs:element name="basic" msprop:Generator_ColumnVarNameInTable="columnbasic" msprop:Generator_ColumnPropNameInRow="basic" msprop:Generator_ColumnPropNameInTable="basicColumn" msprop:Generator_UserColumnName="basic" type="xs:double" minOccurs="0" />
+              <xs:element name="hra" msprop:Generator_ColumnVarNameInTable="columnhra" msprop:Generator_ColumnPropNameInRow="hra" msprop:Generator_ColumnPropNameInTable="hraColumn" msprop:Generator_UserColumnName="hra" type="xs:double" minOccurs="0" />
+              <xs:element name="living" msprop:Generator_ColumnVarNameInTable="columnliving" msprop:Generator_ColumnPropNameInRow="living" msprop:Generator_ColumnPropNameInTable="livingColumn" msprop:Generator_UserColumnName="living" type="xs:double" minOccurs="0" />
+              <xs:element name="production" msprop:Generator_ColumnVarNameInTable="columnproduction" msprop:Generator_ColumnPropNameInRow="production" msprop:Generator_ColumnPropNameInTable="productionColumn" msprop:Generator_UserColumnName="production" type="xs:double" minOccurs="0" />
+              <xs:element name="pf" msprop:Generator_ColumnVarNameInTable="columnpf" msprop:Generator_ColumnPropNameInRow="pf" msprop:Generator_ColumnPropNameInTable="pfColumn" msprop:Generator_UserColumnName="pf" type="xs:double" minOccurs="0" />
+              <xs:element name="esi" msprop:Generator_ColumnVarNameInTable="columnesi" msprop:Generator_ColumnPropNameInRow="esi" msprop:Generator_ColumnPropNameInTable="esiColumn" msprop:Generator_UserColumnName="esi" type="xs:double" minOccurs="0" />
+              <xs:element name="conveyance" msprop:Generator_ColumnVarNameInTable="columnconveyance" msprop:Generator_ColumnPropNameInRow="conveyance" msprop:Generator_ColumnPropNameInTable="conveyanceColumn" msprop:Generator_UserColumnName="conveyance" type="xs:double" minOccurs="0" />
+              <xs:element name="total_dedcution" msprop:Generator_ColumnVarNameInTable="columntotal_dedcution" msprop:Generator_ColumnPropNameInRow="total_dedcution" msprop:Generator_ColumnPropNameInTable="total_dedcutionColumn" msprop:Generator_UserColumnName="total_dedcution" type="xs:double" minOccurs="0" />
+              <xs:element name="netpay" msprop:Generator_ColumnVarNameInTable="columnnetpay" msprop:Generator_ColumnPropNameInRow="netpay" msprop:Generator_ColumnPropNameInTable="netpayColumn" msprop:Generator_UserColumnName="netpay" type="xs:double" minOccurs="0" />
+              <xs:element name="gross_pay" msprop:Generator_ColumnVarNameInTable="columngross_pay" msprop:Generator_ColumnPropNameInRow="gross_pay" msprop:Generator_ColumnPropNameInTable="gross_payColumn" msprop:Generator_UserColumnName="gross_pay" type="xs:double" minOccurs="0" />
+              <xs:element name="remarks" msprop:Generator_ColumnVarNameInTable="columnremarks" msprop:Generator_ColumnPropNameInRow="remarks" msprop:Generator_ColumnPropNameInTable="remarksColumn" msprop:Generator_UserColumnName="remarks" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="total_days_in_month" msprop:Generator_ColumnVarNameInTable="columntotal_days_in_month" msprop:Generator_ColumnPropNameInRow="total_days_in_month" msprop:Generator_ColumnPropNameInTable="total_days_in_monthColumn" msprop:Generator_UserColumnName="total_days_in_month" type="xs:int" minOccurs="0" />
+              <xs:element name="designation" msprop:Generator_ColumnVarNameInTable="columndesignation" msprop:Generator_ColumnPropNameInRow="designation" msprop:Generator_ColumnPropNameInTable="designationColumn" msprop:Generator_UserColumnName="designation" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="240" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="department" msprop:Generator_ColumnVarNameInTable="columndepartment" msprop:Generator_ColumnPropNameInRow="department" msprop:Generator_ColumnPropNameInTable="departmentColumn" msprop:Generator_UserColumnName="department" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="medical" msprop:Generator_ColumnVarNameInTable="columnmedical" msprop:Generator_ColumnPropNameInRow="medical" msprop:Generator_ColumnPropNameInTable="medicalColumn" msprop:Generator_UserColumnName="medical" type="xs:double" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

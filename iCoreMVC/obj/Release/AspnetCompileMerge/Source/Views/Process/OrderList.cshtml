@@ -1,0 +1,1474 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">*@
+@*<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>*@
+@*<link rel="stylesheet" href="/resources/demos/style.css">*@
+
+<style>
+    .col-width {
+        width: 17%;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+
+
+    .datcolor {
+        color: black;
+    }
+
+    .dtimageclass {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+        opacity: 0;
+        background: rgb(255, 255, 255);
+    }
+
+    .editorframe {
+        border-style: solid;
+        border-width: 1px;
+        border-color: inherit;
+        background-color: #FFFFFF;
+        color: #000099;
+        overflow: scroll;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .cvteste {
+        color: darkblue;
+        font-weight: bold;
+    }
+
+    .cvteste1 {
+        background-color: darkblue;
+        font-weight: bold;
+    }
+
+
+    .editicon {
+        width: 25px;
+    }
+
+    .cellWithBackground {
+        display: block;
+        background-color: darkblue;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        border-radius: 0;
+        border: 1px solid transparent;
+        margin-bottom: 10px;
+        background-color: #3289C8;
+        color: #FFF;
+    }
+
+    .hover:hover {
+        color: rgb(26, 179, 148);
+        font-size: x-large;
+    }
+
+    .hover1:hover {
+        color: rgb(26, 179, 148);
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="CPD_Master" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title" style="padding-top:5px">
+                    <span class="label " style="font-size: 11px; font-weight: 700; margin-left: -10px; background-color: #eceeef;margin-top:7px ">Order List Details</span>
+                    <div class="col-sm-2">
+                        <label class="col-sm-3 control-label">From&nbsp;</label>
+                        <div class="col-sm-3">
+                            <div class="input-group date txtfromdt">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="text" id="txtfromdt" class="form-control" readonly="readonly" style="background-color:white; width:100px">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <center><label class="col-sm-3 control-label" style="padding-left: 20px;">To</label></center>
+                        <div class="col-sm-6">
+                            <div class="input-group date txttodt" style="width:140px">
+                                <span class="input-group-addon" id="divtxtdob"><i class="fa fa-calendar"></i></span>
+                                <input type="text" id="txttodt" class="form-control" value="" readonly="readonly" style="background-color:white">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="ibox-tools" style="padding-top:7px">
+
+                        <div class="col-sm-2" style="margin-top: -5px;">
+                            <label class="col-sm-3 control-label" style="padding-left: 20px;">
+                                <a href="#" id="btnSearch" title="Filter Order">
+                                    <i class="fa fa-search hover" aria-hidden="true"></i>
+                                </a>
+
+                            </label>
+                            <label style="padding-top:10px;">
+                                <a href="#" id="lblAdvFilter" title="Advance Filter">
+                                    <font color="blue" class="hover1">Advance Filter</font>
+                                </a>
+                            </label>
+
+                            @*<input type="button" class="btn pull-right" value="Search" id="btnSearch" />*@
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div id="sDivStatus" style="display: none;">
+                            <div class="col-sm-2" style="margin-top: -6px;">
+
+                                <select style="width:100%" class="form-control" id="ddlstatus" data-placeholder="-Status-"></select>
+
+                            </div>
+                            <div class="col-sm-1" style="width:0px;">
+                                <strong>
+                                    <a href=" #">
+                                        <i class="fa fa-save" id="btnSave" title="Update Status"></i>
+                                    </a>
+                                </strong>
+                            </div>
+                        </div>
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-refresh" id="btnRefresh" title="Reload"></i>
+                            </a>
+                        </strong>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div style="padding-top:15px" id="MainPage">
+                        <div class="col-sm-12">
+                            <div class="ibox-content">
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblOrderListGrid"></table>
+                                    <div id="pagerOrdergrid"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <input type="hidden" id="hdnOrderList" />
+
+
+
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- dialog title -->
+                    <div class="modal-header">
+                        <div class="modal-title">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Are you sure to delete order no&nbsp;<span id="spnordercode">&nbsp;</span>?</h4>
+                        </div>
+                    </div>
+                    <!-- dialog body -->
+                    <div class="modal-body" id="divContent">
+                        <div class="col-sm-12">
+                            <font color="blue"><strong>Select the reson for deletion</strong></font>
+                        </div>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ddlalertreson" style="width:100%;">
+                                <option value="1">Dupicate Entry</option>
+                                <option value="2">Wrong Entry</option>
+                                <option value="3">Other</option>
+                            </select>
+                        </div>
+                        <div id="divOther" class="hidden">
+                            <div>&nbsp;</div>
+
+                            <div class="col-sm-12">
+                                <font color="blue"><strong>Pease specify</strong></font>
+                            </div>
+                            <div class="col-sm-12">
+                                <input type="text" id="txtreson" placeholder="Enter reson here.." class="form-control">
+                                <span id="spanerror" class="help-block m-b-none hidden"><i><font color="red"><span id="txtresoneror"></span>Enter a reson and continue..</font></i></span>
+                            </div>
+                        </div>
+                        <div>&nbsp;</div>
+                    </div>
+                    <!-- dialog buttons -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-bottom: 0;">Cancel</button>
+                        <button type="button" class="btn btn-default" id="dialogBtn">Delete</button>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="shdnOrderID" />
+            <input type="hidden" id="shdnDataEntryId" />
+            <input type="hidden" id="shdnPhotoId" />
+            <input type="hidden" id="sQueryStringCount" />
+        </div>
+        <div id="myModalAdvFilter" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- dialog title -->
+                    <div class="modal-header">
+                        <div class="modal-title">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Advanced Filter</h4>
+                        </div>
+                    </div>
+                    <!-- dialog body -->
+                    <div class="modal-body" id="divContent">
+                        <table>
+                            <tr>
+                                <td>
+                                    <select id="ddlFields" class="form-control">
+                                        <option value="subject_address">Address</option>
+                                        <option value="subclient_name">SubClient Name</option>
+                                        <option value="pht_name">Photographer Name</option>
+                                    </select>
+                                </td>
+                                <td style="width:10px"></td>
+                                <td>
+                                    <select id="ddlCondition" class="form-control">
+                                        <option value="cn">contains</option>
+                                        <option value="eq">equal</option>
+                                        <option value="sw">starts with</option>
+                                        <option value="ew">ends with</option>
+                                    </select>
+                                </td>
+                                <td style="width:10px"></td>
+                                <td>
+                                    <input type="text" id="txtValue" class="form-control">
+                                </td>
+                            </tr>
+                        </table>
+                        <div>&nbsp;</div>
+                    </div>
+                    <!-- dialog buttons -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default col-sm-2" style="margin-bottom: 0;" id="dialogBtnReset">Reset</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" id="dialogBtnFilter">Filter</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="MailData" style="visibility: hidden">
+        </div>
+
+    </div>
+</form>
+
+
+
+@*<script>
+        $("#myModal").on("show", function () {    // wire up the OK button to dismiss the modal when shown
+            $("#dialogBtn").on("click", function (e) {
+                console.log("button pressed");   // just as an example...
+                $("#myModal").modal('hide');     // dismiss the dialog
+            });
+        });
+
+        $("#myModal").on("hide", function () {    // remove the event listeners when the dialog is dismissed
+            $("#myModal a.btn").off("click");
+        });
+
+        $("#myModal").on("hidden", function () {  // remove the actual elements from the DOM when fully hidden
+            $("#myModal").remove();
+        });
+
+
+    </script>*@
+
+
+
+
+
+
+
+<script>
+    var sPageId = 0;
+    var classname = '';
+    localStorage.setItem("PageID", "OrderList");
+    var sCurDate;
+    var date = new Date(), yr = date.getFullYear(),
+                    h = date.getHours(),
+                    m = date.getMinutes(),
+                    s = date.getSeconds(),
+                    month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
+                    day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(),
+                    sCurDate = month + '-' + day + '-' + yr;
+
+    var AdvanceSearch = false;
+    var gridSelection = [];
+
+    function IsPhotoUpload(cellvalue, options, rowObject) {
+        if (cellvalue == 0) {
+            return '<span  id="' + options.rowId + '" action="edit"><img  src="../Content/Image/is_photo_not.png" style="width:60%; " /> </span>';
+        }
+        else {
+            return '<span  id="' + options.rowId + '" action="edit"><img  src="../Content/Image/is_photo_upload.png" style="width:60%; " /> </span>';
+
+        }
+    }
+    function Iconformatter(cellvalue, options, rowObject) {
+        if (cellvalue == 1) {
+            return '<span id="' + options.rowId + '" action="edit"><img  src="../Content/Image/checkmark_tick-128.png" style="width:80%; " /> </span>';
+        }
+        else {
+            return '<span  id="' + options.rowId + '" action="edit"><img  src="../Content/Image/close-1.png" style="width:80%; " /> </span>';
+
+        }
+    }
+    function Paidformatter(cellvalue, options, rowObject) {
+        if (cellvalue == 1) {
+            return '<span id="' + options.rowId + '" action="edit"><img  src="../Content/Image/paidstamp.png"  style="width:90%; "  /> </span>';
+        }
+        else {
+            return '<span id="' + options.rowId + '" action="edit"><img  src="../Content/Image/unpaidstamp.png"  style="width:90%; "  /> </span>';
+        }
+
+    }
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+    function undoformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="undo"><i class="fa fa fa-undo text-md" title="Delete"></i> </a>';
+    }
+
+    function rowcolorfromtr(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+
+    function BindOrderStatus() {
+        var Condition = "where enumeration_key='Order_Status' and value in (1,2,7,3) order by value asc"; //order by value asc
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsStatus");
+        if (Result != "" && Result != null) {
+            $('#ddlstatus').empty().change();
+            $('#ddlstatus').append('<option value="0">-Status-</option>');
+            for (var i = 0; i < Result.length; i++) {
+
+                $('#ddlstatus').append('<option value="' + Result[i]["value"] + '">' + Result[i]["short_display"] + '</option>');
+            }
+        }
+    }
+    //function OrderListGrid() {
+    //    var oJQGridFunctions = new JQGridFunctions();
+
+    //    colNames = ['', 'Order No.', 'Client', 'Order Date', 'Due Date', '', 'Subject Address', 'Type', 'Fee', 'Data Entry', 'Photos/Files', 'Status', '', 'Is Paid', ''],
+    //    colModel = [
+    //        { name: 'order_no', index: 'order_no', width: 50, align: "center", sorttype: "int", hidden: true },
+    //        { name: 'order_code', index: 'order_code', width: 50, align: "center", sorttype: "int", search: true, classes: 'cvteste' },
+    //        { name: 'full_name', index: 'full_name', width: 50, align: "center", sorttype: "int", hidden: true, classes: 'cvteste' },
+    //        { name: 'order_date', index: 'order_date', width: 80, align: "center", sorttype: false, search: true, classes: 'datcolor', formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y (h:i A)" } },
+    //        {
+    //            name: 'order_due_date', index: 'order_due_date', width: 80, align: "center", sorttype: false, search: true,
+    //            formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y (h:i A)" }
+    //        },
+    //        { name: 'order_ddate', index: 'order_ddate', width: 60, align: "center", sorttype: false, hidden: true },
+
+    //        { name: 'subject_address', index: 'subject_address', width: 150, align: "center", sorttype: false, search: true },
+    //        { name: 'order_type', index: 'order_type', width: 30, align: "center", sorttype: false, search: true },
+    //        { name: 'fee', index: 'fee', width: 50, align: "center", sorttype: false, hidden: true },
+    //         { name: 'is_dataentry', index: 'is_dataentry', width: 25, align: "center", sorttype: false, search: false, formatter: Iconformatter },
+    //        { name: 'is_photo_upload', index: 'is_photo_upload', width: 32, align: "center", sorttype: false, search: true },
+    //        { name: 'order_status', index: 'order_status', width: 50, align: "center", sorttype: false, search: true, formatter: myformatter },
+
+    //        { name: 'order_status_id', index: 'order_status_id', width: 60, align: "center", sorttype: false, hidden: true },
+
+    //        { name: 'is_paid', index: 'is_paid', width: 50, align: "center", sorttype: false, search: false, formatter: Paidformatter },
+    //        { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false, classes: 'editicon' }
+
+    //    ]
+    //    var mydata = '';
+    //    mydata = PopulateOrderListGrid();
+    //    oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblOrderListGrid', '#pagerOrdergrid', 'Order List', 300, 14, false, mydata)
+    //   // SetBackgroundColor();
+    //    if (access_level == 1)
+    //        $('#tblOrderListGrid').showCol('full_name');
+
+    //}
+
+    function OrderListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+        var grid = $('#tblOrderListGrid');
+        var sMultiSelect = false;
+        if (sPageId == 1 || sPageId == 2 || sPageId == 3 || sPageId == 4 || sPageId == 8) {
+            sMultiSelect = true;
+        }
+        else {
+            document.getElementById('sDivStatus').style.display = "none";
+        }
+        jQuery(grid).jqGrid({
+            //url: '<%= Url.Action("SearchData") %>',
+            data: PopulateOrderListGrid(),
+            colNames: ['', 'Order No.', 'Client', 'Sub Client', 'Pht Name','Portal', 'Order Date', 'Due Date', '', 'Subject Address', 'Type', 'Fee', 'Data Entry', 'Photos', 'Photos/Files', 'Status', '', 'Is Paid', 'Edit', 'Delete', 'Undo'],
+            colModel: [
+                { name: 'order_no', index: 'order_no', width: 50, align: "center", sorttype: "int", hidden: true },
+                { name: 'order_code', index: 'order_code', width: 55, align: "center", sorttype: "int", search: true, classes: 'cvteste' },
+                { name: 'full_name', index: 'full_name', width: 50, align: "center", sorttype: "int", hidden: true, classes: 'cvteste' },
+                { name: 'sub_client', index: 'sub_client', width: 55, align: "center", sorttype: "int", hidden: true, classes: 'cvteste' },
+                { name: 'pht_name', index: 'pht_name', width: 50, align: "center", sorttype: "int", hidden: true, classes: 'cvteste' },
+                { name: 'portal_name', index: 'portal_name', width: 55, align: "center", sorttype: false, search: true },
+                { name: 'order_date', index: 'order_date', width: 55, align: "center", sorttype: false, hidden: true, classes: 'datcolor', formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y (h:i A)" } },
+                {
+                    name: 'order_due_date', index: 'order_due_date', width: 55, align: "center", sorttype: false, search: true,
+                    formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y (h:i A)" }
+                },
+                { name: 'order_ddate', index: 'order_ddate', width: 60, align: "center", sorttype: false, hidden: true },
+
+                { name: 'subject_address', index: 'subject_address', width: 150, align: "center", sorttype: false, search: true },
+                { name: 'order_type', index: 'order_type', width: 30, align: "center", sorttype: false, search: true },
+                { name: 'fee', index: 'fee', width: 50, align: "center", sorttype: false, hidden: true },
+                 { name: 'is_dataentry', index: 'is_dataentry', width: 25, align: "center", sorttype: false, search: false, formatter: Iconformatter },
+                  { name: 'is_photo_icon', index: 'is_photo_icon', width: 32, align: "center", formatter: IsPhotoUpload, sorttype: false, search: false },
+
+                { name: 'is_photo_upload', index: 'is_photo_upload', width: 32, align: "center", sorttype: false, search: true },
+
+                { name: 'order_status', index: 'order_status', width: 50, align: "center", sorttype: false, search: true, formatter: myformatter },
+
+                { name: 'order_status_id', index: 'order_status_id', width: 60, align: "center", sorttype: false, hidden: true },
+
+                { name: 'is_paid', index: 'is_paid', width: 50, align: "center", sorttype: false, search: false, formatter: Paidformatter },
+                { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false, classes: 'editicon' },
+                { name: 'delete', index: 'delete', width: 30, sortable: false, formatter: deleteformatter, align: 'center', search: false, hidden: true, classes: 'editicon' },
+                { name: 'undo', index: 'undo', width: 30, sortable: false, formatter: undoformatter, align: 'center', search: false, hidden: true, classes: 'editicon' }
+
+
+            ],
+            caption: 'Order List',
+            pager: '#pagerOrdergrid',
+            //page: 1,
+            //loadonce: true,
+            viewrecords: true,
+            datatype: "local",
+            height: 300,
+            autowidth: false,
+            shrinkToFit: true,
+            multiselect: sMultiSelect,
+            rownumbers: false,
+            rowTotal: 10,
+            rowNum: 10,
+            rowList: [10, 30, 50, 100],
+            gridview: true,
+            hidegrid: true,
+            searchOperators: true,
+            multipleSearch: true,
+            ignoreCase: true,
+            loadComplete: function () {
+                SetBackgroundColor();
+                if (access_level == 1 || access_level == 4)
+                    $('#tblOrderListGrid').showCol('full_name');
+                if (access_level == 1 || access_level == 2) {
+                    $('#tblOrderListGrid').showCol('delete');
+                }
+                if (access_level == 2) {
+                    $('#tblOrderListGrid').showCol('pht_name');
+                    var Condition = "where delete_status=0 and client_ref_id=" + EmpId + "";
+                    var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+                    var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsSubClient");
+                    if (Result != "" && Result != null) {
+                        if (Result.length >= 2) {
+                            $('#tblOrderListGrid').showCol('sub_client');
+
+                        }
+                    }
+
+                }
+                if (access_level == 4) {
+                    $('#tblOrderListGrid').showCol('sub_client');
+                }
+
+
+            }
+        }
+              );
+        jQuery(grid).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false });
+        //var mydata = '';
+        //mydata = ModulePgeGrid();
+        //oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblPageAcessListGrid', '#pagerOrdergrid', 'Sub Module List', 250, 14, false, mydata, true)
+
+        //  $("#cb_" + grid[0].id).hide(); //code for hide select all option in jqgrid header
+        $("#tblOrderListGrid").jqGrid('setGridParam',
+                {
+                    cellsubmit: 'clientArray',
+                    onSelectRow: function (id) {
+                        //alert('Selected row ID ' + id);
+                        var selected = $('#jqg_tblOrderListGrid_' + id.toString()).is(':checked');
+                        //alert(selected);
+                        var cellValueOrderNo = $("#" + id).find('td').eq(2).text();
+                        var ids = $(this).jqGrid('getDataIDs');
+                        for (var i = 0; i < ids.length; i++) {
+                            var RowData = $("#tblOrderListGrid").getRowData(ids[i]);
+                            var sOrderNo = RowData["order_code"];
+                            if (cellValueOrderNo == sOrderNo) {
+                                if (selected) {
+                                    //jQuery("#tblOrderListGrid").setSelection(ids[i], true);
+                                    document.getElementById('sDivStatus').style.display = "block";
+                                    if (gridSelection.indexOf(sOrderNo) == -1)
+                                        gridSelection.push(sOrderNo);
+                                }
+                                else {
+                                    //jQuery("#tblOrderListGrid").setSelection(ids[i], false);
+                                    gridSelection.splice(gridSelection.indexOf(sOrderNo), 1);
+                                }
+                            }
+                        }
+                    },
+                    onSelectAll: function (aRowids, status) // this function is used when you select all check box
+                    {
+                        document.getElementById('sDivStatus').style.display = "block";
+                    },
+                    //onCellSelect: function (rowid, iCol/*,cellcontent,e*/) {
+                    //    //if ($('#jqg_tblOrderListGrid_' + rowid.toString()).is(':checked')) {
+                    //    //    var ids = $(this).jqGrid('getDataIDs');
+                    //    //    document.getElementById('sDivStatus').style.display = "block";
+                    //    //    //  $(this).jqGrid("resetSelection");
+                    //    //    // $(this).jqGrid("setSelection", null);
+                    //    //}
+                    //    //else {
+                    //    //    var Rowids = $("#tblOrderListGrid").getGridParam('selarrrow');
+                    //    //    if (Rowids.length <= 0) {
+                    //    //        document.getElementById('sDivStatus').style.display = "none";
+                    //    //    }
+                    //    //}
+                    //}//,
+                    //beforeSelectRow: function (rowId, e) {
+                    //    alert($('#jqg_tblOrderListGrid_' + rowId.toString()).is(':checked'));
+                    //    //if ($('#jqg_tblOrderListGrid_' + rowId.toString()).is(':checked'))
+                    //    //    $('#jqg_tblOrderListGrid_' + rowId).attr('checked', false);
+                    //    //else
+                    //    //    $('#jqg_tblOrderListGrid_' + rowId).attr('checked', true);
+                    //    alert($('#jqg_tblOrderListGrid_' + rowId.toString()).is(':checked'));
+                    //    var cellValueOrderNo = $("#" + rowId).find('td').eq(2).text();
+                    //    var ids = $(this).jqGrid('getDataIDs');
+                    //    for (var i = 0; i < ids.length; i++) {
+                    //        var RowData = $("#tblOrderListGrid").getRowData(ids[i]);
+                    //        var sOrderNo = RowData["order_code"];
+                    //        if (cellValueOrderNo == sOrderNo) {
+                    //            if ($('#jqg_tblOrderListGrid_' + rowId.toString()).is(':checked')) {
+                    //                jQuery("#tblOrderListGrid").setSelection(ids[i], true);
+                    //                document.getElementById('sDivStatus').style.display = "block";
+                    //                if (gridSelection.indexOf(sOrderNo) == -1)
+                    //                    gridSelection.push(sOrderNo);
+                    //            }
+                    //            else {
+                    //                jQuery("#tblOrderListGrid").setSelection(ids[i], false);
+                    //                gridSelection.splice(gridSelection.indexOf(sOrderNo), 1);
+                    //            }
+                    //        }
+                    //    }
+                    //},
+                    loadComplete: function () {
+                        OrderSelectionGrid();
+                    }
+                });
+
+    }
+
+    function OrderSelectionGrid() {
+        jQuery('#tblOrderListGrid').jqGrid('resetSelection');
+        var rowID = $('#tblOrderListGrid').jqGrid('getDataIDs');
+        for (var i = 0; i < gridSelection.length; i++) {
+            for (var j = 0; j < rowID.length; j++) {
+                var RowData = $('#tblOrderListGrid').getCell(rowID[j], 'order_code');
+                if (gridSelection[i] == RowData) {
+                    jQuery("#tblOrderListGrid").setSelection(rowID[j], true);
+                }
+            }
+        }
+        SetBackgroundColor();
+    }
+
+    //function highlight(cellValue, options, rowObject) {
+    //    var color = "green";
+    //    var cellHtml = "<span style='color:" + color + "' originalValue='" + cellValue + "'>" + cellValue + "</span>";
+
+    //    return cellHtml;
+    //}
+
+    function myformatter(cellvalue, options, rowObject) {
+        if (cellvalue == 'Open')
+            return '<font color="blue">' + cellvalue + '</font>';//or use classes
+        else
+            return '<font color="#05670e">' + cellvalue + '</font>';//or use classes
+    }
+
+    function SetBackgroundColor() {
+        var rowID = $('#tblOrderListGrid').jqGrid('getDataIDs');
+        for (var i = 0, len = rowID.length; i < len; i++) {
+            var currRow = rowID[i];
+            var sStatus = parseFloat($('#tblOrderListGrid').getCell(currRow, 'order_status_id'));
+            var sDate = parseFloat($('#tblOrderListGrid').getCell(currRow, 'order_date'));
+            var sOrderDueDt = $('#tblOrderListGrid').getCell(currRow, 'order_ddate');
+
+            var cd = new Date();
+            cd = dateFormat(cd, "isoDateTime");
+
+            if (sStatus == "1" && cd > sOrderDueDt) {
+
+                $('#tblOrderListGrid').jqGrid('setRowData', currRow, false, { color: 'black', weightfont: 'bold', background: '#eaa746' });//f1bb69
+            }
+            if (sStatus == 5) {
+                $('#tblOrderListGrid').jqGrid('setRowData', currRow, false, { color: 'black', weightfont: 'bold', background: '#f96241' });//f1bb69
+            }
+            if (sStatus == 4) {
+                $('#tblOrderListGrid').jqGrid('setRowData', currRow, false, { color: 'black', weightfont: 'bold', background: '#f7eb67' });//f1bb69
+            }
+        }
+    }
+
+    function ChkDataLevelAcess(sCondition) {
+        var sRtnCondition = '';
+
+        var Condition = ' WHERE user_id=' + CurrentUser + '';
+        var strJsonDatas = eval({ strSessionID: UserSession, strCondition: Condition, strFieldNames: null });
+        var Result = oAPICall.SelectData(strJsonDatas, 'SelectBtsUserMaster');
+        if (Result != null && Result.length > 0) {
+            var strRoleID = Result[0]["role_id"];
+        }
+        if (strRoleID != 1) {
+            if (access_level == 2) {
+
+                sRtnCondition = sCondition + ' and order_posted_by = ' + EmpId + ' order by order_no desc';
+            }
+            else if (access_level == 3) {
+
+                sRtnCondition = sCondition + ' and photographer_id = ' + EmpId + ' order by order_no desc';
+            }
+            else if (access_level == 4) {
+                sRtnCondition = sCondition + ' and dataentry_id = ' + EmpId + ' order by order_no desc';
+            }
+        }
+        else {
+            sRtnCondition = sCondition + ' order by order_no desc';
+        }
+        return sRtnCondition;
+    }
+
+    function PopulateOrderListGrid() {
+        if (AdvanceSearch) {
+            var field = $('#ddlFields').val();
+            var condition = $("#ddlCondition option:selected").text();
+            var value = $('#txtValue').val();
+            switch (condition) {
+                case 'equal':
+                    condition = "= '" + value + "'";
+                    break;
+                case 'contains':
+                    condition = "like '%" + value + "%' ";
+                    break;
+                case 'starts with':
+                    condition = "like '" + value + "%' ";
+                    break;
+                case 'ends with':
+                    condition = "like '%" + value + "' ";
+                    break;
+            }
+
+            sCondition = "WHERE delete_status=0 and " + field + " " + condition + " ";
+
+            sCondition = ChkDataLevelAcess(sCondition);
+
+            var paramNames = [], paramValues = [];
+            paramNames.push('sClientId'); paramNames.push('sCondition');
+
+            paramValues.push(EmpId); paramValues.push(sCondition);
+            var strJsonDatas = eval({ strSessionID: UserSession, ProcParameters: paramNames, ProcInputData: paramValues });
+            var Result = eval(oAPICall.SelectData(strJsonDatas, "SelectOrderList"));
+
+        }
+        else {
+            var sFromDt = new Date($('#txtfromdt').val());
+            var sToDt = new Date($('#txttodt').val());
+
+            if (sPageId == undefined) {//List All
+                var sCondition = " WHERE delete_status=0 and order_status !=3  and  order_date>= '" + $('#txtfromdt').val() + "'and order_date<='" + $('#txttodt').val() + " 23:59:59.599'";
+            }
+            else if (sPageId == 1) { //Active list
+                var sCondition = " WHERE delete_status=0 and order_status in (1,2,6) and  order_date>= '" + $('#txtfromdt').val() + "'and order_date<='" + $('#txttodt').val() + " 23:59:59.599'";
+                $('#sQueryStringCount').val(sCondition);
+                //var sCondition = " WHERE delete_status=0 and order_status = 1 and order_date between convert(datetime, '" + sFromDt + "',103) and convert(datetime, '" + sToDt + "',103)";
+            }
+            else if (sPageId == 2) { //Completed list
+                var sCondition = " WHERE delete_status=0 and order_status = 2 and  order_date>= '" + $('#txtfromdt').val() + "'and order_date<='" + $('#txttodt').val() + " 23:59:59.599'";
+            }
+            else if (sPageId == 3) { //Paid List
+                var sCondition = " WHERE delete_status=0 and order_status = 3 and  order_date>= '" + $('#txtfromdt').val() + "'and order_date<='" + $('#txttodt').val() + " 23:59:59.599'";
+            }
+            else if (sPageId == 4) { //Submitted/UnPaid List
+                var sCondition = " WHERE delete_status=0 and order_status = 7 and  order_date>= '" + $('#txtfromdt').val() + "'and order_date<='" + $('#txttodt').val() + " 23:59:59.599'";
+            }
+            else if (sPageId == 5) { //Cancelled List
+                var sCondition = " WHERE delete_status=0 and order_status = 5 and  order_date>= '" + $('#txtfromdt').val() + "'and order_date<='" + $('#txttodt').val() + " 23:59:59.599'";
+            }
+            else if (sPageId == 6) { //Pending/hold list
+                var sCondition = " WHERE delete_status=0 and order_status = 4 and  order_date>= '" + $('#txtfromdt').val() + "'and order_date<='" + $('#txttodt').val() + " 23:59:59.599'";
+            }
+            else if (sPageId == 7) { //Deleted List
+                var sCondition = " WHERE delete_status=1 and  order_date>= '" + $('#txtfromdt').val() + "'and order_date<='" + $('#txttodt').val() + " 23:59:59.599'";
+            }
+
+            sCondition = ChkDataLevelAcess(sCondition);
+
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsOrderList");
+        }
+        if (Result != '' && Result != null) {
+
+
+            var sOrderList = [];
+            BindOrderStatus();
+            for (var i = 0; i < Result.length; i++) {
+                var shdnOrderID = Result[i].order_no;
+                var sOrderCode = Result[i].order_code;
+                var sOrderDate = Result[i].order_date;
+                var sOrderDueDate = Result[i].order_due_date;
+                var sOrderDD = sOrderDueDate;
+
+                var sOrderAddress = Result[i].subject_address;
+                var sOrderType = Result[i].ordertype_name;
+
+                var sOrderStatus = Result[i].status_name;
+                var sOrderStatusId = Result[i].order_status;;
+
+                var sIsPhoto = Result[i].count_photo_upload;
+                var sIsPhotoUplaod = Result[i].is_photo_upload;
+                
+
+                var sIsFile = Result[i].count_file_upoad;
+                var sIsFilePhoto = sIsPhoto + '/' + sIsFile
+                var sIsFee = Result[i].data_fee;
+
+                var sIsdtcomp = Result[i].is_entry_comp;
+                var sIsPaid = Result[i].is_paid;
+                var sSubClient_name = Result[i].subclient_name;
+                var sPhtname = Result[i].pht_name;
+                var sFullname = Result[i].full_name;
+                if (sFullname == sSubClient_name) {
+                    sSubClient_name = 'Nil';
+                }
+                var sPortalName = Result[i].portal_name;
+                sOrderList[i] = {
+                    order_no: shdnOrderID, order_code: sOrderCode, full_name: sFullname, order_date: sOrderDate, order_due_date: sOrderDueDate, subject_address: sOrderAddress,
+                    order_type: sOrderType, order_status: sOrderStatus, is_photo_upload: sIsFilePhoto, order_status_id: sOrderStatusId,
+                    fee: sIsFee, order_ddate: sOrderDD, is_dataentry: sIsdtcomp, is_paid: sIsPaid, is_photo_icon: sIsPhotoUplaod,
+                    pht_name: sPhtname, sub_client: sSubClient_name, portal_name: sPortalName
+
+                };
+            }
+            loader(0);
+            return sOrderList;
+        }
+        else {
+            loader(0);
+        }
+    }
+
+
+    ///////////////////////////////////////////////////////////////Mail Code Start ///////////////////////////////////////////////////////////////////
+
+    function SendEmailToDataEntry(sOrderId, sDataEnEmailId, sDataName, sSubjectAd, sReason) {
+        //loadingalert();
+        var sMailTo = sDataEnEmailId;
+        var sMailBody = CreateMailBodyDt(sOrderId, sDataEnEmailId, sDataName, sSubjectAd, sReason);
+        var StrJsonDatas = eval({
+            mail_to: sMailTo,
+            mail_subject: 'Order Deleted : ' + sSubjectAd + '',
+            mail_body: sMailBody
+
+        });
+        var Result = oAPICall.Sendmail(StrJsonDatas, 'sendmailwithoutattachment');
+        if (Result != null || Result != '') {
+            //CreateMailLogDt(sOrderId, sDataEnEmailId, sDataName, sSubjectAd, sReason);
+        }
+    }
+
+
+    function CreateMailBodyDt(sOrderId, sDataEnEmailId, sDataName, sSubjectAd, sReason) {
+
+
+        var Condition = ' where mail_type=8 '; // mail type 8  is Order Deletion
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectEmailTemplate");
+
+        if (Result != null || Result != '') {
+            var sMailData = Result[0].mail_body;
+
+            document.getElementById('MailData').innerHTML = sMailData;
+            document.getElementById('destiname').innerHTML = sDataName;
+            document.getElementById('address').innerHTML = sSubjectAd;
+            document.getElementById('sReason').innerHTML = sReason;
+            document.getElementById('company_address').innerHTML = CompanyName;
+        }
+        return document.getElementById('MailData').innerHTML;
+    }
+
+    function CreateMailLogDt(sOrderId, sDataEnEmailId, sDataName, sSubjectAd, sReason) {
+        var mail_type = "8"; // Order Deletion
+        var username = sDataName;
+        var mail_from = "icorepioneertech@gmail.com";
+        var mail_to = sDataEnEmailId;
+        var mail_cc = "";
+        var mail_bcc = "";
+        var mail_sub = 'Order Deleted';
+        var mail_body = CreateMailBodyDt(sOrderId, sDataEnEmailId, sDataName, sSubjectAd, sReason);
+        var mail_send_datetime = new Date();
+        var dt = dateFormat(dt, "isoDateTime");
+        var loginuser = CurrentUserName;
+        var mail_sendornot = 1; //set to 0 if mail not send
+        var mail_attachment = 1; //set to 0 if there is no attachment
+
+        var strJsonDatas = eval({
+            mail_temp_no: mail_type, mail_from: mail_from, mail_to: mail_to, mail_cc: mail_cc, mail_bcc: mail_bcc,
+            mail_sub: mail_sub, mail_body: mail_body, loginuser: CurrentUser, mail_send_datetime: mail_send_datetime, mail_send_by: CurrentUser,
+            mail_sendornot: mail_sendornot, mail_attachment: mail_attachment
+        });
+
+        var Result = oAPICall.InsertData(strJsonDatas, 'CreateEmailLog');
+
+    }
+
+
+    //For send Photographer mail
+
+    function SendEmailToPht(sOrderId, sPhtEmailId, sPhtName, sSubjectAd, sReason) {
+        //loadingalert();
+        var sMailTo = sPhtEmailId;
+        var sMailBody = CreateMailBodyPht(sOrderId, sPhtEmailId, sPhtName, sSubjectAd, sReason);
+        var StrJsonDatas = eval({
+            mail_to: sMailTo,
+            mail_subject: 'Order Deleted : ' + sSubjectAd + '',
+            mail_body: sMailBody
+
+        });
+        var Result = oAPICall.Sendmail(StrJsonDatas, 'sendmailwithoutattachment');
+        if (Result != null || Result != '') {
+
+            msgalert('Sucess', 'Order Deleted sucessfully ', 1);
+            loader(0);
+            $('#ddlalertreson').val(1).change();
+
+            $('#tblOrderListGrid').jqGrid('GridUnload');
+
+
+            OrderListGrid();
+            document.getElementById('MailData').innerHTML = "";
+            if (access_level == 4) {
+                var myGrid = $("#tblOrderListGrid"),
+                 width = myGrid.jqGrid('getGridParam', 'width');
+                $('#tblOrderListGrid').setGridWidth(width - 50);
+            }
+
+            if (access_level == 1) {
+                var myGrid = $("#tblOrderListGrid"),
+                    width = myGrid.jqGrid('getGridParam', 'width');
+                $('#tblOrderListGrid').setGridWidth(width - 50);
+            }
+
+            var sWidth = $('.jqGrid_wrapper').width();
+
+            $('#tblOrderListGrid').setGridWidth(sWidth);
+
+
+            //CreateMailLogPht(sOrderId, sPhtEmailId, sPhtName, sSubjectAd, sReason);
+        }
+    }
+
+
+    function CreateMailBodyPht(sOrderId, sPhtEmailId, sPhtName, sSubjectAd, sReason) {
+
+
+        var Condition = ' where mail_type=8 '; // mail type 8  is Order Deletion
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectEmailTemplate");
+
+        if (Result != null || Result != '') {
+            var sMailData = Result[0].mail_body;
+
+            document.getElementById('MailData').innerHTML = sMailData;
+            document.getElementById('destiname').innerHTML = sPhtName;
+            document.getElementById('address').innerHTML = sSubjectAd;
+            document.getElementById('sReason').innerHTML = sReason;
+            document.getElementById('company_address').innerHTML = CompanyName;
+        }
+        return document.getElementById('MailData').innerHTML;
+    }
+
+    function CreateMailLogPht(sOrderId, sPhtEmailId, sPhtName, sSubjectAd, sReason) {
+        var mail_type = "8"; // Order Deletion
+        var username = sPhtName;
+        var mail_from = "icorepioneertech@gmail.com";
+        var mail_to = sPhtEmailId;
+        var mail_cc = "";
+        var mail_bcc = "";
+        var mail_sub = 'Order Deleted';
+        var mail_body = CreateMailBodyPht(sOrderId, sPhtEmailId, sPhtName, sSubjectAd, sReason);
+        var mail_send_datetime = new Date();
+        var dt = dateFormat(dt, "isoDateTime");
+        var loginuser = CurrentUserName;
+        var mail_sendornot = 1; //set to 0 if mail not send
+        var mail_attachment = 1; //set to 0 if there is no attachment
+
+        var strJsonDatas = eval({
+            mail_temp_no: mail_type, mail_from: mail_from, mail_to: mail_to, mail_cc: mail_cc, mail_bcc: mail_bcc,
+            mail_sub: mail_sub, mail_body: mail_body, loginuser: CurrentUser, mail_send_datetime: mail_send_datetime, mail_send_by: CurrentUser,
+            mail_sendornot: mail_sendornot, mail_attachment: mail_attachment
+        });
+
+        var Result = oAPICall.InsertData(strJsonDatas, 'CreateEmailLog');
+
+    }
+
+
+    ///////////////////////////////////////////////////////////////Mail Code end ///////////////////////////////////////////////////////////////////
+
+
+
+    function setFilterdates() {
+        var cudt = new Date();
+        cudt.setDate(cudt.getDate() + 3);
+        $('.input-group.date.txtfromdt').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false
+
+            //startDate: '-6m'
+            //startDate: new Date(),
+        });
+
+        $(".input-group.date.txttodt").datepicker("setDate", cudt);
+        $('.input-group.date.txttodt').datepicker("setEndDate", cudt);
+
+
+        $('.input-group.date.txttodt').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false,
+            //startDate: '-2m',
+            //startDate: new Date(),
+        });
+
+        var d = new Date($("#txttodt").val());
+        d.setMonth(d.getMonth() - 2);
+        $(".input-group.date.txtfromdt").datepicker("setDate", new Date(d));
+
+        //$('.input-group.date.txtfromdt').datepicker("setEndDate", cudt);
+        //$('.input-group.date.txtfromdt').datepicker("setStartDate", d);
+    }
+
+    $(document).ready(function () {
+
+        loader(1);
+
+        $("#txtreson").val($("#ddlalertreson option:selected").text());
+        $("#ddlalertreson").change(function () {
+            if ($('#ddlalertreson').val() == 3) {
+                //var nhtml = '</br><div style="margin: -15px;">Please Specify</div></br><div id="editor" contenteditable align="left" style="border-style: solid;border-width: 1px;" class="editorframe textbox"></div>'
+                //parent.document.getElementById("divalert").innerHTML = html + nhtml;
+
+                //inputValue = "";
+                $("#divOther").removeClass("hidden")
+                $("#txtreson").val("");
+
+            }
+            else {
+                $("#divOther").addClass("hidden")
+                $("#txtreson").val($("#ddlalertreson option:selected").text());
+            }
+        });
+
+        $("#lblAdvFilter").click(function () {
+
+            $('#txtValue').val('');
+            document.getElementById('txtValue').style.borderColor = "";
+            $('#ddlFields').val('subject_address');
+            $('#ddlCondition').val('cn');
+            $("#myModalAdvFilter").modal({                    // wire up the actual modal functionality and show the dialog
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true                     // ensure the modal is shown immediately
+
+            });
+        });
+
+        $("#dialogBtnReset").click(function () {
+            $('#btnSearch').trigger('click');
+            $("#myModalAdvFilter").modal("hide");
+        });
+
+        $("#dialogBtnFilter").click(function () {
+
+            if ($("#txtValue").val() == "") {
+                $("#spanerror").removeClass("hidden")
+                document.getElementById('txtValue').style.borderColor = "red";// this adds the error class
+                return;
+            }
+            else {
+                AdvanceSearch = true;
+                $('#tblOrderListGrid').jqGrid('GridUnload');
+                OrderListGrid();
+                SetBackgroundColor();
+
+                if (access_level == 1 || access_level == 4) {
+                    var myGrid = $("#tblOrderListGrid"),
+                     width = myGrid.jqGrid('getGridParam', 'width');
+                    $('#tblOrderListGrid').setGridWidth(width - 50);
+                }
+                var sWidth = $('.jqGrid_wrapper').width();
+
+                $('#tblOrderListGrid').setGridWidth(sWidth);
+
+                AdvanceSearch = false;
+
+                $("#myModalAdvFilter").modal("hide");
+            }
+        });
+
+        $("#dialogBtn").click(function () {
+            $("#myModal").modal("hide");
+            //$("#txtreson").val($("#ddlalertreson option:selected").text());
+            if ($("#txtreson").val() == "") {
+                $("#spanerror").removeClass("hidden")
+                document.getElementById('txtreson').style.borderColor = "red";// this adds the error class
+                //$("#txtreson").focus();
+                return
+            }
+            else {
+
+                loader(1);
+                var Condition = "Where order_no=" + $("#shdnOrderID").val() + "";
+                var StrJsonDatas = eval({
+                    delete_status: 1,
+                    reason_for_deletion: $("#txtreson").val(),
+                    updated_by: CurrentUser,
+                    updated_date: new Date()
+                });
+
+                var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateOrder", Condition);
+                //added by peeru on 9-may-2017
+                var ConditionTFS = "Where bts_order_id=" + $("#shdnOrderID").val() + "";
+                var StrJsonDatasTFS = eval({
+                    delete_status: 1,
+                    update_by: CurrentUser,
+                    update_date: new Date()
+                });
+
+                var ResultTFS = oAPICall.UpdateData(StrJsonDatasTFS, "UpdateOrderom", ConditionTFS);
+                //end 
+                if (Result == "Success") {
+                    setTimeout(function () {
+                        var sOrderId = $('#shdnOrderID').val();
+                        var sCondition = " WHERE delete_status=1 and order_no=" + sOrderId + "";
+                        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+                        var Result = oAPICall.SelectData(strJsonDatas, "SelectOrderDet");
+                        var sPhtId = '';
+                        var sDataId = '';
+                        var sReason = '';
+                        var sSubjectAd = '';
+                        if (Result != '' && Result != null) {
+                            sPhtId = Result[0].photographer_id;
+                            sDataId = Result[0].dataentry_id;
+                            sSubjectAd = Result[0].subject_address;
+                            sReason = Result[0].reason_for_deletion;
+                        }
+                        var Condition = "Where ref_no in(" + sDataId + "," + sPhtId + ")";
+                        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+                        var Result1 = oAPICall.SelectData(strJsonDatas, "Selectformcpdmaster");
+                        var sDataEnEmailId = '';
+                        var sPhtEmailId = '';
+                        var sDataName = '';
+                        var sPhtName = '';
+
+                        if (Result != '' && Result != null) {
+                            sDataEnEmailId = Result1[0].email_id;
+                            sDataName = Result1[0].full_name;
+                            sPhtEmailId = Result1[1].email_id;
+                            sPhtName = Result1[1].full_name
+                        }
+                        SendEmailToDataEntry(sOrderId, sDataEnEmailId, sDataName, sSubjectAd, sReason);
+                        SendEmailToPht(sOrderId, sPhtEmailId, sPhtName, sSubjectAd, sReason);
+
+
+                        //setTimeout(function () {
+
+
+                        //}, 500);
+
+                    }, 1000);
+
+                }
+
+
+            }
+
+        });
+
+        $("#txtreson").change(function () {
+            if ($("#txtreson").val() != "") {
+                document.getElementById('txtreson').style.borderColor = "green";// this adds the error class
+                $("#spanerror").addClass("hidden")
+            }
+        });
+
+
+        sPageId = GetQueryStringParams("PageId");
+        setFilterdates();
+        $('#txtfromdt').change(function () {
+            var dt = new Date($("#txtfromdt").val());
+            dt.setMonth(dt.getMonth() + 2);
+
+            $('.input-group.date.txttodt').datepicker("setEndDate", dt);
+            //$('.input-group.date.txttodt').datepicker("setStartDate", dt);
+            $(".input-group.date.txttodt").datepicker("setDate", dt);
+            //$("#txtfromdate .input-group.date").datepicker("setDate", new Date(dt));
+
+
+            //$("#txtfromdate").datepicker("setEndDate", $("#txttodt").val());
+        });
+        $('#txttodt').change(function () {
+            $('.datepicker').hide();
+        });
+
+        setTimeout(function () {
+
+            OrderListGrid();
+            // SetBackgroundColor();
+            if (access_level == 4) {
+                var myGrid = $("#tblOrderListGrid"),
+                 width = myGrid.jqGrid('getGridParam', 'width');
+                $('#tblOrderListGrid').setGridWidth(width - 50);
+            }
+
+            if (access_level == 1) {
+                var myGrid = $("#tblOrderListGrid"),
+                    width = myGrid.jqGrid('getGridParam', 'width');
+                $('#tblOrderListGrid').setGridWidth(width - 50);
+            }
+
+            var sWidth = $('.jqGrid_wrapper').width();
+
+            $('#tblOrderListGrid').setGridWidth(sWidth + 10);
+
+            if (access_level == 1 && sPageId == 7) {
+                $('#tblOrderListGrid').showCol('undo');
+
+                $('#tblOrderListGrid').hideCol('delete');
+                $('#tblOrderListGrid').hideCol('edit');
+                var myGrid = $("#tblOrderListGrid"),
+                width = myGrid.jqGrid('getGridParam', 'width');
+                $('#tblOrderListGrid').setGridWidth(width + 50);
+            }
+
+        }, 1300);
+
+
+        //$('.input-group.date.txtfromdate').datepicker({
+        //    todayBtn: "linked",
+        //    keyboardNavigation: false,
+        //    forceParse: false,
+        //    calendarWeeks: false,
+        //    autoclose: true,
+        //    format: "mm/dd/yyyy",
+        //    todayHighlight: true,
+        //    //startDate: '-2m',
+        //    startDate: new Date(),
+        //});
+
+
+
+
+
+        //  $('#tblOrderListGrid').setGridWidth(sWidth);
+
+        ////$('#tblOrderListGrid').jqGrid('setColProp', 'edit', { width: 95 });
+        //var gw = $("#tblOrderListGrid").jqGrid('getGridParam', 'width');
+        //$("#tblOrderListGrid").jqGrid('setGridWidth', gw);
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+
+            $('#tblOrderListGrid').setGridWidth(sWidth);
+
+        });
+
+
+        $('.ui-pg-selbox').click(function () {
+            alert();
+            SetBackgroundColor();
+        });
+
+        $('#btnSearch').click(function () {
+            $('#tblOrderListGrid').jqGrid('GridUnload');
+            OrderListGrid();
+            SetBackgroundColor();
+
+            if (access_level == 1 || access_level == 4) {
+                var myGrid = $("#tblOrderListGrid"),
+                 width = myGrid.jqGrid('getGridParam', 'width');
+                $('#tblOrderListGrid').setGridWidth(width - 50);
+            }
+            var sWidth = $('.jqGrid_wrapper').width();
+
+            $('#tblOrderListGrid').setGridWidth(sWidth);
+
+        });
+
+        $('#btnRefresh').click(function () {
+            $('#tblOrderListGrid').jqGrid('GridUnload');
+
+            var dp = new Date();
+            dp.setDate(dp.getDate() + 3);
+            var datet = dp.format("mm/dd/yyyy");
+            $("#txttodt").val(datet);
+
+            dp.setMonth(dp.getMonth() - 2);
+            var datef = dp.format("mm/dd/yyyy");
+            $("#txtfromdt").val(datef);
+
+
+            $('.input-group.date.txtfromdt').datepicker("setEndDate", datet);
+            $('.input-group.date.txtfromdt').datepicker("setStartDate", datef);
+
+
+
+            OrderListGrid();
+            SetBackgroundColor();
+            if (access_level == 1 || access_level == 4) {
+                var myGrid = $("#tblOrderListGrid"),
+                 width = myGrid.jqGrid('getGridParam', 'width');
+                $('#tblOrderListGrid').setGridWidth(width - 50);
+            }
+            var sWidth = $('.jqGrid_wrapper').width();
+
+            $('#tblOrderListGrid').setGridWidth(sWidth);
+            BindClientFee(this)
+
+
+
+        });
+
+        
+        $(document).delegate('#tblOrderListGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblOrderListGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                var sOrderNo = $('#tblOrderListGrid').getCell(rowIds[rowid], 'order_no');
+                window.location = 'OrderManagement?orderid=' + sOrderNo + '';
+
+            }
+
+
+
+            if ($(this).attr('action') == 'delete') {
+
+                $("#shdnOrderID").val($('#tblOrderListGrid').getCell(rowIds[rowid], 'order_no'));
+                var sOrderCode = $('#tblOrderListGrid').getCell(rowIds[rowid], 'order_code');
+                document.getElementById("spnordercode").innerHTML = sOrderCode;
+
+                $("#myModal").modal({                    // wire up the actual modal functionality and show the dialog
+                    "backdrop": "static",
+                    "keyboard": true,
+                    "show": true                     // ensure the modal is shown immediately
+
+                });
+            }
+
+
+            if ($(this).attr('action') == 'undo') {
+                var sOrderNo = $('#tblOrderListGrid').getCell(rowIds[rowid], 'order_no');
+                var sOrderCode = $('#tblOrderListGrid').getCell(rowIds[rowid], 'order_code');
+
+                parent.swal({
+                    title: "Are you sure to Recover order no " + sOrderCode + " ?",
+                    //text: "" + text + "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true,
+                    showLoaderOnConfirm: true,
+
+                },
+                function (isConfirm) {
+
+                    if (isConfirm) {
+                        var Condition = "Where order_no=" + sOrderNo + "";
+                        var StrJsonDatas = eval({
+                            delete_status: 0,
+                            updated_by: CurrentUser,
+                            updated_date: new Date()
+                        });
+
+
+                        var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateOrder", Condition);
+                        if (Result == "Success") {
+                            msgalert('Sucess', 'Order ' + sOrderCode + ' Recoverd sucessfully ', 1);//sucess-1, warning-2, error-3
+
+
+                            $('#tblOrderListGrid').jqGrid('GridUnload');
+                            //StateListGrid();
+
+                            OrderListGrid();
+                            if (access_level == 4) {
+                                var myGrid = $("#tblOrderListGrid"),
+                                 width = myGrid.jqGrid('getGridParam', 'width');
+                                $('#tblOrderListGrid').setGridWidth(width - 50);
+                            }
+
+                            if (access_level == 1) {
+                                var myGrid = $("#tblOrderListGrid"),
+                                    width = myGrid.jqGrid('getGridParam', 'width');
+                                $('#tblOrderListGrid').setGridWidth(width - 50);
+                            }
+
+                            var sWidth = $('.jqGrid_wrapper').width();
+
+                            $('#tblOrderListGrid').setGridWidth(sWidth + 10);
+
+                            if (access_level == 1 && sPageId == 7) {
+                                $('#tblOrderListGrid').showCol('undo');
+
+                                $('#tblOrderListGrid').hideCol('delete');
+                                $('#tblOrderListGrid').hideCol('edit');
+                                var myGrid = $("#tblOrderListGrid"),
+                                width = myGrid.jqGrid('getGridParam', 'width');
+                                $('#tblOrderListGrid').setGridWidth(width + 50);
+                            }
+
+                        }
+                    }
+                    else {
+                        return
+                    }
+                });
+
+            }
+        });
+
+
+        $('#btnSave').click(function () {
+            // loader(1);
+            var Rowids = $("#tblOrderListGrid").getGridParam('selarrrow');
+
+            if (Rowids.length <= 0) {
+                msgalert('Warning', 'Select atleast one order to update status..', 2);
+                return;
+            }
+            var sStatusId = $('#ddlstatus').val();
+            if (sStatusId == 0) {
+                document.getElementById('ddlstatus').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please choose status..', 2);
+                return;
+            }
+            else {
+                var sAllOrderId = [];
+                for (var i = 0; i < Rowids.length; i++) {
+                    var RowData = $("#tblOrderListGrid").getRowData(Rowids[i]);
+                    var sOrderId = RowData["order_no"];
+                    sAllOrderId = sAllOrderId + sOrderId + ','
+                }
+                sAllOrderId = sAllOrderId.replace(/,\s*$/, "");
+                var StrJsonDatas = eval({
+                    order_status: $('#ddlstatus').val()
+                });
+                if (sStatusId == 2) {
+                    StrJsonDatas = eval({
+                        order_status: $('#ddlstatus').val(), is_entry_comp: 1
+
+                    });
+                }
+                else if (sStatusId == 3) {
+                    StrJsonDatas = eval({
+                        order_status: $('#ddlstatus').val(), is_paid: 1
+
+                    });
+                }
+                var Condition = "Where order_no in (" + sAllOrderId + ")";
+                var Result = oAPICall.UpdateData(StrJsonDatas, "UpdateOrder", Condition);
+                if (Result != "" && Result != null) {
+                    msgalert('Success', 'Successfully Changed', 1);
+                    $('#tblOrderListGrid').jqGrid('GridUnload');
+                    OrderListGrid();
+                    SetBackgroundColor();
+                    if (access_level == 1 || access_level == 4) {
+                        var myGrid = $("#tblOrderListGrid"),
+                         width = myGrid.jqGrid('getGridParam', 'width');
+                        $('#tblOrderListGrid').setGridWidth(width - 50);
+                    }
+                    var sWidth = $('.jqGrid_wrapper').width();
+
+                    $('#tblOrderListGrid').setGridWidth(sWidth);
+                }
+            }
+        });
+
+
+    });
+
+
+</script>

@@ -1,0 +1,78 @@
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\Impulse.dll.config
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\Impulse.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\Impulse.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\Antlr3.Runtime.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\BussinessLayer.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\LoginFrameWork.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\Microsoft.Web.Infrastructure.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\Newtonsoft.Json.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Net.Http.Formatting.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Helpers.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Http.WebHost.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Mvc.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Optimization.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Razor.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.Deployment.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.Razor.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\WebGrease.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\BussinessLayer.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\LoginFrameWork.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\Newtonsoft.Json.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Net.Http.Formatting.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Helpers.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Http.WebHost.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Mvc.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Razor.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.Deployment.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.Razor.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Optimization.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\bin\Antlr3.Runtime.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\obj\Release\Impulse.csprojResolveAssemblyReference.cache
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\obj\Release\Impulse.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\iCoreMVC\obj\Release\Impulse.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\Impulse.dll.config
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\Impulse.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\Impulse.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\Antlr3.Runtime.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\BussinessLayer.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\LoginFrameWork.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\Microsoft.Web.Infrastructure.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\Newtonsoft.Json.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Net.Http.Formatting.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Helpers.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Http.WebHost.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Mvc.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Optimization.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Razor.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.Deployment.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.Razor.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\WebGrease.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\BussinessLayer.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\LoginFrameWork.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\Newtonsoft.Json.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Net.Http.Formatting.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Helpers.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Http.WebHost.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Mvc.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Razor.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.Deployment.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.WebPages.Razor.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Optimization.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\Antlr3.Runtime.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\obj\Release\Impulse.csprojResolveAssemblyReference.cache
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\obj\Release\Impulse.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\obj\Release\Impulse.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\obj\Release\RdlCompile.cache
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\obj\Release\RdlCompile.compiled
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\Microsoft.ReportViewer.WebForms.DLL
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Http.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\System.Web.Http.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\SqlServerTypes\x64\msvcr120.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\SqlServerTypes\x64\SqlServerSpatial140.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\SqlServerTypes\x86\msvcr120.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\SqlServerTypes\x86\SqlServerSpatial140.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\iCoreMVC\bin\Microsoft.SqlServer.Types.dll

@@ -1,0 +1,328 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .col-width {
+        width: 17%;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="CPD_Master" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">State Info</span>
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+                        </strong>
+                        <a href="#" title="List">
+                            <i class="fa fa-list" id="btnStateList"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnback"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div style="padding-top:15px" id="MainPage">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">State Code</label>
+                            <div class="col-sm-6"><input type="email" id="txtstatecode" placeholder="Auto generate code here.." required="" class="form-control" readonly="readonly" style="background-color:white;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">State Name<font color="red">*</font> :</label>
+                            <div class="col-sm-6"><input type="text" id="txtstatename" placeholder="Enter state name here.." required="" class="form-control" onpaste="return false" onkeypress="return onlyAlphabets(event,this);"></div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div id="ListPage">
+                        <div class="col-sm-12">
+                            <div class="ibox-content">
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblStateListGrid"></table>
+                                    <div id="pagerStategrid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <input type="hidden" id="hdnStateId" />
+    </div>
+
+</form>
+
+<script>
+    localStorage.setItem("PageID", "StateMaster");
+
+
+    $(function () {
+        $("#btnSave").click(function () {
+
+            if (document.getElementById('txtstatename').value == "") {
+                document.getElementById('txtstatename').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter mandatory fields', 2);
+                return
+            }
+
+            InsertStateMaster();
+
+        });
+
+        function InsertStateMaster() {
+
+            var sStateId = $('#hdnStateId').val();
+            var sMsgDesc = 'New state details added successfully'
+
+            if (sStateId <= 0 && sStateId == "") {       //Create Mode
+                var ValidationSuccess = false;
+                var sStateName = $('#txtstatename').val();
+                var sCondDup = "where delete_status=0";
+                ValidationSuccess = ValidateForDuplicationwithcondition(sStateName, 'ChkDupState', sCondDup);
+                if (!ValidationSuccess) {
+                    msgalert('Error', 'State already exist.. Try another', 3);
+                    document.getElementById('txtstatename').style.borderColor = "red";
+                    return false;
+                }
+                var StrJsonDatas = eval({
+                    state_name: $('#txtstatename').val(),
+                    created_by: CurrentUser,
+                    delete_status: 0,
+                    created_date: new Date()
+
+                });
+                var Result = oAPICall.InsertData(StrJsonDatas, 'CreateStateMaster');
+                if (Result != null && Result != '') {
+                    sStateId = Result[0].IDENTITY;
+                    $('#txtstatecode').val(sStateId);
+                    $('#hdnStateId').val(sStateId);
+                    Clear();
+                    msgalert('Success', sMsgDesc, 1)
+                }
+            }
+            else {   //Update Mode
+                var StrJsonDatas = eval({
+                    state_name: $('#txtstatename').val(),
+                    created_by: CurrentUser,
+                    created_date: new Date()
+
+                });
+                var sCondition = "where state_id=" + sStateId + "";
+                var Result = oAPICall.UpdateData(StrJsonDatas, 'UpdateStateMaster', sCondition);
+                if (Result != null && Result != '') {
+                    sMsgDesc = 'State details updated successfully'
+                    Clear();
+                    msgalert('Success', sMsgDesc, 1);
+
+
+                }
+            }
+        }
+
+
+    });
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+    function StateListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['State No.', 'State Name', '', ''],
+        colModel = [
+            { name: 'state_id', index: 'state_id', width: 110, align: "center", sorttype: "int", search: true },
+            { name: 'state_name', index: 'state_name', width: 150, align: "center", sorttype: false, search: true },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+        ];
+
+        var mydata = PopulateStateGrid();
+
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblStateListGrid', '#pagerStategrid', 'State List', 250, 10, false, mydata);
+
+    }
+
+    function PopulateStateGrid() {
+
+        var sCondition = " WHERE delete_status = 0 order by 1 desc";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsStateData");
+        if (Result != '' && Result != null) {
+            var sStateRt = [];
+            for (var i = 0; i < Result.length; i++) {
+                var sStateId = Result[i].state_id;
+                var sStateName = Result[i].state_name;
+                sStateRt[i] = {
+                    state_id: sStateId, state_name: sStateName
+                };
+            }
+            return sStateRt;
+
+        }
+    }
+
+    function Clear() {
+        $('#hdnStateId').val('');
+        $('#txtstatecode').val('');
+        $('#txtstatename').val('');
+    }
+
+    function onlyAlphabets(e, t) {
+        try {
+            if (window.event) {
+                var charCode = window.event.keyCode;
+            }
+            else if (e) {
+                var charCode = e.which;
+            }
+            else { return true; }
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode == 32))
+                return true;
+            else
+                return false;
+        }
+        catch (err) {
+            alert(err.Description);
+        }
+    }
+
+    $(document).ready(function () {
+
+        $('#ListPage').hide();
+        $('#btnback').hide();
+        Clear();
+        var sWidth = $('.tab-content').width();
+        $('#tblStateListGrid').setGridWidth(sWidth - 20);
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblStateListGrid').setGridWidth(sWidth);
+
+        });
+
+
+        $('#txtstatename').focusout(function () {
+            if (document.getElementById('txtstatename').value == "") {
+                document.getElementById('txtstatename').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtstatename').style.borderColor = "green";
+            }
+
+        });
+
+        $('#btnStateList').click(function () {
+            $('#btnSave').hide();
+            $('#MainPage').hide();
+            $('#ListPage').show();
+            $('#btnback').show();
+            $('#btnStateList').hide();
+            $('#tblStateListGrid').jqGrid('GridUnload');
+            StateListGrid();
+
+        });
+        $('#btnback').click(function () {
+            $('#btnSave').show();
+            $('#MainPage').show();
+            $('#ListPage').hide();
+            $('#btnback').hide();
+            $('#btnStateList').show();
+            $('#tblStateListGrid').jqGrid('GridUnload');
+            StateListGrid();
+            $('#hdnStateId').val('');
+            $('#txtstatecode').val('');
+            $('#txtstatename').val('');
+        });
+
+
+
+
+        $(document).delegate('#tblStateListGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblStateListGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                $('#MainPage').show();
+                $('#ListPage').hide();
+                $('#btnSave').show();
+                $('#hdnStateId').val($('#tblStateListGrid').getCell(rowIds[rowid], 'state_id'));
+                $('#txtstatecode').val($('#tblStateListGrid').getCell(rowIds[rowid], 'state_id'));
+                $('#txtstatename').val($('#tblStateListGrid').getCell(rowIds[rowid], 'state_name'));
+                $('#btnback').hide();
+                $('#btnStateList').show();
+            }
+            else {
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    //text: "" + text + "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              var sStateId = $('#tblStateListGrid').getCell(rowIds[rowid], 'state_id')
+              var sStrJsonDatas = eval({ delete_status: 1 });
+              var Condition = "where state_id=" + sStateId;
+              var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateStateMaster', Condition);
+              if (Result != "" || Result != null) {
+                  $('#tblStateListGrid').jqGrid('delRowData', rowid);
+                  msgalert('Success', 'Successfully Deleted', 1);
+                  $('#tblStateListGrid').jqGrid('GridUnload');
+                  StateListGrid();
+              }
+
+          }
+          else {
+              return
+          }
+      });
+                return
+               
+            }
+        });
+
+    });
+
+
+
+</script>

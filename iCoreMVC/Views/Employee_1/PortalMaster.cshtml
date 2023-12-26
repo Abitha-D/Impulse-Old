@@ -1,0 +1,363 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .col-width {
+        width: 17%;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="CPD_Master" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">Portal Info</span>
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+                        </strong>
+                        <a href="#" title="List">
+                            <i class="fa fa-list" id="btnPortalList"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnback"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div style="padding-top:15px" id="MainPage">
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Portal Code</label>
+                            <div class="col-sm-7"><input type="email" id="txtportalcode" placeholder="Auto generate portal code here.." required="" class="form-control" readonly="readonly" style="background-color:white;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Portal Name<font color="red">*</font> :</label>
+                            <div class="col-sm-7"><input type="text" id="txtportalname" title="Please enter valid portal name." placeholder="Enter portal name here.." required="" class="form-control" onpaste="return false" onkeypress="return onlyAlphabets(event,this);"></div>
+                        </div>
+                        @*<div class="form-group">
+                                <label class="col-sm-3 control-label" style="padding-top: 0px;">Status:</label>
+                                <div class="col-sm-7">
+                                    <div class="switch ">
+                                        <div class="onoffswitch">
+                                            <input type="checkbox" checked="" class="onoffswitch-checkbox" id="chkstatus" />
+                                            <label class="onoffswitch-label" for="chkstatus">
+                                                <span class="onoffswitch-inner"></span>
+                                                <span class="onoffswitch-switch"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+
+
+                    </div>
+                    <div id="ListPage">
+                        <div class="col-sm-12">
+                            <div class="ibox-content">
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblPortalListGrid"></table>
+                                    <div id="pagerPortalgrid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <input type="hidden" id="hdnPortalId" />
+    </div>
+</form>
+@*<script src="~/Scripts/App_js/Common/Search.js"></script>*@
+<script>
+    localStorage.setItem("PageID", "PortalMaster");
+    var sStateRt = [];
+
+    function Reset() {
+        $('#hdnPortalId').val('');
+        $('#txtportalname').val('');
+        $('#txtportalcode').val('');
+    }
+
+    $(function () {
+        $("#btnSave").click(function () {
+
+            if (document.getElementById('txtportalname').value == "") {
+                document.getElementById('txtportalname').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter mandatory fields', 2);
+                return
+            }
+            InsertPortalMaster();
+
+        });
+
+        function InsertPortalMaster() {
+
+            var sPortalId = $('#hdnPortalId').val();
+            var sIsActive = '';
+            var sMsgDesc = 'New portal details added successfully'
+
+            if (sPortalId <= 0 && sPortalId == "") {       //Create Mode
+
+                var ValidationSuccess = false;
+                var sPortalName = $('#txtportalname').val();
+                var sCondDup = "where delete_status=0";
+                ValidationSuccess = ValidateForDuplicationwithcondition(sPortalName, 'ChkDupClientPortal', sCondDup);
+                if (!ValidationSuccess) {
+                    msgalert('Error', 'Portal already exists.. Try another', 3);
+                    document.getElementById('txtportalname').style.borderColor = "red";
+                    return false;
+                }
+                var StrJsonDatas = eval({
+                    portal_name: $('#txtportalname').val(),
+                    portal_code: $('#txtportalcode').val(),
+                    created_by: CurrentUser,
+                    created_date: new Date(),
+                    delete_status: 0
+                });
+                var Result = oAPICall.InsertData(StrJsonDatas, 'CreatePortalMaster');
+                if (Result != null && Result != '') {
+                    sPortalId = Result[0].IDENTITY;
+                    var sPortalCode = Result[0].CODE;
+                    InsertPortalTfs(sPortalId, sPortalCode);
+                    $('#txtportalcode').val(sPortalCode);
+                    $('#hdnPortalId').val(sPortalId);
+                    Reset();
+                    msgalert('Success', sMsgDesc, 1)
+                }
+            }
+            else {   //Update Mode
+                var StrJsonDatas = eval({
+                    portal_name: $('#txtportalname').val(),
+                    portal_code: $('#txtportalcode').val(),
+
+                    updated_by: CurrentUser,
+                    updated_date: new Date()
+
+                });
+                var sCondition = "where portal_id=" + sPortalId + "";
+                var Result = oAPICall.UpdateData(StrJsonDatas, 'UpdatePortalMaster', sCondition);
+                if (Result != null && Result != '') {
+                    sMsgDesc = 'Portal details updated successfully'
+                    Reset();
+                    msgalert('Success', sMsgDesc, 1);
+
+                }
+            }
+        }
+
+        function InsertPortalTfs(sBTSPortalId, sPortalCode) {
+            var StrJsonDatas = eval({
+                SiteRefCode: sPortalCode, SiteTypeId: 2, DeleteStatus: 0
+            });
+            var Result = oAPICall.InsertData(StrJsonDatas, 'Create_Portal_REF_OM');
+           
+            if (Result != null && Result != '') {
+                var sPortalId = Result[0].IDENTITY;
+                var sPortalCode = Result[0].CODE;
+
+                var StrJsonDatasVal = eval({
+                    SiteRefNo:sPortalId, ShortDisplayValue: $('#txtportalname').val(),
+                    DisplayValue: $('#txtportalname').val(), LanguageCode: 1, BTS_site_ref_no: sBTSPortalId
+                });
+                var Result1 = oAPICall.InsertData(StrJsonDatasVal, 'Create_Portal_VALUES_OM');
+            }
+        }
+        $('#ddlstate').change(function () {
+            BindCounty();
+        });
+    });
+
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+    function PortalListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['PortalId', 'Portal Code.', 'Portal Name', '', ''],
+        colModel = [
+            { name: 'portal_id', index: 'portal_id', width: 110, align: "center", sorttype: "int", hidden: true },
+            { name: 'portal_code', index: 'portal_code', width: 80, align: "center", sorttype: false, search: true },
+            { name: 'portal_name', index: 'portal_name', width: 120, align: "center", sorttype: false, search: true },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+        ];
+        var mydata = '';
+        mydata = PopulatePortalGrid();
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblPortalListGrid', '#pagerPortalgrid', 'Portal List', 250, 14, false, mydata);
+
+    }
+
+    function PopulatePortalGrid() {
+
+        var sCondition = " WHERE delete_status=0 order by 1 desc";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsPortalData");
+        if (Result != '' && Result != null) {
+
+            for (var i = 0; i < Result.length; i++) {
+                var sPortalId = Result[i].portal_id;
+                var sPortalCode = Result[i].portal_code;
+                var sPortalName = Result[i].portal_name;
+                sStateRt[i] = {
+                    portal_id: sPortalId, portal_code: sPortalCode, portal_name: sPortalName
+                };
+            }
+            return sStateRt;
+        }
+    }
+
+    function onlyAlphabets(e, t) {
+        try {
+            if (window.event) {
+                var charCode = window.event.keyCode;
+            }
+            else if (e) {
+                var charCode = e.which;
+            }
+            else { return true; }
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode == 32))
+                return true;
+            else
+                return false;
+        }
+        catch (err) {
+            alert(err.Description);
+        }
+    }
+
+
+    $(document).ready(function () {
+
+        Reset();
+
+        $('#ListPage').hide();
+        $('#btnback').hide();
+
+        var sWidth = $('.tab-content').width();
+        $('#tblPortalListGrid').setGridWidth(sWidth - 20);
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblPortalListGrid').setGridWidth(sWidth);
+
+        });
+
+        $('#txtportalname').tooltip();
+
+        $('#btnPortalList').click(function () {
+            $('#btnSave').hide();
+            $('#MainPage').hide();
+            $('#ListPage').show();
+            $('#btnback').show();
+            $('#btnPortalList').hide();
+            $('#tblPortalListGrid').jqGrid('GridUnload');
+            PortalListGrid();
+            Reset();
+        });
+        $('#btnback').click(function () {
+            $('#btnSave').show();
+            $('#MainPage').show();
+            $('#ListPage').hide();
+            $('#btnback').hide();
+            $('#btnPortalList').show();
+            //$('#tblPortalListGrid').jqGrid('clearGridData');
+            $('#tblPortalListGrid').jqGrid('GridUnload');
+            PortalListGrid();
+            Reset();
+
+        });
+
+
+
+
+        $(document).delegate('#tblPortalListGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblPortalListGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                Reset();
+                $('#MainPage').show();
+                $('#ListPage').hide();
+                $('#btnSave').show();
+                $('#hdnPortalId').val($('#tblPortalListGrid').getCell(rowIds[rowid], 'portal_id'));
+                $('#txtportalcode').val($('#tblPortalListGrid').getCell(rowIds[rowid], 'portal_code'));
+                $('#txtportalname').val($('#tblPortalListGrid').getCell(rowIds[rowid], 'portal_name'));
+                $('#btnback').hide();
+                $('#btnPortalList').show();
+                $("#txtportalcode").prop("disabled", true);
+            }
+            else {
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    //text: "" + text + "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              var sPortalId = $('#tblPortalListGrid').getCell(rowIds[rowid], 'portal_id')
+              var sStrJsonDatas = eval({ delete_status: 1 });
+              var Condition = "where portal_id=" + sPortalId;
+              var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdatePortalMaster', Condition);
+              if (Result != "" || Result != null) {
+                  $('#tblPortalListGrid').jqGrid('delRowData', rowid);
+                  var sCondition = "where portal_id=" + sPortalId + "";
+                  var strJsonDatas = eval({ strSessionID: UserSession, strCondition: sCondition });
+                  var Result = oAPICall.DeleteData(strJsonDatas, 'DeleteClientPortal');
+                  msgalert('Success', 'Successfully Deleted', 1)
+                  $('#tblPortalListGrid').jqGrid('GridUnload');
+                  PortalListGrid();
+              }
+
+          }
+          else {
+              return
+          }
+      });
+                return
+
+
+            }
+        });
+
+
+    });
+
+
+
+</script>

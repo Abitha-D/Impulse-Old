@@ -1,0 +1,867 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .onoffswitch {
+        position: relative;
+        width: 64px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .onoffswitch-checkbox {
+        display: none;
+    }
+
+    .onoffswitch-label {
+        display: block;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid #1ab394;
+        border-radius: 2px;
+    }
+
+    .onoffswitch-inner:before,
+    .onoffswitch-inner:after {
+        float: left;
+        width: 50%;
+        height: 20px;
+        padding: 0;
+        line-height: 20px;
+        font-size: 12px;
+        color: white;
+        font-family: Trebuchet, Arial, sans-serif;
+        font-weight: bold;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .onoffswitch-inner:before {
+        content: "Yes";
+        padding-left: 10px;
+        background-color: #1ab394;
+        color: #FFFFFF;
+    }
+
+    .onoffswitch-inner:after {
+        content: "No";
+        padding-right: 10px;
+        background-color: #FFFFFF;
+        color: #999999;
+        text-align: right;
+    }
+
+    .onoffswitch-switch {
+        width: 20px;
+        margin: 0;
+        background: #FFFFFF;
+        border: 2px solid #1ab394;
+        border-radius: 2px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 44px;
+        -moz-transition: all 0.3s ease-in 0s;
+        -webkit-transition: all 0.3s ease-in 0s;
+        -o-transition: all 0.3s ease-in 0s;
+        transition: all 0.3s ease-in 0s;
+    }
+
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+        margin-left: 0;
+    }
+
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+        right: 0;
+    }
+
+    .hover:hover {
+        border-radius: 35px;
+        background-color: #337ab7;
+        /*font-size: x-large;*/
+    }
+
+    .hover1:hover {
+        width: 50px;
+        height: 50px;
+        padding: 10px 16px;
+        border-radius: 25px;
+        font-size: 18px;
+        line-height: 1.33;
+    }
+</style>
+
+
+<form method="get" class="form-horizontal">
+
+    <div id="CPD_Master" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">Generate Invoice</span>
+                    <div class="ibox-tools">
+                        <a href="#" onclick="location.reload();" title="New Invoice">
+                            <i class="fa fa-file-o" aria-hidden="true"></i>
+                        </a>
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+
+                        <strong>
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="ibox-content" id="rptcnt">
+                    <div style="padding-top:15px" id="MainPage">
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-3 control-label">Client<font color="red">*</font> :</label>
+                                    <div class="col-sm-9">
+                                        <select style="width:100%" class="select2_demo_3 form-control" id="ddlclient" data-placeholder="Choose a client...">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label class="col-sm-3 control-label " id="lblrevision">With Revision:</label>
+                                <div class="col-sm-2">
+                                    <div class="switch">
+                                        <div class="onoffswitch">
+                                            <input type="checkbox" checked class="onoffswitch-checkbox" id="chkrevision">
+                                            <label class="onoffswitch-label" for="chkrevision">
+                                                <span class="onoffswitch-inner"></span>
+                                                <span class="onoffswitch-switch"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <label class="col-sm-3 control-label " id="lblinvoiced">With Invoiced:</label>
+                                <div class="col-sm-3">
+                                    <div class="switch">
+                                        <div class="onoffswitch">
+                                            <input type="checkbox" class="onoffswitch-checkbox" id="chkinvoiced">
+                                            <label class="onoffswitch-label" for="chkinvoiced">
+                                                <span class="onoffswitch-inner"></span>
+                                                <span class="onoffswitch-switch"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        @*<div class="col-sm-12">*@
+                        <div class="form-group">
+
+
+                            <div class="col-sm-6">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-3 control-label">Order Date:</label>
+                                    <div class="col-sm-7">
+                                        <div class="input-group date txtdaterange">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            <input type="text" name="txtdaterange" id="txtdaterange" class="form-control" placeholder="Choose Date.." readonly="readonly" style="background-color:white;">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-primary hover" id="btnSearch" title="Filter Order" type="button">
+                                            <i class="fa fa-search-plus " style="color:white" aria-hidden="true"></i>&nbsp;Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 ">
+                                @*<button class="btn btn-primary btn-circle" type="button">
+
+                                        <i class="fa fa-filter" style="color:white" aria-hidden="true"></i>
+                                    </button>*@
+
+                                
+                                <span class="pull-right hidden" style="padding-right:10px" id="BtnNav">
+                                    @*<div class="col-sm-2 ">*@
+                                    <button class="btn btn-primary " id="btnBack" title="Filter Order" type="button">
+                                        <i class="fa fa-backward " style="color:white" aria-hidden="true"></i>&nbsp;Back
+                                    </button>
+                                    &nbsp;&nbsp;<i class="fa fa-ellipsis-v" aria-hidden="true"></i>&nbsp;&nbsp;
+
+                                    <button class="btn btn-primary" id="btnNext" title="Filter Order" type="button">
+                                        Next&nbsp;<i class="fa fa-forward " style="color:white" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                                @*</div>*@
+
+                            </div>
+
+
+
+                            @*<div class="col-sm-2">*@
+
+                            @*<input type="button" id="btnsearch" class="btn btn-primary start" value="Search" />*@
+                            @*</div>*@
+
+
+                        </div>
+
+
+                        @*</div>*@
+                        <div id="ListPage">
+                            <div class="col-sm-12">
+                                <div style="padding-right: 7px;">
+                                    <div id="grid1">
+                                        <div class="jqGrid_wrapper">
+                                            <table id="tblinvoicegen"></table>
+                                            <div id="pagertblinvoicegen"></div>
+                                        </div>
+                                    </div>
+                                    <div id="grid2" class="hidden">
+                                        <div class="jqGrid_wrapper">
+                                            <div class="hidden" id="pivotdiv"> <table id="tblinvoicecountpivot"></table></div>
+                                            <table id="tblinvoicecount"></table>
+                                            <div id="pagertblinvoicecount"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ibox-content hidden" id="rpt_inv">
+                    <div style="padding-top:15px" id="MainPage">
+                        <iframe src="" id="frmreport" style="width: 100%" frameborder="0" scrolling="auto"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    function BindClients() {
+        var Condition = "where CM_DELETESTATUS=0";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectMasterClient");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlclient').append('<option value="' + Result[i]["CM_CUSTOMER_ID"] + '">' + Result[i]["CM_CUSTOMER_NAME"] + '</option>');
+            }
+        }
+    }
+    function OrdersGrid() {
+
+        var oJQGridFunctions = new JQGridFunctions();
+        var grid = $('#tblinvoicegen');
+        var sMultiSelect = false;
+
+        jQuery(grid).jqGrid({
+            colNames: ['Order ID', 'Order Date', 'Address', 'Form', 'Order Type', ''],
+            colModel: [
+                 { name: 'OrderID', index: 'OrderID', width: 120, align: "center", sorttype: false, search: true, hidden: true },
+                {
+                    name: 'Date', index: 'Date', width: 50, align: "center", sorttype: "int", formatter: "date", search: false, formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y " }
+                },
+                { name: 'Address', index: 'Address', width: 120, align: "center", sorttype: false, search: true },
+                { name: 'Form', index: 'Form', width: 60, align: "center", sorttype: false, search: true },
+                { name: 'Type', index: 'Type', width: 60, align: "center", sorttype: false, search: true },
+                { name: 'Typeid', index: 'Typeid', width: 50, align: "center", sorttype: "int", hidden: true },
+            ],
+
+
+            caption: 'Order List',
+            pager: '#pagertblinvoicegen',
+            //page: 1,
+            //loadonce: true,
+            viewrecords: true,
+            datatype: "local",
+            height: 150,
+            autowidth: false,
+            shrinkToFit: true,
+            multiselect: true,
+            rownumbers: false,
+            rowTotal: 10,
+            //rowNum: -1,
+            rowList: ['All',10, 30, 50, 100],
+            width: 1100,
+            hidegrid: true,
+            searchOperators: true,
+            multipleSearch: true,
+            ignoreCase: true,
+            loadComplete: function (data) {
+            $(".ui-pg-selbox option[value='All']").val(1000000000);
+        }
+
+
+        });
+
+        jQuery(grid).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn", autosearch: true });
+        $(grid).jqGrid('navGrid', pagertblinvoicegen,
+                   { edit: false, add: false, del: false, search: true },
+                   { height: 200, reloadAfterSubmit: true }
+           );
+        $(grid).jqGrid('setGridParam', { datatype: 'local' }).trigger('reloadGrid');
+
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        var grid = $('#tblinvoicecount');
+        var sMultiSelect = false;
+
+        jQuery(grid).jqGrid({
+            colNames: ['Order Type', 'Type Count', 'Amt/Unit($)', 'Total Amt($)'],
+            colModel: [
+               { name: 'Type', index: 'Type', width: 60, align: "center", sorttype: false, search: false },
+               { name: 'Count', index: 'Count', width: 20, align: "center", sorttype: false, search: false },
+               {
+                   name: 'AmtUnit', index: 'AmtUnit', width: 20, align: "center", sorttype: false, search: false, editable: true, editoptions: {
+                       size: 15, maxlengh: 10,
+                       dataInit: function (element) {
+                           // $(element).trigger('change')
+                           $(element).keyup(function () {
+                               var val1 = element.value;
+                               var num = new Number(val1);
+                               if (isNaN(num))
+                               { msgalert('Error', 'Please Enter a Valid Number', 3);; element.value = ""; }
+                           })
+                           $(element).trigger('change')
+
+                       }, dataEvents: [
+                      {
+                          type: 'change',
+                          fn: function (e) {
+                              //alert(this.value)
+                              //grid.jqGrid('setCell', 3, 'TotAmt', this.value);
+                          }
+                      }
+                       ]
+                   }
+               },
+               { name: 'TotAmt', index: 'TotAmt', width: 20, align: "center", sorttype: false, search: false }
+            ],
+
+            afterSaveCell: function (rowid, cellname, value) {
+                var quantity;
+                quantity = grid.jqGrid("getCell", rowid, 'Count');
+                grid.jqGrid("setCell", rowid, 'TotAmt', value * quantity);
+
+                grid.jqGrid('footerData', 'set', { 'AmtUnit': '<span style="color:red">Net Total ($)</span>' });
+                var colSum = grid.jqGrid('getCol', 'TotAmt', false, 'sum');
+                grid.jqGrid('footerData', 'set', { ID: 'Total:', 'TotAmt': '<span style="color:red">' + colSum + " $</span>" });
+
+
+
+                //var sum = grid.jqGrid('getCol', 'TotAmt', false, 'sum');
+                //grid.jqGrid('footerData', 'set', { ID: 'Total:', amount: sum });
+
+            },
+
+
+            caption: 'Order Type Consolidation',
+            pager: '#pagertblinvoicecount',
+            footerrow: true,
+            userDataOnFooter: true,
+            //page: 1,
+            //loadonce: true,
+            viewrecords: true,
+            datatype: "local",
+            height: 150,
+            autowidth: false,
+            shrinkToFit: true,
+            //multiselect: true,
+            rownumbers: true,
+            cellEdit: true,
+            cellsubmit: 'clientArray',
+            rowTotal: 10,
+            rowNum: 10,
+            rowList: [10, 30, 50, 100],
+            width: 1100,
+            hidegrid: true,
+            searchOperators: true,
+            multipleSearch: true,
+            ignoreCase: true
+
+
+
+        });
+
+        jQuery(grid).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn", autosearch: true });
+        $(grid).jqGrid('navGrid', pagertblinvoicegen,
+                   { edit: false, add: false, del: false, search: true },
+                   { height: 200, reloadAfterSubmit: true }
+           );
+        $(grid).jqGrid('setGridParam', { datatype: 'local' }).trigger('reloadGrid');
+
+
+    }
+    function PopulateOrdersList() {
+        jQuery('#tblinvoicegen').jqGrid('clearGridData');
+        var DateRange = $('#txtdaterange').val().split('-');
+        var StartDate = DateRange[0].trim();
+        var EndDate = DateRange[1].trim();
+
+
+        //var StartDate = $('#txtstartdate').val();
+        //var EndDate = $('#txtenddate').val();
+        var sClientId = $('#ddlclient').val();
+
+        if (sClientId == "" || sClientId == null) {
+            msgalert('Error', 'Choose client first', 3);
+            return;
+        }
+        if (StartDate == "" || EndDate == '') {
+            msgalert('Error', 'Choose date Range', 3);
+            return;
+        }
+        StartDate = StartDate.split(/\//g);
+        var month = StartDate[0];
+        var day = StartDate[1];
+        var year = StartDate[2];
+        StartDate = year + '-' + month + '-' + day + ' 00:00:00';
+        EndDate = EndDate.split(/\//g);
+        var month = EndDate[0];
+        var day = EndDate[1];
+        var year = EndDate[2];
+        EndDate = year + '-' + month + '-' + day + ' 23:59:59';
+        var Condition = '';
+        var invoiced = "";
+        if (document.getElementById("chkinvoiced").checked == false) {
+            invoiced = " and is_invoiced is NULL";
+        }
+
+        if (document.getElementById("chkrevision").checked == false) {
+            Condition = "where master_account_no='" + sClientId + "'and order_date >= '" + StartDate + "' and order_date <='" + EndDate + "' and ord_revision_flag is NULL and (((status_id=9 and status_reason_id=30) or status_id=8) or ((status_id=5 and status_reason_id=20) or status_id=8) ) " + invoiced;
+        }
+        else {
+            //Condition = "where master_account_no='" + sClientId + "'and order_date >= '" + StartDate + "' and order_date <='" +EndDate + "' and ord_revision_flag=1";
+            Condition = "where master_account_no='" + sClientId + "'and order_date >= '" + StartDate + "' and order_date <='" + EndDate + "' and (ord_revision_flag!=1 or ord_revision_flag is NULL) and (((status_id=9 and status_reason_id=30) or status_id=8) or ((status_id=5 and status_reason_id=20) or status_id=8) )" + invoiced;
+        }
+
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectOrders");
+        if (Result != '' && Result != null) {
+            var sOrders = [];
+            for (var i = 0; i < Result.length; i++) {
+                sOrders[i] = {
+                    OrderID: Result[i].order_id,
+                    Date: Result[i].order_date,
+                    Address: Result[i].subject_address,
+                    Form: Result[i].Portal_Name,
+                    Type: Result[i].order_type_name,
+                    Typeid: Result[i].order_type,
+                }
+                jQuery("#tblinvoicegen").jqGrid('addRowData', i + 1, sOrders[i]);
+            }
+            $('#BtnNav').removeClass("hidden")
+            $('#btnBack').prop('disabled', true);
+
+        }
+        else {
+            msgalert('Warning', 'No records found ..!', 2);
+            $('#BtnNav').addClass("hidden")
+            return;
+        }
+    }
+
+
+    //var start = moment().subtract(29, 'days');
+    //var end = moment();
+
+    var start = moment().subtract(1, 'month').startOf('month');
+    var end = moment().subtract(1, 'month').endOf('month');
+
+
+    function cb(start, end) {
+        //$('#txtstartdate').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#txtdaterange').val(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
+    }
+
+    function setFilterdates() {
+        //$('input[name="txtenddate"]').daterangepicker();
+
+        //$('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+        // $('input[name="daterange"]').daterangepicker();
+
+        //$('input[name="txtstartdate"]').daterangepicker({
+        $('#txtdaterange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            autoApply: true,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            }
+        }, cb);
+
+        cb(start, end);
+
+        return
+        var cudt = new Date();
+
+        $('.input-group.date txtenddate').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false,
+            //startDate: '-2m',
+
+        });
+        $('.input-group.date txtstartdate').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false,
+            //startDate: '-2m',
+
+        });
+
+        $(".input-group.date.txtenddate").datepicker("setDate", cudt);
+
+        var d = new Date($('#txtenddate').val());
+
+        d.setMonth(d.getMonth() - 1);
+
+        $(".input-group.date.txtstartdate").datepicker("setDate", new Date(d));
+
+        var d1 = new Date($('#txtenddate').val());
+        $('.input-group.date.txtenddate').datepicker("setEndDate", cudt);
+        // alert(d1)
+        $('.input-group.date.txtstartdate').datepicker("setEndDate", d1);
+    }
+
+    $(document).ready(function () {
+        //document.getElementById("chkinvoiced").checked = false
+        // $("#chkinvoiced").prop("checked", false);
+        setFilterdates();
+        BindClients();
+        OrdersGrid();
+        var sWidth = $('.tab-content').width();
+        $('#tblCityListGrid').setGridWidth(sWidth);
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblinvoicegen').setGridWidth(sWidth);
+
+        });
+        $('#btnSearch').click(function () {
+            PopulateOrdersList();
+        });
+
+        $('#txtenddate').change(function () {
+            var d1 = new Date($('#txtenddate').val());
+
+            $('.input-group.date.txtstartdate').datepicker("setEndDate", d1);
+            $('.datepicker').hide();
+        });
+        $('#txtstartdate').change(function () {
+            $('.datepicker').hide();
+        });
+
+        var btnnextid = 0;
+        $('#btnNext').click(function () {
+            if (btnnextid == 0) {
+                //loader(1);
+                var sOrdersCount = [];
+                var Rowids = $("#tblinvoicegen").getGridParam('selarrrow');
+                if (Rowids.length <= 0) {
+                    msgalert('Warning', 'Select atleast one order to continue..', 2);
+                    return;
+                }
+                for (var i = 0; i < Rowids.length; i++) {
+                    var RowData = $("#tblinvoicegen").getRowData(Rowids[i]);
+                    jQuery('#tblinvoicecountpivot').jqGrid('clearGridData');
+                    $("#tblinvoicecountpivot").GridUnload();
+                    sOrdersCount[i] = {
+                        TypeName: RowData["Type"],
+                        Type: RowData["Typeid"]
+                    }
+                }
+                jQuery("#tblinvoicecountpivot").jqGrid('jqPivot',
+                           sOrdersCount,
+                           // pivot options
+                           {
+                               xDimension: [{ dataName: "TypeName", label: "Order Type", sortorder: "desc" }],
+                               yDimension: [],
+                               aggregates: [
+                                   {
+                                       member: 'Type',
+                                       aggregator: 'count',
+                                       width: 100,
+                                       label: 'Count',
+                                       formatter: 'int',
+                                       align: 'right'
+                                   }
+                               ]
+                           });
+                var rowIds = $('#tblinvoicecountpivot').jqGrid('getDataIDs');
+                var sOrdersCount1 = [];
+                jQuery('#tblinvoicecount').jqGrid('clearGridData', true).trigger("reloadGrid");
+                for (i = 0; i < rowIds.length; i++) {
+                    var rowData = $("#tblinvoicecountpivot").getRowData(rowIds[i]);
+                    sOrdersCount1[i] = {
+                        Type: rowData["TypeName"],
+                        Count: rowData["Type_count"],
+                    }
+                    jQuery("#tblinvoicecount").jqGrid('addRowData', i + 1, sOrdersCount1[i]);
+                }
+                btnnextid = 1;
+                $('#grid1').addClass("hidden");
+                $('#grid2').removeClass("hidden");
+                $('#btnBack').prop('disabled', false);
+                $("#btnNext").html("Generate")
+
+                $('#ddlclient').prop('disabled', true);
+                $('#txtdaterange').prop('disabled', true);
+                $('#btnSearch').prop('disabled', true);
+                $('#chkrevision').prop('disabled', true);
+                //loader(0);
+                return
+            }
+            //----------------Setp2----------
+            if (btnnextid == 1) {
+
+                var rowIds = $('#tblinvoicecount').jqGrid('getDataIDs');
+                for (i = 0; i < rowIds.length; i++) {
+                    var rowData = $("#tblinvoicecount").getRowData(rowIds[i]);
+                    if (rowData["AmtUnit"] == "") {
+                        msgalert('Warning', 'Enter Per/unit amount..', 2);
+                        return;
+                    }
+                }
+
+                parent.swal({
+                    title: "Are you sure to Create New Invoice for " + $("option:selected", $('#ddlclient')).text() + "?",
+                    //text: "" + text + "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true,
+                    //showLoaderOnConfirm: true,
+
+                },
+                 function (isConfirm) {
+
+                     if (isConfirm) {
+                         loader(1);
+                         setTimeout(function () {
+
+                             createinvoicemaster();
+                             return
+                         }, 1300);
+
+                     }
+                     else {
+                         return
+                     }
+                 });
+
+                return;
+            }
+            //--------------End of seteps
+
+            //if (btnnextid == 1) {
+            //    $("#btnNext").html("Generate")
+            //}
+            //else {
+            //    $("#btnNext").html('Next&nbsp;<i class="fa fa-forward " style="color:white" aria-hidden="true"></i>')
+
+            //}
+        });
+        $('#btnBack').click(function () {
+            if (btnnextid = 1) {
+                $("#btnNext").html('Next&nbsp;<i class="fa fa-forward " style="color:white" aria-hidden="true"></i>')
+                $('#grid1').removeClass("hidden");
+                $('#grid2').addClass("hidden");
+                $('#btnBack').prop('disabled', true);
+
+                $('#ddlclient').prop('disabled', false);
+                $('#txtdaterange').prop('disabled', false);
+                $('#btnSearch').prop('disabled', false);
+                $('#chkrevision').prop('disabled', false);
+                btnnextid = 0;
+                //alert("OK");
+            }
+
+        });
+        //------------End of btn click ...................
+    });
+
+
+    function createinvoicemaster() {
+
+        var grid = $('#tblinvoicecount')
+        var invamt = grid.jqGrid('getCol', 'TotAmt', false, 'sum');
+
+        if (invamt == "") {
+            msgalert('Warning', 'Enter Per/unit amount..', 2);
+        }
+
+        var DateRange = $('#txtdaterange').val().split('-');
+        var StartDate = DateRange[0].trim();
+        var EndDate = DateRange[1].trim();
+
+        StartDate = StartDate.split(/\//g);
+        var month = StartDate[0];
+        var day = StartDate[1];
+        var year = StartDate[2];
+        StartDate = year + '-' + month + '-' + day + ' 00:00:00';
+        EndDate = EndDate.split(/\//g);
+        var month = EndDate[0];
+        var day = EndDate[1];
+        var year = EndDate[2];
+        EndDate = year + '-' + month + '-' + day + ' 23:59:59';
+        var custid = $("#ddlclient").val();
+
+        var todaysDate = new Date();
+        //format the date in the right format (add 1 to month because JavaScript counts from 0)
+        var tmonth = todaysDate.getMonth() + 1;
+        var tdate = todaysDate.getDate();
+        var tyear = todaysDate.getFullYear();
+
+        var invcode = $("option:selected", $('#ddlclient')).text().toUpperCase();
+
+        try {
+            invcode=invcode.split(" ").join("");}
+        catch (err) {
+            invcode = $("option:selected", $('#ddlclient')).text().toUpperCase();
+        }
+
+        var strJsonDatas = eval({
+            INV_CODE: "", CUSTOMER_ID: custid, INV_AMOUNT: invamt, INV_FROMDATE: StartDate, INV_TODATE: EndDate,
+            DELETESTATUS: 0, CREATEDBY: CurrentUser, CREATEDDATE: new Date(), REMARKS: $("#txtremarks").val(),
+        });
+
+        //var Result = oAPICall.InsertData(strJsonDatas, 'createinvoicemaster');
+        var Result = oAPICall.InsertData_fixedstring(strJsonDatas, 'createinvoicemaster', invcode);
+        if (Result != "" && Result != null) {
+            var invoicid = Result[0].IDENTITY;
+            //alert(invoiceno);
+            createinvoicedetailes(invoicid)
+        }
+        else {
+            loader(0);
+        }
+    }
+
+    function createinvoicedetailes(invid) {
+        var inserted = 0;
+        var Rowids = $("#tblinvoicegen").getGridParam('selarrrow');
+        for (var i = 0; i < Rowids.length; i++) {
+            var RowData = $("#tblinvoicegen").getRowData(Rowids[i]);
+            var order_id = RowData["OrderID"]
+
+            var strJsonDatas = eval({
+                INV_ID: invid, order_id: order_id, DELETESTATUS: 0
+            });
+            var Result = oAPICall.InsertData(strJsonDatas, 'createinvoicdetailes');
+            if (Result != "" && Result != null) {
+                inserted = 1;
+                var StrJsonDatasom = eval({
+                    is_invoiced: 1,
+                });
+                var Condition = "Where order_id=" + order_id + "";
+                var Result = oAPICall.UpdateData(StrJsonDatasom, "UpdateOrderom", Condition);
+            }
+            else {
+                loader(0);
+                inserted = 0;
+            }
+        }
+
+        if (inserted == 1) {
+            createinvoiceamount(invid);
+        }
+        else {
+            var Condition = "where INV_ID =" + invid;
+            var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.DeleteData(strJsonDatas, 'DeleteInvoice');
+            return
+        }
+    }
+
+    function createinvoiceamount(invid) {
+        var rowIds = $('#tblinvoicecount').jqGrid('getDataIDs');
+        for (i = 0; i < rowIds.length; i++) {
+            var RowData = $("#tblinvoicecount").getRowData(rowIds[i]);
+            var ORDER_TYPE_NAME = RowData["Type"];
+            var ORDER_UNIT_AMOUNT = RowData["AmtUnit"];
+            var ORDER_TYPE_COUNT = RowData["Count"];
+            var ORDER_TYPE_AMOUNT = RowData["TotAmt"];
+
+            var strJsonDatas = eval({
+                INV_ID: invid, DELETESTATUS: 0, ORDER_TYPE_NAME: ORDER_TYPE_NAME, ORDER_UNIT_AMOUNT: ORDER_UNIT_AMOUNT,
+                ORDER_TYPE_COUNT: ORDER_TYPE_COUNT, ORDER_TYPE_AMOUNT: ORDER_TYPE_AMOUNT
+            });
+            var Result = oAPICall.InsertData(strJsonDatas, 'createinvoiccount');
+            if (Result != "" && Result != null) {
+                inserted = 1;
+            }
+            else {
+                inserted = 0;
+            }
+        }
+        if (inserted == 1) {
+            loader(0);
+            generateinvicereport(invid);
+        }
+        else {
+            var Condition = "where INV_ID =" + invid;
+            var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.DeleteData(strJsonDatas, 'DeleteInvoice');
+            loader(0);
+            return
+        }
+
+    }
+
+    function generateinvicereport(invid) {
+        // loader(0);
+        //alert("OK")
+        //msgalert('Sucess', 'Invoice Sucessfully Created..', 1);
+
+        $("#rpt_inv").removeClass("hidden");
+        $("#rptcnt").addClass("hidden");
+        var report_id = 21;
+        var report_codition = "where INV_ID=" + invid;
+        document.getElementById('frmreport').src = '';
+        //var filters = jQuery.param(StrJsonDatas);
+        document.getElementById('frmreport').src = '../Content/ReportsData/ReportViewer.aspx?report_id=' + report_id + '&report_codition=' + report_codition + '&table_type=2';
+        $(function () {
+            var newheight = $(window).height() - 55;
+            $('#frmreport').css({ height: newheight + 'px' });
+        });
+
+        $(window).resize(function () {
+            var newheight = $(window).height() - 55;
+            $('#frmreport').css({ height: newheight + 'px' });
+        });
+    }
+
+</script>

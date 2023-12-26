@@ -1,0 +1,2426 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "EmployeeMaster";
+
+}
+<link href="~/Content/css/plugins/fileupload/jquery.fileupload.css" rel="stylesheet" />
+<link href="~/Content/css/plugins/fileupload/jquery.fileupload-ui.css" rel="stylesheet" />
+<style>
+    .capitalize {
+        text-transform: capitalize;
+    }
+
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    textarea::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    .select2-container {
+        font-size: 12px;
+    }
+
+    select::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    .fileinput-button {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+    }
+
+    #loadingDiv {
+        position: absolute;
+        top: 150px;
+        right: -475px;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 10000000;
+        opacity: 0.4;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+    <div id="EmployeeMaster" class="divbody">
+        <div class="col-sm-12">
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">Employee Master</span>
+                    <div class="ibox-tools">
+                        @*<strong><b><font color="red">(Note: Please ensure click save before leaving this page)</font></b></strong>*@
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-file-o" id="btnNew" onclick="parent.document.getElementById('framecontent').src = '../master/EmployeeMaster'" title="New"></i>
+                            </a>
+                        </strong>
+
+                        <a href="#" title="List Order">
+                            <i class="fa fa-list" id="btnEmpList"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnBack"></i>
+                        </a>
+                    </div>
+                </div>
+                <div id="MainPage">
+                    <div class="col-sm-12 hidden" id="DivEmpDet">
+                        <div class="col-sm-5">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" id="lblemployeeno">Employee Code:</label>
+                                <label class="col-sm-4 control-label" style=" text-align: -webkit-left;color:#337ab7" id="ttlEmpNo">&nbsp;</label>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label" id="lblemployeename">Employee Name:</label>
+                                <label class="col-sm-6 control-label" style=" text-align: -webkit-left; color:#337ab7" id="ttlEmpName">&nbsp;</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ibox-content" style="padding-top:10px">
+
+                        <div class="tabs-container">
+                            <ul class="nav nav-tabs nav-tabs-justified" style="padding-left:0%;">
+                                <li class="active">
+                                    <a href="#general" data-toggle="tab" id="1_gen">
+                                        <i style=" color:#337ab7" class="fa fa-list-alt"></i>General
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#hometab" data-toggle="tab" id="1_gen">
+                                        <i style=" color:#337ab7" class="fa fa-list-alt"></i>Employment
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#previousexperiencetab" data-toggle="tab" id="2_personal" onclick="settabid(this)">
+                                        <i style="color:#337ab7" class=" fa fa-user" "></i>PreviousExperience
+                                    </a>
+                                </li>
+
+
+                                <li class="">
+                                    <a href="#personaltab" data-toggle="tab" id="4_family" onclick="settabid(this)">
+                                        <i style="color:#337ab7" class="fa fa-users"></i>Personal
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#contacttab" data-toggle="tab" id="5_asset" onclick="settabid(this)">
+                                        <i style="color:#337ab7" class="fa fa-laptop"></i>Contact
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#familytab" data-toggle="tab" id="6_doc" onclick="settabid(this)">
+                                        <i style="color:#337ab7" class="fa fa-file-text-o"></i>Family
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="#employmenthistorytab" data-toggle="tab" id="3_contact" onclick="settabid(this)">
+                                        <i style="color:#337ab7" class="fa fa-file-image-o"></i>Employment History
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="general" style="padding-top:15px">
+                                    <div class="col-sm-7">
+                                        <div class=" form-group">
+                                            <label class="col-sm-3 control-label" id="lblcompany">Company:</label>
+                                            <div class="col-sm-9">
+                                                <select style="width:100%" id="ddlcompany" class="select2_demo_3 form-control">
+                                                    <option id="1" value="1">ECESIS BPO SERVICES</option>
+                                                    @*<option id="2" value="2">ECESIS</option>*@
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class=" form-group">
+                                            <label class="col-sm-3 control-label" id="lbllocation">Location:</label>
+                                            <div class="col-sm-9">
+                                                <select style="width:100%" id="ddllocation" class="select2_demo_3 form-control">
+                                                    <option value="0" disabled selected>--Select Location--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" id="lblemployeecode">Employee Code:</label>
+                                            <div class="col-sm-9"><input type="text" id="txtempcode" style="background-color:white;" placeholder="Enter generate employee code.." required="" class="form-control"></div>
+                                        </div>
+
+                                        <div class=" form-group">
+                                            <label class="col-sm-3 control-label" id="lblempfirstname">First Name<font color="red">*</font> :</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group ">
+                                                    <div class="input-group-btn">
+                                                        <select class="form-control" id="ddltitle" style="width: 80px; background-color: white;"></select>
+                                                    </div>
+                                                    <input type="text" id="txtfirstname" style="background-color: white; text-transform: capitalize;" placeholder="Enter First name here.." class="form-control" onkeypress="javascript: return isAlfa(event)">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label" id="lbllastname">Last Name<font color="red">*</font> :</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" id="txtemplastname" placeholder="Enter Last Name here.." style="background-color: white; text-transform: capitalize;" class="form-control" onkeypress="javascript: return isAlfa(event)">
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-sm-5" style="padding-right:10px">
+
+                                        <div class="form-group">
+                                            <div class="col-sm-8" style="padding-left:45px;">
+
+                                                <img alt="" id="employeeimage" src="../content/image/avatar.png" style="width:60%;" />
+                                                <br />
+                                                <span class="btn btn-white fileinput-button" id="empimgid" style="width: 20%; margin-left: 1px; margin-top: -50px;">
+                                                    <i class="fa fa-camera" style="color: #3489c8" data-toggle="tooltip" data-placement="bottom"></i>
+                                                    <input type="file" accept="image/*" id="employeeimg" style=" width: 80%; height: 90%; " name="employeeimg" onchange="readURL(this);">
+                                                </span>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="hometab" style="padding-top:15px">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label" id="lbldepartment">Department<font color="red">*</font> :</label>
+                                            <div class="col-sm-6">
+                                                <select style="width:100%" id="ddldepartment" data-placeholder="Choose Department.." class="select2_demo_3 form-control">
+                                                    <option value="0" disabled selected>--Select Department--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class=" form-group">
+                                            <label class="col-sm-5 control-label" id="lblrecommendingauthority">Recommending Authority:</label>
+                                            <div class="col-sm-6">
+                                                <select style="width:100%" id="ddlEmployRec" class="select2_demo_3 form-control">
+                                                    <option value="0" disabled selected>--Select Supervisor--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class=" form-group">
+                                            <label class="col-sm-5 control-label" id="lblapprovingauthority">Approving Authority:</label>
+                                            <div class="col-sm-6">
+                                                <select style="width:100%" id="ddlEmployApp" class="select2_demo_3 form-control">
+                                                    <option value="0" disabled selected>--Select Supervisor--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label" id="lblworkdaytype">Work Day Type:</label>
+                                            <div class="col-sm-6">
+                                                <select style="width:100%" id="ddlworkdaytype" data-placeholder="Choose Work Day Type.." class="select2_demo_3 form-control">
+                                                    <option value="0" disabled selected>-Select One-</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label" id="lblemploymentstartdate">Employment Start Date<font color="red">*</font> :</label>
+                                            <div class="col-sm-6">
+                                                <div class="input-group date txtemploymentstartdate">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input type="text" id="txtemploymentstartdate" class="form-control" style="background-color:white;width:100%;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label" id="lblstatus">Status:</label>
+                                            <div class="col-sm-6">
+                                                <select style="width:100%" id="ddlstatus" data-placeholder="Choose status.." class="form-control"></select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-5 control-label" id="lblnightshift">Night Shift:</label>
+                                            <div class="col-sm-6">
+                                                <div class="switch">
+                                                    <div class="onoffswitch">
+                                                        <input type="checkbox" checked class="onoffswitch-checkbox" id="chkshift">
+                                                        <label class="onoffswitch-label" for="chkshift">
+                                                            <span class="onoffswitch-inner"></span>
+                                                            <span class="onoffswitch-switch"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6" style="padding-right:0px">
+                                        <div class="form-group">
+
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label" id="lbldesignation">Designation:</label>
+                                                <div class="col-sm-6">
+                                                    <select style="width:100%" id="ddldesignation" data-placeholder="Select One.." class="select2_demo_3 form-control">
+                                                        <option value="0" disabled selected>--Select Designation--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-5 control-label" id="lblemploymenttype">Employment Type:</label>
+                                                <div class="col-sm-6">
+                                                    <select style="width:100%" id="ddlemploymenttype" data-placeholder="Select One.." class="form-control"></select>
+                                                </div>
+                                            </div>
+
+                                            <div class=" form-group">
+                                                <label class="col-sm-5 control-label" id="lblprobationenddate">Probation End Date :</label>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group ">
+                                                        <input type="text" id="txtprobationenddate" style="background-color:white;" readonly="readonly" class="form-control">
+                                                        <div class="input-group-btn">
+                                                            <select class="form-control" id="ddlprobation" style="width: 110px; background-color: white;"></select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" form-group">
+                                                <label class="col-sm-5 control-label" id="lblnoticeperiod">Notice Period :</label>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group ">
+                                                        <div class="input-group-btn">
+                                                            <select class="form-control" id="ddlnoticeperiod" style="width: 80px; background-color: white;"></select>
+                                                        </div>
+                                                        <input type="text" id="txtnoticeperiod" readonly="readonly" class="form-control" value="Days" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="previousexperiencetab">
+                                    <div style="padding-top:10px; ">
+                                        <div class="col-sm-12" style="padding-top:10px; padding-bottom:10px">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblfresher" style="padding-top:3px;">Is Fresher:</label>
+                                                    <div class="col-sm-9">
+                                                        <div class="switch">
+                                                            <div class="onoffswitch">
+                                                                <input type="checkbox" checked class="onoffswitch-checkbox" id="chkfresher">
+                                                                <label class="onoffswitch-label" for="chkfresher">
+                                                                    <span class="onoffswitch-inner"></span>
+                                                                    <span class="onoffswitch-switch"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblexperience">Total Experience:</label>
+                                                    <div class="col-sm-3">
+                                                        <input type="number" placeholder="Enter Total Experience.." id="txttotalexperiance" class="form-control" onkeypress="javascript:return isNumber(event)" style="background-color:white;width:100%;">
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <select style="width:100%;background-color:white;" data-placeholder="-Select-" id="ddlexperience" class=" form-control">
+                                                            <option value="0" disabled selected>-Select-</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div id="experiencefresherinfomodel" class="modal fade" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <!-- dialog title -->
+                                                        <div class="modal-header" style="margin-top:1%;">
+                                                            <div class="modal-title">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">Fresher Info</h4>
+                                                            </div>
+                                                        </div>
+                                                        <!-- dialog body -->
+                                                        <div class="modal-body" id="divContent">
+
+                                                            <div class="form-group col-sm-12">
+
+                                                                <label class="col-sm-5 control-label" id="lblreference">Reference Name:</label>
+                                                                <div class="col-sm-6"><input type="text" id="txtfresherreference" class="form-control" placeholder=" Enter Reference here" /></div>
+                                                            </div>
+                                                            <div class="form-group col-sm-12">
+
+                                                                <label class="col-sm-5 control-label" id="lblphoneno">Phone No:</label>
+                                                                <div class="col-sm-6"><input type="number" id="txtphoneno" class="form-control" onkeypress="javascript:return isNumber(event)" placeholder=" Enter phone no here" /></div>
+                                                            </div>                                                                                                                                                                                  <div>&nbsp;</div>
+                                                            <!-- dialog buttons -->
+                                                            <div class="modal-footer">
+                                                                <button type="button" class=" btn btn-primary" id="btnsubmitfresher">Submit And Continue</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="experienceinfo" class="modal fade" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <!-- dialog title -->
+                                                        <div class="modal-header" style="margin-top:1%;">
+                                                            <div class="modal-title">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">Experience Info</h4>
+                                                            </div>
+                                                        </div>
+                                                        <!-- dialog body -->
+                                                        <div class="modal-body" id="divContent">
+                                                            <div class="form-group col-sm-12">
+                                                                <label class="col-sm-5 control-label" id="lblcompany">Company:</label>
+                                                                <div class="col-sm-6">
+                                                                    <input type="text" id="txtcompany" class="form-control" placeholder="Enter company here.. " />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-sm-12">
+                                                                <label class="col-sm-5 control-label" id="lbllocation">Location:</label>
+                                                                <div class="col-sm-6"><input type="text" id="txtcompanylocation" class="form-control" placeholder=" Enter company location here" /></div>
+                                                            </div>
+                                                            <div class="form-group col-sm-12">
+                                                                <label class="col-sm-5 control-label" id="lbldesignation">Designation:</label>
+                                                                <div class="col-sm-6"><input type="text" id="txtdesignation" class="form-control" placeholder=" Enter designation here" /></div>
+                                                            </div>
+                                                            <div class="form-group col-sm-12">
+                                                                <label class="col-sm-5 control-label" id="lblprevexperience">Experience:</label>
+                                                                <div class="col-sm-2">
+                                                                    <input type="number" id="txtprevexperience" class="form-control" onkeypress="javascript:return isNumber(event)" />
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <select style="width:100%" class="form-control" id="ddlprevexp">
+                                                                        <option id="1" value="1">Months</option>
+                                                                        <option id="2" value="2">Years</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-sm-12">
+                                                                <label class="col-sm-5 control-label" id="lblempreference">Reference Name:</label>
+                                                                <div class="col-sm-6">
+                                                                    <input type="text" id="txtempreference" class="form-control" placeholder="Enter reference here.. " />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group col-sm-12">
+                                                                <label class="col-sm-5 control-label" id="lblrefphno">Phone No:</label>
+                                                                <div class="col-sm-6">
+                                                                    <input type="number" id="txtrefphoneno" class="form-control" onkeypress="javascript:return isNumber(event)" placeholder="Enter phone no here.. " />
+                                                                </div>
+                                                            </div>                                                                                                                       <div>&nbsp;</div>
+                                                            <!-- dialog buttons -->
+                                                            <div class="modal-footer">
+                                                                <button type="button" class=" btn btn-primary" id="btnsubmitexp">Submit And Continue</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="ListPage2">
+                                                <div class="col-sm-12">
+                                                    <div class="ibox-content" style="padding-top:15px;padding-right: 7px;">
+                                                        <div class="jqGrid_wrapper">
+                                                            <table id="tblexperienceinfofresher"></table>
+                                                            <div id="pagertblexperienceinfofresher"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="ListPage3">
+                                                <div class="col-sm-12">
+                                                    <div class="ibox-content" style="padding-top:15px;padding-right: 7px;">
+                                                        <div class="jqGrid_wrapper">
+                                                            <table id="tblexperienceinforxperienced"></table>
+                                                            <div id="pagertblexperienceinforxperienced"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="familytab">
+                                    <div class="col-sm-12" style="padding-top:0px; padding-bottom:10px">
+                                        <div id="ListPage2" style="padding-top:15px;">
+                                            <div class="col-sm-12">
+                                                <div class="jqGrid_wrapper">
+                                                    <table id="tblfamilydetailsinfo"></table>
+                                                    <div id="pagertblfamilydetailsinfo"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="familyinfomodel" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <!-- dialog title -->
+                                                    <div class="modal-header" style="margin-top:1%;">
+                                                        <div class="modal-title">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title">Family Info</h4>
+                                                        </div>
+                                                    </div>
+                                                    <!-- dialog body -->
+                                                    <div class="modal-body" id="divContent">
+                                                        <div class="form-group col-sm-12">
+                                                            <label class="col-sm-5 control-label" id="lblname">Name:</label>
+                                                            <div class="col-sm-6">
+                                                                <input type="text" id="txtfamilymembername" class="form-control" placeholder=" Enter name here.." />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-sm-12">
+
+                                                            <label class="col-sm-5 control-label" id="lblactivedate">Date Of Birth:</label>
+                                                            <div class="col-sm-6">
+                                                                <div class="input-group date txtdob1">
+                                                                    <span class="input-group-addon" id="divtxtdob"><i class="fa fa-calendar"></i></span>
+                                                                    <input type="text" id="txtdob1" class="form-control" placeholder="Choose Date" readonly="readonly" style="background-color:white">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-sm-12">
+                                                            <label class="col-sm-5 control-label" id="lblphno">Phone No:</label>
+                                                            <div class="col-sm-6">
+                                                                <input type="number" id="txtfamilyphoneno" class="form-control" onkeypress="javascript:return isNumber(event)" placeholder=" Enter phone no here.." />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-sm-12">
+                                                            <label class="col-sm-5 control-label" id="lblrelation">Relation<font color="red">*</font> :</label>
+                                                            <div class="col-sm-6"><input type="text" id="txtrelation" class="form-control" placeholder="Enter relation here..." /></div>
+                                                        </div>
+                                                        <div class="form-group col-sm-12">
+                                                            <label class="col-sm-5 control-label" id="lblgender">Gender:</label>
+                                                            <div class="col-sm-6">
+                                                                <select id="ddlgender1" class="form-control" data-placeholder="Gender...">
+                                                                    <option id="1" value="1">Male</option>
+                                                                    <option id="2" value="2">Female</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div>&nbsp;</div>
+                                                        <!-- dialog buttons -->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class=" btn btn-primary" id="btnsubmit1">Submit And Continue</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-pane" id="personaltab">
+                                    <div style="padding-top:10px; ">
+                                        <div class="col-sm-12" style="padding-top:10px; padding-bottom:10px">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lblgender">Gender<font color="red">*</font> :</label>
+                                                    <div class="col-sm-8">
+                                                        <select style="width:100%" onchange="" class="select2_demo_3 form-control" id="ddlgender" data-placeholder="Choose gender..">
+                                                            <option id="1" value="1">Male</option>
+                                                            <option id="2" value="2">Female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lblbloodgrroup">Blood Group:</label>
+                                                    <div class="col-sm-8">
+                                                        <select style="width:100%" id="ddlbloodgroup" data-placeholder="Choose Blood group.." class="select2_demo_3 form-control">
+                                                            <option value="0" disabled selected>-Select your blood group-</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lblpancardno">Pancard No:</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" id="txtpancardno" placeholder="Enter pancard number.." class="form-control" style="background-color:white;width:100%;">
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lblpassportno">Passport No:</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" id="txtpassport" placeholder="Enter passport number.." class="form-control" style="background-color:white;width:100%;">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lblreligion">Religion:</label>
+                                                    <div class="col-sm-8">
+                                                        <select style="width:100%" id="ddlreligion" data-placeholder="Choose religion.." class="select2_demo_3 form-control"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lblnationality">Nationality:</label>
+                                                    <div class="col-sm-8">
+                                                        <select class="select2_demo_3 form-control" id="ddlnationality" data-placeholder="Choose nationality.." style="width:100%"></select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lblresidencecountry">Residence Of Country:</label>
+                                                    <div class="col-sm-8">
+                                                        <select style="width:100%" id="ddlresidencecountry" data-placeholder="Choose Residence of country.." class="select2_demo_3 form-control"></select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                                <div class="form-group" id="data_1">
+                                                    <label class="col-sm-4 control-label" id="lbldob">Date Of Birth<font color="red">*</font> :</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group date txtdob">
+                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                            <input type="text" id="txtdob" class="form-control" style="background-color:white;width:100%;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lblqualification">Qualification:</label>
+                                                    <div class="col-sm-8">
+                                                        <select style="width:100%" id="ddlqualification" data-placeholder="Choose qualification.." class="select2_demo_3 form-control">
+                                                            <option value="0" disabled selected>-Select your qualification-</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lblspecification">Educational Specification:</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" id="txteduspecificaton" placeholder="Enter educational specification.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" id="data_1">
+                                                    <label class="col-sm-4 control-label" id="lslpassportval">Passport Validity:</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group date txtpassportval">
+                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                            <input type="text" id="txtpassportval" class="form-control" readonly="readonly" style="background-color:white;width:100%;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lblmaritalstatus">Marital Status:</label>
+                                                    <div class="col-sm-8">
+                                                        <select style="width:100%" id="ddlmaritalstatus" data-placeholder="Choose marital status.." class="select2_demo_3 form-control">
+                                                            <option id="1" value="1">Single</option>
+                                                            <option id="2" value="2">Married</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label" id="lbllanguagues">Languages Known:</label>
+                                                    <div class="col-sm-8">
+                                                        <textarea id="txtlanguages" placeholder="languages known" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="contacttab">
+                                    <div style="padding-top:10px; ">
+                                        <label id="lblcontactdetails">Contact Details</label>
+                                        <div class="col-sm-12" style="padding-top:10px; padding-bottom:10px">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblmobno">Mobile No:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="number" id="txtmobileno" placeholder="Enter mobile number here.." class="form-control" onkeypress="javascript:return isNumber(event)" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblphoneno">Phone No:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="number" id="txtphno" placeholder="Enter phone number here.." class="form-control" onkeypress="javascript:return isNumber(event)" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblofficeno">Office No:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="number" id="txtofficenumber" placeholder="Enter office number here.." class="form-control" onkeypress="javascript:return isNumber(event)" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblalternatemob">Alternate Mobile:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="number" id="txtaltermob" placeholder="Enter alternate mobile number here.." class="form-control" onkeypress="javascript:return isNumber(event)" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblemail">Email Id<font style="color:red">*</font>:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="email" id="txtemail" placeholder="Enter personal email id here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblofficeemail">Office Email Id:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="email" id="txtofficeemail" placeholder="Enter office email here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                                                                <label id="lbllocaladress" class="col-sm-4" style="margin-left:-1.5%;">Local Address</label>
+
+                                        <div class="col-sm-12" style="padding-top:10px; padding-bottom:10px">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblstreet">Street/Building:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtstreetlocal" placeholder="Enter street/building here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lbladdress1">Address1:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtaddress1local" placeholder="Enter address1 here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lbladdress2">Address2:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtaddress2local" placeholder="Enter address here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lbladdress3">Address3:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtaddress3local" placeholder="Enter address3 here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblstate">State:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtState" placeholder="Choose state.." class="form-control" style="background-color:white;width:100%;">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblofficeemail">Zipcode:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="number" id="txtzipcodelocal" maxlength="5" placeholder="Enter zipcode here.." onkeypress="javascript:return isNumber(event)" class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                                                                                                                                                              <div class="form-group">
+                                            <label id="lblpermenentadress" class="col-sm-2">Permenent Address</label>
+                                        </div>
+                                        <label class="col-sm-3 control-label" id="lblsameasabove" style="padding-top: 3px;">Same as above:</label>
+                                        <div class="col-sm-3">
+                                            <div class="switch">
+                                                <div class="onoffswitch">
+                                                    <input type="checkbox" checked class="onoffswitch-checkbox" id="chksameasabove">
+                                                    <label class="onoffswitch-label" for="chksameasabove">
+                                                        <span class="onoffswitch-inner"></span>
+                                                        <span class="onoffswitch-switch"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12" style="padding-top:10px; padding-bottom:10px">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblstreet">Street/Building:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtstreet" placeholder="Enter street/building here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lbladdress1">Address1:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtaddress1" placeholder="Enter address1 here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lbladdress2">Address2:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtaddress2" placeholder="Enter address here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lbladdress3">Address3:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtaddress3" placeholder="Enter address3 here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblstate">State:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtState1" placeholder="Choose state.." class="form-control" style="background-color:white;width:100%;">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblofficeemail">Zipcode:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="number" id="txtzipcode" maxlength="5" placeholder="Enter zipcode here.." class="form-control" onkeypress="javascript:return isNumber(event)" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="lbllocaladress" class="col-sm-4">Emergency Contact Details</label>
+                                        </div>
+                                        <div class="col-sm-12" style="padding-top:10px; padding-bottom:10px">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblemergencyname">Name:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtname" placeholder="Enter name here.." class="form-control" style="background-color:white;width:100%;">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lbladdress1">Address1:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtemgaddress1" placeholder="Enter address1 here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lbladdress3">Address2:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtemgaddress2" placeholder="Enter address2 here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="padding-right:10px">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblcontactno">Contact No:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="number" id="txtcontact" placeholder="Enter contact number here.." class="form-control" onkeypress="javascript:return isNumber(event)" style="background-color:white;width:100%;">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label" id="lblrealtionship">Relationship:</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="txtemgrelation" placeholder="Enter relationship here.." class="form-control" style="background-color:white;width:100%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="employmenthistorytab">
+                                    <div class="col-sm-12" style="padding-top:0px; padding-bottom:10px">
+                                        <div id="ListPage2" style="padding-top:15px;">
+                                            <div class="col-sm-12">
+                                                <div class="jqGrid_wrapper">
+                                                    <table id="tblemploymenthistory"></table>
+                                                    <div id="pagertblemploymenthistory"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="employmenthistorymodel" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <!-- dialog title -->
+                                                    <div class="modal-header" style="margin-top:1%;">
+                                                        <div class="modal-title">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title">Employment History</h4>
+                                                        </div>
+                                                    </div>
+                                                    <!-- dialog body -->
+                                                    <div class="modal-body" id="divContent">
+                                                        <div class="form-group col-sm-12">
+                                                            <label class="col-sm-5 control-label" id="lbldepartment">Department<font color="red">*</font> :</label>
+                                                            <div class="col-sm-6"><input type="text" id="txtdepartment" class="form-control" placeholder="Enter department here..." /></div>
+                                                        </div>
+                                                        <div class="form-group col-sm-12">
+                                                            <label class="col-sm-5 control-label" id="lbldesignation">Designation<font color="red">*</font> :</label>
+                                                            <div class="col-sm-6"><input type="text" id="txtdesignation" class="form-control" placeholder="Enter designation here..." /></div>
+                                                        </div>
+
+                                                        <div class="form-group col-sm-12">
+
+                                                            <label class="col-sm-5 control-label" id="lblactivedate">Date:</label>
+                                                            <div class="col-sm-6">
+                                                                <div class="input-group date txtdob1">
+                                                                    <span class="input-group-addon" id="divtxtdob"><i class="fa fa-calendar"></i></span>
+                                                                    <input type="text" id="txtdob1" class="form-control" placeholder="Choose Date" readonly="readonly" style="background-color:white">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div>&nbsp;</div>
+                                                        <!-- dialog buttons -->
+                                                        <div class="modal-footer">
+                                                            <button type="button" class=" btn btn-primary" id="btnsubmit1">Submit And Continue</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ListPage1">
+                    <div class="col-sm-12">
+                        <div class="ibox-content" style="padding-top:15px;padding-right: 7px;">
+                            <div class="jqGrid_wrapper main">
+                                <table id="tblEmpListGrid"></table>
+                                <div id="pagertblEmpListGrid"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="loadingDiv" style="display: none;">
+                    <img id="myImage" src="~/Content/Image/loading_spinner.gif">
+                </div>
+
+
+            </div>
+            <input type="hidden" id="hdnexprowidfresher" />
+            <input type="hidden" id="hdnexprowid" />
+            <input type="hidden" id="hdnempid" />
+            <input type="hidden" id="hdnfamilyrowid" />
+        </div>
+    </div>
+</form>
+<script>
+    var sImgFileNameEmp;
+    var ResultDesgn = [];
+    function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    }
+    function readURL(input) {
+
+
+        var fileType = input.files[0].name.split('.').pop(), allowdtypes = 'jpeg,jpg,png,gif,JPEG,JPG,PNG,GIF';
+        //if (allowdtypes.indexOf(fileType) < 0) {
+        //    msgalert("Error", 'Invalid file format,Please select an image file', 3);
+        //    return false;
+        //}
+        if (input.files && input.files[0]) {
+            if (allowdtypes.indexOf(fileType) < 0) {
+                msgalert("Error", 'Invalid file format,Please select an image file', 3);
+                return false;
+            }
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#employeeimage')
+                    .attr('src', e.target.result)
+                    .width(200)
+                    .height(180);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        var filename = $('#employeeimg').prop("files")[0]['name'];
+        file = $("#employeeimg").get(0).files[0];
+        var formData = new FormData();
+        formData.append("sessionid", UserSession);
+        formData.append("empname", $("#txtfirstname").val() + $("#txtemplastname").val());
+        formData.append("employeeimg", file);
+        $.ajax({
+            type: "POST",
+            url: 'UploadProfilePic',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function (data) {
+                sImgFileNameEmp = data.fileName;
+                return sImgFileNameEmp;
+
+            },
+            error: function (data) {
+
+            }
+        });
+    }
+    function settabid(tab) {
+        tabid = tab.id;
+    }
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+    function SetPlusButton(GridId, PagerId, headerbutton, footerbutton) {
+        $('.ui-search-toolbar').hide();
+        $('#' + PagerId + '_right').css('width', '35px');
+        $('#' + PagerId + '_center').css('width', '100%');
+        //$('#' + PagerId + '_right').html('<table cellspacing="0" cellpadding="0" border="0" class="ui-pg-table navtable" style="float:left;table-layout:auto;"><tbody><td class="ui-pg-button ui-corner-all" title=""><div class="ui-pg-div"><i id="' + footerbutton + '" class="fa fa-plus text-md" style="margin:6px;"></i></div></td></tr></tbody></table>');
+        $('#gview_' + GridId).find('div').eq(0).find('a').remove();
+        $('#gview_' + GridId).find('div').eq(0).append('<i id="' + headerbutton + '" class="fa fa-plus text-md" style="margin:10px;color:#333;float:right;cursor:pointer"></i>');
+    }
+    function FamilyInfoListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+        colNames = ['Name', 'Date Of Birth', 'Phone No', 'Relation', 'Gender', '', '', ''],
+        colModel = [
+                { name: 'Name', index: 'Name', width: 230, align: "center", search: true },
+                { name: 'DOB', index: 'DOB', width: 220, align: "center", search: true },
+                { name: 'PhoneNo', index: 'PhoneNo', width: 160, align: "center", search: true },
+                { name: 'Relation', index: 'Relation', width: 170, align: "center", search: true },
+                { name: 'Gender', index: 'Gender', width: 170, align: "center", search: true },
+                { name: 'GenderId', index: 'GenderId', width: 10, align: "center", hidden: true },
+                { name: 'edit', index: 'edit', width: 80, sortable: false, formatter: editformatter, align: 'center', search: false },
+                { name: 'delete', index: 'delete', width: 80, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+        ];
+        var mydata = [];
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblfamilydetailsinfo', '#pagertblfamilydetailsinfo', 'Family Info', 200, 14, false, mydata, false);
+        SetPlusButton('tblfamilydetailsinfo', 'pagertblfamilydetailsinfo', 'btnaddFamilyInfo', '');
+    }
+    function EmploymentHistoryListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+        colNames = ['Department', 'Deignation', 'Date', '', ''],
+        colModel = [
+                { name: 'Department', index: 'Department', width: 330, align: "center", search: true },
+                { name: 'Deignation', index: 'Deignation', width: 320, align: "center", search: true },
+                { name: 'Date', index: 'Date', width: 260, align: "center", search: true },
+                { name: 'edit', index: 'edit', width: 80, sortable: false, formatter: editformatter, align: 'center', search: false },
+                { name: 'delete', index: 'delete', width: 80, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+        ];
+        var mydata = [];
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblemploymenthistory', '#pagertblemploymenthistory', 'Employment History', 200, 14, false, mydata, false);
+        // SetPlusButton('tblemploymenthistory', 'pagertblemploymenthistory', 'btnsubmitemloymenthistory', '');
+    }
+    function ExperienceInfoListGridExperienced() {
+        var oJQGridFunctions = new JQGridFunctions();
+        colNames = ['Company', 'Location', 'Designation', 'Experience', 'Reference', 'Phone No', '', '', ''],
+        colModel = [
+                { name: 'Company', index: 'Company', width: 150, align: "center", search: true },
+                { name: 'Location', index: 'Location', width: 150, align: "center", search: true },
+                { name: 'Designation', index: 'Designation', width: 150, align: "center", search: true },
+                { name: 'Experience', index: 'Experience', width: 120, align: "center", search: true },
+                { name: 'Reference', index: 'Reference', width: 150, align: "center", search: true },
+                { name: 'PhoneNo', index: 'PhoneNo', width: 125, align: "center", search: true },
+                { name: 'ExperienceTypeId', index: 'ExperienceTypeId', width: 80, align: "center", hidden: true },
+                { name: 'edit', index: 'edit', width: 65, sortable: false, formatter: editformatter, align: 'center', search: false },
+                { name: 'delete', index: 'delete', width: 65, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+
+        ];
+        var mydata = [];
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblexperienceinforxperienced', '#pagertblexperienceinforxperienced', 'Experience Info', 110, 14, false, mydata, false);
+        SetPlusButton('tblexperienceinforxperienced', 'pagertblexperienceinforxperienced', 'btnaddExperienceInfo', '');
+    }
+    function ExperienceInfoListGridFresher() {
+        var oJQGridFunctions = new JQGridFunctions();
+        colNames = ['Reference Name', 'Phone No', '', ''],
+        colModel = [
+                { name: 'Reference', index: 'Reference', width: 335, align: "center", search: true },
+                { name: 'PhoneNo', index: 'PhoneNo', width: 335, align: "center", search: true },
+                { name: 'edit', index: 'edit', width: 150, sortable: false, formatter: editformatter, align: 'center', search: false },
+                { name: 'delete', index: 'delete', width: 150, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+        ];
+        var mydata = [];
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblexperienceinfofresher', '#pagertblexperienceinfofresher', 'Fresher Info', 110, 14, false, mydata, false);
+        SetPlusButton('tblexperienceinfofresher', 'pagertblexperienceinfofresher', 'btnaddExperienceInfofresher', '');
+    }
+
+    function SetFilterDates() {
+        $('.input-group.date').datepicker({
+            //todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "dd/mm/yyyy",
+            todayHighlight: false,
+            //startDate: cudt,
+            // endDate: cudt
+        });
+        $('.input-group.date.txtemploymentstartdate').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+
+            //startDate: cudt,
+            // endDate: cudt
+        });
+        $('.input-group.date.txtprobationenddate').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+        });
+        $('.input-group.date.txtdob').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+        });
+        //var cudt = new Date();
+        //$(".input-group.date.txtemploymentstartdate").datepicker("setDate", cudt);
+        var d = new Date();
+        $(".input-group.date.txtemploymentstartdate").datepicker("setDate", d);
+        d.setYear(d.getFullYear() - 18);
+        $(".input-group.date.txtdob").datepicker("setEndDate", d);
+    }
+
+    function EmployeeMasterPageLoad() {
+        var sData1 = [], sData2 = [];
+        var strJsonData = eval({ CurrentUser: 1, EmployeeId: 1 });
+        var Result = "";
+        $.ajax({
+            url: "GetEmployeeMasterPageLoad",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(strJsonData),
+            success: function (data) {
+                var ResultLocation = jQuery.parseJSON(data.strLocation);
+                var ResultGeneric = jQuery.parseJSON(data.strGeneric);
+                var ResultDept = jQuery.parseJSON(data.strDepart);
+                ResultDesgn = jQuery.parseJSON(data.strDesign);
+                var ResultEmp = jQuery.parseJSON(data.strEmploy);
+                var ResultCountry = jQuery.parseJSON(data.strNatonality);
+                // ----------------------------------- EMPLOYEE LOCATION --------------------------
+                if (ResultLocation != "" && ResultLocation != null) {
+                    //$('#ddllocation').empty().append();
+                    //$('#ddllocation').append('<option></option>');
+                    for (var i = 0; i < ResultLocation.length; i++) {
+                        $('#ddllocation').append('<option value="' + ResultLocation[i]["SM_STATION_ID"] + '">' + ResultLocation[i]["SM_STATION_NAME"] + '</option>');
+                    }
+                }
+                // ----------------------------------- EMPLOYEE Department --------------------------
+                if (ResultDept != "" && ResultDept != null) {
+                    //$('#ddldepartment').empty().append();
+                    //$('#ddldepartment').append('<option></option>');
+                    for (var i = 0; i < ResultDept.length; i++) {
+                        $('#ddldepartment').append('<option value="' + ResultDept[i]["dept_id"] + '">' + ResultDept[i]["display_value"] + '</option>');
+                    }
+                }
+                // ----------------------------------- EMPLOYEE Designation --------------------------
+                if (ResultDesgn != "" && ResultDesgn != null) {
+                    //$('#ddldesignation').empty().append();
+                    //$('#ddldesignation').append('<option></option>');
+                    for (var i = 0; i < ResultDesgn.length; i++) {
+                        $('#ddldesignation').append('<option value="' + ResultDesgn[i]["designation_id"] + '">' + ResultDesgn[i]["display_value"] + '</option>');
+                    }
+                }
+                // ----------------------------------- EMPLOYEE Generic Details --------------------------
+                if (ResultGeneric != "" && ResultGeneric != null) {
+                    //$('#ddltitle').empty().append();
+                    //$('#ddlreligion').empty().append();
+                    //$('#ddlbloodgroup').empty().append();
+                    //$('#ddlqualification').empty().append();
+                    //$('#ddlworkdaytype').empty().append();
+                    //$('#ddlemploymenttype').empty().append();
+                    //$('#ddlprobation').empty().append();
+                    //$('#ddlexperience').empty().append();
+                    //$('#ddlnoticeperiod').empty().append();
+                    for (var i = 0; i < ResultGeneric.length; i++) {
+                        var sEnukey = ResultGeneric[i]["enumeration_key"];
+                        var sEnuValue = ResultGeneric[i]["value"];
+                        var sEnuDispValue = ResultGeneric[i]["display_value"];
+                        if (sEnukey == 'Employee_Title') {
+                            $('#ddltitle').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        }
+                        else if (sEnukey == 'Religion') {
+                            $('#ddlreligion').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        }
+                        else if (sEnukey == 'Blood_Group') {
+                            $('#ddlbloodgroup').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        }
+                        else if (sEnukey == 'Highest_Qualification') {
+                            $('#ddlqualification').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        }
+                        else if (sEnukey == 'Work_Day_Type') {
+                            $('#ddlworkdaytype').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        }
+                        else if (sEnukey == 'Employment_Type') {
+                            $('#ddlemploymenttype').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        }
+                        else if (sEnukey == 'Probation_Period_Days') {
+                            $('#ddlprobation').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        }
+                        else if (sEnukey == 'Status') {
+                            $('#ddlstatus').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        }
+                        else if (sEnukey == 'Experience') {
+                            $('#ddlexperience').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        }
+                        else if (sEnukey == 'Notice_Period_Days') {
+                            $('#ddlnoticeperiod').append('<option value="' + sEnuValue + '">' + sEnuDispValue + '</option>');
+                        }
+
+                    }
+                }
+                // ----------------------------------- EMPLOYEES LIST --------------------------
+                if (ResultEmp != "" && ResultEmp != null) {
+                    //$('#ddlEmployRec').empty().append();
+                    //$('#ddlEmployRec').append('<option></option>');
+                    for (var i = 0; i < ResultEmp.length; i++) {
+                        var sFullName = ResultEmp[i]["EM_EMPLOYEE_NAME"] + ' ' + ResultEmp[i]["EM_EMP_FULL_NAME"]
+                        $('#ddlEmployRec').append('<option value="' + ResultEmp[i]["EM_EMPLOYEE_ID"] + '">' + sFullName + '</option>');
+
+                        $('#ddlEmployApp').append('<option value="' + ResultEmp[i]["EM_EMPLOYEE_ID"] + '">' + sFullName + '</option>');
+
+                    }
+                }
+                // ----------------------------------- EMPLOYEES Nationality --------------------------
+                if (ResultCountry != "" && ResultCountry != null) {
+                    //$('#ddlnationality').empty().append();
+                    //$('#ddlresidencecountry').empty().append();
+                    for (var i = 0; i < ResultCountry.length; i++) {
+
+                        $('#ddlnationality').append('<option value="' + ResultCountry[i]["value"] + '">' + ResultCountry[i]["display_value"] + '</option>');
+
+                        $('#ddlresidencecountry').append('<option value="' + ResultCountry[i]["value"] + '">' + ResultCountry[i]["display_value"] + '</option>');
+
+                    }
+                }
+
+            }
+        });
+    }
+    function ValidationEmail() {
+        var ValidationEmail = false;
+        ValidationEmail = validateEmail($("#txtemail").val());
+        if (!ValidationEmail) {
+            document.getElementById('txtemail').style.borderColor = "red";
+            $('#txtemail').focus();
+            msgalert('Warning', 'Please enter a valid email and continue..!', 2);
+            return false;
+        }
+    }
+    function Reset() {
+        $('#ddlnationality').val(1).change();
+    }
+
+    function ClearExperienceInfo() {
+        $("#txtcompany").val("");
+        $("#txtcompanylocation").val("");
+        $("#txtdesignation").val("");
+        $("#txtprevexperience").val("");
+        $("#ddlprevexp")[0].selectedIndex = 0;
+        $("#txtempreference").val("");
+        $("#txtrefphoneno").val("");
+    }
+    function ClearExperienceFresher() {
+        $("#txtfresherreference").val("");
+        $("#txtphoneno").val("");
+    }
+
+    function PopulateFamilyInfo() {
+        var sName = $("#txtfamilymembername").val();
+        var sRelation = $("#txtrelation").val();
+        var sPhoneNo = $("#txtfamilyphoneno").val();
+        var sDob = $("#txtdob1").val();
+        var sGenderId = $("#ddlgender1").val();
+        var sGender = $("#ddlgender1 option:selected").text();
+        var RowIds = $('#tblfamilydetailsinfo').jqGrid('getDataIDs');
+        if (sName == "" || sName == null) {
+            msgalert('warning', 'Enter name to continue', 2);
+            return false;
+        }
+        if (sRelation == "" || sRelation == null) {
+            msgalert('warning', 'Enter relation to continue', 2);
+            return false;
+        }
+        var RowNo = $("#hdnfamilyrowid").val();
+        if ($("#hdnfamilyrowid").val() != "") {
+            $("#tblfamilydetailsinfo").jqGrid('setCell', RowNo, 'Name', sName);
+            $("#tblfamilydetailsinfo").jqGrid('setCell', RowNo, 'DOB', sDob);
+            $("#tblfamilydetailsinfo").jqGrid('setCell', RowNo, 'PhoneNo', sPhoneNo);
+            $("#tblfamilydetailsinfo").jqGrid('setCell', RowNo, 'Gender', sGender);
+            $("#tblfamilydetailsinfo").jqGrid('setCell', RowNo, 'Relation', sRelation);
+            $("#tblfamilydetailsinfo").jqGrid('setCell', RowNo, 'GenderId', sGenderId);
+            $("#hdnfamilyrowid").val("");
+            $("#familyinfomodel").modal("hide");
+        }
+        else {
+            var Datas = [];
+            var i = RowIds.length + 1;
+            Datas[i] = {
+                Name: sName, DOB: sDob, PhoneNo: sPhoneNo, GenderId: sGenderId,
+                Gender: sGender, Relation: sRelation
+            }
+            jQuery("#tblfamilydetailsinfo").jqGrid('addRowData', RowIds.length + 1, Datas[i]);
+        }
+        ClearFamilyInfo();
+    }
+
+
+
+    function ClearFamilyInfo() {
+        $("#txtfamilymembername").val("");
+        $("#txtfamilyphoneno").val("");
+        $("#txtrelation").val("");
+        $("#txtdob1").val("");
+        $("#ddlgender1")[0].selectedIndex = 0;
+
+    }
+
+    function EmployeeListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+        colNames = ['Employee Code', 'Employee Name', 'Email', '', '', '', '', ''],
+        colModel = [
+                { name: 'EmpCode', index: 'EmpCode', width: 300, align: "center", search: true },
+                { name: 'EmpName', index: 'EmpName', width: 320, align: "center", search: true },
+                { name: 'Email', index: 'Email', width: 250, align: "center", search: true },
+                { name: 'EmpId', index: 'EmpId', width: 80, align: "center", hidden: true },
+                { name: 'BranchId', index: 'BranchId', width: 80, align: "center", hidden: true },
+                { name: 'CompanyId', index: 'CompanyId', width: 80, align: "center", hidden: true },
+                { name: 'edit', index: 'edit', width: 125, sortable: false, formatter: editformatter, align: 'center', search: false },
+                { name: 'delete', index: 'delete', width: 125, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+        ];
+        var mydata = PopulateEmployeeListGrid();
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblEmpListGrid', '#pagertblEmpListGrid', 'Employee List', 295, 14, false, mydata, false);
+    }
+
+    function PopulateEmployeeListGrid() {
+
+        var sCondition = " where delete_status=0 order by emp_ref_code desc";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectTfsEmployeeList");
+        var Datas = [];
+        if (Result != '' && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                var sEmpFName = Result[i].emp_first_name;
+                var sEmpLName = Result[i].emp_last_name;
+                var sFullName = '';
+                if (sEmpLName != null)
+                    sFullName = sEmpFName + ' ' + sEmpLName;
+                else
+                    sFullName = sEmpFName;
+
+                Datas[i] = {
+                    EmpCode: Result[i].emp_ref_code,
+                    EmpName: sFullName,
+                    Email: Result[i].email_id,
+                    CompanyId: Result[i].emp_comp_id,
+                    EmpId: Result[i].emp_ref_no,
+                };
+            }
+            return Datas;
+        }
+    }
+
+
+    function PopulateExperienceInfoFresher() {
+        var sReference = $("#txtfresherreference").val();
+        var sPhoneNo = $("#txtphoneno").val();
+        var RowIds = $('#tblexperienceinfofresher').jqGrid('getDataIDs');
+        if (sReference == "" || sReference == null) {
+            msgalert('warning', 'Enter reference to continue', 2);
+            return false;
+        }
+        var RowNo = $("#hdnexprowidfresher").val();
+        if ($("#hdnexprowidfresher").val() != "") {
+
+            $("#tblexperienceinfofresher").jqGrid('setCell', RowNo, 'Reference', sReference);
+            $("#tblexperienceinfofresher").jqGrid('setCell', RowNo, 'PhoneNo', sPhoneNo);
+            $("#hdnexprowidfresher").val("");
+            $("#experiencefresherinfomodel").modal("hide");
+        }
+        else {
+            var Datas = [];
+            var i = RowIds.length + 1;
+            Datas[i] = {
+                Reference: sReference, PhoneNo: sPhoneNo
+            }
+            jQuery("#tblexperienceinfofresher").jqGrid('addRowData', RowIds.length + 1, Datas[i]);
+        }
+        ClearExperienceFresher();
+    }
+    function PopulateExperienceInfo() {
+        var sCompany = $("#txtcompany").val();
+        var sDesignation = $("#txtdesignation").val();
+        var sPrevExp = $("#txtprevexperience").val();
+        var sPrevExpId = $("#ddlprevexp").val();
+        if (sPrevExpId == 1) {
+            sPrevExp = sPrevExp + ' Months';
+        }
+        else {
+            sPrevExp = sPrevExp + ' Years';
+        }
+        var sLocation = $("#txtcompanylocation").val();
+        var sReference = $("#txtempreference").val();
+        var sRefPhoneNo = $("#txtrefphoneno").val();
+        var RowIds = $('#tblexperienceinforxperienced').jqGrid('getDataIDs');
+        if (sCompany == "" || sCompany == null) {
+            msgalert('warning', 'Enter company name to continue', 2);
+            return false;
+        }
+        if (sDesignation == "" || sDesignation == null) {
+            msgalert('warning', 'Enter designation to continue', 2);
+            return false;
+        }
+        if (sPrevExp == "" || sPrevExp == null) {
+            msgalert('warning', 'Enter previous experience to continue', 2);
+            return false;
+        }
+        var RowNo = $("#hdnexprowid").val();
+        if ($("#hdnexprowid").val() != "") {
+            $('#tblexperienceinforxperienced').jqGrid('setCell', RowNo, 'Company', sCompany);
+            $("#tblexperienceinforxperienced").jqGrid('setCell', RowNo, 'Location', sLocation);
+            $("#tblexperienceinforxperienced").jqGrid('setCell', RowNo, 'Designation', sDesignation);
+            $("#tblexperienceinforxperienced").jqGrid('setCell', RowNo, 'Experience', sPrevExp);
+            $("#tblexperienceinforxperienced").jqGrid('setCell', RowNo, 'ExperienceTypeId', sPrevExpId);
+            $("#tblexperienceinforxperienced").jqGrid('setCell', RowNo, 'Reference', sReference);
+            $("#tblexperienceinforxperienced").jqGrid('setCell', RowNo, 'PhoneNo', sRefPhoneNo);
+            $("#hdnexprowid").val("");
+            $("#experienceinfo").modal("hide");
+        }
+        else {
+            var Datas = [];
+            var i = RowIds.length + 1;
+            Datas[i] = {
+                Company: sCompany, Location: sLocation, Experience: sPrevExp,
+                ExperienceTypeId: sPrevExpId, Reference: sReference,
+                PhoneNo: sRefPhoneNo, Designation: sDesignation
+            }
+            jQuery("#tblexperienceinforxperienced").jqGrid('addRowData', RowIds.length + 1, Datas[i]);
+            ClearExperienceInfo();
+        }
+    }
+
+    function ClearPermenentAddress() {
+        $("#txtstreet").val("");
+        $("#txtaddress1").val("");
+        $("#txtaddress2").val("");
+        $("#txtaddress3").val("");
+        $("#txtState1")[0].selectedIndex = 0;
+        $("#txtzipcode").val("");
+
+    }
+
+    function isAlfa(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122)) {
+            return false;
+        }
+        return true;
+    }
+    //----------------------Insert into details tables----------------------------//
+
+    function InsertDetails(Exp_Id) {
+        var sHiddenEmpId = $("#hdnempid").val();
+        var sFresher = 0;
+        if (document.getElementById("chkfresher").checked == true) {
+            sFresher = 1;
+        }
+        if (document.getElementById("chkfresher").checked == false) {
+            sFresher = 0;
+        }
+
+        //--------insert into experienceinfo table--------------------------//
+
+        if (sFresher == 0) {
+            var RowIds = $('#tblexperienceinforxperienced').jqGrid('getDataIDs');
+
+            for (var i = 0; i < RowIds.length; i++) {
+
+                var CompanyName = $('#tblexperienceinforxperienced').getCell(RowIds[i], 'Company')
+                var Location = $('#tblexperienceinforxperienced').getCell(RowIds[i], 'Location')
+                var Designation = $('#tblexperienceinforxperienced').getCell(RowIds[i], 'Designation')
+                var Experience = $('#tblexperienceinforxperienced').getCell(RowIds[i], 'Experience')
+                var ReferenceName = $('#tblexperienceinforxperienced').getCell(RowIds[i], 'Reference');
+                var PhoneNumber = $('#tblexperienceinforxperienced').getCell(RowIds[i], 'Phonenumber');
+                if (CompanyName != "") {//ReferenceName != '' && PhoneNumber != '') {
+                    var strJsonDatas = eval({
+                        emp_exp_id: Exp_Id, emp_ref_no: sHiddenEmpId, company_name: CompanyName, location: Location, designation: Designation, experience: Experience, reference: ReferenceName, phone_number: PhoneNumber
+                    });
+                    var Result = oAPICall.InsertData(strJsonDatas, "CreateEmployeeMasterExperience");
+                   
+                }
+    
+
+            }
+        }
+        else {
+            var RowIds = $('#tblexperienceinfofresher').jqGrid('getDataIDs');
+            for (var i = 0; i < RowIds.length; i++) {
+                var ReferenceName = $('#tblexperienceinfofresher').getCell(RowIds[i], 'Reference');
+                var PhoneNumber = $('#tblexperienceinfofresher').getCell(RowIds[i], 'PhoneNo');
+                if (ReferenceName != '' && PhoneNumber != '') {
+                    var strJsonDatas = eval({
+                        emp_exp_id: Exp_Id, emp_ref_no: sHiddenEmpId, reference: ReferenceName, phone_number: PhoneNumber
+                    });
+                    var Result1 = oAPICall.InsertData(strJsonDatas, 'CreateEmployeeMasterExperience');
+
+                }
+            }
+        }
+
+        //-----------------insert into family table--------------------//
+
+        var RowIds = $('#tblfamilydetailsinfo').jqGrid('getDataIDs');
+        for (var i = 0; i < RowIds.length; i++) {
+            var sDob = $("#tblfamilydetailsinfo").getCell(RowIds[i], 'DOB');
+            if (sDob != "") {
+                sDob = formatedatetoDB(sDob);
+            }
+            var RelationName = $('#tblfamilydetailsinfo').getCell(RowIds[i], 'name');
+            var RelationPhoneNo = $('#tblfamilydetailsinfo').getCell(RowIds[i], 'phone_no');
+            var RelationAadharNo = $('#tblfamilydetailsinfo').getCell(RowIds[i], 'aadhar_no');
+            var RelStatusId = $('#tblfamilydetailsinfo').getCell(RowIds[i], 'status_id');
+            var RelationId = $('#tblfamilydetailsinfo').getCell(RowIds[i], 'relationship_id');
+            var GenderId = $('#tblfamilydetailsinfo').getCell(RowIds[i], 'gender_id');
+            var RelationIdNo = $('#tblfamilydetailsinfo').getCell(RowIds[i], 'relation_emp_id');
+            var Verified = $('#tblfamilydetailsinfo').getCell(RowIds[i], 'is_verified');
+            var Famfilename = $('#tblfamilydetailsinfo').getCell(RowIds[i], 'familyfile_name'); //FamFileName
+            if (RelationName != '') {
+                var strJsonDatas = eval({
+                    emp_ref_no: sHiddenEmpId, rel_name: RelationName, rel_with_emp: RelationId,
+                    rel_sex: GenderId, rel_date_of_birth: sDob, rel_phone_no: RelationPhoneNo, rel_aadhar_no: RelationAadharNo, rel_emp_id: RelationIdNo,
+                    rel_status: RelStatusId, is_verified: Verified, verified_by: CurrentUser, verified_remarks: 0, delete_status: 0
+
+                });
+                var Result = oAPICall.InsertData(strJsonDatas, "CreateEmployeeFamilyInfo");
+            }
+        }
+    }
+
+    function BindEmployeeDetails(EmpId) {
+        var sCondition = " where delete_status=0 and emp_ref_no='" + EmpId + "'";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectTfsEmployeeList");
+        if (Result != '' || Result != null) {
+            $("#DivEmpDet").removeClass("hidden");
+            document.getElementById("ttlEmpNo").innerHTML = Result[0].emp_ref_code;
+            document.getElementById("ttlEmpName").innerHTML = Result[0].emp_first_name;
+            var sTitle = Result[0].emp_title;
+            $("#ddltitle").val(sTitle).change();
+            $("#txtempcode").val(Result[0].emp_ref_code);
+            $("#txtfirstname").val(Result[0].emp_first_name);
+            $("#txtemplastname").val(Result[0].emp_last_name);
+            var sCompany = Result[0].emp_org_id;
+            $("#ddlcompany").val(sCompany).change();
+            var sBranch = Result[0].emp_comp_id;
+            $("#ddllocation").val(sBranch).change();
+            var sDOB = Result[0].date_of_birth;
+            if (sDOB != '' && sDOB != null) {
+                sDOB = dateFormat(new Date(sDOB), 'dd/mm/yyyy');
+            }
+            $("#txtdob").val(sDOB);
+            var sBloodGroup = Result[0].blood_group;
+            $("#ddlbloodgroup").val(sBloodGroup).change();
+            var sReligion = Result[0].religion;
+            $("#ddlreligion").val(sReligion).change();
+            var sGender = Result[0].gender;
+            $("#ddlgender").val(sGender).change();
+            var sQualification = Result[0].emp_highest_qualfication;
+            $("#ddlqualification").val(sQualification).change();
+            $("#txteduspecificaton").val(Result[0].emp_highest_qual_remarks);
+            var sMaritalstatus = Result[0].maritial_status;
+            $("#ddlmaritalstatus").val(sMaritalstatus).change();
+            var sImgPath = Result[0].file_path;
+            var sImgName = Result[0].file_name;
+            if (sImgPath != "../Content/Employee/EmployeeImages/undefined" && sImgPath != null && sImgPath != "../Content/Employee/EmployeeImages/") {
+                $('#employeeimage').attr('src', sImgPath).width(200).height(180);
+                $('#hdnempimg').val(sImgName);
+
+            } else {
+                $('#employeeimage').attr('src', '../content/image/avatar.png').width(200).height(180);
+                //$('#hdnempimg').val('../content/image/avatar.png');
+            }
+
+            $("#txtpancardno").val(Result[0].pan_card_no);
+
+            $("#txtlanguages").val(Result[0].languages_known);
+            $("#txtpassport").val(Result[0].passport_number);
+            var sPassportVal = Result[0].passport_validity;
+            if (sPassportVal != '' && sPassportVal != null) {
+                sPassportVal = dateFormat(new Date(sPassportVal), 'dd/mm/yyyy');
+            }
+            $("#txtpassportval").val(sPassportVal);
+            var snationality = Result[0].nationality;
+            $("#ddlnationality").val(snationality).change();
+            var sresidentcountry = Result[0].residence_country;
+            $("#ddlresidencecountry").val(sresidentcountry).change();
+            $("#txtmobileno").val(Result[0].mobile_number);
+            $("#txtaltermob").val(Result[0].alternate_mobile_number);
+            $("#txtphno").val(Result[0].phone_number);
+            $("#txtemail").val(Result[0].email_id);
+            $("#txtofficenumber").val(Result[0].office_phone_no);
+            $("#txtofficeemail").val(Result[0].office_email_id);
+            $("#txtstreetlocal").val(Result[0].local_street);
+            $("#txtaddress1local").val(Result[0].local_level);
+            $("#txtaddress2local").val(Result[0].local_unit);
+            $("#txtaddress3local").val(Result[0].local_country);
+            var sLocalState = Result[0].local_state;
+            $("#txtState").val(sLocalState);
+            $("#txtzipcodelocal").val(Result[0].local_postal_code);
+            $("#txtstreet").val(Result[0].foreign_street);
+            $("#txtaddress1").val(Result[0].foreign_level);
+            $("#txtaddress2").val(Result[0].foreign_unit);
+            $("#txtaddress3").val(Result[0].foreign_country);
+            var sPermenentState = Result[0].foreign_state;
+            $("#txtState1").val(sPermenentState);
+            $("#txtzipcode").val(Result[0].foreign_postal_code);
+            $("#txtname").val(Result[0].emrergency_contact_name);
+            $("#txtemgaddress1").val(Result[0].emrergency_contact_address);
+            $("#txtemgaddress2").val(Result[0].emergency_contact_level);
+            $("#txtcontact").val(Result[0].emrergency_contact_number);
+            $("#txtemgrelation").val(Result[0].emergency_contact_relationship);
+
+            $("#txttotalexperiance").val(Result[0].total_experience);
+            var sTotalExpid = Result[0].total_experience_type;
+            if (sTotalExpid != '' && sTotalExpid != null) {
+                $("#ddlexperience").val(sTotalExpid).change();
+            }
+            else {
+                $("#ddlexperience").val(0).change();
+            }
+            var sDeptId = Result[0].empt_dept_id
+            $('#ddldepartment').val(sDeptId).change();
+            var sDesgId = Result[0].empt_desig_id
+            $('#ddldesignation').val(sDesgId).change();
+            var sSupvisorId = Result[0].supervisor_id
+            $('#ddlEmployRec').val(sSupvisorId).change();
+            var sApprovdId = Result[0].approver_id;
+            $('#ddlEmployApp').val(sApprovdId).change();
+            var sWorkDay = Result[0].work_day_type;
+            $('#ddlworkdaytype').val(sWorkDay).change();
+            var sEmpType = Result[0].empt_type;
+            $('#ddlemploymenttype').val(sEmpType).change();
+            var sEmpStartDate = Result[0].empt_start_date;
+            if (sEmpStartDate != '' && sEmpStartDate != null) {
+                sEmpStartDate = dateFormat(new Date(sEmpStartDate), 'dd/mm/yyyy');
+            }
+            $('#txtemploymentstartdate').val(sEmpStartDate);
+            var sProbPerid = Result[0].probation_period;
+            $('#ddlprobation').val(sProbPerid).change();
+            var sEmpStatus = Result[0].empt_status;
+            $('#ddlstatus').val(sEmpStatus).change();
+            var sNoticePeriod = Result[0].notice_period;
+            $('#ddlnoticeperiod').val(sNoticePeriod).change();
+            $('#txtnoticeperiod').val(Result[0].notice_period_in);
+            //$('#r1nightshift input:checked').val(night_shift);
+
+            var sIsShift = Result[0].night_shift;
+            if (sIsShift == 1)
+                $('#chkshift').prop('checked', true);
+            else
+                $('#chkshift').prop('checked', false);
+
+            var EndDate = AddDate(sEmpStartDate, sProbPerid);
+            $('#txtprobationenddate').val(EndDate);
+
+            jQuery('#tblexperienceinforxperienced').jqGrid('clearGridData');
+            jQuery('#tblexperienceinfofresher').jqGrid('clearGridData');
+            jQuery('#tblfamilydetailsinfo').jqGrid('clearGridData');
+            $("#hdnempid").val(Result[0].emp_ref_no);
+            BindExperienceInfo();
+            BindFamilyInfo();
+        }
+    }
+    function AddDate(StartDate, offset) {
+        var StDate = GetDateUnformated(StartDate, SelectedDateFormat)
+        var sYear = parseInt(StDate.getFullYear());
+        var sMonth = parseInt(StDate.getMonth() + 1);
+        var sDate = parseInt(StDate.getDate());
+        var sHour = parseInt(StDate.getHours());
+        var newDate;
+        sMonth = parseInt(sMonth) + parseInt(offset);
+        newDate = new Date(sYear, sMonth - 1, sDate);
+        newDate = FormatDate(newDate, 1);
+        newDate = GetDateFormated(newDate, SelectedDateFormat);
+        return newDate;
+    }
+
+    //-----------------------------------TFS EDIT ----------------------------
+    function BindExperienceInfo() {
+        var sEmpId = $("#hdnempid").val();
+        var sCondition = " where emp_ref_no='" + sEmpId + "'";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Results = oAPICall.SelectData(strJsonDatas, "SelectEmployeeExperience");
+        var Datas = [];
+        if (Results != '' && Results != null) {
+            var sIsFresher = Results[0].is_fresher;
+            if (sIsFresher == 1) {
+                $('#chkfresher').prop('checked', true);
+                $("#ddlexperience").prop('disabled', true);
+                for (var i = 0; i < Results.length; i++) {
+                    Datas[i] = {
+                        Reference: Results[i].reference, PhoneNo: Results[i].ref_phone_no
+                    }
+                    jQuery("#tblexperienceinfofresher").jqGrid('addRowData', i + 1, Datas[i]);
+                }
+                $("#txttotalexperiance").prop('disabled', true);
+                $("#ListPage3").hide();
+                $("#ListPage2").show();
+
+            } else {
+                $('#chkfresher').prop('checked', false);
+                for (var i = 0; i < Results.length; i++) {
+                    Datas[i] = {
+                        Company: Results[i].prev_exp_company, Location: Results[i].location, Designation: Results[i].designation,
+                        Experience: Results[i].experience, ExperienceTypeId: Results[i].prev_exp_type_id,
+                        Reference: Results[i].reference, PhoneNo: Results[i].ref_phone_no
+                    }
+                    jQuery("#tblexperienceinforxperienced").jqGrid('addRowData', i + 1, Datas[i]);
+                }
+                $("#ListPage3").show();
+                $("#ListPage2").hide();
+                $("#txttotalexperiance").prop('disabled', false);
+            }
+        }
+        else {
+            $("#ddlexperience").val(0);
+        }
+
+    }
+
+    function BindFamilyInfo() {
+        var sEmpId = $("#hdnempid").val();
+        var sCondition = " where emp_ref_no='" + sEmpId + "'";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result1 = oAPICall.SelectData(strJsonDatas, "SelectEmployeeFamilyInfo");
+        var Data = [];
+        if (Result1 != '' && Result1 != null) {
+            for (var i = 0; i < Result1.length; i++) {
+                var sFamilyDob = Result1[i].family_member_dob;
+                if (sFamilyDob != '' && sFamilyDob != null) {
+                    var sFamilyDob = dateFormat(new Date(sFamilyDob), 'dd/mm/yyyy');
+                }
+                Data[i] = {
+                    Name: Result1[i].family_member_name, DOB: sFamilyDob, Relation: Result1[i].family_member_relation,
+                    PhoneNo: Result1[i].family_member_phone_no, GenderId: Result1[i].family_member_gender, Gender: Result1[i].family_gender
+                }
+
+                jQuery("#tblfamilydetailsinfo").jqGrid('addRowData', i + 1, Data[i]);
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        $(window).bind('resize', function () {
+            var sWidth = $('.tab-content').width();
+            $('#tblfamilydetailsinfo').setGridWidth(sWidth - 20);
+            $('#tblexperienceinfofresher').setGridWidth(sWidth - 20);
+            $('#tblexperienceinforxperienced').setGridWidth(sWidth - 20);
+            $('#tblemploymenthistory').setGridWidth(sWidth - 20);
+        });
+        EmployeeMasterPageLoad();
+        Reset();
+        SetFilterDates();
+        FamilyInfoListGrid();
+        ExperienceInfoListGridFresher();
+        ExperienceInfoListGridExperienced();
+        EmploymentHistoryListGrid();
+        $("#ListPage2").show();
+        $("#ListPage3").hide();
+        $("#btnBack").hide();
+        $("#btnNew").show();
+        $("#ListPage1").hide();
+
+        $('#ddlemploymenttype').val(2).change();
+
+        $("#txttotalexperiance").prop('disabled', true);
+        $("#ddlexperience").prop('disabled', true);
+
+        $('#chksameasabove').prop('checked', false);
+
+        $('#chksameasabove').change(function () {
+            if (document.getElementById("chksameasabove").checked == true) {
+                $("#txtstreet").val($("#txtstreetlocal").val());
+                $("#txtaddress1").val($("#txtaddress1local").val());
+                $("#txtaddress2").val($("#txtaddress2local").val());
+                $("#txtaddress3").val($("#txtaddress3local").val());
+                $("#txtState1").val($("#txtState").val()).change();
+                $("#txtzipcode").val($("#txtzipcodelocal").val());
+            }
+            else {
+                ClearPermenentAddress();
+            }
+        });
+
+        $("#btnsubmitfresher").click(function () {
+            PopulateExperienceInfoFresher();
+        });
+        $("#btnsubmitexp").click(function () {
+            PopulateExperienceInfo();
+        });
+        $("#btnaddFamilyInfo").click(function () {
+            ClearFamilyInfo();
+            $("#familyinfomodel").modal({
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true
+            });
+        });
+        $("#btnsubmit1").click(function () {
+            PopulateFamilyInfo();
+        });
+
+        $("#txtemail").focusout(function () {
+            ValidationEmail();
+        });
+
+        $("#ddlprobation").click(function () {
+
+            var probstartDate = $('#txtemploymentstartdate').val();
+            if (probstartDate != null && probstartDate != "") {
+                var probcount = $('#ddlprobation').val();
+                var EndDate = AddDate(probstartDate, probcount);
+                $('#txtprobationenddate').val(EndDate);
+            }
+            else {
+                $('#txtprobationenddate').val('');
+                msgalert("Warning", "Please enter the employment start date", 2);
+            }
+        });
+
+        $("#btnEmpList").click(function () {
+            var sWidth = $('.tab-content').width();
+            $('#tblEmpListGrid').setGridWidth(sWidth - 20);
+
+            $("#btnBack").show();
+            $("#btnNew").hide();
+            $("#btnSave").hide();
+            $("#MainPage").hide();
+            $("#ListPage1").show();
+            EmployeeListGrid();
+
+            // EmployeeListGrid();
+        });
+
+        $("#btnBack").click(function () {
+            var sWidth = $('.main').width();
+            $('#tblfamilydetailsinfo').setGridWidth(sWidth - 20);
+            $('#tblexperienceinfofresher').setGridWidth(sWidth - 20);
+            $('#tblexperienceinforxperienced').setGridWidth(sWidth - 20);
+            $("#btnEmpList").show();
+            $("#btnBack").hide();
+            $("#btnNew").show();
+            $("#btnSave").show();
+            $("#MainPage").show();
+            $("#ListPage1").hide();
+        });
+
+        $("#ddldepartment").change(function () {
+            $('#ddldesignation option').remove();
+            if (ResultDesgn != "" && ResultDesgn != null) {
+                var sDeptId = $("#ddldepartment").val();
+                for (var i = 0; i < ResultDesgn.length; i++) {
+                    if (sDeptId == ResultDesgn[i]["department_id"])
+                        $('#ddldesignation').append('<option value="' + ResultDesgn[i]["designation_id"] + '">' + ResultDesgn[i]["display_value"] + '</option>');
+                }
+            }
+            $('#ddldesignation').change();
+        });
+        //$("#txtfirstname").keypress(function (event) {
+        //    var inputValue = event.charCode;
+        //    if (!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0)) {
+        //        event.preventDefault();
+        //    }
+        //});
+        //$("#txtemplastname").keypress(function (event) {
+        //    var inputValue = event.charCode;
+        //    if (!(inputValue >= 65 && inputValue <= 120) && (inputValue != 32 && inputValue != 0)) {
+        //        event.preventDefault();
+        //    }
+        //});
+
+        $('#chkfresher').change(function () {
+            if (document.getElementById("chkfresher").checked == true) {
+                $("#ListPage2").show();
+                $("#ListPage3").hide();
+                $("#txttotalexperiance").prop('disabled', true);
+                $("#ddlexperience").prop('disabled', true);
+            }
+            else {
+                $("#ListPage2").hide();
+                $("#ListPage3").show();
+
+                $("#txttotalexperiance").prop('disabled', false);
+                $("#ddlexperience").prop('disabled', false);
+
+            }
+        });
+        $("#btnaddExperienceInfofresher").click(function () {
+            ClearExperienceFresher();
+            $("#experiencefresherinfomodel").modal({
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true
+            });
+        });
+
+        $("#btnaddExperienceInfo").click(function () {
+            ClearExperienceInfo();
+            var sExp = $("#txttotalexperiance").val();
+            if (sExp != "" & sExp != null) {
+                $("#experienceinfo").modal({
+                    "backdrop": "static",
+                    "keyboard": true,
+                    "show": true
+                });
+            }
+            else {
+                msgalert("Warning", "Please enter total experience to continue..", 2);
+                return;
+            }
+        });
+
+
+        $("#btnSave").click(function () {
+            //check for validations
+            //if (document.getElementById('ddlcompany').value == "") {
+            //    document.getElementById('ddlcompany').style.borderColor = "red";// this adds the error class
+            //    msgalert('Error', 'Please select company and continue..!', 3);
+            //    $("#1_gen").trigger("click");
+            //    $('#ddlcompany').focus();
+            //    return;
+            //}
+            //if (document.getElementById('ddllocation').value == "") {
+            //    document.getElementById('ddllocation').style.borderColor = "red";// this adds the error class
+            //    msgalert('Error', 'Please select branch and continue..!', 3);
+            //    $("#1_gen").trigger("click");
+            //    $('#ddllocation').focus();
+            //    return;
+            //}
+
+            if (document.getElementById('txtfirstname').value == "") {
+                document.getElementById('txtfirstname').style.borderColor = "red";// this adds the error class
+                msgalert('Error', 'Please enter first name and continue..!', 3);
+                $("#1_gen").trigger("click");
+                $('#txtfirstname').focus();
+                return;
+            }
+            if (document.getElementById('txtemplastname').value == "") {
+                document.getElementById('txtemplastname').style.borderColor = "red";// this adds the error class
+                msgalert('Error', 'Please enter last name and continue..!', 3);
+                $("#1_gen").trigger("click");
+                $('#txtemplastname').focus();
+                return;
+            }
+            if (document.getElementById('ddlgender').value == "") {
+                document.getElementById('ddlgender').style.borderColor = "red";// this adds the error class
+                msgalert('Error', 'Please select gender and continue..!', 3);
+                $("#2_personal").trigger("click");
+
+                $('#ddlgender').focus();
+                return;
+            }
+            if (document.getElementById('txtdob').value == "") {
+                document.getElementById('txtdob').style.borderColor = "red";// this adds the error class
+                msgalert('Error', 'Please enter date of birth and continue..!', 3);
+                $("#2_personal").trigger("click");
+                // $('#txtdob').focus();
+                return;
+            }
+            if (document.getElementById('txtemail').value == "") {
+                document.getElementById('txtemail').style.borderColor = "red";// this adds the error class
+                msgalert('Error', 'Please enter email and continue..!', 3);
+                $("#3_contact").trigger("click");
+
+                $('#txtemail').focus();
+                return;
+            }
+            var ValidationEmail = false;
+            ValidationEmail = validateEmail($("#txtemail").val());
+            if (!ValidationEmail) {
+                document.getElementById('txtemail').style.borderColor = "red";
+                $('#txtemail').focus();
+                msgalert('Warning', 'Please enter a valid email and continue..!', 2);
+                return false;
+            }
+            var sHiddenEmpId = $("#hdnempid").val();
+
+            var sEmpCode = $("#txtempcode").val();
+            var sDOB = $("#txtdob").val();
+            sDOB = formatedatetoDB(sDOB);
+
+            var sPassportValidity = $("#txtpassportval").val();
+            if (sPassportValidity != "") {
+                sPassportValidity = formatedatetoDB(sPassportValidity);
+            }
+            var sFresher = 0;
+            if (document.getElementById("chkfresher").checked == true) {
+                sFresher = 1;
+            }
+            if (document.getElementById("chkfresher").checked == false) {
+                sFresher = 0;
+            }
+            //insert
+            // UploadProfilePics();
+            if (sHiddenEmpId == "" || sHiddenEmpId == null) {
+                var ValidationSuccess = false;
+                var condition1 = "where delete_status=0";
+                var strJsonDatas = eval({
+                    emp_ref_code: sEmpCode,
+                    emp_title: $("#ddltitle").val(),
+                    emp_first_name: $("#txtfirstname").val(),
+                    emp_last_name: $("#txtemplastname").val(),
+                    emp_org_id: $("#ddlcompany").val(),
+                    emp_comp_id: $("#ddllocation").val(),
+                    date_of_birth: sDOB,
+                    blood_group: $("#ddlbloodgroup").val(),
+                    religion: $("#ddlreligion").val(),
+                    gender: $("#ddlgender").val(),
+                    emp_highest_qualfication: $("#ddlqualification").val(),
+                    emp_highest_qual_remarks: $("#txteduspecificaton").val(),
+                    pan_card_no: $("#txtpancardno").val(),
+                    languages_known: $("#txtlanguages").val(),
+                    passport_number: $("#txtpassport").val(),
+                    passport_validity: sPassportValidity,
+                    nationality: $("#ddlnationality").val(),
+                    residence_country: $("#ddlresidencecountry").val(),
+                    maritial_status: $("#ddlmaritalstatus").val(),
+                    mobile_number: $("#txtmobileno").val(),
+                    alternate_mobile_number: $("#txtaltermob").val(),
+                    phone_number: $("#txtphno").val(),
+                    email_id: $("#txtemail").val(),
+                    office_phone_no: $("#txtofficenumber").val(),
+                    office_email_id: $("#txtofficeemail").val(),
+                    local_street: $("#txtstreetlocal").val(),
+                    local_level: $("#txtaddress1local").val(),
+                    local_unit: $("#txtaddress2local").val(),
+                    local_country: $("#txtaddress3local").val(),
+                    local_state: $("#txtState").val(),
+                    local_postal_code: $("#txtzipcodelocal").val(),
+                    foreign_street: $("#txtstreet").val(),
+                    foreign_level: $("#txtaddress1").val(),
+                    foreign_unit: $("#txtaddress2").val(),
+                    foreign_country: $("#txtaddress3").val(),
+                    foreign_state: $("#txtState1").val(),
+                    foreign_postal_code: $("#txtzipcode").val(),
+                    emrergency_contact_name: $("#txtname").val(),
+                    emrergency_contact_address: $("#txtemgaddress1").val(),
+                    emergency_contact_level: $("#txtemgaddress2").val(),
+                    emrergency_contact_number: $("#txtcontact").val(),
+                    emergency_contact_relationship: $("#txtemgrelation").val(),
+                    created_by: CurrentUser,
+                    created_date: CurrentDate,
+                    file_name: sImgFileNameEmp,
+                    file_path: "../Content/Employee/EmployeeImages/" + sImgFileNameEmp,
+                    delete_status: 0
+
+                });
+                var ResultEmp = oAPICall.InsertData(strJsonDatas, 'CreateTfsEmployeeMaster');
+                if (ResultEmp != "" && ResultEmp != null) {
+                    sHiddenEmpId = ResultEmp[0].IDENTITY;
+                    $("#hdnempid").val(sHiddenEmpId);
+                    var sIsEdit = 0;
+                    var EmpStartDate = $('#txtemploymentstartdate').val();
+                    EmpStartDate = formatedatetoDB(EmpStartDate);
+
+                    var sIsShift = 0;
+                    if (document.getElementById("chkshift").checked == true) {
+                        sIsShift = 1;
+                    }
+                    if (document.getElementById("chkshift").checked == false) {
+                        sIsShift = 0;
+                    }
+
+
+                    var sStrJsonDetail = eval({
+
+                        sIsEdit: 0,
+                        emp_ref_no: sHiddenEmpId,
+                        empt_org_id: $("#ddlcompany").val(),
+                        empt_comp_id: $("#ddllocation").val(),
+                        empt_dept_id: $('#ddldepartment').val(),
+                        empt_desig_id: $('#ddldesignation').val(),
+                        supervisor_id: $('#ddlEmployRec').val(),
+                        approver_id: $('#ddlEmployApp').val(),
+                        work_day_type: $('#ddlworkdaytype').val(),
+                        empt_type: $('#ddlemploymenttype').val(),
+                        empt_start_date: EmpStartDate,
+                        probation_period: $('#ddlprobation').val(),
+                        empt_status: $('#ddlstatus').val(),
+                        notice_period: $('#ddlnoticeperiod').val(),
+                        notice_period_in: $('#txtnoticeperiod').val(),
+                        night_shift: sIsShift,
+                        exp_type: sFresher,
+                        total_experience: $('#txttotalexperiance').val(),
+                        total_experience_in: $('#ddlexperience').val()
+
+                    });
+                    var ResultEmpDetail = "";
+                    var ResultEmpExp = "";
+                    $.ajax({
+                        url: "InsertEmployeeMasterDetail",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(sStrJsonDetail),
+                        success: function (data) {
+                            ResultEmpDetail = jQuery.parseJSON(data.strEmpDetail);
+                            ResultEmpExp = jQuery.parseJSON(data.strEmpExp);
+                            if (ResultEmpDetail != "" && ResultEmpDetail != null) {
+                                InsertDetails(ResultEmpExp[0]["emp_exp_id"]);
+                                msgalert('Success', 'Employee details added successfully', 1);
+                            }
+                        }
+                    });
+
+                }
+            }
+            else {
+                //-----------------------------For Update ------------------------------------------//
+                var ValidationSuccess = false;
+                var condition1 = "where delete_status=0";
+                var strJsonDatas = eval({
+                    emp_ref_code: sEmpCode,
+                    emp_title: $("#ddltitle").val(),
+                    emp_first_name: $("#txtfirstname").val(),
+                    emp_last_name: $("#txtemplastname").val(),
+                    emp_org_id: $("#ddlcompany").val(),
+                    emp_comp_id: $("#ddllocation").val(),
+                    date_of_birth: sDOB,
+                    blood_group: $("#ddlbloodgroup").val(),
+                    religion: $("#ddlreligion").val(),
+                    gender: $("#ddlgender").val(),
+                    emp_highest_qualfication: $("#ddlqualification").val(),
+                    emp_highest_qual_remarks: $("#txteduspecificaton").val(),
+                    pan_card_no: $("#txtpancardno").val(),
+                    languages_known: $("#txtlanguages").val(),
+                    passport_number: $("#txtpassport").val(),
+                    passport_validity: sPassportValidity,
+                    nationality: $("#ddlnationality").val(),
+                    residence_country: $("#ddlresidencecountry").val(),
+                    maritial_status: $("#ddlmaritalstatus").val(),
+                    mobile_number: $("#txtmobileno").val(),
+                    alternate_mobile_number: $("#txtaltermob").val(),
+                    phone_number: $("#txtphno").val(),
+                    email_id: $("#txtemail").val(),
+                    office_phone_no: $("#txtofficenumber").val(),
+                    office_email_id: $("#txtofficeemail").val(),
+                    local_street: $("#txtstreetlocal").val(),
+                    local_level: $("#txtaddress1local").val(),
+                    local_unit: $("#txtaddress2local").val(),
+                    local_country: $("#txtaddress3local").val(),
+                    local_state: $("#txtState").val(),
+                    local_postal_code: $("#txtzipcodelocal").val(),
+                    foreign_street: $("#txtstreet").val(),
+                    foreign_level: $("#txtaddress1").val(),
+                    foreign_unit: $("#txtaddress2").val(),
+                    foreign_country: $("#txtaddress3").val(),
+                    foreign_state: $("#txtState1").val(),
+                    foreign_postal_code: $("#txtzipcode").val(),
+                    emrergency_contact_name: $("#txtname").val(),
+                    emrergency_contact_address: $("#txtemgaddress1").val(),
+                    emergency_contact_level: $("#txtemgaddress2").val(),
+                    emrergency_contact_number: $("#txtcontact").val(),
+                    emergency_contact_relationship: $("#txtemgrelation").val(),
+                    created_by: CurrentUser,
+                    created_date: CurrentDate,
+                    file_name: sImgFileNameEmp,
+                    file_path: "../Content/Employee/EmployeeImages/" + sImgFileNameEmp,
+                    delete_status: 0
+
+                });
+                var sCondition = "where emp_ref_no=" + sHiddenEmpId + "";
+                var ResultEmp = oAPICall.UpdateData(strJsonDatas, 'UpdateTfsEmployeeMaster', sCondition);
+                if (ResultEmp != "" && ResultEmp != null) {
+
+                    var EmpStartDate = $('#txtemploymentstartdate').val();
+                    EmpStartDate = formatedatetoDB(EmpStartDate);
+
+                    var sIsShift = 0;
+                    if (document.getElementById("chkshift").checked == true) {
+                        sIsShift = 1;
+                    }
+                    if (document.getElementById("chkshift").checked == false) {
+                        sIsShift = 0;
+                    }
+                    var sStrJsonDetail = eval({
+                        emp_ref_no: sHiddenEmpId,
+                        empt_org_id: $("#ddlcompany").val(),
+                        empt_comp_id: $("#ddllocation").val(),
+                        empt_dept_id: $('#ddldepartment').val(),
+                        empt_desig_id: $('#ddldesignation').val(),
+                        supervisor_id: $('#ddlEmployRec').val(),
+                        approver_id: $('#ddlEmployApp').val(),
+                        work_day_type: $('#ddlworkdaytype').val(),
+                        empt_type: $('#ddlemploymenttype').val(),
+                        empt_start_date: EmpStartDate,
+                        probation_period: $('#ddlprobation').val(),
+                        empt_status: $('#ddlstatus').val(),
+                        notice_period: $('#ddlnoticeperiod').val(),
+                        notice_period_in: $('#txtnoticeperiod').val(),
+                        night_shift: sIsShift
+                    });
+                    var ResultDetail = oAPICall.UpdateData(sStrJsonDetail, 'UpdateTfsEmployeeDetail', sCondition);
+                    if (ResultDetail != "" && ResultDetail != null) {
+                        var ResultsDFam = oAPICall.DeleteData(strJsonDatas, "DeleteFamilyInfo", sCondition);
+                        var ResultsDeExp = oAPICall.DeleteData(strJsonDatas, "DeleteExpInfo", sCondition);
+                        InsertDetails();
+                        msgalert('Success', 'Employee details updated successfully', 1);
+                    }
+                }
+            }
+
+        });
+
+        $(document).delegate('#tblexperienceinforxperienced .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblexperienceinforxperienced').jqGrid('getDataIDs');
+            //var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                $("#experienceinfo").modal({
+                    "backdrop": "static",
+                    "keyboard": true,
+                    "show": true
+
+                });
+                $("#hdnexprowid").val($(this).attr('id'));
+                $('#txtcompany').val($('#tblexperienceinforxperienced').getCell(rowIds[rowid], 'Company'));
+                $('#txtcompanylocation').val($('#tblexperienceinforxperienced').getCell(rowIds[rowid], 'Location'));
+                $('#txtdesignation').val($('#tblexperienceinforxperienced').getCell(rowIds[rowid], 'Designation'));
+                var sExperience = $('#tblexperienceinforxperienced').getCell(rowIds[rowid], 'Experience');
+                $('#txtempreference').val($('#tblexperienceinforxperienced').getCell(rowIds[rowid], 'Reference'));
+                $('#txtrefphoneno').val($('#tblexperienceinforxperienced').getCell(rowIds[rowid], 'PhoneNo'));
+                var sExpId = $('#tblexperienceinforxperienced').getCell(rowIds[rowid], 'ExperienceTypeId');
+                var result = sExperience.split(" ");
+                var exp = result[0];
+                var pre = result[1];
+                if (pre == 'Months') {
+                    pre = 1;
+                }
+                else if (pre == 'Years') {
+                    pre = 2;
+                }
+                //  document.getElementById("textbox2").value = result[0];
+                // document.getElementById("textbox3").value = result[1];
+                $("#ddlprevexp").val(pre).change();
+
+                $("#txtprevexperience").val(exp);
+
+
+                //if (sExpId == 1) {
+                //    sExperience = sExperience * 12;
+                //}
+                //$("#ddlprevexp").val(sExpId).change();
+                //$("#txtprevexperience").val(sExperience);
+            }
+            else {
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              $('#tblexperienceinforxperienced').jqGrid('delRowData', rowid + 1);
+              msgalert('Success', 'Successfully Deleted', 1);
+          }
+          else {
+              return
+          }
+      });
+                return
+            }
+
+        });
+        $(document).delegate('#tblexperienceinfofresher .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblexperienceinfofresher').jqGrid('getDataIDs');
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                $("#experiencefresherinfomodel").modal({
+                    "backdrop": "static",
+                    "keyboard": true,
+                    "show": true
+
+                });
+                $('#txtfresherreference').val($('#tblexperienceinfofresher').getCell(rowIds[rowid], 'Reference'));
+                $('#txtphoneno').val($('#tblexperienceinfofresher').getCell(rowIds[rowid], 'PhoneNo'));
+                $("#hdnexprowidfresher").val($(this).attr('id'));
+            }
+            else {
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              $('#tblexperienceinfofresher').jqGrid('delRowData', rowid + 1);
+              msgalert('Success', 'Successfully Deleted', 1);
+
+          }
+          else {
+              return
+          }
+      });
+                return
+            }
+
+        });
+        $(document).delegate('#tblfamilydetailsinfo .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblfamilydetailsinfo').jqGrid('getDataIDs');
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                $("#familyinfomodel").modal({
+                    "backdrop": "static",
+                    "keyboard": true,
+                    "show": true
+                });
+                $('#txtfamilymembername').val($('#tblfamilydetailsinfo').getCell(rowIds[rowid], 'Name'));
+                $('#txtdob1').val($('#tblfamilydetailsinfo').getCell(rowIds[rowid], 'DOB'));
+                $('#txtfamilyphoneno').val($('#tblfamilydetailsinfo').getCell(rowIds[rowid], 'PhoneNo'));
+                $('#txtrelation').val($('#tblfamilydetailsinfo').getCell(rowIds[rowid], 'Relation'));
+                var sGender = $('#tblfamilydetailsinfo').getCell(rowIds[rowid], 'GenderId');
+                $("#ddlgender1").val(sGender).change();
+                $("#hdnfamilyrowid").val($(this).attr('id'));
+            }
+            else {
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              $('#tblfamilydetailsinfo').jqGrid('delRowData', rowid + 1);
+              msgalert('Success', 'Successfully Deleted', 1);
+          }
+          else {
+              return
+          }
+      });
+                return
+            }
+
+        });
+
+
+        //edit and delete of employee list grid
+        $(document).delegate('#tblEmpListGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblEmpListGrid').jqGrid('getDataIDs');
+            var rowid = parseInt($(this).attr('id') - 1);
+            var sEmpId = $('#tblEmpListGrid').getCell(rowIds[rowid], 'EmpId');
+            $("#hdnempid").val(sEmpId);
+            if ($(this).attr('action') == 'edit') {
+                $("#btnBack").hide();
+                $('#MainPage').show();
+                $('#ListPage1').hide();
+                $('#btnSave').show();
+                $("#btnNew").show();
+                $('#btnEmpList').show();
+                BindEmployeeDetails(sEmpId)
+                $("#1_gen").trigger("click");
+
+            }
+            else {
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              var sEmpId = $('#tblEmpListGrid').getCell(rowIds[rowid], 'EmpId')
+              var sStrJsonDatas = eval({ delete_status: 1 });
+              var sCondition = "where emp_ref_no=" + sEmpId;
+              var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateEmployeeMaster', sCondition);
+              if (Result != "" || Result != null) {
+                  var Condition = "where ref_no=" + sEmpId;
+                  var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateUserMaster', Condition);
+                  var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+                  var Results = oAPICall.DeleteData(strJsonDatas, "DeleteFamilyInfo");
+                  var Results1 = oAPICall.DeleteData(strJsonDatas, "DeleteExperienceInfo");
+                  var Results2 = oAPICall.DeleteData(strJsonDatas, "DeleteAssetsInfo");
+                  var Results3 = oAPICall.DeleteData(strJsonDatas, "DeleteDocumentsInfo");
+                  $('#tblEmpListGrid').jqGrid('delRowData', rowid);
+                  msgalert('Success', 'Successfully Deleted', 1);
+                  $('#tblEmpListGrid').jqGrid('GridUnload');
+                  EmployeeListGrid();
+              }
+          }
+          else {
+              return
+          }
+      });
+                return
+            }
+
+        });
+    });
+</script>

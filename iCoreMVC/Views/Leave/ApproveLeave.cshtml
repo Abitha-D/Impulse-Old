@@ -1,0 +1,326 @@
+﻿@{
+    ViewBag.Title = "ApproveLeave";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Approve Leave</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <link href="~/assets/global/plugins/icheck/skins/all.css" rel="stylesheet" />
+
+    <style>
+        .switch {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 50px;
+            text-align: center;
+            background: #00bc9c;
+            transition: all 0.2s ease;
+            border-radius: 25px;
+        }
+
+            .switch span {
+                position: absolute;
+                width: 20px;
+                height: 4px;
+                top: 50%;
+                left: 50%;
+                margin: -2px 0px 0px -4px;
+                background: #fff;
+                display: block;
+                transform: rotate(-45deg);
+                transition: all 0.2s ease;
+            }
+
+                .switch span:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 4px;
+                    height: 12px;
+                    margin-top: -8px;
+                    background: #fff;
+                    transition: all 0.2s ease;
+                }
+
+        input[type=radio] {
+            display: none;
+        }
+
+        .switch label {
+            cursor: pointer;
+            color: rgba(0,0,0,0.2);
+            width: 60px;
+            line-height: 50px;
+            transition: all 0.2s ease;
+        }
+
+        label[for=yes] {
+            position: absolute;
+            left: 0px;
+            height: 20px;
+        }
+
+        label[for=no] {
+            position: absolute;
+            right: 0px;
+        }
+
+        #no:checked ~ .switch {
+            background: #eb4f37;
+        }
+
+            #no:checked ~ .switch span {
+                background: #fff;
+                margin-left: -8px;
+            }
+
+                #no:checked ~ .switch span:after {
+                    background: #fff;
+                    height: 20px;
+                    margin-top: -8px;
+                    margin-left: 8px;
+                }
+
+        .font_class {
+            font-size: 15px;
+            padding-left: 15px;
+            color: black;
+        }
+
+        #yes:checked ~ .switch label[for=yes] {
+            color: #fff;
+        }
+
+        #no:checked ~ .switch label[for=no] {
+            color: #fff;
+        }
+
+        .noborder {
+            border: 0px;
+        }
+
+        select[disabled] {
+            background-color: blue;
+        }
+
+        .trashBin {
+            color: #E43A45;
+            border: 0px;
+            background-color: transparent;
+            padding: 8px;
+        }
+
+        .downFile {
+            color: #1BBC9B;
+            border: 0px;
+            background-color: transparent;
+            padding: 8px;
+        }
+
+        .eyeclass {
+            margin-top: 10px;
+            margin-left: 10px;
+            color: #398bc7;
+            font-size: 25px;
+        }
+
+        .centeralign {
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="page-container-bg-solid" ng-app="Leave" ng-cloak>
+    <div ng-controller="LeaveController" ng-init="GetPendingApproval(refNo)" ng-cloak>
+        <div class="portlet box red">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>Leave Approval List
+                </div>
+                <div class="tools">
+
+                </div>
+            </div>
+            <div class="portlet-body" style="overflow:auto" ng-cloak>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> Employee </th>
+                                <th> Employee Code </th>
+                                <th> Leave Type </th>
+                                <th> Start Date </th>
+                                <th> End Date </th>
+                                <th> Reason </th>
+                                <th> No of Leave </th>
+                                <th> Eligibility</th>
+                                <th> Action  </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="pl in PendingLeaves" ng-cloak>
+
+                                <td> {{pl.emp_first_name}} {{pl.emp_last_name}} </td>
+                                <td> {{pl.emp_ref_code}} </td>
+                                <td> {{pl.short_description}} </td>
+                                <td> {{pl.start_date}} </td>
+                                <td> {{pl.end_date}} </td>
+                                <td style="width: 350px;"> {{pl.reason}} </td>
+                                <td> {{pl.no_of_days}} </td>
+                                <td><i class="fa fa-eye eyeclass" id="{{pl.emp_ref_no}}" ng-click="GetLeaveEligible(pl.emp_ref_no)" aria-hidden="true" data-toggle="modal" data-target="#LeaveHistoryModal"></i></td>
+                                <td>
+                                    <div class="mt-action-buttons">
+                                        <div class="btn-group btn-group-circle">
+                                            <button type="button" id="{{pl.emp_ref_no}}" name="{{pl.leave_ent_ref_no}}" ng-click="openModal(pl.emp_ref_no, pl.leave_ent_ref_no,2)" class="btn btn-outline red btn-sm" data-toggle="modal" data-target="#ReasonModal">Reject</button>
+                                            <button type="button" id="{{pl.emp_ref_no}}" name="{{pl.leave_ent_ref_no}}" ng-click="openModal(pl.emp_ref_no, pl.leave_ent_ref_no,1,pl.leave_type_id,pl.no_of_days)" class="btn btn-outline green btn-sm" data-toggle="modal" data-target="#ReasonModal">Approve</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal fade" id="ReasonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-model="PendingLeaves.emp_ref_no">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="exampleModalLabel">Leave Status</h2>
+                            </div>
+                            <div class="modal-body">
+                                <label style="font-size:20px;">Reason</label>
+                                <input type="text" style="margin-left: 50px; height:30px; width: 400px; color: black;" id="txtReason" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" ng-click="LeaveApprove()">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="LeaveHistoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-model="PendingLeaves.emp_ref_no">
+                    <div class="modal-dialog" role="document" style="width: 700px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="exampleModalLabel">Taken and Balance Leave</h2>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th> Leave Type </th>
+                                            <th> PL </th>
+                                            <th> CL </th>
+                                            <th> 0.5 </th>
+                                            <th> COMP OFF </th>
+                                            <th> LOP </th>
+                                            <th> LOP 0.5 </th>
+                                            <th> Maternity </th>
+                                            <th> Medical </th>
+                                            <th> Prev Year </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-repeat="lc in empLeaveCount">
+                                        <tr class="centeralign">
+                                            <td class="centeralign"> Taken </td>
+                                            <td class="centeralign">{{lc.PL_taken}}</td>
+                                            <td class="centeralign">{{lc.CL_taken}}</td>
+                                            <td class="centeralign">{{lc.Half}}</td>
+                                            <td class="centeralign">{{lc.CompOff}}</td>
+                                            <td class="centeralign">{{lc.LossofPay}}</td>
+                                            <td class="centeralign">{{lc.LossofPay_Half}}</td>
+                                            <td class="centeralign">{{lc.Maternity}}</td>
+                                            <td class="centeralign">{{lc.Medical}}</td>
+                                            <td class="centeralign">{{lc.py_taken}}</td>
+                                        </tr>
+                                        <tr class="centeralign">
+                                            <td class="centeralign"> Balance </td>
+                                            <td class="centeralign">{{lc.PL_total}}</td>
+                                            <td class="centeralign">{{lc.CL_total}}</td>
+                                            <td class="centeralign">-</td>
+                                            <td class="centeralign">-</td>
+                                            <td class="centeralign">-</td>
+                                            <td class="centeralign">-</td>
+                                            <td class="centeralign">-</td>
+                                            <td class="centeralign">-</td>
+                                            <td class="centeralign">{{lc.py_balance}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+
+        </div>
+        <!-- END CONTAINER -->
+        <!--[if lt IE 9]>
+        <script src="~/assets/global/plugins/respond.min.js"></script>
+        <script src="~/assets/global/plugins/excanvas.min.js"></script>
+        <![endif]-->
+        <!-- BEGIN CORE PLUGINS -->
+        <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+        @*<script src="~/assets/pages/scripts/form-samples.min.js" type="text/javascript"></script>*@
+        @*<script src="~/assets/layouts/layout3/scripts/layout.min.js" type="text/javascript"></script>*@
+        @*<script src="~/assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>*@
+        <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+        <script src="~/assets/pages/scripts/components-date-time-pickers.min.js"></script>
+        <script src="~/assets/pages/scripts/components-date-time-pickers.js"></script>.
+
+    </div>
+    <script>
+
+        var refNo;
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        $(document).ready(function () {
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+        });
+
+    </script>
+</body>
+</html>
+<script src="~/Scripts/js/angular.min.js"></script>
+
+<script src="~/Scripts/AngularController/Leavecontroller.js"></script>

@@ -1,0 +1,721 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    .ui-state-highlight {
+        background: #c4e3fa !important;
+    }
+
+    .ui-jqgrid tr.ui-row-ltr td {
+        border-color: #c7c2c2;
+    }
+
+    #loadingDiv {
+        position: absolute;
+        top: 150px;
+        right: -475px;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 10000000;
+        opacity: 0.4;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="OrderAcceptBy" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">Order Accept By</span>
+                    <div class="ibox-tools">
+                        <div class="col-sm-4"></div>
+                        <label class="col-sm-2 control-label">Accepted By:</label>
+                        <div class="col-sm-2">
+                            <select style="width:100%" class="select2_demo_3 form-control" id="ddlStatus" data-placeholder="Choose a status...">
+                                <option value="0">--Select Accepted By --</option>
+                                <option value="-2">Software</option>
+                                <option value="-1">Employee</option>
+
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select style="width:100%" class="select2_demo_3 form-control" id="ddlEmployee" data-placeholder="Choose a employee...">
+                                <option></option>
+                            </select>
+                        </div>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+                        </strong>
+                        <a href="#">
+                            <i class="fa fa-refresh" id="btnRefresh" title="Refresh" onclick="parent.document.getElementById('framecontent').src = '../Process/OrderAcceptBy'"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="col-sm-12">
+
+                        @*<div class="col-sm-6">*@
+                        <div style="padding-top:15px" id="FirstPage">
+                            <!-- <div class="col-sm-12">-->
+                            @*<div class="form-group">*@
+
+                            <div class="col-sm-2">
+                                <label class="control-label">Client:</label>
+                                <select style="width:100%" class="select2_demo_3 form-control" id="ddlClient" data-placeholder="Choose a client...">
+                                    <option></option>
+
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <label class="control-label">SubClient:</label>
+                                <select style="width:100%" class="form-control" id="ddlSubClient" data-placeholder="Choose a subclient..."></select>
+                            </div>
+                            <div class="col-sm-2">
+                                <label class="control-label">From Date :</label>
+                                <div class="input-group date txtfromdate">
+                                    <span class="input-group-addon" id="divtxtdob"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" id="txtfromdate" class="form-control" value="" readonly="readonly" style="background-color:white">
+                                </div>
+
+                            </div>
+                            <div class="col-sm-2">
+                                <label class="control-label">To Date:</label>
+                                <div class="input-group date txttodate" style="width:140px">
+                                    <span class="input-group-addon" id="divtxtdob"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" id="txttodate" class="form-control" value="" readonly="readonly" style="background-color:white">
+                                </div>
+
+                            </div>
+                            @*<label class="col-sm-2 control-label">To Date:</label>*@
+                            @*<div class="col-sm-4">
+
+                                </div>*@
+                            <div class="col-sm-1">
+                                <label class="control-label">&nbsp;</label>
+                                <button type="button" id="btnSearchFiltr" style="padding-bottom: 5px;margin-top:26px;">
+                                    <span class=" glyphicon glyphicon-search">
+                                    </span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    @*<div class="col-sm-12">
+                            <div class="col-sm-6"></div>
+                            <label class="col-sm-2 control-label">Pic Status:</label>
+                            <div class="col-sm-2">
+                                <select style="width:100%" class="select2_demo_3 form-control" id="ddlPhotoReqStatus" data-placeholder="Choose a client...">
+                                    <option></option>
+
+                                </select>
+                            </div>
+                            <input type="button" id="btnSubmit" value="Save Changes" class="btn btnorder btnactive">
+
+                        </div>*@
+                    <div id="MainPage">
+                        <div class="col-sm-12">
+                            <div class="col-sm-2"></div>
+                            <div class="ibox-content">
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblOrderListGrid"></table>
+                                    <div id="pagerOrderListGrid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--Close div-->
+                </div>
+            </div>
+            <input type="hidden" id="hdnOrderId" />
+
+        </div>
+        <div id="loadingDiv" style="display: none;">
+            <img id="myImage" src="~/Content/Image/loading_spinner.gif">
+        </div><br>
+    </div>
+
+    <script type="text/javascript">
+
+        var ResultSubClientList;
+        var ResultEmpList;
+        function SetFilterdates() {
+            var cudt = new Date();
+            //cudt.setDate(cudt.getDate() + 3);
+            $('.input-group.date.txtfromdate').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: false,
+                autoclose: true,
+                format: "mm/dd/yyyy",
+                todayHighlight: false
+
+                //startDate: '-6m'
+                //startDate: new Date(),
+            });
+
+            $(".input-group.date.txttodate").datepicker("setDate", cudt);
+            $('.input-group.date.txttodate').datepicker("setEndDate", cudt);
+
+
+            $('.input-group.date.txttodate').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: false,
+                autoclose: true,
+                format: "mm/dd/yyyy",
+                todayHighlight: false,
+                //startDate: '-2m',
+                //startDate: new Date(),
+            });
+
+            var d = new Date($("#txttodate").val());
+            d.setDate(d.getDate() - 20);
+            $(".input-group.date.txtfromdate").datepicker("setDate", new Date(d));
+
+            //$('.input-group.date.txtfromdate').datepicker("setEndDate", cudt);
+            //$('.input-group.date.txtfromdate').datepicker("setStartDate", d);
+
+
+
+            //var dt = new Date(Result[0]["order_date"]);
+            //var sOrdDt = dt.format('mm/dd/yyyy');
+            //$('#txtOrderDate').val(sOrdDt);
+
+
+        }
+
+        //-----------------For grid-----------------
+        var ColumnNames = ['clientID', 'Client', 'Sub Client', 'Order No', 'Order Date', 'Subject Address', 'Type', 'Due', 'Portal',
+            'Assignee', 'Status', 'Current Status', 'Pic.Status','Accepted By', 'bts_order_id', 'emp_ref_no'];
+        var ColumnModel = [
+            { name: 'master_account_no', index: 'master_account_no', width: 40, sorttype: "string", hidden: true },
+            { name: 'CM_CUSTOMER_NAME', index: 'CM_CUSTOMER_NAME', width: 40, sorttype: "string", search: true },
+              { name: 'subclient', index: 'subclient', width: 40, sorttype: "string", search: true },
+            { name: 'order_id', index: 'order_id', width: 25, sorttype: "string", hidden: true },
+            { name: 'order_date', index: 'order_date', width: 40, sorttype: "string", search: true, formatter: DateFormat },
+             { name: 'subject_address', index: 'subject_address', width: 125, sorttype: "string", search: true },
+            { name: 'ordertypename', index: 'ordertypename', width: 30, sorttype: "string", align: 'center', search: true },
+             { name: 'due_date', index: 'due_date', width: 40, sorttype: "string", search: true, classes: 'duecolor' },
+            { name: 'portal_name', index: 'portal_name', width: 40, sorttype: "string", search: true },
+            { name: 'emp_first_name', index: 'emp_first_name', width: 40, sorttype: "string", hidden: true },
+
+            { name: 'status_desc', index: 'status_desc', width: 40, sorttype: "string", search: true },
+            { name: 'status_reason_desc', index: 'status_reason_desc', width: 40, sorttype: "string", hidden: true },
+            { name: 'photo_req_status_desc', index: 'photo_req_status_desc', width: 40, sorttype: "string", search: true },
+              { name: 'order_accepted_by', index: 'order_accepted_by', width: 40, sorttype: "string", search: true },
+        { name: 'bts_order_id', index: 'bts_order_id', width: 40, sorttype: "string", hidden: true },
+        { name: 'emp_ref_no', index: 'emp_ref_no', width: 40, sorttype: "string", hidden: true }];
+
+        function FormatDate(DateToFormat, IsReturnDateObject) {
+
+
+            try {
+
+                var ConvertedDate = null;
+
+                if (DateToFormat == null || DateToFormat == '')
+                    return null;
+
+                try {
+                    var m = DateToFormat.getMonth() + 1;
+                }
+                catch (ex) {
+                    DateToFormat = new Date(parseInt(DateToFormat.substr(6)));
+                }
+
+                if (IsReturnDateObject)
+                    return DateToFormat;
+                else {
+
+                    DateToFormatString = GetDateFormated(DateToFormat, SelectedDateFormat);
+                    return DateToFormatString;
+
+                }
+
+            }
+            catch (ex) {
+                return null;
+            }
+        }
+
+        function SplitDateTimeString(sFormat, sDateTime, sIsFormat) {
+
+            var sDay = '';
+            var sDate = '';
+            var iMonth = '';
+            var sMonth = '';
+            var sYear = '';
+            var shours = '';
+            var sMinutes = '';
+            var sSeconds = '';
+            var sMilliseconds = '';
+            var sParameterName = '';
+
+            if (sFormat == 'mm/dd/yy') {
+
+                if (sIsFormat == 0) {
+                    sDateTimeSplit = sDateTime.split('/');
+                    sDate = sDateTimeSplit[0];
+                    iMonth = sDateTimeSplit[1];
+                    sYear = sDateTimeSplit[2];
+
+                    //Sample Return String: 2015,05,23
+                    sParameterName = sYear + ',' + iMonth + ',' + sDate;
+
+                }
+                else if (sIsFormat == 1) {
+                    var dt1 = new Date(sDateTime);
+
+                    sDate = dt1.getDate();
+                    //iMonth = dt1.getMonth() + 1;
+
+                    iMonth = (dt1.getMonth() + 1).toString().length > 1 ? (dt1.getMonth() + 1).toString() : ('0' + (dt1.getMonth() + 1).toString());
+
+                    sYear = dt1.getFullYear();
+
+
+                    //Sample Return String: 23/05/2015
+                    sParameterName = iMonth + '/' + sDate + '/' + sYear;
+                }
+                else if (sIsFormat == 2) {
+
+                    var dt1 = new Date(sDateTime);
+
+                    sDate = dt1.getDate();
+                    iMonth = dt1.getMonth();
+
+                    //iMonth = (dt1.getMonth() + 1).toString().length > 1 ? (dt1.getMonth() + 1).toString() : ('0' + (dt1.getMonth() + 1).toString());
+
+                    sYear = dt1.getFullYear();
+                    sDay = dt1.getDay();
+
+                    //            shours = dt1.getHours();
+                    //            sMinutes = dt1.getMinutes();
+                    //            sSeconds = dt1.getSeconds();
+                    //            sMilliseconds = dt1.getMilliseconds();
+
+                    shours = 2;
+                    sMinutes = 3;
+                    sSeconds = 5;
+                    sMilliseconds = 551;
+
+                    //Sample Return String: 1 Jan 2011, 02:03:04.567
+                    sParameterName = sYear + ',' + iMonth + ',' + sDay + ',' + shours + ',' + sMinutes + ',' + sSeconds + ',' + sMilliseconds;
+                }
+
+            }
+
+            return sParameterName;
+
+        }
+
+        function GetDateFormated(sDateTime, dtFormat) {
+
+            try {
+
+
+                sDateTime = SplitDateTimeString(dtFormat, sDateTime, 1);
+                return sDateTime;
+            }
+            catch (ex) {
+                alert(ex.message);
+            }
+        }
+
+        function DateFormat(cellvalue, options, rowObject) {
+            if (cellvalue != '') {
+                //cellvalue = FormatDate(cellvalue, 1);
+                return GetDateFormated(cellvalue, 'mm/dd/yy');
+            }
+        }
+
+
+        function ListGrid(page, rows, searchqry) {
+
+            if (page == null) {
+                page = 0;
+            }
+            if (rows == null) {
+                rows = 100;
+            }
+            if (searchqry == null) {
+                searchqry = '';
+            }
+
+            $('#loading-indicator').show();
+            var sStartDate = $('#txtfromdate').val();
+            var sEndDate = $('#txttodate').val();
+            var sSearchType = $('#ddlStatus').val();
+            var sSearchClient = $('#ddlClient').val();
+            var sSubClient = $('#ddlSubClient').val();
+            var data = [];
+        
+            if (sStartDate != '' && sEndDate == '') {
+                msgalert("Error", 'Please choose end date', 3);
+                return;
+            }
+
+            var Condition = "where delete_status = 0  and  order_date>= '" + $('#txtfromdate').val() + "' and order_date<='" + $('#txttodate').val() + " 23:59:59.599 '" + searchqry + " order by order_id desc";
+            if (sSearchClient == "") {
+                msgalert("Warning", "Please choose an client and continue....", 2);
+                return;
+            }
+            if (sSearchType != 0) {
+                if (sSubClient != "" && sSubClient != null)
+                    var Condition = "where delete_status = 0  and master_account_no=" + sSearchClient + "  and hierarchy_id=" + sSubClient + "  and order_date>= '" + $('#txtfromdate').val() + "' and order_date<='" + $('#txttodate').val() + " 23:59:59.599 '" + searchqry + " order by order_id desc";
+                else
+                    var Condition = "where delete_status = 0  and master_account_no=" + sSearchClient + " and order_date>= '" + $('#txtfromdate').val() + "' and order_date<='" + $('#txttodate').val() + " 23:59:59.599 '" + searchqry + " order by order_id desc";
+
+            }
+            else if (sSearchType > 0) {
+                if (sSubClient != "" && sSubClient != null)
+                    var Condition = "where delete_status = 0 and master_account_no=" + sSearchClient + "  and hierarchy_id=" + sSubClient + " and status_id=" + sSearchType + " and  order_date>= '" + $('#txtfromdate').val() + "' and order_date<='" + $('#txttodate').val() + " 23:59:59.599 '" + searchqry + " order by order_id desc";
+                else
+                    var Condition = "where delete_status = 0 and master_account_no=" + sSearchClient + "  and status_id=" + sSearchType + " and  order_date>= '" + $('#txtfromdate').val() + "' and order_date<='" + $('#txttodate').val() + " 23:59:59.599 '" + searchqry + " order by order_id desc";
+
+            }
+            else if (sSearchType == 0) {
+                if (sSubClient != "" && sSubClient != null)
+                    var Condition = "where delete_status = 0 and master_account_no=" + sSearchClient + "  and hierarchy_id=" + sSubClient + " and order_date>= '" + $('#txtfromdate').val() + "' and order_date<='" + $('#txttodate').val() + " 23:59:59.599 '" + searchqry + "  order by order_id desc";
+                else
+                    var Condition = "where delete_status = 0 and master_account_no=" + sSearchClient + " and order_date>= '" + $('#txtfromdate').val() + "' and order_date<='" + $('#txttodate').val() + " 23:59:59.599' order by order_id desc";
+
+            }
+            else if (sSearchType > 0) {
+                if (sSubClient != "")
+                    var Condition = "where delete_status = 0 and master_account_no=" + sSearchClient + "  and hierarchy_id=" + sSubClient + " and status_id=" + sSearchType + " and  order_date>= '" + $('#txtfromdate').val() + "' and order_date<='" + $('#txttodate').val() + " 23:59:59.599 '" + searchqry + " order by order_id desc";
+                else
+                    var Condition = "where delete_status = 0 and master_account_no=" + sSearchClient + "  and status_id=" + sSearchType + " and  order_date>= '" + $('#txtfromdate').val() + "' and order_date<='" + $('#txttodate').val() + " 23:59:59.599 '" + searchqry + " order by order_id desc";
+
+            }
+
+            var pager_id = "pagerOrderListGrid";
+            var Datas = [];
+            var Result;
+
+            var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession, page: page, rows: rows, Table: 'OM_VW_ORDERLIST' });
+
+            //var grid = $('#tblOrderListGrid');
+
+            $.ajax({
+                type: "POST",
+
+                url: "GetJqGridData",
+                data: JSON.stringify(strJsonDatas),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var data = msg.Data;
+                    if (data == '[]') {
+                        WriteLog('No Records Found');
+                    }
+                    else if (data == null) {
+                        WriteLog('Unable to connect to server');
+                    }
+                    else {
+                        try {
+
+                            Result = jQuery.parseJSON(data);
+
+                        }
+                        catch (exception) {
+                            Result = null;
+                        }
+
+                        if (Result == null)
+                            WriteLog(data.toString());
+
+                    }
+
+                    if (Result != '' && Result != null) {
+
+                        Datas = Result;
+                    }
+
+                    //Create Grid for list------------------------------------------------------------------------------------------------------------
+
+                    var oJQGridFunctions = new JQGridFunctions();
+                    var grid = $('#tblOrderListGrid');
+                    jQuery(grid).jqGrid('clearGridData');
+                    var sMultiSelect = true;
+                    jQuery(grid).jqGrid({
+                        colNames: ColumnNames,
+                        colModel: ColumnModel,
+                        caption: 'Order List',
+                        //data: Datas,
+                        pager: '#' + pager_id,
+                        viewrecords: true,
+                        autowidth: false,
+                        shrinkToFit: true,
+                        multiselect: true,
+                        rownumbers: false,
+                        rowTotal: 100,
+                        rowNum: 100,
+                        rowList: [10, 30, 50, 100],
+                        //width: 1050,
+                        hidegrid: true,
+                        searchOperators: true,
+                        multipleSearch: true,
+                        ignoreCase: true,
+                        loadOnce: true,
+                    });
+
+                    gridbind(pager_id, grid, msg.Page, msg.TotalPage, msg.Total, Datas)
+                    if (Result == null) {
+                        msgalert("Warning", "No Datas Found....", 2);
+                        return;
+                    }
+                    FormateGrid();
+
+                    //sets the grid size initially
+                    //DataGrid.jqGrid('setGridWidth', parseInt($(window).width()) - 20);
+
+                }
+            });
+
+        }
+
+
+        function FormateGrid() {
+
+            $("#tblOrderListGrid").jqGrid('setGridParam',
+           {
+               loadComplete: function () {
+                   var rowIds = $('#tblOrderListGrid').jqGrid('getDataIDs');
+                
+                   for (i = 0; i < rowIds.length; i++) {//iterate over each row
+                       rowData = $('#tblOrderListGrid').jqGrid('getRowData', rowIds[i]);
+                       //set background style if ColValue === true\
+                       var sAcceptBy = rowData['order_accepted_by'];
+                       var sAcceptName = '';
+                       if (sAcceptBy == '-2') {
+                           sAcceptName = 'Software';
+                          // $('#tblOrderListGrid').jqGrid('setCell', i, 'order_accepted_by', sAcceptName);
+                       }
+                       else if (sAcceptBy > 0) {
+                           sAcceptName = 'By Employee';
+                           //$('#tblOrderListGrid').jqGrid('setCell', i, 'order_accepted_by', sAcceptName);
+                       }
+                       else if (sAcceptBy == "") {
+                           sAcceptName = '';
+                          
+                       }
+                       $('#tblOrderListGrid').jqGrid('setCell', rowIds[i], 'order_accepted_by', sAcceptName);
+                       sAcceptName = '';
+                       
+                   }
+
+               },
+
+           }).trigger('reloadGrid');
+        }
+
+        function OrderAcceptPageLoad() {
+
+            var strJsonData = eval({ CurrentUser: 1, EmployeeId: 1 });
+            var Result = "";
+            $.ajax({
+                url: "GetOrderAssignPageLoad",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(strJsonData),
+                success: function (data) {
+                    var ResultClientList = jQuery.parseJSON(data.strClientList);
+                    ResultSubClientList = jQuery.parseJSON(data.strClientList);
+                    ResultEmpList = jQuery.parseJSON(data.strEmpList);
+                    // ----------------------------------- Client List --------------------------
+                    if (ResultClientList != "" && ResultClientList != null) {
+                        for (var i = 0; i < ResultClientList.length; i++) {
+                            if (ResultClientList[i]["IsParent"] == 1)
+                                $('#ddlClient').append('<option value="' + ResultClientList[i]["CM_CUSTOMER_ID"] + '">' + ResultClientList[i]["CM_CUSTOMER_FULL_NAME"] + '</option>');
+                        }
+                    }
+       
+                }
+            });
+        }
+
+        function ProcAsign() {
+            var SelRowId = $('#tblOrderListGrid').jqGrid('getGridParam', 'selarrrow');
+            var sOrderID = '';
+            if (SelRowId.length > 0) {
+                for (var i = 0; i < SelRowId.length; i++) {
+                    var RowData = $("#tblOrderListGrid").jqGrid('getRowData', SelRowId[i]);
+                    sOrderID += RowData.order_id + ',';
+                }
+                sOrderID = sOrderID.replace(/,\s*$/, "");
+                var sOrderAccptBy = $('#ddlStatus').val();
+                if (sOrderAccptBy == -1) {
+                    sOrderAccptBy = $('#ddlEmployee').val();
+                }
+
+                var oAPICall = new APICall();
+                var sCurDate = new Date();
+                var Condition = "WHERE order_id in ( " + sOrderID + ")";
+                var StrJsonDatas = eval({
+                    order_accepted_by: sOrderAccptBy,
+                    update_date: sCurDate, update_by: EmpId
+                });
+                var Result = oAPICall.UpdateData(StrJsonDatas, 'UpdateClientOrder', Condition);
+                if (Result != null && Result != "") {
+                    msgalert('Success', 'Order Accepted By Marked Successfully....', 1);
+                    ListGrid();
+                }
+            }
+
+            else {
+                msgalert("Warning", "Please select atleast one order....", 2);
+                return;
+            }
+        }
+        $(document).ready(function () {
+            retdata = parent.$('#hdnUserDetails').val();
+            var userConfig = new UserConfig();
+            userConfig.InitilizeUserConfig(retdata);
+            $('#ddlEmployee').hide();
+
+            SetFilterdates();
+            OrderAcceptPageLoad();
+            var page = 0;
+            var rows = 100;
+            var searchqry = '';
+            var sCondition = "where delete_status=0 " + searchqry + " order by order_id desc";
+            var pager_id = "pagerOrderListGrid";
+            var Datas = [];
+            var Result;
+
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession, page: page, rows: rows, Table: 'OM_VW_ORDERLIST' });
+
+            //--------------------END--------------------------
+
+            //Create Grid for list------------------------------------------------------------------------------------------------------------
+
+            var oJQGridFunctions = new JQGridFunctions();
+            var grid = $('#tblOrderListGrid');
+            var sMultiSelect = false;
+            jQuery(grid).jqGrid({
+                colNames: ColumnNames,
+                colModel: ColumnModel,
+                caption: 'Order List',
+                pager: '#' + pager_id,
+                viewrecords: true,
+                //datatype: "local",
+                //mtype: 'GET',
+                autowidth: false,
+                shrinkToFit: true,
+                multiselect: true,
+                rownumbers: false,
+                rowTotal: 100,
+                rowNum: 100,
+                rowList: [10, 30, 50, 100],
+                width: $(window).innerWidth() - 25,
+                height: $(window).innerHeight() - 240,
+                hidegrid: true,
+                searchOperators: true,
+                multipleSearch: true,
+                ignoreCase: true,
+                loadOnce: true,
+            });
+
+            $(window).bind('resize', function () {
+                $('#tblOrderListGrid').setGridHeight($(window).innerHeight() - 240);
+                $('#tblOrderListGrid').setGridWidth($(window).innerWidth() - 25);
+
+            });
+
+            $('#ddlClient').change(function () {
+                var sIsSubClient = 0;
+                $('#ddlSubClient option').remove();
+                $('#ddlSubClient').val(0).change();
+                $('#ddlSubClient').empty().append('<option value="">-Select SubClient-</option>');
+                for (var i = 0; i < ResultSubClientList.length; i++) {
+                    if (ResultSubClientList[i]["ParentId"] == $('#ddlClient').val()) {
+                        $('#ddlSubClient').append('<option value="' + ResultSubClientList[i]["CM_CUSTOMER_ID"] + '">' + ResultSubClientList[i]["CM_CUSTOMER_FULL_NAME"] + '</option>');
+                        sIsSubClient = 1;
+                    }
+
+                }
+                if (sIsSubClient != 1) {
+                    $('#ddlSubClient option').remove();
+                    $('#ddlSubClient').val(0).change();
+                }
+
+            });
+            $('#btnSearchFiltr').click(function () {
+
+                ListGrid();
+            });
+
+
+           
+            $('#btnSave').click(function () {
+                var sStatus = $('#ddlStatus').val();
+                var sCurrentStatus = $('#ddlEmployee').val();
+                if (sStatus == 0) {
+                    msgalert("Warning", "Please choose accepted type..", 2);
+
+                    return;
+                }
+                if (sStatus == -1) {
+                    if (sCurrentStatus == 0) {
+                        msgalert("Warning", "Please choose employee and continue..", 2);
+                        
+                        return;
+                    }
+                    else {
+                        ProcAsign();
+                    }
+                }
+
+                else {
+                    ProcAsign();
+                }
+
+            });
+            $('#ddlStatus').change(function () {
+
+                if ($('#ddlStatus').val() == '-1') {
+                    $('#ddlEmployee option').remove();
+                    $('#ddlEmployee').val(0).change();
+                    $('#ddlEmployee').empty().append('<option value="0">-Select Employee-</option>');
+                    for (var i = 0; i < ResultEmpList.length; i++) {
+                        $('#ddlEmployee').append('<option value="' + ResultEmpList[i]["EM_EMPLOYEE_ID"] + '">' + ResultEmpList[i]["EM_EMPLOYEE_NAME"] + '</option>');
+                    }
+                    $('#ddlEmployee').show();
+                }
+                else {
+                    $('#ddlEmployee').hide();
+                    $('#ddlEmployee option').remove();
+                }
+
+               
+
+            });
+        });
+
+    </script>
+</form>

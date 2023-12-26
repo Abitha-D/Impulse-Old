@@ -1,0 +1,1218 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link href="~/Content/css/style.css" rel="stylesheet" />*@
+
+<style>
+    .col-width {
+        width: 17%;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    .select2-container--default.select2-container--disabled .select2-selection--single {
+        background-color: white;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        border-radius: 0;
+        border: 1px solid transparent;
+        margin-bottom: 10px;
+        background-color: #3289C8;
+        color: #FFF;
+    }
+
+    #loadingDiv {
+        position: absolute;
+        top: 150px;
+        right: -475px;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 10000000;
+        opacity: 0.4;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="CPD_Master" class="divbody">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">Photographer Profile</span>
+
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+
+                        </strong>
+                        <a href="#" title="List">
+                            <i class="fa fa-list" id="btnPhotoghrList"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnback"></i>
+                        </a>
+                    </div>
+                </div>
+                <div id="MainPage1">
+                    <div class="ibox-content" style="padding-top:15px">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Name<font color="red">*</font> :</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group ">
+                                        <div class="input-group-btn">
+                                            <select class="form-control" id="ddltitle" style="width:80px;">
+                                                <option value="1">Mr.</option>
+                                                <option value="2">Mrs.</option>
+                                                <option value="3">Ms.</option>
+                                            </select>
+                                        </div>
+                                        <input type="text" id="txtfullname" placeholder="Enter name here.." class="form-control" onkeypress="return onlyAlphabets(event,this);">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Email Id<font color="red">*</font> :</label>
+                                <div class="col-sm-9"><input type="email" id="txtemailid" placeholder="Enter email id here.." class="form-control">
+                                    <span id="spanResendMail"><i><a href="#" onclick="btnResendMail()"> <font color="blue"><b>Resend-Mail</b></font></a></i></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Gender:</label>
+                                <div class="col-sm-9">
+
+
+                                    <div class="input-group-btn">
+                                        <select class="form-control" id="ddlgender" style="width:100%;">
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">State:</label>
+                                <div class="col-sm-9">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlstate" data-placeholder="Choose a state...">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" style="display:none">
+                                <label class="col-sm-3 control-label">County:</label>
+                                <div class="col-sm-9">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlcounty" data-placeholder="Choose a county...">
+                                        <option></option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">City:</label>
+                                <div class="col-sm-9">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlcity" data-placeholder="Choose a city...">
+                                        <option></option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6" style="padding-right: 7px;">
+
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Address<font color="red">*</font> :</label>
+                                <div class="col-sm-9"><input type="text" id="txtaddress1" placeholder="Enter address1 here.." class="form-control" title="<< Enter Street No Street Name,City,State, Zipcode >>"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">ZipCode<font color="red">*</font> :</label>
+                                <div class="col-sm-9"><input type="text" id="txtzipcode" maxlength="5" placeholder="Enter zipcode here.." required="" class="form-control" min="1" onkeypress="return isNumber(event)" /></div>
+
+                            </div>
+                            <div class="form-group" style="display:none">
+                                <label class="col-sm-3 control-label">Address Line 2:</label>
+                                <div class="col-sm-9"><input type="text" id="txtaddress2" placeholder="Enter address2 here.." class="form-control"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Mobile No:</label>
+                                <div class="col-sm-9"><input type="number" id="txtmobileno" placeholder="Enter mobile No here.." min="0" class="form-control"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Phone No:</label>
+                                <div class="col-sm-9"><input type="number" id="txtphoneno" placeholder="Enter phone No here.." min="0" class="form-control"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="MainPage2">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>&nbsp;</h5> <span class="label ">Login Profile</span>
+                        <div class="ibox-tools">
+                            <a class="collapse-link" title="Minimize">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="ibox-content" style="padding-top:15px;padding-right: 7px;">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">UserName<font color="red">*</font> :</label>
+                                <div class="col-sm-9"><input type="text" id="txtusername" placeholder="Enter username here.." class="form-control"></div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div style="padding-right:20px;">
+                            <div class="form-group">
+                                <input type="button" class="btn pull-right" value="Save Changes" onclick="InsertPhotogrphrMaster()" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="ListPage">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper">
+                        <table id="tblPhotoListGrid"></table>
+                        <div id="pagerPhotogrid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="hdnPhtgrhrId" />
+        <input type="hidden" id="hdnLatitude" />
+        <input type="hidden" id="hdnLongitude" />
+        <input type="hidden" id="hdntemppasswd" />
+        <input type="hidden" id="hdnpasswd" />
+        <div id="MailData" style="visibility: hidden">
+        </div>
+        <div id="loadingDiv" style="display: none;">
+            <img id="myImage" src="~/Content/Image/loading_spinner.gif">
+        </div><br>
+
+    </div>
+</form>
+<script>
+    localStorage.setItem("PageID", "PhotographerMaster");
+    var sPhotoghId = '';
+    var sgEMailId = 0;
+    function show() {
+        document.getElementById("loadingDiv").style.display = "block";
+        // setTimeout("hide()", 7000);  // 5 seconds
+    }
+    function hide() {
+        document.getElementById("loadingDiv").style.display = "none";
+    }
+
+    function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    }
+
+    function btnResendMail() {
+        parent.swal({
+            title: "Are you sure to Resend Mail?",
+            //text: "" + text + "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#ED5565",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: true
+
+        },
+ function (isConfirm) {
+     if (isConfirm) {
+        show();
+
+        setTimeout(function () {
+
+            SendEMail();
+            hide();
+            msgalert('Success', 'Mail Send Successfully.', 1);
+            return;
+        }, 3000);
+            }
+            else {
+                return
+            }
+ });
+
+    }
+    function onlyAlphabets(e, t) {
+        try {
+            if (window.event) {
+                var charCode = window.event.keyCode;
+            }
+            else if (e) {
+                var charCode = e.which;
+            }
+            else { return true; }
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode == 32))
+                return true;
+            else
+                return false;
+        }
+        catch (err) {
+            alert(err.Description);
+        }
+    }
+
+    function BindState() {
+        $('#ddlstate').empty().append();
+        $('#ddlstate').append('<option></option>');
+        var Condition = "where delete_status=0";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsState");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlstate').append('<option value="' + Result[i]["state_id"] + '">' + Result[i]["state_name"] + '</option>');
+            }
+        }
+    }
+    function BindCounty() {
+        $('#ddlcounty').empty().append();
+        $('#ddlcounty').append('<option></option>');
+        var sStateId = $('#ddlstate').val();
+        var Condition = "where delete_status=0 and state_id=" + sStateId + "";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsCounty");
+
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlcounty').append('<option value="' + Result[i]["county_id"] + '">' + Result[i]["county_name"] + '</option>');
+            }
+        }
+    }
+    function BindCity() {
+        $('#ddlcity').empty().append();
+        $('#ddlcity').append('<option></option>');
+        var sStateId = $('#ddlstate').val();
+        var Condn = "where delete_status=0 and state_id=" + sStateId + "";
+        var strJsonDatas = eval({ strCondition: Condn, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsCity");
+
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlcity').append('<option value="' + Result[i]["city_id"] + '">' + Result[i]["city_name"] + '</option>');
+            }
+        }
+    }
+    function InsertPhotogrphrMaster() {
+
+        if (document.getElementById('txtfullname').value == "") {
+            document.getElementById('txtfullname').style.borderColor = "red";// this adds the error class
+            document.getElementById('txtfullname').focus();
+            msgalert('Warning', 'Please enter name and continue..!', 2);
+            return;
+        }
+        if (document.getElementById('txtemailid').value == "") {
+            document.getElementById('txtemailid').style.borderColor = "red";// this adds the error class
+            document.getElementById('txtemailid').focus();
+            msgalert('Warning', 'Please enter email id and continue..!', 2);
+            return;
+        }
+        var sEmail = $('#txtemailid').val();
+        if ($.trim(sEmail).length == 0) {
+            msgalert('Warning', 'Please enter valid email address!', 2);
+            return;
+        }
+        if (!validateEmail(sEmail)) {
+            msgalert('Warning', 'Invalid email address!', 2)
+            return;
+        }
+        if (document.getElementById('txtaddress1').value == "") {
+            document.getElementById('txtaddress1').style.borderColor = "red";// this adds the error class
+            msgalert('Warning', 'Please enter address and continue..!', 2);
+            document.getElementById('txtaddress1').focus();
+            return;
+        }
+        if (document.getElementById('txtzipcode').value == "") {
+            document.getElementById('txtzipcode').style.borderColor = "red";// this adds the error class
+            msgalert('Warning', 'Please enter zipcode and continue..!', 2);
+            document.getElementById('txtzipcode').focus();
+            return;
+        }
+        if (document.getElementById('txtusername').value == "") {
+            document.getElementById('txtusername').style.borderColor = "red";// this adds the error class
+            msgalert('Warning', 'Please enter username and continue..!', 2);
+            document.getElementById('txtusername').focus();
+            return;
+        }
+        var myVar = document.getElementById('txtfullname').value;
+        var myNum = +myVar;
+        if (!isNaN(myNum)) {
+            msgalert('Warning', 'Not allowed only numbers..', 2);
+            document.getElementById('txtfullname').style.borderColor = "red";
+            return;
+        }
+        var myVar1 = document.getElementById('txtusername').value;
+        var myNum = +myVar1;
+        if (!isNaN(myNum)) {
+            msgalert('Warning', 'Not allowed only numbers..', 2);
+            document.getElementById('txtusername').style.borderColor = "red";
+            return;
+        }
+        var myVar2 = document.getElementById('txtaddress1').value;
+        var myNum = +myVar2;
+        if (!isNaN(myNum)) {
+            msgalert('Warning', 'Not allowed only numbers..', 2);
+            document.getElementById('txtaddress1').style.borderColor = "red";
+            return;
+        }
+
+        var sPhtId = $('#hdnPhtgrhrId').val();
+        if (sPhtId <= 0 && sPhtId == "") {
+
+            var ValidationSuccess = false;
+            var sEmailId = $.trim($("#txtemailid").val());
+            var sSplitEmail = sEmailId.split(qRegdata);
+            ValidationSuccess = ValidateForDuplicationMail(sSplitEmail[0], sSplitEmail[1], 'ChkDupClientEmailId', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'Email id already exist.. Try another', 3);
+                document.getElementById('txtemailid').style.borderColor = "red";
+                return false;
+            }
+            var ValidationSuccess = false;
+            var sUserName = $('#txtusername').val();
+            ValidationSuccess = ValidateForDuplication(sUserName, 'ChkDupClientUserName', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'Username already exist.. Try another', 3);
+                document.getElementById('txtusername').style.borderColor = "red";
+                return false;
+            }
+        }
+        show();
+        setTimeout(function () {
+            InsertPhotogrphrMasterDetails();
+        }, 1000);
+    }
+
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        if (cellvalue == 1) {
+            return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-lock" title="Blocked" style="color:red"></i> </a>';
+        }
+        else {
+            return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-unlock-alt" title="UnBlock"style="color:blue"></i> </a>';
+        }
+    }
+
+    function PhotogrListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['Ref No.', 'PhotoGrapher', 'Client ', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'IsBlocked'],
+        colModel = [
+            { name: 'ref_no', index: 'ref_no', width: 80, align: "center", sorttype: "int", search: true },
+            { name: 'full_name', index: 'full_name', width: 150, align: "center", sorttype: false, search: true },
+            { name: 'client_name', index: 'client_name', width: 150, align: "center", sorttype: false, search: true },
+            { name: 'title', index: 'title', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'gender', index: 'gender', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'state_id', index: 'state_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'county_id', index: 'county_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'city', index: 'city', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'mobile_no', index: 'mobile_no', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'phone_no', index: 'phone_no', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'email_id', index: 'email_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'address1', index: 'address1', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'address2', index: 'address2', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'dob', index: 'dob', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'b_address', index: 'b_address', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'b_state', index: 'b_state', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'zipcode', index: 'zipcode', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'username', index: 'username', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false },
+            { name: 'isblocked', index: 'username', width: 80, align: "center", sorttype: "int", hidden: true }
+        ];
+
+        var mydata = PopulatePhotoghrData();
+
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblPhotoListGrid', '#pagerPhotogrid', 'Photographer List', 250, 10, false, mydata);
+
+    }
+
+    function PopulatePhotoghrData() {
+        if (access_level == 1) {
+            var sCondition = " WHERE user_type=2 order by 1 desc";  //user_type=2 is photographer
+        }
+        else {
+            var sCondition = " WHERE client_id=" + EmpId + " order by 1 desc";
+        }
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsClientPhtList");
+        if (Result != '' && Result != null) {
+            var sPhotoghrRt = [];
+            for (var i = 0; i < Result.length; i++) {
+                var sRefId = Result[i].ref_no;
+                var sPhtghrName = Result[i].full_name;
+                var sClientName = Result[i].client_name;
+                var sIsBlock = Result[i].delete_status;
+
+                sPhotoghrRt[i] = {
+                    ref_no: sRefId, full_name: sPhtghrName, client_name: sClientName, title: Result[i].title, gender: Result[i].gender, state_id: Result[i].state_id,
+                    county_id: Result[i].county_id, city: Result[i].city, mobile_no: Result[i].mobile_no, phone_no: Result[i].phone_no,
+                    address1: Result[i].address1, address2: Result[i].address2, zipcode: Result[i].zipcode, delete: sIsBlock,
+                    email_id: Result[i].email_id, dob: Result[i].dob, b_address: Result[i].b_address, b_state: Result[i].b_state, isblocked: sIsBlock
+                };
+            }
+            return sPhotoghrRt;
+
+        }
+    }
+
+
+    $(function () {
+
+        $("#btnSave").click(function () {
+
+            InsertPhotogrphrMaster();
+
+        });
+
+        $('#txtfullname').focusout(function () {
+            if (document.getElementById('txtfullname').value == "") {
+                document.getElementById('txtfullname').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtfullname').style.borderColor = "green";
+            }
+
+        });
+
+        $('#txtusername').focusout(function () {
+
+            if (document.getElementById('txtusername').value == "") {
+                document.getElementById('txtusername').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtusername').style.borderColor = "green";
+            }
+        });
+
+
+        $('#ddlstate').change(function () {
+            // BindCounty();
+
+            $('#ddlcity').val('').change();
+            BindCity();
+        });
+
+        $('#ddlcounty').change(function () {
+            BindCity();
+        });
+
+        $('#ddlcity').change(function () {
+            var sCity = $('#ddlcity option:selected').text();
+            var sAddress1 = $('#txtaddress1').val();
+            $.ajax({
+                url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + sAddress1 + sCity + "&sensor=false",
+                type: "POST",
+                success: function (res) {
+                    $('#hdnLatitude').val(res.results[0].geometry.location.lat);
+                    $('#hdnLongitude').val(res.results[0].geometry.location.lng);
+
+
+                }
+            });
+        });
+
+    });
+
+
+    function InsertPhotogrphrMasterDetails() {
+
+
+        var sPhtId = $('#hdnPhtgrhrId').val();
+        var sLatitude = $('#hdnLatitude').val();
+        var sLongitude = $('#hdnLongitude').val();
+
+        if (sPhtId <= 0 && sPhtId == "") {              // Create Mode
+
+            var sIsclient = 2 // 2 is Photographer;
+            var sMsgDesc = 'New photographer details added successfully'
+            var StrJsonDatas = eval({
+                title: $('#ddltitle').val(),
+                full_name: $('#txtfullname').val(),
+                user_type: sIsclient,
+                gender: $('#ddlgender').val(),
+                email_id: $('#txtemailid').val(),
+                state_id: $('#ddlstate').val(),
+
+                county_id: $('#ddlcounty').val(),
+                city: $('#ddlcity').val(),
+                address1: $('#txtaddress1').val(),
+                address2: $('#txtaddress2').val(),
+                mobile_no: $('#txtmobileno').val(),
+                phone_no: $('#txtphoneno').val(),
+                zipcode: $('#txtzipcode').val(),
+                latitude: sLatitude,
+                longitude: sLongitude,
+                delete_status: 0,
+                created_by: CurrentUser,
+                created_date: new Date()
+
+            });
+            var Result = oAPICall.InsertData(StrJsonDatas, 'CreateCpdMaster');
+            if (Result != null && Result != '') {
+                sPhtId = Result[0].IDENTITY;
+                $('#hdnPhtgrhrId').val(sPhtId);
+                InsertUserDetails(sPhtId);
+                InsertClientPhtghr(sPhtId);
+                SendEMail();
+                hide();
+                parent.document.getElementById('framecontent').src = '../Master/photographermaster';
+                if (sPhotoghId == -1) {
+                    parent.document.getElementById('framecontent').src = '../Master/UserSettings';
+                }
+                msgalert('Success', sMsgDesc, 1);
+                $('#spanResendMail').show();
+            }
+        }
+        else {
+
+
+            var sIsclient = 2 // 2 is Photographer;
+            var sMsgDesc = 'Photographer details updated successfully'
+            var StrJsonDatas = eval({
+                title: $('#ddltitle').val(),
+                full_name: $('#txtfullname').val(),
+                user_type: sIsclient,
+                gender: $('#ddlgender').val(),
+                email_id: $('#txtemailid').val(),
+                state_id: $('#ddlstate').val(),
+                county_id: $('#ddlcounty').val(),
+                city: $('#ddlcity').val(),
+                address1: $('#txtaddress1').val(),
+                address2: $('#txtaddress2').val(),
+                mobile_no: $('#txtmobileno').val(),
+                phone_no: $('#txtphoneno').val(),
+                zipcode: $('#txtzipcode').val(),
+                latitude: sLatitude,
+                longitude: sLongitude,
+                delete_status: 0,
+                updated_by: CurrentUser,
+                updated_date: new Date()
+
+            });
+            var sCondition = "where ref_no=" + sPhtId + "";
+            var Result = oAPICall.UpdateData(StrJsonDatas, 'UpdateCpdMaster', sCondition);
+            if (Result != null && Result != '') {
+                if ($('#txtemailid').val() != sgEMailId) {
+                    SendEMail();
+                }
+                msgalert('Success', sMsgDesc, 1);
+                if (sPhotoghId > 0) {
+                    window.location = "UserSettings";
+                }
+                hide();
+
+            }
+        }
+    }
+
+    function InsertUserDetails(sPhtId) {
+
+        var date = new Date(),
+                        yr = date.getFullYear() + 1,
+                        h = date.getHours(),
+                        m = date.getMinutes(),
+                        s = date.getSeconds(),
+                        month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth(),
+                        day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(),
+                        sNextDate = parseFloat(month) + parseFloat(1) + '/' + day + '/' + yr;
+
+        var sInActiveDt = new Date(sNextDate);
+        var sPassword = encode64($('#hdntemppasswd').val().toString());
+
+        var StrJsonDatas = eval({
+            ref_no: sPhtId, username: $('#txtusername').val(), password: sPassword, delete_status: 0,
+            active_date: new Date(), inactive_date: sInActiveDt, created_by: CurrentUser, created_date: new Date(),
+            company_code: 40, password_expiry: sInActiveDt, theme_preference: 1, is_first_login: 1, role_id: 3, access_level: 3
+
+        });
+        var Result = oAPICall.InsertData(StrJsonDatas, 'CreateBtsUserMaster');
+        if (Result != null && Result != '') {
+            var sUSerId = Result[0].IDENTITY;
+        }
+
+    }
+
+    function InsertClientPhtghr(sPhtId) {
+
+        var StrJsonDatas = eval({
+            client_id: EmpId, photographer_id: sPhtId, latitude: $('#hdnLatitude').val(), longitude: $('#hdnLongitude').val()
+        });
+        var Result = oAPICall.InsertData(StrJsonDatas, 'CreateClientPhotoghrMap');
+
+    }
+
+    function decodeBase64(str) {
+
+        setBase64Str(str);
+        var result = "";
+        var inBuffer = new Array(4);
+        var done = false;
+        while (!done && (inBuffer[0] = readReverseBase64()) != END_OF_INPUT && (inBuffer[1] = readReverseBase64()) != END_OF_INPUT) {
+            inBuffer[2] = readReverseBase64();
+            inBuffer[3] = readReverseBase64();
+            result += ntos((((inBuffer[0] << 2) & 0xff) | inBuffer[1] >> 4));
+            if (inBuffer[2] != END_OF_INPUT) {
+                result += ntos((((inBuffer[1] << 4) & 0xff) | inBuffer[2] >> 2));
+                if (inBuffer[3] != END_OF_INPUT) {
+                    result += ntos((((inBuffer[2] << 6) & 0xff) | inBuffer[3]));
+                } else {
+                    done = true;
+                }
+            } else {
+                done = true;
+            }
+        }
+        return result;
+    }
+
+    ///////////////////////////////////////////////////////////////Mail Code Start ///////////////////////////////////////////////////////////////////
+
+    function SendEMail() {
+        //loadingalert();
+        var sMailTo = $('#txtemailid').val();
+        var sMailBody = CreateMailBody();
+        var StrJsonDatas = eval({
+            mail_to: sMailTo,
+            mail_subject: 'BTS Photographer Login Credentials Created Successfully',
+            mail_body: sMailBody
+
+        });
+
+        var Result = oAPICall.Sendmail(StrJsonDatas, 'SendMailPhtAttached');
+        if (Result != null || Result != '') {
+            CreateMailLog();
+        }
+    }
+
+
+    function CreateMailBody() {
+        var Condition = " where ref_no=" + EmpId + "";
+        var sClientMailid = "";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result1 = oAPICall.SelectData(strJsonDatas, "SelectPhotographer");
+        if (Result1 != null || Result1 != '') {
+            var sClientMailid = Result1[0].email_id;
+        }
+        var sName = $('#txtfullname').val();
+        var sUsername = $('#txtusername').val();
+        var sPasswd = $('#hdntemppasswd').val();
+        if (sgEMailId != 0)
+            sPasswd = $('#hdnpasswd').val();
+        var appurl = '@(System.Configuration.ConfigurationManager.AppSettings["appurl"].ToString())'
+        var sNewURL = window.location.protocol + "//" + window.location.host + "/" + appurl + "";
+        //var sNewURL = window.location.protocol + "//" + window.location.host + "/" + "";
+        var Condition = ' where mail_type=2 '; // mail type 2  is New Photographer Creation
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectEmailTemplate");
+
+        if (Result != null || Result != '') {
+            var sMailData = Result[0].mail_body;
+
+            document.getElementById('MailData').innerHTML = sMailData;
+            document.getElementById('sUrl').innerHTML = sNewURL;
+            document.getElementById('sUsername').innerHTML = sUsername;
+            document.getElementById('sPassword').innerHTML = sPasswd;
+            document.getElementById('company_address').innerHTML = sClientMailid;
+        }
+        return document.getElementById('MailData').innerHTML;
+    }
+
+    function CreateMailLog() {
+        var mail_type = "2"; // New Photographer Creation Mail type
+        var username = $('#txtusername').val();
+        var mail_from = "icorepioneertech@gmail.com";
+        var mail_to = $('#txtemailid').val();
+        var mail_cc = "";
+        var mail_bcc = "";
+        var mail_sub = 'Photographer Login Credentials Created Successfully';
+        var mail_body = CreateMailBody();
+        var mail_send_datetime = new Date();
+        var dt = dateFormat(dt, "isoDateTime");
+        var loginuser = CurrentUserName;
+        var mail_sendornot = 1; //set to 0 if mail not send
+        var mail_attachment = 1; //set to 0 if there is no attachment
+
+        var strJsonDatas = eval({
+            mail_temp_no: mail_type, mail_from: mail_from, mail_to: mail_to, mail_cc: mail_cc, mail_bcc: mail_bcc,
+            mail_sub: mail_sub, mail_body: mail_body, loginuser: CurrentUser, mail_send_datetime: mail_send_datetime, mail_send_by: CurrentUser,
+            mail_sendornot: mail_sendornot, mail_attachment: mail_attachment
+        });
+
+        var Result = oAPICall.InsertData(strJsonDatas, 'CreateEmailLog');
+
+    }
+
+
+
+
+    ///////////////////////////////////////////////////////////////Mail Code end ///////////////////////////////////////////////////////////////////
+
+
+    function processfunctiion(s) {
+        if (s == 1) {
+            msgalert("ECESIS-BTS", "", 1)
+        }
+        else {
+            msgalert("ECESIS-BTS", "", 3)
+        }
+    }
+
+    function Reset() {
+
+        $('#hdnPhtgrhrId').val('');
+        $('#txtfullname').val('');
+        $('#txtemailid').val('');
+        $('#txtaddress1').val('');
+        $('#txtaddress2').val('');
+        $('#txtmobileno').val('');
+        $('#txtphoneno').val('');
+        $('#txtusername').val('');
+        $('#txtzipcode').val('');
+        $('#ddlstate').val('').change();
+        $('#ddlcounty').val('').change();
+        $('#ddlcity').val('').change();
+        $("#txtusername").prop("disabled", false);
+        $('#spanResendMail').hide();
+    }
+
+    function DeleteConfirm() {
+
+        parent.swal({
+            title: "Are you sure to delete?",
+            //text: "" + text + "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            closeOnConfirm: false,
+            closeOnCancel: true
+
+        },
+        function (isConfirm) {
+            if (isConfirm) {
+                RemovePhotogrpaher(checkbox_value);
+            }
+            else {
+                return
+            }
+        });
+        return
+
+    }
+
+    function LoadPhotoghrData(sPhotoghId) {
+        var Condition = " where ref_no=" + sPhotoghId + "";
+
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectClientPhtList");
+        if (Result != "" || Result != null) {
+
+
+            $('#MainPage1').show();
+            $('#MainPage2').show();
+            $('#ListPage').hide();
+            $('#hdnPhtgrhrId').val(Result[0].ref_no);
+            $('#txtusername').val(Result[0].username);
+            var sPassword = Result[0].password;
+            var sPwd = decodeBase64(sPassword.toString());
+            $('#hdnpasswd').val(sPwd);
+            $('#txtfullname').val(Result[0].full_name);
+            $('#ddltitle').val(Result[0].title);
+            sgEMailId = Result[0].email_id;
+            $('#txtemailid').val(sgEMailId);
+            $('#ddlgender').val(Result[0].gender);
+            var sStateId = Result[0].state_id;
+            $('#ddlstate').val("" + sStateId + "").change();
+            $('#ddlcounty').val("" + Result[0].county_id + "").change();
+            $('#ddlcity').val("" + Result[0].city + "").change();
+            $('#txtaddress1').val(Result[0].address1);
+            $('#txtaddress2').val(Result[0].address2);
+            $('#txtmobileno').val(Result[0].mobile_no);
+            $('#txtphoneno').val(Result[0].phone_no);
+            $('#txtzipcode').val(Result[0].zipcode);
+            $("#txtusername").prop("disabled", true);
+            $('#btnback').hide();
+            $('#btnPhotoghrList').show();
+            $('#spanResendMail').show();
+        }
+    }
+
+
+    $(document).ready(function () {
+
+        document.getElementById('txtfullname').focus();
+        Reset();
+        BindState();
+        BindCounty();
+        BindCity();
+        $('#btnback').hide();
+        $('#MainPage1').show();
+        $('#MainPage2').show();
+        $('#ListPage').hide();
+        $('#spanResendMail').hide();
+
+        var sWidth = $('.tab-content').width();
+        $('#tblPhotoListGrid').setGridWidth(sWidth - 20);
+
+        $('#txtaddress1').tooltip();
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblPhotoListGrid').setGridWidth(sWidth);
+
+        });
+
+        sPhotoghId = GetQueryStringParams("qPhotoghId");
+        if (sPhotoghId > 0) {
+            LoadPhotoghrData(sPhotoghId);
+        }
+        var sChange = "";
+        $("#txtaddress1").blur(function () {
+            var subaddress = $.trim($("#txtaddress1").val());
+            var n = subaddress.split(" ");
+            var zipcode = n[n.length - 1].split("-")
+            //return n[n.length - 1];
+
+            if (!isNaN(zipcode[0])) {
+                $("#txtzipcode").val(zipcode[0]);
+                sChange = "ok";
+                $("#txtzipcode").trigger("change");
+            }
+            else {
+                msgalert('Warning', 'Zipcode is not valid in address please enter manually', 2);//sucess-1, warning-2, error-3
+                $('#txtzipcode').focus();
+                $("#txtzipcode").val("");
+                $("#ddlstate").val("").change();
+                $("#ddlcity").val("").change();
+                return;
+            }
+        });
+        $("#txtzipcode").change(function () {
+
+            if ($("#txtzipcode").val() != "") {
+                var Condition = "where zip_code=" + $("#txtzipcode").val() + "and delete_status =0";
+                var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+                var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsZipCodeMaster");
+                if (Result != "" && Result != null) {
+                    $("#ddlstate").val(Result[0]["state_id"]).change();
+                    $("#ddlcity").val(Result[0]["city_id"]).change();
+                }
+                else {
+                    $('#txtzipcode').focus();
+                    $("#ddlstate").val("").change();
+                    $("#ddlcity").val("").change();
+                    if (sChange == "ok") {
+                        $("#txtzipcode").val("");
+                        sChange = "";
+                        msgalert('Warning', 'Zipcode is not found contact vendor or Enter manually', 2);//sucess-1, warning-2, error-3
+                    }
+                    else {
+                        msgalert('Warning', 'Zipcode is not found contact vendor or continue with same', 2);//sucess-1, warning-2, error-3
+                    }
+
+                }
+            }
+            else {
+                $('#txtzipcode').focus();
+                $("#txtzipcode").val("");
+                $("#ddlstate").val("").change();
+                $("#ddlcity").val("").change();
+            }
+        });
+
+
+        $('#btnPhotoghrList').click(function () {
+
+            $('#btnSave').hide();
+            if (sPhotoghId > 0 || sPhotoghId == -1) {
+                window.location = 'UserSettings'
+                return;
+            }
+            $('#MainPage1').hide();
+            $('#MainPage2').hide();
+            $('#ListPage').show();
+            $('#btnback').show();
+            $('#btnPhotoghrList').hide();
+            $('#tblPhotoListGrid').jqGrid('GridUnload');
+            PhotogrListGrid();
+        });
+
+        $('#btnback').click(function () {
+
+            $('#btnSave').show();
+            $('#MainPage1').show();
+            $('#MainPage2').show();
+            $('#ListPage').hide();
+            $('#btnback').hide();
+            $('#btnPhotoghrList').show();
+            $('#tblPhotoListGrid').jqGrid('GridUnload');
+            PhotogrListGrid();
+            Reset();
+        });
+
+        $('#txtusername').focusout(function () {
+            var ValidationSuccess = false;
+            var sUserName = $('#txtusername').val();
+            ValidationSuccess = ValidateForDuplication(sUserName, 'ChkDupClientUserName', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'Username already exist.. Try another', 3);
+                document.getElementById('txtusername').style.borderColor = "red";
+                return false;
+            }
+
+        });
+        $('#txtemailid').focusout(function () {
+            if (document.getElementById('txtemailid').value == "") {
+                document.getElementById('txtemailid').style.borderColor = "red";// this adds the error class
+
+            }
+            else if ($('#hdnPhtgrhrId').val() <= 0) {
+                var ValidationSuccess = false;
+                var sEmailId = $.trim($("#txtemailid").val());
+                var sSplitEmail = sEmailId.split(qRegdata);
+                ValidationSuccess = ValidateForDuplicationMail(sSplitEmail[0], sSplitEmail[1], 'ChkDupClientEmailId', '', '');
+                if (!ValidationSuccess) {
+                    msgalert('Error', 'Email id already exist.. Try another', 3);
+                    document.getElementById('txtemailid').style.borderColor = "red";
+                    return false;
+                }
+                else {
+                    document.getElementById('txtemailid').style.borderColor = "green";
+                }
+            }
+        });
+
+
+
+        $(document).delegate('#tblPhotoListGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblPhotoListGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                $('#MainPage1').show();
+                $('#MainPage2').show();
+                $('#ListPage').hide();
+                $('#btnSave').show();
+                var sRefNo = $('#tblPhotoListGrid').getCell(rowIds[rowid], 'ref_no');
+                $('#hdnPhtgrhrId').val(sRefNo);
+                $('#txtfullname').val($('#tblPhotoListGrid').getCell(rowIds[rowid], 'full_name'));
+                $('#ddltitle').val($('#tblPhotoListGrid').getCell(rowIds[rowid], 'title'));
+                sgEMailId = $('#tblPhotoListGrid').getCell(rowIds[rowid], 'email_id');
+                $('#txtemailid').val(sgEMailId);
+                $('#ddlgender').val($('#tblPhotoListGrid').getCell(rowIds[rowid], 'gender'));
+                var sStateId = $('#tblPhotoListGrid').getCell(rowIds[rowid], 'state_id');
+                $('#ddlstate').val("" + sStateId + "").change();
+                $('#ddlcounty').val("" + $('#tblPhotoListGrid').getCell(rowIds[rowid], 'county_id') + "").change();
+                $('#ddlcity').val("" + $('#tblPhotoListGrid').getCell(rowIds[rowid], 'city') + "").change();
+                $('#txtaddress1').val($('#tblPhotoListGrid').getCell(rowIds[rowid], 'address1'));
+                $('#txtaddress2').val($('#tblPhotoListGrid').getCell(rowIds[rowid], 'address2'));
+                $('#txtmobileno').val($('#tblPhotoListGrid').getCell(rowIds[rowid], 'mobile_no'));
+                $('#txtphoneno').val($('#tblPhotoListGrid').getCell(rowIds[rowid], 'phone_no'));
+                $('#txtzipcode').val($('#tblPhotoListGrid').getCell(rowIds[rowid], 'zipcode'));
+
+                $('#btnback').hide();
+                $('#btnPhotoghrList').show();
+                var Condition = " where ref_no=" + sRefNo + "";
+                var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+                var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsUserMaster");
+                if (Result != "" || Result != null) {
+                    $('#txtusername').val(Result[0].username);
+                    $("#txtusername").prop("disabled", true);
+                    var sPassword = Result[0].password;
+                    sPassword = decodeBase64(sPassword.toString());
+                    $('#hdnpasswd').val(sPassword);
+                }
+                $('#spanResendMail').show();
+            }
+            else {
+                /////////////////////////////delete code start////////////////////////
+
+                var sIsBlock = $('#tblPhotoListGrid').getCell(rowIds[rowid], 'isblocked');
+                if (sIsBlock == 0) {
+                    parent.swal({
+                        title: "Are you sure to block?",
+                        //text: "" + text + "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#ED5565",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+
+                    },
+                  function (isConfirm) {
+                      if (isConfirm) {
+                          var sRefId = $('#tblPhotoListGrid').getCell(rowIds[rowid], 'ref_no')
+                          var sStrJsonDatas = eval({ delete_status: 1 });
+                          var Condition = "where ref_no=" + sRefId;
+                          var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateCpdMaster', Condition);
+                          var Result2 = oAPICall.UpdateData(sStrJsonDatas, 'UpdateBtsUserMaster', Condition);
+                          if (Result != "" || Result != null) {
+                              // $('#tblPhotoListGrid').jqGrid('delRowData', rowid);
+                              // $('#tblPhotoListGrid').showCol('isblocked');
+                              $('#tblPhotoListGrid').jqGrid('setCell', rowid, 'delete', '1');
+                              msgalert('Success', 'Successfully Blocked', 1);
+                              $('#tblPhotoListGrid').jqGrid('GridUnload');
+                              PhotogrListGrid();
+                          }
+                      }
+                      else {
+                          return
+                      }
+                  });
+                }
+                else {
+                    parent.swal({
+                        title: "Are you sure to Unblock?",
+                        //text: "" + text + "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#ED5565",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+
+                    },
+                  function (isConfirm) {
+                      if (isConfirm) {
+                          var sRefId = $('#tblPhotoListGrid').getCell(rowIds[rowid], 'ref_no')
+                          var sStrJsonDatas = eval({ delete_status: 0 });
+                          var Condition = "where ref_no=" + sRefId;
+                          var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateCpdMaster', Condition);
+                          var Result1 = oAPICall.UpdateData(sStrJsonDatas, 'UpdateBtsUserMaster', Condition);
+                          if (Result != "" || Result != null) {
+                              // $('#tblPhotoListGrid').jqGrid('delRowData', rowid);
+                              // $('#tblPhotoListGrid').showCol('isblocked');
+                              $('#tblPhotoListGrid').jqGrid('setCell', rowid, 'delete', '0');
+                              msgalert('Success', 'Successfully UnBlocked', 1);
+                              $('#tblPhotoListGrid').jqGrid('GridUnload');
+                              PhotogrListGrid();
+                          }
+                      }
+                      else {
+                          return
+                      }
+                  });
+                }
+                /////////////////////////////end////////////////////////
+
+            }
+        });
+
+        //////////////////////////////////////////////////////////Random password Start ///////////////////////////////////////////////
+
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+        var string_length = 8;
+        var randomstring = '';
+        var charCount = 0;
+        var numCount = 0;
+
+        for (var i = 0; i < string_length; i++) {
+            // If random bit is 0, there are less than 3 digits already saved, and there are not already 5 characters saved, generate a numeric value.
+            if ((Math.floor(Math.random() * 2) == 0) && numCount < 3 || charCount >= 5) {
+                var rnum = Math.floor(Math.random() * 10);
+                randomstring += rnum;
+                numCount += 1;
+            } else {
+                // If any of the above criteria fail, go ahead and generate an alpha character from the chars string
+                var rnum = Math.floor(Math.random() * chars.length);
+                randomstring += chars.substring(rnum, rnum + 1);
+                charCount += 1;
+            }
+
+        }
+        $('#hdntemppasswd').val(randomstring);
+
+        //////////////////////////////////////////////////////////Random password end ///////////////////////////////////////////////
+
+
+        ///////////////////////////////////////////////////////For Send Mail End///////////////////////////////////////////////////////////////////////
+        YAHOO.namespace("example.container");
+        YAHOO.example.container.wait = new YAHOO.widget.Panel("wait",
+                                                       {
+                                                           width: "240px",
+                                                           fixedcenter: true,
+                                                           close: false,
+                                                           draggable: false,
+                                                           zindex: 4,
+                                                           modal: true,
+                                                           visible: false
+                                                       }
+                                                       );
+        YAHOO.example.container.wait.setHeader("Loading, please wait...");
+        YAHOO.example.container.wait.setBody("<img src=\"http://us.i1.yimg.com/us.yimg.com/i/us/per/gr/gp/rel_interstitial_loading.gif\"/>");
+        YAHOO.example.container.wait.render(document.body);
+
+        ///////////////////////////////////////////////////////For Send Mail End///////////////////////////////////////////////////////////////////////
+    });
+
+</script>

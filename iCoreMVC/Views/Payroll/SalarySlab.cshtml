@@ -1,0 +1,344 @@
+﻿
+@{
+    ViewBag.Title = "SalarySlab";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Ecesis Impulse</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+
+    <style>
+        .labelclass {
+            color: #2679e0 !important;
+            margin-top: -15px;
+            margin-left: -15px;
+        }
+
+        .labelclass1 {
+            color: #2679e0 !important;
+            margin-top: -15px;
+        }
+        .handCursor:hover{
+            cursor:pointer;
+        }
+
+        .highlighter{
+            font-weight: bolder;
+            font-size: 16px;
+            color: black !important;
+        }
+    </style>
+
+</head>
+<body style="width:98%;" ng-app="PayrollDetails">
+    <div ng-controller="Payroll" id="ControllerID" style="margin-top: 20px;">
+        <div class="row" ng-init="GetScalelist()">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label class="control-label col-md-3">Choose Existing PayScale: </label>
+                    <div class="col-md-5" ng-model="ScaleList">
+
+                        <select class="select2_demo_3 form-control select2" style="background-color: #fbfbfb; opacity: 1; border: 1px solid #6ec5d2; color: black; " id="ddlSalaryScale"
+                                ng-model="SalaryScaleSelected"
+                                data-ng-options="SalaryScale as SalaryScale.scale_name for SalaryScale in ScaleList track by SalaryScale.sl_no | orderBy:'scale_name' ">
+
+                            <option value="">--Select Salary Slab--</option>
+                        </select>
+
+
+                    </div>
+                    <label class=""></label>
+                    <button type="button" @*id="btnView"*@ class="btn green" ng-click="GetSalaryValues()">
+                        <i class="fa fa-check"></i>
+                    </button>
+                </div>
+            </div>
+            <input type="text" class="hidden" id="searchBox" placeholder="Search" style="width:30%;">
+        </div>
+        <div class="pull-right handCursor">
+            <i class="fa fa-save green" style="font-size:20px;margin-right:30px;color:#59dc48" title="Save" ng-click="SaveScale(refNo)"></i>
+            @*<button type="button" class="btn green" >Save</button>*@   
+        </div>
+        
+        <div class="pull-right handCursor">
+            <i class="fa fa-refresh" style="font-size:20px;margin-right:30px;color:#59dc48;" title="Reset" onclick="Reset()"></i>
+        </div>
+        <div class="pull-right handCursor">
+            <i class="fa fa-cogs" style="font-size:20px;margin-right:30px;color:#59dc48;" title="Change Tax Amount" data-toggle="modal" data-target="#Salarytax"></i>
+        </div>
+        <div style="margin-top: 50px;" ng-model="ScaleValue">
+            <div class="row" style="margin-left:50px;">
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="text" class="form-control" rows="3" id="txtScaleName" ng-model="ScaleValue[0].scale_name">
+                        <label for="form_control" class="labelclass">Scale Name<font style="color:red">*</font></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-left:50px;">
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" rows="3" id="txtSalBasic" ng-model="ScaleValue[0].basic" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Basic</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" rows="3" id="txtSalHRA" ng-model="ScaleValue[0].HRA" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">HRA</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" rows="3" id="txtSalLiving" ng-model="ScaleValue[0].living_allowance" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Living Allowance</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalConveyance" ng-model="ScaleValue[0].conveyance_allowance" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Conveyance Allowance</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-left:50px;">
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" style="margin-top: 10px;" id="txtSalProduction" ng-model="ScaleValue[0].production_allowance" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Production Allowance</label>
+                    </div>
+                </div>
+                @*<div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalTransfer" ng-model="ScaleValue[0].transfer_allowance" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Transfer Allowance</label>
+                    </div>
+                </div>*@
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalGrossPay" ng-model="ScaleValue[0].gross_pay" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass highlighter">Gross Pay</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalPF" ng-model="ScaleValue[0].PF" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Employee PF</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalESI" ng-model="ScaleValue[0].ESI">
+                        <label for="form_control" class="labelclass">Employee ESI</label>
+                    </div>
+                </div>                
+            </div>
+            <div class="row" style="margin-left:50px;">
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalDeduction" ng-model="ScaleValue[0].total_deduction">
+                        <label for="form_control" class="labelclass">Total Deduction</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalNetPay" ng-model="ScaleValue[0].net_pay" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass highlighter">Net Pay</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" style="margin-top: 10px;" id="txtSalPFemp" ng-model="ScaleValue[0].PF_employer">
+                        <label for="form_control" class="labelclass">Employer PF</label>
+                    </div>
+                </div>
+
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" style="margin-top: 10px;" id="txtSalESIemp" ng-model="ScaleValue[0].ESI_employer">
+                        <label for="form_control" class="labelclass">Employer ESI</label>
+
+                        <input type="text" class="hidden" id="hdnID" ng-model="ScaleValue[0].sl_no">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-left:50px;">
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalGratuity" ng-model="ScaleValue[0].gratuity" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Gratuity</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalAnnual" ng-model="ScaleValue[0].annual_bonus" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Annual Bonus</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" style="margin-top: 10px;" id="txtSalTotalCost" ng-model="ScaleValue[0].total_cost_company" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass highlighter">Total Cost to the Company</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalPension" ng-model="ScaleValue[0].pension" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Employee Pension</label>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row" style="margin-left:50px;">
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" style="margin-top: 10px;" id="txtSalIncometax" ng-model="ScaleValue[0].income_tax" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Income Tax</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalMedical" ng-model="ScaleValue[0].medical_allowance" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Medical Allowance</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" id="txtSalIncentive" ng-model="ScaleValue[0].incentives" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Special Incentives</label>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-2">
+                    <div class="form-group form-md-line-input">
+                        <input autocomplete="off" type="number" class="form-control" style="margin-top: 10px;" id="txtSalOthers" ng-model="ScaleValue[0].others" ng-change="CalculatePF()">
+                        <label for="form_control" class="labelclass">Others</label>
+                    </div>
+                </div>
+                
+            </div>            
+
+            <div class="modal fade" id="Salarytax" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document" style="width: 700px;height:500px">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="exampleModalLabel">PF TAX</h2>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="margin-left:50px;">
+                                <div class="form-group form-md-line-input col-md-5">
+                                    <input autocomplete="off" type="number" class="form-control" rows="1" id="txtPFTax">
+                                    <label for="form_control" class="labelclass">Enter TAX for PF<font style="color:red">*</font></label>
+                                </div><br />
+                                <button type="button" class="btn green" data-dismiss="modal" target="#Salarytax"  style="float: right;margin-right: 20px;" ng-click="SaveTax()">Save</button>
+                                <button type="button" class="btn default" data-dismiss="modal" target="#Salarytax" style=" float: right;margin-right: 19px;">Cancel</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+
+    <script>
+
+        var refNo;
+
+        function Reset()
+        {
+            $("#txtScaleName").val("");
+            $("#txtSalBasic").val("");
+            $("#txtSalHRA").val("");
+            $("#txtSalLiving").val("");
+            $("#txtSalConveyance").val("");
+            $("#txtSalProduction").val("");
+            $("#txtSalMedical").val("");
+            $("#txtSalIncentive").val("");
+            $("#txtSalGratuity").val("");
+            $("#txtSalAnnual").val("");
+            $("#txtSalPension").val("");
+            $("#txtSalIncometax").val("");
+            $("#txtSalOthers").val("");
+            $("#txtSalProftax").val("");
+            $("#txtSalGrossPay").val("");
+            $("#txtSalNetPay").val("");
+            $("#txtSalTotalCost").val("");
+            $("#txtSalPF").val("");
+            $("#txtSalPFemp").val("");
+            $("#txtSalESI").val("");
+            $("#txtSalESIemp").val("");
+            $("#hdnID").val("");
+            $("#ddlSalaryScale").val("").change();
+        }
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        $(document).ready(function () {
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+            roleId = sUserDetails.RoleId;
+
+        });
+    </script>
+
+</body>
+
+</html>
+<script src="~/Scripts/js/angular.min.js"></script>
+<script src="~/Scripts/AngularController/PayrollController.js"></script>
+

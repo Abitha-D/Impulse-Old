@@ -1,0 +1,49 @@
+D:\PROJECT\22-06-2016\BussinessLayer\bin\Release\BussinessLayer.dll
+D:\PROJECT\22-06-2016\BussinessLayer\bin\Release\BussinessLayer.pdb
+D:\PROJECT\22-06-2016\BussinessLayer\bin\Release\Newtonsoft.Json.dll
+D:\PROJECT\22-06-2016\BussinessLayer\bin\Release\Newtonsoft.Json.xml
+D:\PROJECT\22-06-2016\BussinessLayer\obj\Release\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\PROJECT\22-06-2016\BussinessLayer\obj\Release\BussinessLayer.dll
+D:\PROJECT\22-06-2016\BussinessLayer\obj\Release\BussinessLayer.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\bin\Release\BussinessLayer.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\bin\Release\BussinessLayer.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\bin\Release\Newtonsoft.Json.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\bin\Release\Newtonsoft.Json.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\obj\Release\BussinessLayer.csprojResolveAssemblyReference.cache
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\obj\Release\BussinessLayer.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\obj\Release\BussinessLayer.pdb
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\bin\Release\BussinessLayer.dll
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\bin\Release\BussinessLayer.pdb
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\bin\Release\Newtonsoft.Json.dll
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\bin\Release\Newtonsoft.Json.xml
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\obj\Release\BussinessLayer.csprojResolveAssemblyReference.cache
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\obj\Release\BussinessLayer.dll
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\obj\Release\BussinessLayer.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\bin\Release\BussinessLayer.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\bin\Release\BussinessLayer.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\bin\Release\Newtonsoft.Json.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\bin\Release\Newtonsoft.Json.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\obj\Release\BussinessLayer.csprojResolveAssemblyReference.cache
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\obj\Release\BussinessLayer.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\obj\Release\BussinessLayer.pdb
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\bin\Release\BussinessLayer.dll
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\bin\Release\BussinessLayer.pdb
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\bin\Release\Newtonsoft.Json.dll
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\bin\Release\Newtonsoft.Json.xml
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\obj\Release\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\obj\Release\BussinessLayer.dll
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\obj\Release\BussinessLayer.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\bin\Release\BussinessLayer.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\bin\Release\BussinessLayer.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\bin\Release\Newtonsoft.Json.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\bin\Release\Newtonsoft.Json.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\obj\Release\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\obj\Release\BussinessLayer.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\obj\Release\BussinessLayer.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Release\BussinessLayer.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Release\BussinessLayer.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Release\Newtonsoft.Json.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Release\Newtonsoft.Json.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\obj\Release\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\obj\Release\BussinessLayer.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\obj\Release\BussinessLayer.pdb

@@ -1,0 +1,494 @@
+﻿@{
+    ViewBag.Title = "GenerateWage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Approve Leave</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <link href="~/assets/global/plugins/icheck/skins/all.css" rel="stylesheet" />
+
+    <link href="~/assets/pages/css/NewStyle.css" rel="stylesheet" />
+
+    <style>
+        .stuck {
+            width: 100%;
+            z-index: 1;
+            height: 50px;
+        }
+
+        .labelclass {
+            color: #2679e0 !important;
+        }
+
+        .labelclass1 {
+            color: black;
+            margin-top: -15px;
+        }
+
+        .buttonClass {
+            background: 0, 0;
+            color: #040404;
+            border-radius: 5px;
+            height: 40px;
+            text-align: center;
+            border-color: #19ff00;
+            font-weight: 600;
+        }
+
+            .buttonClass:hover {
+                background-color: black;
+                border-color: black;
+                color: white;
+            }
+
+        .btns {
+            min-width: 200px;
+            width: fit-content;
+            width: -moz-fit-content;
+            background-color: white;
+            height: 50px;
+            font-family: "Open Sans", sans-serif;
+            text-transform: uppercase;
+            font-size: 14px;
+            color: black;
+            letter-spacing: 2.8px;
+            font-weight: 700;
+            line-height: 1.6;
+            box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            display: -webkit-flex;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 0;
+            margin-top: 15px;
+        }
+
+            .btns span {
+                z-index: 1;
+                text-align: center;
+            }
+
+            .btns:before, .btns:after {
+                content: "";
+                position: absolute;
+                width: 4px;
+                height: 100%;
+                top: 0;
+                transition: all 0.4s ease;
+                background-color: #3effeb;
+            }
+
+            .btns:before {
+                left: 0;
+            }
+
+            .btns:after {
+                right: 0;
+            }
+
+            .btns:hover {
+                transition: all 0.4s ease;
+                box-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.2);
+                color: black;
+            }
+
+                .btns:hover:before, .btns:hover:after {
+                    width: 51%;
+                }
+
+        .DropDownClass {
+            background-color: #ffffff;
+            opacity: 1;
+            border: 1px solid #c2cad8;
+            color: black;
+            height: 30px;
+        }
+
+        .closer {
+            margin-top: -25px;
+            float: right;
+            width: 25px;
+            border-radius: 50%;
+            border: 2px solid #237394;
+            padding-left: 6px;
+            padding-top: 3px;
+            height: 25px;
+            outline: 0;
+            background: transparent;
+            color: #237394;
+        }
+    </style>
+</head>
+<body class="page-container-bg-solid" ng-app="PayrollDetails" ng-cloak style="overflow:hidden;">
+    <div ng-controller="Payroll" ng-cloak ng-init="">
+
+        <center>
+            <div class="form-group">
+                <label class="control-label col-md-2" style=" color: #2679e0">Choose Company </label>
+                <div class="col-md-8">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <select id="ddlCompany" class="DropDownClass">
+                        </select>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-1">
+                        <button style="float:right" type="button" class="btn green btn-outline" id="btnSearch" ng-click="GetEmployeeByCompany(refNo,roleId)">Search</button>
+                    </div>
+                    @*<div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        <button style="float:right" type="button" class="btn blue btn-outline" id="btnSearch" ng-click="calculateEarnings(refNo)">Generate New Payroll List</button>
+                    </div>*@
+                </div>
+            </div>
+        </center>
+
+        <br /><br />
+        <div class="hidden" id="pendingList" style="margin-top:20px;">
+            <div class="col-md-12">
+                <div class="row" style="margin-left:15px;">
+                    <div class="col-md-3">
+                        <label class="labelclass">Wage Month</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select id="ddlMonth" class="DropDownClass" style="margin-top:30px;">
+                            <option value="1">January</option>
+                            <option value="2">Febraury</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" style="margin-left: -110px;">
+                        <label class="labelclass">Wage Year</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select id="ddlYear" class="DropDownClass" style="margin-top:30px;">
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 hidden" id="otAllowance">
+                        <div class="form-group form-md-line-input">
+                            <label class="labelclass">Over Time Allowance</label><br />
+                            <input type="number" id="txtOTallowance" style="width: 70%;outline: 0;border: 0px;border-bottom: 2px groove red;" value="0" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group form-md-line-input">
+                            <label class="labelclass">Deduction Percentage</label><br />
+                            <input type="number" id="txtDeductPercentage" style="width: 70%;outline: 0;border: 0px;border-bottom: 2px groove red;" value="0" />
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group form-md-line-input">
+                            <label class="labelclass">Transfer Allowance</label><br />
+                            <input type="number" id="txtTransfer" style="width: 70%;outline: 0;border: 0px;border-bottom: 2px groove red;" value="0" />
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btns" ng-click="GenerateWage(refNo,roleId)"><span>Generate Wage</span></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="portlet box red col-md-12">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i>Employee List
+                    </div>
+                    <div class="tools" style="padding: 0px; margin-top: 10px;">
+                        <div class="stuck search-form">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="searchBoxes" style="border-radius: 10px;" placeholder="Search Employee...." onkeypress="searchWord(this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body" style="overflow:auto" ng-cloak>
+                    <input type="text" class="hidden" id="searchBox" placeholder="Search" style="width: 35%; margin-left: 490px;">
+                    <div class="table-responsive" style="overflow-y: scroll;height: 370px;margin-top: 35px;">
+                        <table class="table" id="mytable">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><input type="checkbox" id="checkall" style="text-align:center;"></th>
+                                    <th> Employee Code </th>
+                                    <th> Employee Name </th>
+                                    <th> Department </th>
+                                </tr>
+                            </thead>
+                            <tbody id="myContent">
+                                <tr ng-repeat="el in Employees" ng-cloak>
+                                    <td>
+                                        <input type="checkbox" id="{{el.emp_ref_no}}" style="text-align:center;">
+                                    </td>
+                                    <td>{{el.emp_ref_code}}</td>
+                                    <td> {{el.emp_full_name}} </td>
+                                    <td> {{el.designation}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="personal_info_modal" class="modal custom-modal fade hidden" role="dialog" data-select2-id="personal_info_modal" aria-modal="true" style="display: block; padding-right: 17px;margin-top:-12px;">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Salary Info</h5>
+                        <button class="buttonr closer" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="height:475px;" ng-model="EmployeeDetails" ng-cloak>
+                        <div class="col-md-12">
+                            <div class="col-md-4"><p style="font-weight:bold">Employee Name:</p>&nbsp;&nbsp; {{EmployeeDetails.emp_full_name}}</div>
+                            <div class="col-md-4"><p style="font-weight:bold">Employee Code:</p>&nbsp;&nbsp; {{EmployeeDetails.emp_ref_code}}</div>
+                            <div class="col-md-4"><p style="font-weight:bold">Month & Year :</p>&nbsp;&nbsp;&nbsp;&nbsp; {{EmployeeDetails.month_name}} {{EmployeeDetails.payslip_year}}</div>
+                        </div>
+                        <ul></ul>
+                        <hr />
+                        <div class="col-md-12">
+                            <div class="row" style="margin-left:15px;">
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Basic</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.basic}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">HRA</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.hra}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Living Allowance</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.living_allowance}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Conveyance Allowance</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.conveyance_allowance}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Production Allowance</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.production_allowance}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Medical Allowance</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.medical_allowance}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Gross Pay</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.gross_pay}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Provident Fund (PF)</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.PF}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">ESI</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.ESI}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Total Deduction</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.total_deduction}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Net Pay</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.net_pay}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Incentive</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.incentives}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Special Incentive</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.special_incentives}}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group form-md-line-input">
+                                        <label class="labelclass">Night Incentive</label><br />
+                                        <label class="labelclass1">{{EmployeeDetails.night_incentives}}</label>
+                                    </div>
+                                </div>
+                                @*<div class="col-md-3">
+                                        <div class="form-group form-md-line-input">
+                                            <label class="labelclass">Other Deductions</label><br />
+                                            <label class="labelclass1">{{EmployeeDetails.other_deduction}}</label>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- END CONTAINER -->
+        <!--[if lt IE 9]>
+        <script src="~/assets/global/plugins/respond.min.js"></script>
+        <script src="~/assets/global/plugins/excanvas.min.js"></script>
+        <![endif]-->
+        <!-- BEGIN CORE PLUGINS -->
+        <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+        <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+        @*<script src="~/assets/pages/scripts/form-samples.min.js" type="text/javascript"></script>*@
+        @*<script src="~/assets/layouts/layout3/scripts/layout.min.js" type="text/javascript"></script>*@
+        @*<script src="~/assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>*@
+        <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+        <script src="~/assets/pages/scripts/components-date-time-pickers.min.js"></script>
+        <script src="~/assets/pages/scripts/components-date-time-pickers.js"></script>.
+
+    </div>
+    <script>
+
+        function searchWord(id)
+        {
+            var value = $(id).val().toLowerCase();
+            $("#myContent tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        }
+
+        var refNo, roleId;
+
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        function loader(action)
+        {
+            parent.loadergif(action);
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        $(document).ready(function () {
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+            roleId  = sUserDetails.RoleId;
+
+            if(roleId == 1)
+            {
+                $('#otAllowance').removeClass('hidden');
+
+                $('#ddlCompany').empty().append();
+
+                $('#ddlCompany').append('<option value="0">Choose Company</option>');
+                $('#ddlCompany').append('<option value="1">BPO TVM</option>');
+                $('#ddlCompany').append('<option value="2">BPO NGL</option>');
+                $('#ddlCompany').append('<option value="3">CARE</option>');
+                $('#ddlCompany').append('<option value="4">Ecesis Engineering</option>');
+            }
+            else if(roleId == 9 || roleId == 10) //for BPO HR
+            {                
+                $('#ddlCompany').empty().append();
+
+                $('#ddlCompany').append('<option value="0">Choose Company</option>');
+                $('#ddlCompany').append('<option value="1">BPO TVM</option>');
+                $('#ddlCompany').append('<option value="2">BPO NGL</option>');
+                $('#ddlCompany').append('<option value="3">CARE</option>');    
+
+            }
+            else if(roleId == 27) //for Mechanical HR
+            {
+                $('#otAllowance').removeClass('hidden');
+
+                $('#ddlCompany').empty().append();
+
+                $('#ddlCompany').append('<option value="0">Choose Company</option>');
+                $('#ddlCompany').append('<option value="4">Ecesis Engineering</option>');
+            }
+            
+            $("#mytable #checkall").click(function () {
+                if ($("#mytable #checkall").is(':checked')) {
+                    $("#mytable input[type=checkbox]").each(function () {
+                        $(this).prop("checked", true);
+                    });
+
+                } else {
+                    $("#mytable input[type=checkbox]").each(function () {
+                        $(this).prop("checked", false);
+                    });
+                }
+
+            });
+
+        });
+
+    </script>
+</body>
+</html>
+<script src="~/Scripts/js/angular.min.js"></script>
+
+<script src="~/Scripts/AngularController/PayrollController.js"></script>

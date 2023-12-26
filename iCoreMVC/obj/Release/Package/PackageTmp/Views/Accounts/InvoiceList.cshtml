@@ -1,0 +1,533 @@
+﻿
+@{
+    ViewBag.Title = "InvoiceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .hover:hover {
+        color: rgb(26, 179, 148);
+        font-size: x-large;
+    }
+
+    .hover1:hover {
+        color: rgb(26, 179, 148);
+    }
+</style>
+
+
+<form method="get" class="form-horizontal">
+
+    <div id="INV_LIST" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title" style="padding-top:5px">
+                    <span class="label " style="font-size: 11px; font-weight: 700; margin-left: -10px; background-color: #eceeef;margin-top:7px ">Invoice List</span>
+                    <div class="col-sm-2">
+                        <label class="col-sm-3 control-label">From&nbsp;</label>
+                        <div class="col-sm-3">
+                            <div class="input-group date txtfromdt">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="text" id="txtfromdt" class="form-control" readonly="readonly" style="background-color:white; width:100px">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <center><label class="col-sm-3 control-label" style="padding-left: 20px;">To</label></center>
+                        <div class="col-sm-6">
+                            <div class="input-group date txttodt" style="width:140px">
+                                <span class="input-group-addon" id="divtxtdob"><i class="fa fa-calendar"></i></span>
+                                <input type="text" id="txttodt" class="form-control" value="" readonly="readonly" style="background-color:white">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="ibox-tools" style="padding-top:7px">
+
+                        <div class="col-sm-2" style="margin-top: -5px;">
+                            <label class="col-sm-3 control-label" style="padding-left: 20px;">
+                                <a href="#" id="btnSearch" title="Filter Order">
+                                    <i class="fa fa-search hover" aria-hidden="true"></i>
+                                </a>
+
+                            </label>
+                            @*<label style="padding-top:10px;">
+                                <a href="#" id="lblAdvFilter" title="Advance Filter">
+                                    <font color="blue" class="hover1">Advance Filter</font>
+                                </a>
+                            </label>*@
+
+                            @*<input type="button" class="btn pull-right" value="Search" id="btnSearch" />*@
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div id="sDivStatus" style="display: none;">
+                            <div class="col-sm-2" style="margin-top: -6px;">
+
+                                <select style="width:100%" class="form-control" id="ddlstatus" data-placeholder="-Status-"></select>
+
+                            </div>
+                            <div class="col-sm-1" style="width:0px;">
+                                <strong>
+                                    <a href=" #">
+                                        <i class="fa fa-save" id="btnSave" title="Update Status"></i>
+                                    </a>
+                                </strong>
+                            </div>
+                        </div>
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-refresh" id="btnRefresh" title="Reload"></i>
+                            </a>
+                        </strong>
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div style="padding-top:15px" id="MainPage">
+                        <div class="col-sm-12">
+                            <div class="ibox-content">
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblOrderListGrid"></table>
+                                    <div id="pagerOrdergrid"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <input type="hidden" id="hdnOrderList" />
+
+
+
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- dialog title -->
+                    <div class="modal-header">
+                        <div class="modal-title">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Are you sure to delete order no&nbsp;<span id="spnordercode">&nbsp;</span>?</h4>
+                        </div>
+                    </div>
+                    <!-- dialog body -->
+                    <div class="modal-body" id="divContent">
+                        <div class="col-sm-12">
+                            <font color="blue"><strong>Select the reson for deletion</strong></font>
+                        </div>
+                        <div class="col-sm-12">
+                            <select class="form-control" id="ddlalertreson" style="width:100%;">
+                                <option value="1">Dupicate Entry</option>
+                                <option value="2">Wrong Entry</option>
+                                <option value="3">Other</option>
+                            </select>
+                        </div>
+                        <div id="divOther" class="hidden">
+                            <div>&nbsp;</div>
+
+                            <div class="col-sm-12">
+                                <font color="blue"><strong>Pease specify</strong></font>
+                            </div>
+                            <div class="col-sm-12">
+                                <input type="text" id="txtreson" placeholder="Enter reson here.." class="form-control">
+                                <span id="spanerror" class="help-block m-b-none hidden"><i><font color="red"><span id="txtresoneror"></span>Enter a reson and continue..</font></i></span>
+                            </div>
+                        </div>
+                        <div>&nbsp;</div>
+                    </div>
+                    <!-- dialog buttons -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-bottom: 0;">Cancel</button>
+                        <button type="button" class="btn btn-default" id="dialogBtn">Delete</button>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="shdnOrderID" />
+            <input type="hidden" id="shdnDataEntryId" />
+            <input type="hidden" id="shdnPhotoId" />
+            <input type="hidden" id="sQueryStringCount" />
+        </div>
+        <div id="myModalAdvFilter" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- dialog title -->
+                    <div class="modal-header">
+                        <div class="modal-title">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Advanced Filter</h4>
+                        </div>
+                    </div>
+                    <!-- dialog body -->
+                    <div class="modal-body" id="divContent">
+                        <table>
+                            <tr>
+                                <td>
+                                    <select id="ddlFields" class="form-control">
+                                        <option value="invoiceid">Address</option>
+                                        <option value="client_name">SubClient Name</option>
+                                    </select>
+                                </td>
+                                <td style="width:10px"></td>
+                                <td>
+                                    <select id="ddlCondition" class="form-control">
+                                        <option value="cn">contains</option>
+                                        <option value="eq">equal</option>
+                                        <option value="sw">starts with</option>
+                                        <option value="ew">ends with</option>
+                                    </select>
+                                </td>
+                                <td style="width:10px"></td>
+                                <td>
+                                    <input type="text" id="txtValue" class="form-control">
+                                </td>
+                            </tr>
+                        </table>
+                        <div>&nbsp;</div>
+                    </div>
+                    <!-- dialog buttons -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default col-sm-2" style="margin-bottom: 0;" id="dialogBtnReset">Reset</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-default" id="dialogBtnFilter">Filter</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="MailData" style="visibility: hidden">
+        </div>
+
+    </div>
+</form>
+
+<script>
+    function setFilterdates() {
+        var cudt = new Date();
+        $('.input-group.date.txtfromdt').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false
+
+            //startDate: '-6m'
+            //startDate: new Date(),
+        });
+
+        $(".input-group.date.txttodt").datepicker("setDate", cudt);
+        $('.input-group.date.txttodt').datepicker("setEndDate", cudt);
+
+
+        $('.input-group.date.txttodt').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "mm/dd/yyyy",
+            todayHighlight: false,
+            //startDate: '-2m',
+            //startDate: new Date(),
+        });
+
+        var d = new Date($("#txttodt").val());
+        d.setMonth(d.getMonth() - 1);
+        $(".input-group.date.txtfromdt").datepicker("setDate", new Date(d));
+
+        //$('.input-group.date.txtfromdt').datepicker("setEndDate", cudt);
+        //$('.input-group.date.txtfromdt').datepicker("setStartDate", d);
+    }
+    $(document).ready(function () {
+        setFilterdates();
+        $('#txtfromdt').change(function () {
+            var dt = new Date($("#txtfromdt").val());
+            dt.setMonth(dt.getMonth() + 1);
+
+            $('.input-group.date.txttodt').datepicker("setEndDate", dt);
+            //$('.input-group.date.txttodt').datepicker("setStartDate", dt);
+            $(".input-group.date.txttodt").datepicker("setDate", dt);
+            //$("#txtfromdate .input-group.date").datepicker("setDate", new Date(dt));
+
+
+            //$("#txtfromdate").datepicker("setEndDate", $("#txttodt").val());
+        });
+        $('#txttodt').change(function () {
+            $('.datepicker').hide();
+        });
+
+        $('#btnRefresh').click(function () {
+            $('#tblOrderListGrid').jqGrid('GridUnload');
+
+            var dp = new Date();
+            var datet = dp.format("mm/dd/yyyy");
+            $("#txttodt").val(datet);
+
+            dp.setMonth(dp.getMonth() - 1);
+            var datef = dp.format("mm/dd/yyyy");
+            $("#txtfromdt").val(datef);
+
+
+            $('.input-group.date.txtfromdt').datepicker("setEndDate", datet);
+            $('.input-group.date.txtfromdt').datepicker("setStartDate", datef);
+
+
+
+            OrderListGrid();
+           // SetBackgroundColor();
+            //if (access_level == 1 || access_level == 4) {
+            //    var myGrid = $("#tblOrderListGrid"),
+            //     width = myGrid.jqGrid('getGridParam', 'width');
+            //    $('#tblOrderListGrid').setGridWidth(width - 50);
+            //}
+            //var sWidth = $('.jqGrid_wrapper').width();
+
+            //$('#tblOrderListGrid').setGridWidth(sWidth);
+           // BindClientFee(this)
+
+        });
+
+        $("#lblAdvFilter").click(function () {
+
+            $('#txtValue').val('');
+            document.getElementById('txtValue').style.borderColor = "";
+            $('#ddlFields').val('subject_address');
+            $('#ddlCondition').val('cn');
+            $("#myModalAdvFilter").modal({                    // wire up the actual modal functionality and show the dialog
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true                     // ensure the modal is shown immediately
+
+            });
+        });
+
+        $('#btnSearch').click(function () {
+            $('#tblOrderListGrid').jqGrid('GridUnload');
+            OrderListGrid();
+           
+            var sWidth = $('.jqGrid_wrapper').width();
+
+            $('#tblOrderListGrid').setGridWidth(sWidth);
+
+        });
+
+        setTimeout(function () {
+
+            OrderListGrid();
+            // SetBackgroundColor();
+            //if (access_level == 4) {
+            //    var myGrid = $("#tblOrderListGrid"),
+            //     width = myGrid.jqGrid('getGridParam', 'width');
+            //    $('#tblOrderListGrid').setGridWidth(width - 50);
+            //}
+
+            //if (access_level == 1) {
+            //    var myGrid = $("#tblOrderListGrid"),
+            //        width = myGrid.jqGrid('getGridParam', 'width');
+            //    $('#tblOrderListGrid').setGridWidth(width - 50);
+            //}
+
+            //var sWidth = $('.jqGrid_wrapper').width();
+
+            //$('#tblOrderListGrid').setGridWidth(sWidth + 10);
+
+            //if (access_level == 1 && sPageId == 7) {
+            //    $('#tblOrderListGrid').showCol('undo');
+
+            //    $('#tblOrderListGrid').hideCol('delete');
+            //    $('#tblOrderListGrid').hideCol('edit');
+            //    var myGrid = $("#tblOrderListGrid"),
+            //    width = myGrid.jqGrid('getGridParam', 'width');
+            //    $('#tblOrderListGrid').setGridWidth(width + 50);
+            //}
+
+        }, 1300);
+
+    });
+    function OrderListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+        var grid = $('#tblOrderListGrid');
+        //var sMultiSelect = false;
+        //if (sPageId == 1 || sPageId == 2 || sPageId == 3 || sPageId == 4 || sPageId == 8) {
+        //    sMultiSelect = true;
+        //}
+        //else {
+        //    document.getElementById('sDivStatus').style.display = "none";
+        //}
+        jQuery(grid).jqGrid({
+            //url: '<%= Url.Action("SearchData") %>',
+            data: PopulateOrderListGrid(),
+            colNames: ['', 'Invoice No.', 'Client', 'Inv. Date', 'Inv. Amount', 'Order From', 'Order To', 'Inv.Due', 'Is Paid', 'Edit','Preview', 'Delete'],
+            colModel: [
+                { name: 'INV_ID', index: 'INV_ID', width: 50, align: "center", sorttype: "int", hidden: true },
+                { name: 'INV_CODE', index: 'INV_CODE', width: 55, align: "center", sorttype: "int", search: true, classes: 'cvteste' },
+                { name: 'CM_CUSTOMER_NAME', index: 'CM_CUSTOMER_NAME', width: 55, align: "center", sorttype: "int", search: true, classes: 'cvteste' },
+                {
+                    name: 'CREATEDDATE', index: 'CREATEDDATE', width: 55, align: "center", sorttype: false, search: true,
+                    formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y" }
+                },
+
+                { name: 'INV_AMOUNT', index: 'INV_AMOUNT', width: 50, align: "center", sorttype: "int", search: true, classes: 'cvteste' },
+                 {
+                     name: 'INV_FROMDATE', index: 'INV_FROMDATE', width: 55, align: "center", sorttype: false, search: true,
+                     formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y" }
+                 },
+                  {
+                      name: 'INV_TODATE', index: 'INV_TODATE', width: 55, align: "center", sorttype: false, search: true,
+                      formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y " }
+                  },
+                  {
+                      name: 'INV_DUE_DDATE', index: 'INV_DUE_DDATE', width: 55, align: "center", sorttype: false, search: true,
+                      formatter: "date", formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y (h:i A)" }
+                  },
+
+                { name: 'is_paid', index: 'is_paid', width: 50, align: "center", sorttype: false, search: false, hidden: true },
+                { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false, classes: 'editicon',hidden: true },
+                { name: 'preview', index: 'preview', width: 25, sortable: false, formatter: preformatter, align: 'center', search: false, classes: 'editicon' },
+                { name: 'delete', index: 'delete', width: 30, sortable: false, formatter: deleteformatter, align: 'center', search: false, hidden: true, classes: 'editicon' },
+
+            ],
+            caption: 'Invoice List',
+            pager: '#pagerOrdergrid',
+            //page: 1,
+            //loadonce: true,
+            viewrecords: true,
+            datatype: "local",
+            height: 300,
+            autowidth: false,
+            shrinkToFit: true,
+           // multiselect: sMultiSelect,
+            rownumbers: false,
+            rowTotal: 10,
+            rowNum: 10,
+            rowList: [10, 30, 50, 100],
+
+            hidegrid: true,
+            searchOperators: true,
+            multipleSearch: true,
+            ignoreCase: true,
+         
+        }
+              );
+        jQuery(grid).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false });
+
+       
+        var sWidth = $('.jqGrid_wrapper').width();
+
+        $('#tblOrderListGrid').setGridWidth(sWidth);
+
+    }
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+    function preformatter(cellvalue, options, rowObject) {
+        return '<a href="#" onClick="displayinvoice(' + rowObject.INV_ID + ','+"'"+rowObject.INV_CODE +"'"+');" id="' + options.rowId + '" action="Preview"><i class="fa fa-file-pdf-o" title="Preview" style="color:#1ab394"></i> </a>';
+    }
+    
+    function displayinvoice(invid,invcode) {
+        //alert(rowObject)
+        var report_id = 21;
+        var report_codition = "where INV_ID=" + invid;
+        parent.document.getElementById('frmreport').src = "";
+       parent.document.getElementById('frmreport').src = '../Content/ReportsData/ReportViewer.aspx?report_id=' + report_id + '&report_codition=' + report_codition + '&table_type=2';
+        //$('#txtValue').val('');
+       parent.document.getElementById('invcode').innerHTML="Invoice no: " + invcode
+       // $('#ddlFields').val('subject_address');
+       // $('#ddlCondition').val('cn');
+        parent.$("#myModalInvPreview").modal({                    // wire up the actual modal functionality and show the dialog
+            "backdrop": "static",
+            "keyboard": true,
+            "show": true                     // ensure the modal is shown immediately
+
+        });
+    }
+    var AdvanceSearch = false;
+    function PopulateOrderListGrid() {
+        if (AdvanceSearch) {
+            var field = $('#ddlFields').val();
+            var condition = $("#ddlCondition option:selected").text();
+            var value = $('#txtValue').val();
+            switch (condition) {
+                case 'equal':
+                    condition = "= '" + value + "'";
+                    break;
+                case 'contains':
+                    condition = "like '%" + value + "%' ";
+                    break;
+                case 'starts with':
+                    condition = "like '" + value + "%' ";
+                    break;
+                case 'ends with':
+                    condition = "like '%" + value + "' ";
+                    break;
+            }
+
+            sCondition = "WHERE delete_status=0 and " + field + " " + condition + " ";
+
+            sCondition = ChkDataLevelAcess(sCondition);
+
+            var paramNames = [], paramValues = [];
+            paramNames.push('sClientId'); paramNames.push('sCondition');
+
+            paramValues.push(EmpId); paramValues.push(sCondition);
+            var strJsonDatas = eval({ strSessionID: UserSession, ProcParameters: paramNames, ProcInputData: paramValues });
+            var Result = eval(oAPICall.SelectData(strJsonDatas, "SelectOrderList"));
+
+        }
+        else {
+            var sFromDt = new Date($('#txtfromdt').val());
+            var sToDt = new Date($('#txttodt').val());
+            var sCondition = " WHERE DELETESTATUS=0 and  CREATEDDATE>= '" + $('#txtfromdt').val() + "'and CREATEDDATE<='" + $('#txttodt').val() + " 23:59:59.599'";
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectInvoiceList");
+        }
+        if (Result != '' && Result != null) {
+
+
+            var sOrderList = [];
+            //BindOrderStatus();
+            for (var i = 0; i < Result.length; i++) {
+                var INV_ID = Result[i].INV_ID;
+                var INV_CODE = Result[i].INV_CODE;
+                var CM_CUSTOMER_NAME = Result[i].CM_CUSTOMER_NAME;
+                var CREATEDDATE = Result[i].CREATEDDATE;
+                var INV_AMOUNT = Result[i].INV_AMOUNT;
+
+                var INV_FROMDATE = Result[i].INV_FROMDATE;
+                var INV_TODATE = Result[i].INV_TODATE;
+
+                var INV_DUE_DDATE = Result[i].INV_DUE_DDATE;
+                
+                sOrderList[i] = {
+                    INV_ID: INV_ID, INV_CODE: INV_CODE, CM_CUSTOMER_NAME: CM_CUSTOMER_NAME, CREATEDDATE: CREATEDDATE, INV_AMOUNT: INV_AMOUNT, INV_FROMDATE: INV_FROMDATE,
+                    INV_TODATE: INV_TODATE, INV_DUE_DDATE: INV_DUE_DDATE, is_paid: "", 
+                };
+            }
+            loader(0);
+            return sOrderList;
+        }
+        else {
+            loader(0);
+        }
+    }
+</script>

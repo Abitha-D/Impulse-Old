@@ -1,0 +1,144 @@
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\BussinessLayer.dll
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\BussinessLayer.dll
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\BussinessLayer.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+D:\peeru\BTS\26-02-2016\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+D:\peeru\BTS\26-02-2016\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+D:\peeru\BTS\26-02-2016\LoginFrameWork\bin\Debug\BussinessLayer.dll
+D:\peeru\BTS\26-02-2016\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+D:\peeru\BTS\26-02-2016\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+D:\peeru\BTS\26-02-2016\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+D:\peeru\BTS\26-02-2016\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+D:\peeru\BTS\26-02-2016\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+D:\peeru\BTS\26-02-2016\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+D:\PROJECT\22-06-2016\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+D:\PROJECT\22-06-2016\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+D:\PROJECT\22-06-2016\LoginFrameWork\bin\Debug\BussinessLayer.dll
+D:\PROJECT\22-06-2016\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+D:\PROJECT\22-06-2016\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+D:\PROJECT\22-06-2016\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+D:\PROJECT\22-06-2016\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+D:\PROJECT\22-06-2016\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+D:\PROJECT\22-06-2016\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\LoginFrameWork\bin\Debug\BussinessLayer.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+F:\Project\ECESIS\BTS\iCore_BTS-V2\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+F:\Project\ECESIS\OMS_V1\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+F:\Project\ECESIS\OMS_V1\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+F:\Project\ECESIS\OMS_V1\LoginFrameWork\bin\Debug\BussinessLayer.dll
+F:\Project\ECESIS\OMS_V1\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+F:\Project\ECESIS\OMS_V1\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+F:\Project\ECESIS\OMS_V1\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+F:\Project\ECESIS\OMS_V1\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+F:\Project\ECESIS\OMS_V1\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+F:\Project\ECESIS\OMS_V1\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+E:\Projects\ECESIS\TFS_OM\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+E:\Projects\ECESIS\TFS_OM\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+E:\Projects\ECESIS\TFS_OM\LoginFrameWork\bin\Debug\BussinessLayer.dll
+E:\Projects\ECESIS\TFS_OM\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+E:\Projects\ECESIS\TFS_OM\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+E:\Projects\ECESIS\TFS_OM\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+E:\Projects\ECESIS\TFS_OM\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+E:\Projects\ECESIS\TFS_OM\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+E:\Projects\ECESIS\TFS_OM\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\LoginFrameWork\bin\Debug\BussinessLayer.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+D:\Projects\TFSOMV2\TFS_OM\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+D:\Projects\TFSOMV2\TFS_OM\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+D:\Projects\TFSOMV2\TFS_OM\LoginFrameWork\bin\Debug\BussinessLayer.dll
+D:\Projects\TFSOMV2\TFS_OM\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\TFSOMV2\TFS_OM\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+D:\Projects\TFSOMV2\TFS_OM\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\TFSOMV2\TFS_OM\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+D:\Projects\TFSOMV2\TFS_OM\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+D:\Projects\TFSOMV2\TFS_OM\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+D:\Projects\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+D:\Projects\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+D:\Projects\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.dll
+D:\Projects\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+D:\Projects\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+D:\Projects\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+D:\Projects\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.dll
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+D:\Projects\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+D:\Projects\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+D:\Projects\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.dll
+D:\Projects\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+D:\Projects\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+D:\Projects\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+D:\Projects\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+F:\Solution\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+F:\Solution\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+F:\Solution\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.dll
+F:\Solution\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+F:\Solution\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+F:\Solution\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+F:\Solution\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+F:\Solution\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+F:\Solution\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.pdb

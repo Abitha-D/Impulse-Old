@@ -1,0 +1,1412 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .col-width {
+        width: 17%;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    body {
+        background-color: #eef;
+    }
+
+    #tabs {
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+    }
+
+    .ibox {
+        clear: both;
+        margin-bottom: 0px;
+    }
+
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    .spanlabl {
+        font-size: 14px;
+        font-weight: bold;
+        color: darkblue;
+        text-align: left;
+        padding-top: 6px;
+        margin-bottom: 0px;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        border-radius: 0;
+        border: 1px solid transparent;
+        margin-bottom: 10px;
+        background-color: #3289C8;
+        color: #FFF;
+    }
+
+    #loadingDiv {
+        position: absolute;
+        top: 158px;
+        right: -447px;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 10000000;
+        opacity: 0.4;
+    }
+</style>
+
+
+<form method="get" class="form-horizontal">
+
+    <div id="UserSettings" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class=" ibox float-e-margins">
+
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">User Settings</span>
+                    <div class="ibox-tools">
+                        @*<a class="collapse-link" title="Minimize">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <strong>
+                                <a href="#">
+                                    <i class="fa fa-save" id="btnSave" title="Save"></i>
+                                </a>
+                            </strong>
+                            <a href="#" title="List">
+                                <i class="fa fa-list" id="btnUserSetting"></i>
+                            </a>*@
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="ibox-content" style="padding-top:15px" id="maintab">
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs nav-tabs-justified" style="padding-left:0%;">
+
+                        <li class="active">
+                            <a href="#tabprofile" data-toggle="tab" id="tabprofile1">
+                                View Profile
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="#tabportal" data-toggle="tab" id="tabportal1" style="display:none;">
+                                Add Portal Info
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="#tabphotoghr" data-toggle="tab" id="tabphotoghr1" style="display:none;">
+                                Add Photographer Info
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="#tabfee" data-toggle="tab" id="tabfee1" style="display:none;">
+                                Add Fee Info
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="#tabsubclient" data-toggle="tab" id="tabsubclient1" style="display:none">
+                                Add SubClient
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="#tabpassword" data-toggle="tab" id="tabpassword1">
+                                Password Reset
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tabprofile" style="padding-top:20px">
+
+                            <div class="col-sm-6">
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Name :</label>
+                                    <span id="spname" class="col-sm-3 spanlabl"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Email id:</label>
+                                    <span id="spemail" class="col-sm-3  spanlabl"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Gender:</label>
+                                    <span id="spgender" class="col-sm-3 spanlabl"> </span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">UserName:</label>
+                                    <span id="spusername" class="col-sm-3  spanlabl"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">State:</label>
+                                    <span id="spstate" class="col-sm-3 spanlabl"></span>
+                                </div>
+                                <div class="form-group" style="display:none;">
+                                    <label class="col-sm-3 control-label">County:</label>
+                                    <span id="spcounty" class="col-sm-3  spanlabl"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">City:</label>
+                                    <span id="spcity" class="col-sm-3  spanlabl"></span>
+                                </div>
+
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Address Line1:</label>
+                                    <span id="spadd1" class="col-sm-5 spanlabl"></span>
+                                </div>
+                                <div class="form-group" style="display:none">
+                                    <label class="col-sm-3 control-label">Address Line2:</label>
+                                    <span id="spadd2" class="col-sm-5  spanlabl"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Business Adrs:</label>
+                                    <span id="spbadd" class="col-sm-5 spanlabl"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Phone No:</label>
+                                    <span id="spphnno" class="col-sm-5  spanlabl"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Mobile No:</label>
+                                    <span id="spmobile" class="col-sm-5  spanlabl"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-10 control-label"></label>
+                                <div class="col-sm-2" id="divBtnEdit">
+                                    <a href="#" title="List">
+                                        <i class="fa fa-edit" id="btnEditProfile">
+                                            <span class="spanlabl"> Edit Profile</span>
+                                        </i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabportal">
+                            <div class="col-sm-12" style="padding-top: 15px">
+
+                                @*<div class="ibox-content" style="padding-top:15px;">*@
+
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblPortalListGrid"></table>
+                                    <div id="pagerPortalgrid"></div>
+                                </div>
+                                @*</div>*@
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-10 control-label"></label>
+                                <div class="col-sm-2" style="padding-top:10px;"><input type="button" id="btnPortalSave" value="Save Changes" required="" class="btn btn-primary block full-width m-b"></div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabphotoghr">
+
+                            <div class="col-sm-12" style="padding-top:15px;">
+                                @*<div class="ibox-content">*@
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblPhotoghrListGrid"></table>
+                                    <div id="pagerPhtghrgrid"></div>
+                                </div>
+                                @*</div>*@
+                            </div>
+                            <div class="form-group" style="padding-top:5px;">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-10 control-label"></label>
+                                <div class="col-sm-2"><input type="button" id="btnNewPhotographer" value="Add New Photographer" required="" class="btn btn-primary block full-width m-b"></div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" id="tabfee">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-content" style="padding-top:20px;">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Data Entry:<font color="red">*</font> :</label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                                <input type="text" id="txtdtintfee" class="form-control" placeholder="0.00" maxlength="4" min="1" onkeypress="return isNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display:none">
+                                        <label class="col-sm-3 control-label">Data Entry Fee Exterior<font color="red">*</font> :</label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                                <input type="text" id="txtdtextfee" class="form-control" placeholder="0.00" maxlength="4" min="1" onkeypress="return isNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Photo Fee Interior<font color="red">*</font> :</label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                                <input type="text" id="txtphtintfee" class="form-control" placeholder="0.00" maxlength="4" min="1" onkeypress="return isNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Photo Fee Exterior<font color="red">*</font> :</label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                                <input type="text" id="txtphtextfee" class="form-control" placeholder="0.00" maxlength="4" min="1" onkeypress="return isNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">QA Fee :</label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
+                                                <input type="text" id="txtqafee" class="form-control" placeholder="0.00" maxlength="4" onkeypress="return isNumber(event)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-10 control-label"></label>
+                                        <div class="col-sm-2"><input type="button" id="btnFeeSave" value="Save Changes" required="" class="btn btn-primary block full-width m-b"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tabsubclient">
+
+                            <div class="col-sm-12" style="padding-top:15px;">
+                                @*<div class="ibox-content">*@
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblSubClientListGrid"></table>
+                                    <div id="pagerSubClientListGrid"></div>
+                                </div>
+                                @*</div>*@
+                            </div>
+                            <div class="form-group" style="padding-top:5px;">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-10 control-label"></label>
+                                <div class="col-sm-2"><input type="button" id="btnSubCient" value="Add New Subclient" required="" class="btn btn-primary block full-width m-b"></div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" id="tabpassword">
+
+                            <div style="padding-top:15px" id="MainPage">
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Current Password</label>
+                                    <div class="col-sm-7"><input type="password" id="txtcurrpasswd" placeholder="Enter your password here.." required="" class="form-control"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">New Password</label>
+                                    <div class="col-sm-7"><input type="password" id="txtnewpasswd" title="<< Enter Minimum 6 Character with atleast 1 Character, 1 number, 1 symbols >>" onpaste="return false" placeholder="Enter new password here.." required="" class="form-control txtClass" onkeyup="CheckPasswordStrength(this.value)"></div>
+                                    <span id="password_strength"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Confirm Password</label>
+                                    <div class="col-sm-7"><input type="password" id="txtnconfirmpasswd" onpaste="return false" placeholder="Enter confirm new password here.." required="" class="form-control"></div>
+                                </div>
+                                <div class="form-group" id="divSuperAdmin">
+                                    <label class="col-sm-3 control-label">Admin Password</label>
+                                    <div class="col-sm-7"><input type="password" id="txtsuperpwd" onpaste="return false" placeholder="Enter SuperAdmin Password.." required="" class="form-control"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-10 control-label"></label>
+                                    <div class="col-sm-2"><input type="button" id="btnPasswrdSubmit" value="Submit" required="" class="btn btn-primary block full-width m-b"></div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="hdnEmailId" />
+    <input type="hidden" id="hdnUserId" />
+    <input type="hidden" id="hdnUserfullname" />
+    <input type="hidden" id="hdnUsername" />
+    <div id="MailData" style="visibility: hidden">
+    </div>
+    <div id="loadingDiv" style="display: none;">
+        <img id="myImage" src="~/Content/Image/loading_spinner.gif">
+    </div><br>
+
+</form>
+
+<script>
+    var sIsFirst = 0; var sIsFirst1 = 0;
+    var sCurrentUser = '';
+    localStorage.setItem("PageID", "UserSettings");
+    var sUserType = '';
+    var gridSelection = [];
+    var sIsFirstResult = [];
+
+    function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    }
+
+    function PortalRowRebind(cellValueRfiNo) {
+        var sCondition = " WHERE client_id=" + EmpId + "";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var sIsFirstResult = oAPICall.SelectData(strJsonDatas, "SelectPortalDataFromSp");
+
+        for (var i = 0; i < sIsFirstResult.length; i++) {
+
+            var sPortalId = sIsFirstResult[i].portal_id;
+            var sPortalCode = sIsFirstResult[i].portal_code;
+            var sPortalName = sIsFirstResult[i].portal_name;
+            if (cellValueRfiNo == sPortalName) {
+                return i;
+            }
+        }
+    }
+
+    function PortalListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['PortalId', 'Portal Code.', 'Portal Name', 'Order Interior Value ($)', 'Order Exterior Value ($)', ''],
+
+        colModel = [
+             // { name: 'check', index: 'check', width: 20, align: "center", sorttype: "int",editoptions: { value: "True:False" }, search: true,edittype: 'checkbox', formatter: "checkbox",editable:true },
+            { name: 'portal_id', index: 'portal_id', width: 110, align: "center", sorttype: "int", hidden: true },
+            { name: 'portal_code', index: 'portal_code', width: 80, align: "center", sorttype: false, search: true },
+            { name: 'portal_name', index: 'portal_name', width: 120, align: "center", sorttype: false, search: true },
+            {
+                name: 'order_int_value', index: 'order_int_value', width: 60, align: "center", sorttype: false, search: true, editable: true, editoptions: {
+                    size: 15, maxlengh: 10,
+                    dataInit: function (element) {
+                        $(element).keyup(function () {
+                            var val1 = element.value;
+                            var num = new Number(val1);
+                            if (isNaN(num)) {
+                                msgalert('Warning', 'Please enter a valid value..', 2);
+                                $(this).val('');
+                                return;
+                            }
+                        })
+                    }
+
+                }
+            },
+             {
+                 name: 'order_ext_value', index: 'order_ext_value', width: 60, align: "center", sorttype: false, search: false, editable: true, editoptions: {
+                     size: 15, maxlengh: 10,
+                     dataInit: function (element) {
+                         $(element).keyup(function () {
+                             var val1 = element.value;
+                             var num = new Number(val1);
+                             if (isNaN(num)) {
+                                 msgalert('Warning', 'Please enter a valid value..', 2);
+                                 $(this).val('');
+                                 return;
+                             }
+                         })
+                     }
+
+                 }
+             },
+            { name: 'is_checked', index: 'is_checked', width: 110, align: "center", sorttype: "int", hidden: true }
+
+        ];
+        var mydata = '';
+        mydata = PopulatePortalGrid();
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblPortalListGrid', '#pagerPortalgrid', 'Portal List', 220, 150, false, mydata, true);
+        var rowID = $('#tblPortalListGrid').jqGrid('getDataIDs');
+        for (var i = 0; i < rowID.length; i++) {
+            var RowData = $("#tblPortalListGrid").getRowData(rowID[i]);
+            var sPortalnamr = RowData["portal_name"];
+            var sIschecked = $('#tblPortalListGrid').getCell(rowID[i], 'is_checked');
+            if (sIschecked == 1) {
+                if (gridSelection.indexOf(sPortalnamr) == -1)
+                    gridSelection.push(sPortalnamr);
+            }
+
+        }
+        var grid = $("#tblPortalListGrid");
+        $("#cb_" + grid[0].id).click(function () {
+            gridSelection = [];
+            if ($("#cb_" + grid[0].id.toString()).is(':checked') == true) {
+                var rowID = $('#tblPortalListGrid').jqGrid('getDataIDs');
+                for (var i = 0; i < rowID.length; i++) {
+                    var sPortalnamr = $('#tblPortalListGrid').getCell(rowID[i], 'portal_name');
+                    $(this).jqGrid('setCell', rowID[i], 'is_checked', 1);
+                    gridSelection.push(sPortalnamr);
+                }
+            }
+            else {
+                var rowID = $('#tblPortalListGrid').jqGrid('getDataIDs');
+                for (var i = 0; i < rowID.length; i++) {
+                    $(this).jqGrid('setCell', rowID[i], 'is_checked', 0);
+                    gridSelection = [];
+                }
+            }
+        });
+        $("#tblPortalListGrid").jqGrid('setGridParam',
+                  {
+                      cellsubmit: 'clientArray',
+                      afterEditCell: function (id, name, val, iRow, iCol) {
+
+                          if ($('#jqg_tblPortalListGrid_' + id.toString()).is(':checked')) {
+                              var ids = $(this).jqGrid('getDataIDs');
+
+                              $(this).jqGrid("setSelection", ids);
+                              $("#tblPortalListGrid").jqGrid('setCell', id, 'is_checked', 1);
+
+                          }
+                      },
+                      beforeSelectRow: function (rowId, e) {
+                          iCol = $.jgrid.getCellIndex($(e.target).closest("td")[0]);
+                          if (iCol != 0) {
+                              if ($('#jqg_tblPortalListGrid_' + rowId.toString()).is(':checked'))
+                                  $('#jqg_tblPortalListGrid_' + rowId).attr('checked', false);
+                              else
+                                  $('#jqg_tblPortalListGrid_' + rowId).attr('checked', true);
+                          }
+                          var cellValueRfiNo = $("#" + rowId).find('td').eq(3).text();
+                          var Rowids = $(this).jqGrid('getDataIDs');// $("#tblPortalListGrid").getGridParam('selrow');
+                          for (var i = 0; i < Rowids.length; i++) {
+                              var RowData = $("#tblPortalListGrid").getRowData(Rowids[i]);
+                              var sPortalnamr = RowData["portal_name"];
+                              if (sPortalnamr == cellValueRfiNo) {
+                                  //var sRetunrowId = PortalRowRebind(cellValueRfiNo);
+                                  //sRetunrowId = sRetunrowId + 1;
+                                  if ($('#jqg_tblPortalListGrid_' + rowId.toString()).is(':checked')) {
+                                      jQuery("#tblPortalListGrid").setSelection(Rowids[i], true);
+                                      $(this).jqGrid('setCell', Rowids[i], 'is_checked', 1);
+                                      if (gridSelection.indexOf(sPortalnamr) == -1)
+                                          gridSelection.push(sPortalnamr);
+                                      //$("#tblPortalListGrid").jqGrid('setCell', Rowids[i], 'is_checked', 1);
+                                  }
+                                  else {
+                                      jQuery("#tblPortalListGrid").setSelection(Rowids[i], false);
+                                      $(this).jqGrid('setCell', Rowids[i], 'is_checked', 0);
+                                      gridSelection.splice(gridSelection.indexOf(sPortalnamr), 1);
+                                  }
+                              }
+                          }
+                      },
+                      loadComplete: function () {
+
+                          PortalSelectionGrid();
+
+                      }
+
+                  });
+
+
+    }
+
+    function SubClientListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['Ref No.', 'SubClient', '', '', 'Lock/UnLock'],
+        colModel = [
+            { name: 'ref_no', index: 'ref_no', width: 80, align: "center", sorttype: "int", search: true },
+            { name: 'full_name', index: 'full_name', width: 150, align: "center", sorttype: false, search: true },
+            { name: 'title', index: 'title', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false },
+        ];
+
+        var mydata = PopulateSubClientData();
+
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblSubClientListGrid', '#pagerSubClientListGrid', 'Sub Client List', 230, 10, false, mydata, false);
+        $("#1", "#tblSubClientListGrid").css({ display: "none" });
+        hide();
+    }
+
+
+    function PopulateSubClientData() {
+
+        var sCondition = " WHERE  client_ref_id=" + EmpId + " order by 1";  //user_type=1 is client
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectSubClient");
+        if (Result != '' && Result != null) {
+            var sClientRt = [];
+            for (var i = 0; i < Result.length; i++) {
+                var sRefId = Result[i].ref_no;
+                var sClientName = Result[i].full_name;
+                var sIsBlock = Result[i].delete_status;
+                sClientRt[i] = {
+                    ref_no: sRefId,
+                    full_name: sClientName,
+                    title: Result[i].title,
+                    gender: Result[i].gender,
+                    state_id: Result[i].state_id,
+                    county_id: Result[i].county_id,
+                    city: Result[i].city,
+                    mobile_no: Result[i].mobile_no,
+                    phone_no: Result[i].phone_no,
+                    address1: Result[i].address1,
+                    address2: Result[i].address2,
+                    zipcode: Result[i].zipcode,
+                    delete: sIsBlock,
+                    email_id: Result[i].email_id,
+                    dob: Result[i].dob,
+                    isblocked: sIsBlock
+                };
+            }
+            return sClientRt;
+
+        }
+    }
+
+    function SetPlusButton(GridId, PagerId, headerbutton, footerbutton) {
+        $('.ui-search-toolbar').hide();
+        $('#' + PagerId + '_right').css('width', '35px');
+        $('#' + PagerId + '_center').css('width', '100%');
+        $('#' + PagerId + '_right').html('<table cellspacing="0" cellpadding="0" border="0" class="ui-pg-table navtable" style="float:left;table-layout:auto;"><tbody><td class="ui-pg-button ui-corner-all" title=""><div class="ui-pg-div"><i id="' + footerbutton + '" class="fa fa-plus text-md" style="margin:6px;"></i></div></td></tr></tbody></table>');
+        $('#gview_' + GridId).find('div').eq(0).find('a').remove();
+        $('#gview_' + GridId).find('div').eq(0).append('<i id="' + headerbutton + '" class="fa fa-plus text-md" style="margin:10px;color:#333;float:right;cursor:pointer"></i>');
+    }
+
+
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        if (cellvalue == 1) {
+            return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-lock" title="Blocked" style="color:red"></i> </a>';
+        }
+        else {
+            return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-unlock-alt" title="UnBlock"style="color:blue"></i> </a>';
+        }
+    }
+
+    function PhotoGrahprListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['', '', 'PhotoGrapher No.', 'Photographer Name', '', '', ''],
+        colModel = [
+            { name: 'ref_no', index: 'ref_no', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'client_id', index: 'client_id', width: 80, align: "center", sorttype: false, hidden: true },
+            { name: 'photographer_id', index: 'photographer_id', width: 80, align: "center", sorttype: false, search: true },
+            { name: 'full_name', index: 'full_name', width: 120, align: "center", sorttype: false, search: true },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false },
+            { name: 'isblocked', index: 'username', width: 80, align: "center", sorttype: "int", hidden: true }
+
+        ];
+        var mydata = '';
+        mydata = PopulatePhotogrphrGrid();
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblPhotoghrListGrid', '#pagerPhtghrgrid', 'Photographer List', 210, 20, false, mydata, false);
+        // SetPlusButton('tblPhotoghrListGrid', 'pagerPhtghrgrid', 'btnPhotoghr_header', 'btnPhotoghr');
+    }
+    function PopulatePortalGrid() {
+        var paramNames = [], paramValues = [];
+        paramNames.push('sClientId'); paramNames.push('sStatusId');
+        paramValues.push(EmpId); paramValues.push('');
+        var strJsonDatas = eval({ strSessionID: UserSession, ProcParameters: paramNames, ProcInputData: paramValues });
+        var result = eval(oAPICall.SelectData(strJsonDatas, "GetPortalSpData"));
+        var sPortalRt = [];
+        var sCondition = " WHERE client_id=" + EmpId + "";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectPortalDataFromSp");
+        //  sIsFirstResult = Result;
+        if (Result != '' && Result != null) {
+
+            for (var i = 0; i < Result.length; i++) {
+
+                var sPortalId = Result[i].portal_id;
+                var sPortalCode = Result[i].portal_code;
+                var sPortalName = Result[i].portal_name;
+                var sOrderIntValue = Result[i].portal_int_value;
+                var sOrderExtValue = Result[i].portal_ext_value;
+                var sIsCheck = Result[i].is_checked;
+                sPortalRt[i] = {
+                    portal_id: sPortalId, portal_code: sPortalCode, portal_name: sPortalName, order_int_value: sOrderIntValue,
+                    order_ext_value: sOrderExtValue, is_checked: sIsCheck
+                };
+
+            }
+            return sPortalRt;
+        }
+    }
+
+    function PopulatePhotogrphrGrid() {
+        var sPhtghrRt = [];
+        var sCondition = " WHERE client_id=" + EmpId + "";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectClientPhtMapList");
+        if (Result != '' && Result != null) {
+
+            for (var i = 0; i < Result.length; i++) {
+                var sPhtgrphrId = Result[i].photographer_id;
+                var sPhtName = Result[i].full_name;
+                var sClientId = Result[i].client_id;
+                var sIsBlock = Result[i].delete_status;
+                sPhtghrRt[i] = {
+                    photographer_id: sPhtgrphrId, full_name: sPhtName, client_id: sClientId, delete: sIsBlock, isblocked: sIsBlock
+                };
+            }
+            return sPhtghrRt;
+        }
+    }
+
+
+    function PopulateProfileInfo() {
+
+        var Condition = ' WHERE user_id=' + CurrentUser + '';
+        var strJsonDatas = eval({ strSessionID: UserSession, strCondition: Condition, strFieldNames: null });
+        var Result = oAPICall.SelectData(strJsonDatas, 'SelectClientPhtList');
+
+        if (Result != null && Result.length > 0) {
+
+            sUserType = Result[0]["user_type"];
+
+            document.getElementById('spname').innerHTML = Result[0]["full_name"];
+            document.getElementById('spemail').innerHTML = Result[0]["email_id"];
+            var sGender = Result[0]["gender"];
+            if (sGender == 1)
+                document.getElementById('spgender').innerHTML = 'Male'
+            else
+                document.getElementById('spgender').innerHTML = 'Female';
+            document.getElementById('spusername').innerHTML = Result[0]["username"];
+            document.getElementById('spstate').innerHTML = Result[0]["state_name"];
+            document.getElementById('spcounty').innerHTML = Result[0]["county_name"];
+            document.getElementById('spcity').innerHTML = Result[0]["city_name"];
+            document.getElementById('spadd1').innerHTML = Result[0]["address1"];
+            document.getElementById('spadd2').innerHTML = Result[0]["address2"];
+            document.getElementById('spbadd').innerHTML = Result[0]["b_address"];
+            document.getElementById('spphnno').innerHTML = Result[0]["mobile_no"];
+            document.getElementById('spmobile').innerHTML = Result[0]["phone_no"];
+        }
+    }
+
+    function PortalSelectionGrid() {
+
+        jQuery('#tblPortalListGrid').jqGrid('resetSelection');
+        var rowID = $('#tblPortalListGrid').jqGrid('getDataIDs');
+        for (var i = 0; i < gridSelection.length; i++) {
+            for (var j = 0; j < rowID.length; j++) {
+                var RowData = $('#tblPortalListGrid').getCell(rowID[j], 'portal_name');
+                if (gridSelection[i] == RowData) {
+                    jQuery("#tblPortalListGrid").setSelection(rowID[j], true);
+                }
+                //var sIschecked = $('#tblPortalListGrid').getCell(rowID[i], 'is_checked');
+                //if (sIschecked == 1) {
+                //    jQuery("#tblPortalListGrid").setSelection(rowID[i], true);
+                //}
+            }
+        }
+    }
+
+    function PopulateFeeInfo() {
+
+        var sCondition = " WHERE client_id=" + EmpId + "order by 1 desc ";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectClientFees");
+        if (Result != '' && Result != null) {
+            $('#txtdtintfee').val(Result[0].data_int_fee);
+            $('#txtdtextfee').val(Result[0].data_ext_fee);
+            $('#txtphtintfee').val(Result[0].photo_int_fee);
+            $('#txtphtextfee').val(Result[0].photo_ext_fee);
+            $('#txtqafee').val(Result[0].qa_fee);
+
+        }
+    }
+
+    function CreateClientPortal(sClientId, sMasterAccntNo) {
+        //$('#gs_portal_name').val('');
+        $('#tblPortalListGrid').jqGrid('GridUnload');
+        PortalListGrid();
+        PortalSelectionGrid();
+       
+        setTimeout(function () {
+            var Rowids = $("#tblPortalListGrid").getGridParam('selarrrow');
+
+            if (Rowids.length <= 0) {
+                msgalert('Warning', 'Select atleast one portal', 2);
+                loader(0);
+                return;
+            }
+            var sPcPortalData = [];
+            for (var i = 0; i < Rowids.length; i++) {
+                var RowData = $("#tblPortalListGrid").getRowData(Rowids[i]);
+                var sPortalId = RowData["portal_id"];
+                var sPortalName = RowData["portal_name"];
+                var sOrderIntValue = RowData["order_int_value"];
+                var sOrderExtValue = RowData["order_ext_value"];
+                if (sOrderIntValue == null || sOrderIntValue == '')
+                    sOrderIntValue = 0;
+                if (sOrderExtValue == null || sOrderExtValue == '')
+                    sOrderExtValue = 0;
+                sPcPortalData += sPortalId + '~' + sOrderIntValue + '~' + sOrderExtValue + '~' + ',';
+                //var sStrJsonDatas = eval({
+                //    portal_id: sPortalId, portal_name: sPortalName, client_id: sClientId, order_int_value: sOrderIntValue,
+                //    order_ext_value: sOrderExtValue
+                //});
+                //var Result = oAPICall.InsertData(sStrJsonDatas, 'CreateClientPortal');
+                //if (Result != null && Result != '') {
+                //    CreateClientPortalto_TFS(sClientId, sPortalId, sMasterAccntNo, sPortalName);
+                //}
+
+            }
+            var paramNames = [], paramValues = [];
+            paramNames.push('sClientId'); paramNames.push('sProcPortalData');
+            paramValues.push(sClientId); paramValues.push(sPcPortalData);
+            var strJsonDatas = eval({ strSessionID: UserSession, ProcParameters: paramNames, ProcInputData: paramValues });
+            var ResultProc = eval(oAPICall.SelectData(strJsonDatas, "ProcInsertPortalClient"));
+
+            if (ResultProc == null) {
+                $('#tblPortalListGrid').jqGrid('GridUnload');
+                PortalListGrid();
+                PortalSelectionGrid();
+                parent.BindPortal();
+                loader(0);
+                msgalert('Sucess', 'Successfully Created', 1);
+            }
+        }, 1000);
+    }
+    function CreateClientPortalto_TFS(sClientId, sPortalId, sMasterAccntNo, sPortalName) {
+
+        var tfs_portalid = "", SiteName = "";
+
+        //var sCondition = " WHERE BTS_site_ref_no=" + sPortalId + "";
+        //var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        //var Result = oAPICall.SelectData(strJsonDatas, "SelectPortalTFS");
+        //if (Result != '' && Result != null) {
+        //    tfs_portalid = Result[0].SiteRefNo;
+        //    SiteName = Result[0].ShortDisplayValue;
+            var strJsonDatas = eval({
+                CustomerId: sMasterAccntNo, SiteType: 2, SiteRefNo: sPortalId, SiteDesc: sPortalName, SiteStatus: 1
+            });
+            var Result = oAPICall.InsertData(strJsonDatas, "Create_Client_MLS_Portal_OM");
+        //}
+      
+    }
+
+    function DeleteClientPortal(sClientId) {
+
+        var sCondition = "where client_id=" + EmpId + "";
+        var strJsonDatas = eval({ strSessionID: UserSession, strCondition: sCondition });
+        var Result = oAPICall.DeleteData(strJsonDatas, 'DeleteClientPortal');
+        if (Result != null && Result != '') {
+            var sMasterAccntNo = DeleteClientPortal_TFS(sClientId);
+            CreateClientPortal(sClientId, sMasterAccntNo);
+           
+        }
+    }
+
+    function DeleteClientPortal_TFS(sClientId) {
+        var EmpId = "";
+        var sMasterAccntNo = "";
+        var sCondition = " WHERE CM_DELETESTATUS=0 and bts_client_id=" + sClientId + "";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectClientTFS");
+        if (Result != '' && Result != null) {
+            sMasterAccntNo = Result[0].CM_CUSTOMER_ID;
+        }
+        var sCondition = "where CustomerId=" + sMasterAccntNo + "";
+        var strJsonDatas = eval({ strSessionID: UserSession, strCondition: sCondition });
+        var Result1 = oAPICall.DeleteData(strJsonDatas, 'DeleteClientPortal_TFS');
+        return sMasterAccntNo;
+    }
+
+    function InsertClientFee(sClientId) {
+        var sDataInt = $('#txtdtintfee').val();
+        $('#txtdtextfee').val(sDataInt);
+        var sStrJsonDatas = eval({
+            client_id: sClientId, data_int_fee: $('#txtdtintfee').val(), data_ext_fee: $('#txtdtextfee').val(),
+            photo_int_fee: $('#txtphtintfee').val(), photo_ext_fee: $('#txtphtextfee').val(), qa_fee: $('#txtqafee').val(),
+            created_date: new Date()
+        });
+        var Result = oAPICall.InsertData(sStrJsonDatas, 'CreateClientFees');
+        if (Result != null && Result != '') {
+            msgalert('Success', 'Successfully Created', 1);
+        }
+    }
+
+    function TabSettings() {
+        if (access_level == 2) {
+            $("#tabportal1").show();
+            $("#tabphotoghr1").show();
+            $("#tabfee1").show();
+            $("#tabsubclient1").show();
+        }
+    }
+
+    function show() {
+        document.getElementById("loadingDiv").style.display = "block";
+        // setTimeout("hide()", 7000);  // 5 seconds
+    }
+    function hide() {
+        document.getElementById("loadingDiv").style.display = "none";
+    }
+
+    ///////////////////////////////////////////////////////////////Mail Code Start ///////////////////////////////////////////////////////////////////
+
+    function SendEMail1() {
+        //loadingalert();
+        var sMailTo = $('#hdnEmailId').val();
+        var sMailBody = CreateMailBody1();
+        var StrJsonDatas = eval({
+            mail_to: sMailTo,
+            mail_subject: 'Password Successfully Changed',
+            mail_body: sMailBody
+
+        });
+        var Result = oAPICall.Sendmail(StrJsonDatas, 'sendmail');
+        if (Result != null || Result != '') {
+            CreateMailLog1();
+        }
+    }
+
+
+    function CreateMailBody1() {
+        var Condition = ' where mail_type=7 '; // mail type 7  is Password Changed Successfully
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectEmailTemplate");
+
+        if (Result != null || Result != '') {
+            var sMailData = Result[0].mail_body;
+            var sUserfullname = $('#hdnUserfullname').val();
+            var sUsername = $('#hdnUsername').val();
+            document.getElementById('MailData').innerHTML = sMailData;
+            document.getElementById('sname').innerHTML = sUserfullname;
+            document.getElementById('sUsername').innerHTML = sUsername;
+            document.getElementById('company_address').innerHTML = CompanyName;
+        }
+        return document.getElementById('MailData').innerHTML;
+    }
+
+    function CreateMailLog1() {
+        var mail_type = "7"; // mail type 7  is Password Changed Successfully
+        var username = $('#hdnUsername').val();
+        var mail_from = "icorepioneertech@gmail.com";
+        var mail_to = $('#hdnEmailId').val();
+        var mail_cc = "";
+        var mail_bcc = "";
+        var mail_sub = 'Password Successfully Changed';
+        var mail_body = CreateMailBody1();
+        var mail_send_datetime = new Date();
+        var dt = dateFormat(dt, "isoDateTime");
+        var loginuser = $('#hdnUsername').val();
+        var mail_sendornot = 1; //set to 0 if mail not send
+        var mail_attachment = 1; //set to 0 if there is no attachment
+
+        var strJsonDatas = eval({
+            mail_temp_no: mail_type, mail_from: mail_from, mail_to: mail_to, mail_cc: mail_cc, mail_bcc: mail_bcc,
+            mail_sub: mail_sub, mail_body: mail_body, loginuser: CurrentUser, mail_send_datetime: mail_send_datetime, mail_send_by: CurrentUser,
+            mail_sendornot: mail_sendornot, mail_attachment: mail_attachment
+        });
+
+        var Result = oAPICall.InsertData(strJsonDatas, 'CreateEmailLog');
+
+    }
+
+    ///////////////////////////////////////////////////////////////Mail Code end ///////////////////////////////////////////////////////////////////
+
+
+    function Clear() {
+        $('#txtcurrpasswd').val('');
+        $('#txtnewpasswd').val('');
+        $('#txtnconfirmpasswd').val('');
+        $('#txtsuperpwd').val('');
+        $("#password_strength").html('');
+
+    }
+
+
+    function UserLogout() {
+        localStorage.setItem("islogin", 'off');
+        localStorage.setItem("cu", '');
+    }
+
+    $(document).ready(function () {
+
+        loader(1);
+
+        setTimeout(function () {
+            if (access_level == 1 || access_level == 4) {
+                $('#divBtnEdit').hide();
+            }
+            if (access_level == 4) {
+                $('#divSuperAdmin').show();
+                $('#divBtnEdit').hide();
+            }
+            $('#divSuperAdmin').hide();
+
+            TabSettings();
+            PopulateProfileInfo();
+
+            PhotoGrahprListGrid();
+            PopulateFeeInfo();
+
+            var sWidthn = $('#maintab').width() - 30;
+            $('#tblPhotoghrListGrid').setGridWidth(sWidthn);
+
+            loader(0);
+        }, 1000);
+
+
+        $('#txtnewpasswd').tooltip();
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.tabs-container').width();
+            $('#tblPortalListGrid').setGridWidth(sWidth);;
+        });
+
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.tabs-container').width();
+            $('#tblPhotoghrListGrid').setGridWidth(sWidth);
+
+        });
+
+        $("#tabportal1").click(function (e) {
+            if (sIsFirst == 0) {
+                show();
+                setTimeout(function () {
+
+                    PortalListGrid();
+                    PortalSelectionGrid();
+                    var sWidthn = $('#maintab').width() - 30;
+                    $('#tblPortalListGrid').setGridWidth(sWidthn);
+                    hide();
+                    sIsFirst = 1;
+
+                }, 500);
+
+            }
+
+        });
+
+        $("#tabsubclient1").click(function (e) {
+            if (sIsFirst1 == 0) {
+                loader(1);
+                setTimeout(function () {
+
+                    SubClientListGrid();
+                    //PortalSelectionGrid();
+                    var sWidthn = $('#maintab').width() - 30;
+                    $('#tblSubClientListGrid').setGridWidth(sWidthn);
+                    loader(0);
+                    sIsFirst = 1;
+                }, 500);
+
+            }
+
+        });
+
+        $("#tabphotoghr1").click(function (e) {
+            loader(0);
+        });
+        $('#btnNewPhotographer').click(function () {
+            window.location = 'PhotographerMaster?qPhotoghId=' + -1 + '';
+
+        });
+        $('#btnSubCient').click(function () {
+            window.location = 'SubClientMaster?qSubclientId=' + -1 + '';
+
+        });
+
+        $('#txtcurrpasswd').focusout(function () {
+
+            if (document.getElementById('txtcurrpasswd').value == "") {
+                document.getElementById('txtcurrpasswd').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtcurrpasswd').style.borderColor = "green";
+            }
+            var sPassword = encode64($('#txtcurrpasswd').val().toString());
+            var sCondition = " WHERE user_id=" + "'" + CurrentUser + "'" + "";
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsUserMaster");
+            if (Result != "" || Result != null) {
+                var sPasswordt = Result[0].password;
+                if (sPasswordt != sPassword) {
+                    msgalert('Warning', 'Current password is wrong', 2);
+                    return;
+                }
+            }
+
+        });
+        $('#txtnewpasswd').focusout(function () {
+
+            if (document.getElementById('txtnewpasswd').value == "") {
+                document.getElementById('txtnewpasswd').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtnewpasswd').style.borderColor = "green";
+            }
+        });
+        $('#txtnconfirmpasswd').focusout(function () {
+
+            if (document.getElementById('txtnconfirmpasswd').value == "") {
+                document.getElementById('txtnconfirmpasswd').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtnconfirmpasswd').style.borderColor = "green";
+            }
+        });
+
+
+        $('#btnEditProfile').click(function () {
+            if (sUserType == 1)
+                window.location = 'ClientMaster?qPhotoghId=' + EmpId + '';
+            else
+                window.location = 'PhotographerMaster?qPhotoghId=' + EmpId + '';
+
+
+        });
+
+        $('#btnPortalSave').click(function () {
+            //var Rowids = $("#tblPortalListGrid").getGridParam('selarrrow');
+
+            //if (Rowids.length <= 0) {
+            //    msgalert('Warning', 'Select atleast one portal', 2);
+            //    return;
+            //}
+            //else {
+            loader(1);
+            setTimeout(function () {
+                DeleteClientPortal(EmpId);
+            }, 1000);
+
+            //}
+        });
+        $('#btnFeeSave').click(function () {
+
+            if ($('#txtdtintfee').val() == 0) {
+                msgalert('Warning', 'Enter Data Fee informations and continue..', 2);
+                return;
+            }
+            if ($('#txtphtintfee').val() == 0) {
+                msgalert('Warning', 'Enter Photo Interior Fee informations and continue..', 2);
+                return;
+            }
+            if ($('#txtphtextfee').val() == 0) {
+                msgalert('Warning', 'Enter Photo Exterior Fee informations and continue..', 2);
+                return;
+            }
+            if ($('#txtdtintfee').val() != 0) {
+                InsertClientFee(EmpId);
+            }
+
+        });
+
+        $('#btnPasswrdSubmit').click(function () {
+
+
+            if (document.getElementById('txtcurrpasswd').value == "") {
+                document.getElementById('txtcurrpasswd').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter mandatory fields', 2);
+                return;
+            }
+            if (document.getElementById('txtnewpasswd').value == "") {
+                document.getElementById('txtnewpasswd').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter mandatory fields', 2);
+                return;
+            }
+            if (document.getElementById('txtnconfirmpasswd').value == "") {
+                document.getElementById('txtnconfirmpasswd').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter mandatory fields', 2);
+                return;
+            }
+            if (document.getElementById('txtnconfirmpasswd').value != document.getElementById('txtnewpasswd').value) {
+                document.getElementById('txtnconfirmpasswd').style.borderColor = "red";
+                document.getElementById('txtnewpasswd').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Password do not match!..', 2);
+                return;
+            }
+            if (access_level == 4) {
+                if (document.getElementById('txtsuperpwd').value == "") {
+                    document.getElementById('txtsuperpwd').style.borderColor = "red";// this adds the error class
+                    msgalert('Warning', 'Please enter mandatory fields', 2);
+                    return;
+                }
+            }
+            if ($("#password_strength").html() == "Weak" || $("#password_strength").html() == "Good") {
+                msgalert('Warning', 'Password strength must strong and continue..', 2);
+                return;
+            }
+            if ($("#txtnconfirmpasswd").val().length <= 5) {
+                msgalert('Warning', 'Short passwords are easy to guess. Try one with atleast 6 characters.', 2);
+                return;
+            }
+            var sPassword = encode64($('#txtcurrpasswd').val().toString());
+            var sCondition = " WHERE user_id=" + "'" + CurrentUser + "'" + "";
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsUserList");
+            if (Result != "" || Result != null) {
+                var sPasswordt = Result[0].password;
+                $('#hdnUsername').val(Result[0].username);
+                $('#hdnUserfullname').val(Result[0].full_name);
+                $('#hdnEmailId').val(Result[0].email_id);
+
+                if (sPasswordt != sPassword) {
+                    document.getElementById('txtcurrpasswd').style.borderColor = "red";
+                    msgalert('Warning', 'Current password is wrong', 2);
+                    return;
+                }
+            }
+            var sCurrPasswd = encode64($('#txtcurrpasswd').val().toString());
+            var sNewPasswd = encode64($('#txtnewpasswd').val().toString());
+
+            if (access_level == 4) {
+                var sPassword1 = encode64($('#txtsuperpwd').val().toString());
+                var sCondition = " WHERE user_id=" + "'" + 1 + "'" + "";
+                var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+                var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsUserList");
+                if (Result != "" || Result != null) {
+                    var sPasswordt1 = Result[0].password;
+                    $('#hdnUsername').val(Result[0].username);
+                    $('#hdnUserfullname').val(Result[0].full_name);
+                    $('#hdnEmailId').val(Result[0].email_id);
+                    if (sPasswordt1 != sPassword1) {
+                        document.getElementById('txtsuperpwd').style.borderColor = "red";
+                        msgalert('Warning', 'SuperAdmin password is wrong', 2);
+                        return;
+                    }
+                }
+            }
+            var sCondition = " WHERE user_id=" + "'" + CurrentUser + "'" + "";
+            var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+            var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsUserMaster");
+            if (Result != "" || Result != null) {
+
+                //Update Password
+                var StrJsonDatas = eval({
+                    password: sNewPasswd,
+                    updated_by: CurrentUser,
+                    updated_date: new Date(),
+                    is_first_login: 2
+
+                });
+                show();
+                var sCondition = " WHERE user_id=" + "'" + CurrentUser + "'" + "";
+                var Result1 = oAPICall.UpdateData(StrJsonDatas, 'UpdateBtsUserMaster', sCondition);
+                if (Result1 != null && Result1 != '') {
+                    sMsgDesc = 'Password reset successfully'
+                    setTimeout(function () {
+                        SendEMail1();
+                        hide();
+                        msgalert('Success', sMsgDesc, 1);
+                        Clear();
+                        UserLogout();
+                        window.location = "../Home/Logout";
+                    }, 2000);
+
+                }
+            }
+            else { msgalert('Warning', 'Current password is wrong', 2); }
+
+        });
+
+        $(document).delegate('#tblPhotoghrListGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblPhotoghrListGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                var sPhtghrId = $('#tblPhotoghrListGrid').getCell(rowIds[rowid], 'photographer_id');
+                window.location = 'PhotographerMaster?qPhotoghId=' + sPhtghrId + '';
+
+            }
+            else {
+                /////////////////////////////delete code start////////////////////////
+
+                var sIsBlock = $('#tblPhotoghrListGrid').getCell(rowIds[rowid], 'isblocked');
+                if (sIsBlock == 0) {
+                    parent.swal({
+                        title: "Are you sure to block?",
+                        //text: "" + text + "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#ED5565",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+
+                    },
+                  function (isConfirm) {
+                      if (isConfirm) {
+                          var sRefId = $('#tblPhotoghrListGrid').getCell(rowIds[rowid], 'photographer_id')
+                          var sStrJsonDatas = eval({ delete_status: 1 });
+                          var Condition = "where ref_no=" + sRefId;
+                          var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateCpdMaster', Condition);
+                          var Result2 = oAPICall.UpdateData(sStrJsonDatas, 'UpdateBtsUserMaster', Condition);
+                          if (Result != "" || Result != null) {
+                              // $('#tblPhotoListGrid').jqGrid('delRowData', rowid);
+                              // $('#tblPhotoListGrid').showCol('isblocked');
+                              $('#tblPhotoghrListGrid').jqGrid('setCell', rowid, 'delete', '1');
+                              msgalert('Success', 'Successfully Blocked', 1);
+                              $('#tblPhotoghrListGrid').jqGrid('GridUnload');
+                              PhotoGrahprListGrid();
+                          }
+                      }
+                      else {
+                          return
+                      }
+                  });
+                }
+                else {
+                    parent.swal({
+                        title: "Are you sure to Unblock?",
+                        //text: "" + text + "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#ED5565",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+
+                    },
+                  function (isConfirm) {
+                      if (isConfirm) {
+                          var sRefId = $('#tblPhotoghrListGrid').getCell(rowIds[rowid], 'photographer_id')
+                          var sStrJsonDatas = eval({ delete_status: 0 });
+                          var Condition = "where ref_no=" + sRefId;
+                          var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateCpdMaster', Condition);
+                          var Result1 = oAPICall.UpdateData(sStrJsonDatas, 'UpdateBtsUserMaster', Condition);
+                          if (Result != "" || Result != null) {
+                              // $('#tblPhotoListGrid').jqGrid('delRowData', rowid);
+                              // $('#tblPhotoListGrid').showCol('isblocked');
+                              $('#tblPhotoghrListGrid').jqGrid('setCell', rowid, 'delete', '0');
+                              msgalert('Success', 'Successfully UnBlocked', 1);
+                              $('#tblPhotoghrListGrid').jqGrid('GridUnload');
+                              PhotoGrahprListGrid();
+                          }
+                      }
+                      else {
+                          return
+                      }
+                  });
+                }
+            }
+        });
+
+        $(document).delegate('#tblSubClientListGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblSubClientListGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+
+            if ($(this).attr('action') == 'edit') {
+                var sSubClientId = $('#tblSubClientListGrid').getCell(rowIds[rowid], 'ref_no');
+                window.location = 'SubClientMaster?qSubclientId=' + sSubClientId + '';
+
+            }
+            else {
+                /////////////////////////////delete code start////////////////////////
+
+                var sIsBlock = $('#tblSubClientListGrid').getCell(rowIds[rowid], 'isblocked');
+                if (sIsBlock == 0) {
+                    parent.swal({
+                        title: "Are you sure to block?",
+                        //text: "" + text + "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#ED5565",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+
+                    },
+           function (isConfirm) {
+               if (isConfirm) {
+                   var sRefId = $('#tblSubClientListGrid').getCell(rowIds[rowid], 'ref_no')
+                   var sStrJsonDatas = eval({ delete_status: 1 });
+                   var Condition = "where ref_no=" + sRefId;
+                   var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateSubClientMaster', Condition);
+
+                   if (Result != "" || Result != null) {
+                       $('#tblSubClientListGrid').jqGrid('setCell', rowid, 'delete', '1');
+                       msgalert('Success', 'Successfully Blocked', 1);
+
+                       $('#tblSubClientListGrid').jqGrid('GridUnload');
+                       SubClientListGrid();
+                   }
+               }
+               else {
+                   return
+               }
+           });
+                }
+                else {
+                    parent.swal({
+                        title: "Are you sure to Unblock?",
+                        //text: "" + text + "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#ED5565",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+
+                    },
+                  function (isConfirm) {
+                      if (isConfirm) {
+                          var sStrJsonDatas = eval({ delete_status: 0 });
+                          var sRefId = $('#tblSubClientListGrid').getCell(rowIds[rowid], 'ref_no')
+                          var Condition = "where ref_no=" + sRefId;
+                          var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateSubClientMaster', Condition);
+                          if (Result != "" || Result != null) {
+                              $('#tblSubClientListGrid').jqGrid('setCell', rowid, 'delete', '0');
+                              msgalert('Success', 'Successfully UnBlocked', 1);
+                              $('#tblSubClientListGrid').jqGrid('GridUnload');
+                              SubClientListGrid();
+                          }
+                      }
+                      else {
+                          return
+                      }
+                  });
+                }
+                /////////////////////////////end////////////////////////
+
+
+            }
+        });
+
+    });
+
+</script>

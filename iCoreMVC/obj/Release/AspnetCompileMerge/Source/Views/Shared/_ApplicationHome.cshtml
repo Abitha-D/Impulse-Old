@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+@*<meta http-equiv="X-UA-Compatible" content="IE=10">*@
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<link rel="shortcut icon" type="image/icon" href="~/Content/Image/new.png" />
+<link rel="stylesheet" href="http://tawian.io/text-spinners/spinners.css">
+<link href="~/Content/css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+
+<style>
+    .modal {
+        text-align: center;
+        padding: 0 !important;
+    }
+
+        .modal:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -4px;
+        }
+
+    .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .text-navy {
+        color: #f3f3f4 !important;
+    }
+</style>
+<script type="text/javascript">
+    var lcltime = 0;
+    // Set timeout variables.
+    //var timoutWarning = 3540000; // Display warning in 1Mins.
+    //var timoutNow = 3600000; // Timeout in 2 mins.
+    var timoutWarning = 60000; // Display warning in 1Mins.
+    var timoutNow = 120000; // Timeout in 2 mins.
+    var timeoutTimer = 30000;
+
+    var logoutUrl = "../Home/Logout";
+
+    var warningTimer = "";
+    var timeoutTimer = "";
+
+    // Start timers.
+    function StartTimers() {
+        localStorage.setItem("time_local", "on");
+        warningTimer = setTimeout("IdleWarning()", timoutWarning);
+        timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
+    }
+
+    // Reset timers.
+    function ResetTimers() {
+
+        clearTimeout(warningTimer);
+        clearTimeout(timeoutTimer);
+        warningTimer = "";
+        timeoutTimer = "";
+        //localStorage.removeItem("time_local");
+        localStorage.setItem("time_local1", "off");
+        //alert(localStorage.getItem("time_local"));
+        StartTimers();
+        //alert(warningTimer);
+        $("#timeout").modal("hide");
+
+    }
+
+    // Show idle timeout warning dialog.
+    function IdleWarning() {
+        $("#timeout").modal({                    // wire up the actual modal functionality and show the dialog
+            "backdrop": "static",
+            "keyboard": true,
+            "show": true                     // ensure the modal is shown immediately
+        });
+    }
+
+    // Logout the user.
+    function IdleTimeout() {
+        if (localStorage.getItem("time_local") == "on") {
+            userlogout();
+            window.location = logoutUrl;
+        }
+    }
+</script>
+
+<html>
+@*ResetTimers() onmousemove="ResetTimers()" onkeypress="ResetTimers()"*@
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script type="text/javascript" src="../Scripts/js/plugins/pace/pace.min.js"></script>
+</head>
+<body style="overflow:auto">
+    @*<div id="StyleSheetCount"></div>*@
+    <div id=" timeout" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-body" style="background-color:white" id="">
+                <h1>
+                    Session About To Timeout
+                </h1>
+                <p>
+                    You will be automatically logged out in 1 minute.<br />
+                    To remain logged in move your mouse over this window.
+            </div>
+        </div>
+
+    </div>
+
+
+    <div>
+        @RenderBody()
+
+
+    </div>
+    <div id="blueimp-gallery" class="blueimp-gallery" data="fullscreen:true">
+        <!-- The container for the modal slides -->
+        <div class="slides"></div>
+        <!-- Controls for the borderless lightbox -->
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+        <!-- The modal dialog, which will be used to wrap the lightbox content -->
+
+    </div>
+
+    <div id="myModalLoad" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            @*<div class="modal-content" style="background-color:transparent">*@
+            <!-- dialog title -->
+            @*<div class="modal-header">
+                    <div class="modal-title">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Are you sure to delete order no&nbsp;<span id="spnordercode">&nbsp;</span>?</h4>
+                    </div>
+                </div>*@
+            <!-- dialog body -->
+            <div class="modal-body" id="divContent">
+                @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                @*<center><img src='../Content/Image/Loading.gif' style='background-color: white;' /></center><br />*@
+                <center>
+                    @*<div class="h1 m-t-xs text-navy">
+                        <span class="loading bullseye"></span>
+                    </div>*@
+
+                    <div class="sk-spinner sk-spinner-three-bounce" style="width:100%">
+                        <div class="sk-bounce1" style="background-color:white"></div>
+                        <div class="sk-bounce2" style="background-color:white"></div>
+                        <div class="sk-bounce3" style="background-color:white"></div>
+                        <div class="sk-bounce4" style="background-color:white"></div>
+                        <div class="sk-bounce5" style="background-color:white"></div>
+                        <div class="sk-bounce6" style="background-color:white"></div>
+                        <div class="sk-bounce7" style="background-color:white"></div>
+                        <div class="sk-bounce8" style="background-color:white"></div>
+                        <div class="sk-bounce9" style="background-color:white"></div>
+                        <div class="sk-bounce10" style="background-color:white"></div></div>
+
+
+
+                </center><br />
+                <center> <span style='color:#F8BB86'>Please wait..! Do not press refresh or back button.</span>"</center>
+            </div>
+            <!-- dialog buttons -->
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-bottom: 0;">Cancel</button>
+                    <button type="button" class="btn btn-default" id="dialogBtn">Delete</button>
+                    <center> <span style='color:#F8BB86'>Please wait..Do not press refresh or back button.</span>"</center>
+                </div>*@
+            @*</div>*@
+        </div>
+
+    </div>
+    <div id="myModalLoadmenu" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-body" id="divContent1">
+                <center><img src='../Content/Image/Loading.gif' style='background-color: white;' /></center><br />
+                <center> <span style='color:#F8BB86'>Please wait..! Do not press refresh or back button.</span>"</center>
+            </div>
+        </div>
+
+    </div>
+    <div id="myModalLoad1" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-body" id="divContent1">
+                <center><img src='../Content/Image/Loading.gif' style='background-color: white;' /></center><br />
+                <center> <span style='color:#F8BB86'>Please wait..! Do not press refresh or back button.</span>"</center>
+            </div>
+        </div>
+
+    </div>
+    <input type="text" name="hdnUserDetails" id="hdnUserDetails" value="false" style="visibility:hidden;display:none" />
+
+</body>
+</html>
+<script src="~/Scripts/js/plugins/blueimp/blueimp-helper.js"></script>
+<script src="~/Scripts/js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+
+@*<script src="~/Scripts/js/plugins/blueimp/blueimp-gallery.js"></script>*@
+<script src="~/Scripts/js/plugins/blueimp/blueimp-gallery-fullscreen.js"></script>
+<script src="~/Scripts/js/plugins/blueimp/blueimp-gallery-indicator.js"></script>
+<script id="jq" src=""></script>
+
+<script type="text/javascript">
+
+    window.SessionTimeout = (function () {
+        alert("Timeout")
+    })
+
+</script>
+
+<script>
+    var oAPICall = new APICall();
+    $(document).ready(function () {
+        //$("#myModalLoad").modal({                    // wire up the actual modal functionality and show the dialog
+        //    "backdrop": "static",
+        //    "keyboard": true,
+        //    "show": true                     // ensure the modal is shown immediately
+
+        //});
+
+        //sessionStorage.clickcount = 0;
+        //alert(sessionStorage.clickcount)
+
+        setTimeout(function () {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 4000
+            };
+            toastr.success('Welcome to ECESIS - BPO Tracking System', 'BTS');
+
+        }, 1300);
+    });
+
+
+
+    function getsessiondata() {
+        $.ajax({
+            url: "getsessionvalue",
+            type: "POST",
+            success: function (data) {
+                $('#hdnUserDetails').val(data);
+                retdata = $('#hdnUserDetails').val();
+                var userConfig = new UserConfig();
+                userConfig.InitilizeUserConfig(retdata);
+
+            }
+        });
+    }
+</script>
+<script>
+    $(function () {
+        'use strict'
+        $('#blueimp-gallery').data('fullScreen', true);
+    });
+
+</script>

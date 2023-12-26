@@ -1,0 +1,435 @@
+﻿@{
+    ViewBag.Title = "EmployeeLeave";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Apply Leave</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <link href="~/Content/css/plugins/datetimepicker/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/datetimepicker/jquery.timeentry.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="~/Content/css/plugins/datapicker/datepicker3.css" rel="stylesheet" />
+
+    <link href="~/assets/global/plugins/icheck/skins/all.css" rel="stylesheet" />
+
+    <style>
+        .switch {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150px;
+            height: 50px;
+            text-align: center;
+            background: #00bc9c;
+            transition: all 0.2s ease;
+            border-radius: 25px;
+        }
+
+            .switch span {
+                position: absolute;
+                width: 20px;
+                height: 4px;
+                top: 50%;
+                left: 50%;
+                margin: -2px 0px 0px -4px;
+                background: #fff;
+                display: block;
+                transform: rotate(-45deg);
+                transition: all 0.2s ease;
+            }
+
+                .switch span:after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    width: 4px;
+                    height: 12px;
+                    margin-top: -8px;
+                    background: #fff;
+                    transition: all 0.2s ease;
+                }
+
+        input[type=radio] {
+            display: none;
+        }
+
+        .switch label {
+            cursor: pointer;
+            color: rgba(0,0,0,0.2);
+            width: 60px;
+            line-height: 50px;
+            transition: all 0.2s ease;
+        }
+
+        label[for=yes] {
+            position: absolute;
+            left: 0px;
+            height: 20px;
+        }
+
+        label[for=no] {
+            position: absolute;
+            right: 0px;
+        }
+
+        #no:checked ~ .switch {
+            background: #eb4f37;
+        }
+
+            #no:checked ~ .switch span {
+                background: #fff;
+                margin-left: -8px;
+            }
+
+                #no:checked ~ .switch span:after {
+                    background: #fff;
+                    height: 20px;
+                    margin-top: -8px;
+                    margin-left: 8px;
+                }
+
+        .font_class {
+            font-size: 15px;
+            padding-left: 15px;
+            color: black;
+        }
+
+        #yes:checked ~ .switch label[for=yes] {
+            color: #fff;
+        }
+
+        #no:checked ~ .switch label[for=no] {
+            color: #fff;
+        }
+
+        .noborder {
+            border: 0px;
+        }
+
+        select[disabled] {
+            background-color: blue;
+        }
+
+        .trashBin {
+            color: #E43A45;
+            border: 0px;
+            background-color: transparent;
+            padding: 8px;
+        }
+
+        .downFile {
+            color: #1BBC9B;
+            border: 0px;
+            background-color: transparent;
+            padding: 8px;
+        }
+
+        .centeralign {
+            text-align: center;
+            border: 1px solid #327ad5;
+        }
+
+        .table > thead > tr > th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #327ad5;
+        }
+
+        .table > tbody > tr > td {
+            vertical-align: bottom;
+            border-bottom: 2px solid #327ad5;
+        }
+
+        .pdd {
+            text-align: center;
+            padding: 10px;
+        }
+
+    </style>
+</head>
+<body class="page-container-bg-solid" ng-app="Leave" ng-cloak>
+    <div class="col-md-12" ng-controller="LeaveController" ng-init="GetEmployeeLeaveCounts(refNo, 1)">
+
+        <div class="col-md-2">
+            <div class="form-group form-md-line-input has-info">
+                <select class="form-control" id="ddlYear">
+                    <option value="0">Select Year</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                </select>
+                <label for="form_control_1">Select Year</label>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group form-md-line-input has-info">
+                <button style="float:right" type="button" class="btn green btn-outline" id="btnsave" ng-click="GetEmployeeLeaveCounts(refNo, 1)">Submit</button>
+            </div>
+        </div>
+        <div class="input-group" style="float: right; margin-top: 15px;">
+            <input type="text" class="form-control" id="searchBoxes" style="border-radius: 10px;border: 1px solid blue;" placeholder="&#128269; Search Employee...." onkeypress="searchWord(this)">
+        </div>
+
+        <div class="col-md-12 portlet box red">
+            <div class="portlet box red" style="height: 377px; overflow-x: scroll;">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-cogs"></i>Leave Approval List
+                    </div>
+                    <div class="tools">
+
+                    </div>
+                </div>
+                <div class="portlet-body" style="overflow:auto" ng-cloak>
+                    <div class="table-responsive">
+                        <table class="table" style="box-shadow: 0px 0px 15px 2px #868f96">
+                            <thead>
+
+                                <tr class="centeralign">
+                                    <th class="centeralign" rowspan="2"> Employee Code </th>
+                                    <th class="centeralign" rowspan="2"> Action </th>
+                                    <th class="centeralign" rowspan="2"> Employee Name </th>
+                                    <th class="centeralign" colspan="9"> Taken </th>
+                                    <th class="centeralign" colspan="9"> Balance </th>
+                                </tr>
+                                <tr class="centeralign">
+                                    <th class="centeralign" style="width: 3.33%;"> PL </th>
+                                    <th class="centeralign" style="width: 3.33%;"> CL </th>
+                                    <th class="centeralign" style="width: 3.33%;"> 0.5 </th>
+                                    <th class="centeralign" style="width: 3.33%;"> Comp Off </th>
+                                    <th class="centeralign" style="width: 3.33%;"> LOP </th>
+                                    <th class="centeralign" style="width: 3.33%;"> LOP 0.5 </th>
+                                    <th class="centeralign" style="width: 3.33%;"> MTL </th>
+                                    <th class="centeralign" style="width: 3.33%;"> MDL </th>
+                                    <th class="centeralign" style="width: 3.33%;"> PY </th>
+                                    <th class="centeralign" style="width: 3.33%;"> PL </th>
+                                    <th class="centeralign" style="width: 3.33%;"> CL </th>
+                                    <th class="centeralign" style="width: 3.33%;"> 0.5 </th>
+                                    <th class="centeralign" style="width: 3.33%;"> Comp Off </th>
+                                    <th class="centeralign" style="width: 3.33%;"> LOP </th>
+                                    <th class="centeralign" style="width: 3.33%;"> LOP 0.5 </th>
+                                    <th class="centeralign" style="width: 3.33%;"> MTL </th>
+                                    <th class="centeralign" style="width: 3.33%;"> MDL </th>
+                                    <th class="centeralign" style="width: 3.33%;"> PY </th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="elv in EmployeeLeaveValue" id="myContent">
+                                <tr class="centeralign">
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.emp_ref_code}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">
+                                        <i class="fa fa-pencil" id="{{elv.emp_ref_no}}" ng-click="GetEmployeeLeaveValue(elv.emp_ref_no, 2)" aria-hidden="true" data-toggle="modal" data-target="#LeaveValueModal"></i>
+                                    </td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.emp_full_name}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.PL_taken}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.CL_taken}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.Half}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.CompOff}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.LossofPay}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.LossofPay_Half}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.Maternity}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.Medical}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.py_taken}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.PL_total}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.CL_total}}</td>
+                                    <td class="centeralign" style="width: 3.33%;">-</td>
+                                    <td class="centeralign" style="width: 3.33%;">-</td>
+                                    <td class="centeralign" style="width: 3.33%;">-</td>
+                                    <td class="centeralign" style="width: 3.33%;">-</td>
+                                    <td class="centeralign" style="width: 3.33%;">-</td>
+                                    <td class="centeralign" style="width: 3.33%;">-</td>
+                                    <td class="centeralign" style="width: 3.33%;">{{elv.py_balance}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal fade" id="LeaveValueModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-model="EmployeeLeave[0]">
+                        <div class="modal-dialog" role="document" style="width: 700px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2 class="modal-title" id="exampleModalLabel">Leave Value</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <table>
+                                        <tbody>
+                                            <tr class="pdd">
+                                                <td class="pdd">
+                                                    PL Taken
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtPLTaken" ng-model="EmployeeLeave[0].PL_taken" />
+                                                </td>
+                                                <td class="pdd">
+                                                    PL Balance
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtPLBalance" ng-model="EmployeeLeave[0].PL_total" />
+                                                </td>
+                                            </tr>
+                                            <tr class="pdd">
+                                                <td class="pdd">
+                                                    CL Taken
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtCLTaken" ng-model="EmployeeLeave[0].CL_taken" />
+                                                </td>
+                                                <td class="pdd">
+                                                    CL Balance
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtCLTotal" ng-model="EmployeeLeave[0].CL_total" />
+                                                </td>
+                                            </tr>
+                                            <tr class="pdd">
+                                                <td class="pdd">
+                                                    PY Taken
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtPYTaken" ng-model="EmployeeLeave[0].py_taken" />
+                                                </td>
+                                                <td class="pdd">
+                                                    PY Balance
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtPYBalance" ng-model="EmployeeLeave[0].py_balance" />
+                                                </td>
+                                            </tr>
+                                            <tr class="pdd">
+                                                <td class="pdd">
+                                                    Comp Off
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtCompOff" ng-model="EmployeeLeave[0].CompOff" />
+                                                </td>
+                                                <td class="pdd">
+                                                    0.5
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtHalf" ng-model="EmployeeLeave[0].Half" />
+                                                </td>
+                                            </tr>
+                                            <tr class="pdd">
+                                                <td class="pdd">
+                                                    LOP
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtLossofPay" ng-model="EmployeeLeave[0].LossofPay" />
+                                                </td>
+                                                <td class="pdd">
+                                                    LOP 0.5
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtLossofPay_Half" ng-model="EmployeeLeave[0].LossofPay_Half" />
+                                                </td>
+                                            </tr>
+                                            <tr class="pdd">
+                                                <td class="pdd">
+                                                    Maternity
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtMaternity" ng-model="EmployeeLeave[0].Maternity" />
+                                                </td>
+                                                <td class="pdd">
+                                                    Medical
+                                                </td>
+                                                <td class="pdd">
+                                                    <input type="text" id="txtMedical" ng-model="EmployeeLeave[0].Medical" />
+                                                </td>
+                                            </tr>
+                                            <tr class="pdd">
+                                                <td class="pdd"></td>
+                                                <td class="pdd">
+                                                    <button ng-click="UpdateEmployeeLeaveValue(EmployeeLeave[0].emp_ref_no, refNo)">Update</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Modal -->
+
+            </div>            
+        </div>
+
+    </div>
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <script src="~/assets/pages/scripts/components-date-time-pickers.min.js"></script>
+    <script src="~/assets/pages/scripts/components-date-time-pickers.js"></script>
+
+    <script>
+
+        var refNo, roleId;
+
+        function searchWord(id)
+        {
+            var value = $(id).val().toLowerCase();
+            $("#myContent tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        }
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        $(document).ready(function () {
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+            roleId = sUserDetails.RoleId;
+
+            $('#txttotal').val("");
+
+            var dt = new Date();
+
+            var yy = dt.getFullYear();
+
+            $("#ddlYear").val(yy).change();
+
+        });
+
+    </script>
+
+</body>
+</html>
+<script src="~/Scripts/js/angular.min.js"></script>
+<script src="~/Scripts/AngularController/Leavecontroller.js"></script>

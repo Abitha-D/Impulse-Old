@@ -1,0 +1,97 @@
+﻿.nav-brand
+{
+    color: rgba(255, 255, 255, 0.8);
+    background: #367fa9;
+}
+
+.bg-black
+{
+    background-color: #3C8DBC;
+    color: #9AA1B1;
+}
+
+.bg-black.lt, .bg-black .lt
+{
+    background-color: #343843;
+}
+
+.bg-black.dker, .bg-black .dker
+{
+    background-color: #1C1F25;
+}
+
+.bg-black .nav li > a
+{
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.bg-black .nav li > ul.dropdown-menu > li > a
+{
+    color: #424856;
+}
+
+.btn-primary
+{
+    color: #fff !important;
+    background-color: #3C8DBC;
+    border-color: #3C8FB6;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary
+{
+    color: #fff !important;
+    background-color: #2177A0;
+    border-color: #2E7DAC;
+}
+
+.nav-primary > ul > li > a
+{
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+.nav-primary > ul > li.dropdown-submenu:hover > a, .nav-primary > ul > li.dropdown-submenu:focus > a, .nav-primary > ul > li > a:hover, .nav-primary > ul > li > a:focus, .nav-primary > ul > li > a:active, .nav-primary > ul > li.active > a
+{
+    color: #FFF;
+}
+
+#lbl-company-name, .user-text, .fa-user
+{
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#lbl-company-name:hover, .user-text:hover, .fa-user:hover, #lbl-company-name:focus, .user-text:focus, .fa-user:focus
+{
+    color: #FFF;
+}
+
+.nav-user.b-r, section.scrollable.b-r, footer.b-r
+{
+    border-right: 0px solid #e0e4e8;
+}
+
+.match-bg
+{
+    background-color: #343843 !important;
+}
+
+#tabs div#current.tab a
+{
+    color: #343843;
+}
+
+.close-button
+{
+    opacity: .3;
+    filter: alpha(opacity=30);
+}
+
+.close-button:hover
+{
+    opacity: .7;
+    filter: alpha(opacity=70);
+}
+
+div table tr img
+{
+    border-color: #3c8dbc !important;
+}

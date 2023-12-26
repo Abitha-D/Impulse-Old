@@ -1,0 +1,183 @@
+﻿@{
+    ViewBag.Title = "ClientPriceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<form method="get" class="form-horizontal">
+    <div class="ibox-title" style="padding-top:5px">
+        <span class="label " style="font-size: 11px; font-weight: 700; margin-left: -10px; background-color: #eceeef;margin-top:7px ">Invoice List</span>
+        <div class="col-sm-8">
+            <label class="col-sm-3 control-label">Client<font color="red">*</font> :</label>
+            <div class="col-sm-5">
+                <select style="width:100%" class="select2_demo_3 form-control" id="ddlclient" data-placeholder="Choose a client...">
+                    <option></option>
+                </select>
+            </div>
+        </div>
+  
+        <div class="ibox-tools">
+          
+        
+  
+        
+
+            <a href="#" title="List Order" name="listcheck">
+                 <i class="fa fa-save" id="btnSave" onclick="SaveData()" title="Save/Update Price"></i>
+            </a>
+        </div>
+
+
+
+
+        </div>
+    <div class="ibox-content">
+        <div style="padding-top:15px" id="MainPage">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper">
+                        <table id="tblClientPriceListGrid"></table>
+                        <div id="pagerPriceListgrid"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</form>
+
+
+<script>
+    var sIsOrderAccept = 0;
+    var sTmfAssign = 0;
+    var sPhotoAssign = 0;
+    function BindClients() {
+        var Condition = "where CM_DELETESTATUS=0 and IsParent=1 order by CM_CUSTOMER_NAME asc"; // changed by peeru 14 2 2018
+        // var Condition = "where CM_DELETESTATUS=0";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectMasterClient");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlclient').append('<option value="' + Result[i]["CM_CUSTOMER_ID"] + '">' + Result[i]["CM_CUSTOMER_NAME"] + '</option>');
+            }
+        }
+    }
+
+
+
+    function OrderListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['', 'order_type_id', 'Order Type', 'Price'],
+        colModel = [
+            { name: 'client_id', index: 'client_id', width: 50, align: "center", sorttype: "int", hidden: true },
+            { name: 'order_type_id', index: 'order_type_id', width: 55, align: "center", sorttype: "int", hidden: true },
+            { name: 'order_type_name', index: 'order_type_name', width: 120, align: "center", sorttype: "int", search: true },
+            {
+                name: 'price', index: 'price', width: 70, align: "center", search: false, editable: true, celledit: false, editoptions: {
+                    dataInit: function (element) {
+                        $(element).keypress(function (e) {
+                            if (e.which != 8 && e.which != 0 && e.which != 46 && (e.which < 48 || e.which > 57)) {
+                                return false;
+                            }
+                        });
+                    }
+                }
+            },
+        ];
+        var mydata = '';
+        // mydata = PopulateOrderPriceListGrid();
+        oJQGridFunctions.CreateDataEntryJQGrid(colNames, colModel, '#tblClientPriceListGrid', 'Client Price Info', '#pagerPriceListgrid', 350, 20, false);
+        // SetPlusButton('tblPhotoghrListGrid', 'pagerPhtghrgrid', 'btnPhotoghr_header', 'btnPhotoghr');
+    }
+
+    function PopulateOrderPriceListGrid() {
+
+        $('#tblClientPriceListGrid').jqGrid('clearGridData');
+        var sClientId = $('#ddlclient').val();
+        var sCondition = " WHERE client_id=" + sClientId + "";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectPriceOrders");
+
+
+        var sCondition = " WHERE enumeration_key='order_type'";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var ResultGen = oAPICall.SelectData(strJsonDatas, "SelectGenericData");
+
+        if (ResultGen != '' && ResultGen != null) {
+
+            var sOrderList = [];
+            for (var i = 0; i < ResultGen.length; i++) {
+                var sOrderTypeId = ResultGen[i].value;
+                var sPrice = 0;
+                for (var k = 0; k < Result.length; k++) {
+
+                    if (sOrderTypeId == Result[k].order_type_id) {
+                        sPrice = Result[k].price
+                    }
+                }
+
+                var sOrderTypeName = ResultGen[i].display_value;
+
+                sOrderList[i] = {
+                    order_type_id: sOrderTypeId, order_type_name: sOrderTypeName, price: sPrice
+                };
+            }
+            for (var j = 0; j <= sOrderList.length; j++) {
+
+                jQuery("#tblClientPriceListGrid").jqGrid('addRowData', j + 1, sOrderList[j]);
+            }
+
+        }
+
+    }
+
+    function SaveData() {
+        loader(1);
+        var Rowids = $("#tblClientPriceListGrid").getGridParam('selarrrow');
+        var sClientId = $('#ddlclient').val();
+        setTimeout(function () {
+            if (Rowids.length <= 0) {
+                msgalert('Warning', 'Select atleast one order type', 2);
+                loader(0);
+                return;
+            }
+            var sCondition = " WHERE client_id=" + sClientId + "";
+            var strJsonDatas = eval({ strSessionID: UserSession, strCondition: sCondition });
+            var Result1 = oAPICall.DeleteData(strJsonDatas, 'DeleteClientPrice');
+
+            for (var i = 0; i < Rowids.length; i++) {
+                var RowData = $("#tblClientPriceListGrid").getRowData(Rowids[i]);
+                var sTypeId = RowData["order_type_id"];
+                var sTypeName = RowData["order_type_name"];
+                var sPrice = RowData["price"];
+                var strJsonDatas = eval({
+                    order_type_id: sTypeId, order_type: sTypeName, price: sPrice, client_id: $('#ddlclient').val()
+                });
+                var Result = oAPICall.InsertData(strJsonDatas, "CreateClientOrderPrice");
+                
+            }
+            if (Result != null && Result != '') {
+                loader(0);
+                msgalert('Sucess', 'Successfully Created', 1);
+            }
+          
+        }, 1000);
+    }
+    $(document).ready(function () {
+        BindClients();
+        $('#ddlclient').val(1);
+        OrderListGrid();
+        PopulateOrderPriceListGrid();
+        $('#ddlclient').change(function () {
+            OrderListGrid();
+            PopulateOrderPriceListGrid();
+        });
+    });
+</script>

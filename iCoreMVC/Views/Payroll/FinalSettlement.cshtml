@@ -1,0 +1,824 @@
+﻿@{
+    ViewBag.Title = "FinalSettlement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>FinalSettlement</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <link href="~/assets/global/plugins/icheck/skins/all.css" rel="stylesheet" />
+
+    <style>
+        /*basic reset*/
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /*form styles*/
+        #msform {
+            text-align: center;
+            position: relative;
+            margin-top: 30px;
+        }
+        
+        #msform fieldset {
+            background: white;
+            border: 0 none;
+            border-radius: 0px;
+            box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+            padding: 20px 30px;
+            box-sizing: border-box;
+            width: 80%;
+            margin: 0 10%;
+        
+            /*stacking fieldsets above each other*/
+            position: relative;
+        }
+        
+        /*Hide all except first fieldset*/
+        #msform fieldset:not(:first-of-type) {
+            display: none;
+        }
+        
+        /*inputs*/
+        #msform input, #msform textarea {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 0px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 13px;
+        }
+        
+        #msform input:focus, #msform textarea:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border: 1px solid #29ba82;
+            outline-width: 0;
+            transition: All 0.5s ease-in;
+            -webkit-transition: All 0.5s ease-in;
+            -moz-transition: All 0.5s ease-in;
+            -o-transition: All 0.5s ease-in;
+        }
+        
+        /*buttons*/
+        #msform .action-button {
+            width: 100px;
+            background: #29ba82;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 25px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+        
+        #msform .action-button:hover, #msform .action-button:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #29ba82;
+        }
+        
+        #msform .action-button-previous {
+            width: 100px;
+            background: #204d9e;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 25px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+        
+        #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+            box-shadow: 0 0 0 2px white, 0 0 0 3px #204d9e;
+        }
+        
+        /*headings*/
+        .fs-title {
+            font-size: 18px;
+            text-transform: uppercase;
+            color: #2C3E50;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        
+        .fs-subtitle {
+            font-weight: normal;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        /*progressbar*/
+        #progressbar {
+            margin-bottom: 30px;
+            overflow: hidden;
+            /*CSS counters to number the steps*/
+            counter-reset: step;
+        }
+        
+        #progressbar li {
+            list-style-type: none;
+            color: #006e3c;
+            text-transform: uppercase;
+            font-size: 9px;
+            width: 19.33%;
+            float: left;
+            position: relative;
+            letter-spacing: 1px;
+        }
+        
+        #progressbar li:before {
+            content: counter(step);
+            counter-increment: step;
+            width: 24px;
+            height: 24px;
+            line-height: 26px;
+            display: block;
+            font-size: 12px;
+            color: #333;
+            background: white;
+            border-radius: 25px;
+            margin: 0 auto 10px auto;
+        }
+        
+        /*progressbar connectors*/
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: white;
+            position: absolute;
+            left: -50%;
+            top: 9px;
+            z-index: -1; /*put it behind the numbers*/
+        }
+        
+        #progressbar li:first-child:after {
+            /*connector not needed before the first step*/
+            content: none;
+        }
+        
+        /*marking active/completed steps green*/
+        /*The number of the step and the connector before it = green*/
+        #progressbar li.active:before, #progressbar li.active:after {
+            background: #29ba83;
+            color: white;
+        }
+        
+        
+        /* Not relevant to this form */
+        .dme_link {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .dme_link a {
+            background: #FFF;
+            font-weight: bold;
+            color: #ee0979;
+            border: 0 none;
+            border-radius: 25px;
+            cursor: pointer;
+            padding: 5px 25px;
+            font-size: 12px;
+        }
+        
+        .dme_link a:hover, .dme_link a:focus {
+            background: #204d9e;
+            text-decoration: none;
+        }
+
+        .table > thead > tr > th {
+            vertical-align: bottom;
+            border: 2px solid #327ad5;
+            text-align: center;
+        }
+
+        .table > tbody > tr > td {
+            vertical-align: bottom;
+            border: 2px solid #327ad5;
+        }
+
+        .table>caption+thead>tr:first-child>td, .table>caption+thead>tr:first-child>th, .table>colgroup+thead>tr:first-child>td, .table>colgroup+thead>tr:first-child>th, .table>thead:first-child>tr:first-child>td, .table>thead:first-child>tr:first-child>th {
+            border-top: 2 !important;
+        }
+
+        td, th {
+            padding: 5px;
+        }
+
+    </style>
+</head>
+<body class="page-container-bg-solid" ng-app="PayrollDetails" style="overflow-x:hidden;overflow-y:hidden;">
+    <div class="" ng-controller="Payroll" id="controllerID" ng-init="GetEmployeeLists(refNo, roleId)">
+        <div id="mainContent">
+            <div class="col-md-6">
+                <select id="ddlMonth" class="col-md-2" style="height: 30px; width: 150px; border-radius: 5px;">
+                    <option value="0">Select Month</option>
+                    <option value="1">JAN</option>
+                    <option value="2">FEB</option>
+                    <option value="3">MAR</option>
+                    <option value="4">APR</option>
+                    <option value="5">MAY</option>
+                    <option value="6">JUN</option>
+                    <option value="7">JUL</option>
+                    <option value="8">AUG</option>
+                    <option value="9">SEP</option>
+                    <option value="10">OCT</option>
+                    <option value="11">NOV</option>
+                    <option value="12">DEC</option>
+                </select>
+
+                <div class="col-md-1"></div>
+
+                <select id="ddlYear" class="col-md-2" style="height: 30px; width: 150px; border-radius: 5px;">
+                    <option value="0">Select Year</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                </select>
+
+                <div class="col-md-1"></div>
+
+                <input type="text" class="hidden" id="searchBox" placeholder="Search" style="width: 35%; margin-left: 490px;">
+
+                <button class="btn green btn-outline" ng-click="GetSeperationEmployees(refNo)" onclick="GoWithSeperationEmployees()"><i class="fa fa-search"></i></button>
+
+            </div>
+
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <!-- MultiStep Form -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="msform">
+                                <!-- progressbar -->
+                                <ul id="progressbar">
+                                    <li class="active">EMPLOYEE</li>
+                                    <li>RESIGNATION DETAILS</li>
+                                    <li>NOTICE PAY</li>
+                                    <li>WORK DAYS</li>
+                                    <li>REMARKS</li>
+                                </ul>
+                                <!-- fieldsets -->
+                                <fieldset>
+                                    <h2 class="fs-title">Employee List</h2>
+
+                                    @*<select style="height: 30px; width: 150px; border-radius: 5px; margin-top: 15px;" id="ddlEmployee" ng-model="Employees"
+                                            data-ng-options="Employee as Employee.emp_full_name for Employee in Employees | orderBy:'emp_full_name' track by Employee.emp_ref_no">
+
+                                        <option value="-1">--Select Employee--</option>
+
+                                    </select>*@
+
+                                    <select style="height: 40px; width: 300px;border-radius: 5px; margin-top: 15px; background-color: #fbfbfb; opacity: 1; border: 1px solid #6ec5d2; color: black; " id="ddlEmployee">
+                                        <option value="-1">--Select Employee--</option>
+                                        <option ng-repeat="emp in Employees" value="{{emp.emp_ref_no}}">{{emp.emp_full_name}}</option>
+                                    </select>
+
+                                    <input type="button" name="next" style="float:right;" onclick="goNextTab('employeePage')" class="next action-button" value="Next" />
+                                    <table class="table hidden" id="menus">
+                                        <thead>
+                                            <tr>
+                                                <th> </th>
+                                                <th>Payout Month</th>
+                                                <th>Employee Code</th>
+                                                <th>Employee Name</th>
+                                                <th>Leaving Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="el in Employees" ng-cloak>
+                                                <td>
+                                                    <input type="checkbox" id="{{el.emp_ref_no}}" style="text-align:center;width:50px;">
+                                                </td>
+                                                <td>{{el.prev_month}}</td>
+                                                <td>{{el.emp_ref_code}}</td>
+                                                <td>{{el.emp_full_name}}</td>
+                                                <td>{{el.designation}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </fieldset>
+                                <fieldset>
+                                    <h2 class="fs-title">Resignation Details</h2>
+
+                                    <input type="button" name="previous" style="float:left;" onclick="goNextTab('employeePage')" class="previous action-button-previous" value="Previous" />
+                                    <input type="button" name="next" style="float:right;" onclick="goNextTab('resignationPage')" class="next action-button" value="Next" />
+
+                                    <table style="margin-left: 300px;">
+                                        <tr>
+                                            <td>
+                                                Resignation Submitted on
+                                            </td>
+                                            <td>
+                                                <div class="input-group input-large date-picker input-daterange" data-date="05 MAY 2020" data-date-format="dd MM yyyy">
+                                                    <input type="text" class="form-control" name="from" id="txtresignSubDate" autocomplete="off">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Leaving Date
+                                            </td>
+                                            <td>
+                                                <div class="input-group input-large date-picker input-daterange" data-date="05 MAY 2020" data-date-format="dd MM yyyy">
+                                                    <input type="text" class="form-control" name="from" id="txtLeavedate" autocomplete="off">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Leaving Reason
+                                            </td>
+                                            <td>
+                                                <select id="ddlReason" class="col-md-2" style="height: 30px; width: 320px; border-radius: 5px;">
+                                                    <option value="1">Resigned</option>
+                                                    <option value="2">Transferred</option>
+                                                    <option value="3">Terminatted</option>
+                                                    <option value="4">Abandoned</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Settlement Date
+                                            </td>
+                                            <td>
+                                                <div class="input-group input-large date-picker input-daterange" data-date="05 MAY 2020" data-date-format="dd MM yyyy">
+                                                    <input type="text" class="form-control" name="from" id="txtSettledate" autocomplete="off">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+
+                                </fieldset>
+                                <fieldset>
+
+                                    <h2 class="fs-title">Notice Pay</h2>
+
+                                    <input type="button" name="previous" style="float:left;" onclick="goNextTab('resignationPage')" class="previous action-button-previous" value="Previous" />
+                                    <input type="button" name="next" style="float:right;" onclick="goNextTab('noticepayPage')" class="next action-button" value="Next" />
+
+                                    <table style="">
+                                        <tr>
+                                            <td style="width:300px;">
+                                                <label for="noticeReq"> Notice Required </label><br>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" id="noticereq" style="float: left; margin-left: -108px;" name="noticeReq" value="noticeReq">
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Notice Period
+                                            </td>
+                                            <td>
+                                                <input type="number" id="txtNotice" style="height: 20px;" />
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                No of Days Served
+                                            </td>
+                                            <td>
+                                                <input type="number" id="txtServed" style="height: 20px;" />
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Excess in Notice
+                                            </td>
+                                            <td>
+                                                <input type="number" id="txtExcessNotice" onchange="changeValue(2)" style="height: 20px;" />
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th> Payroll Month </th>
+                                                            <th> Excess in Notice </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-model="ssMonth">
+                                                            <td><label id="payoutMonth1">{{ssMonth}}</label></td>
+                                                            <td><label id="excessNotice"></label></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+
+
+                                </fieldset>
+                                <fieldset>
+                                    <h2 class="fs-title">Work Days</h2>
+
+                                    <input type="button" name="previous" style="float:left;" onclick="goNextTab('noticepayPage')" class="previous action-button-previous" value="Previous" />
+                                    <input type="button" name="next" style="float:right;" onclick="goNextTab('workdaysPage')" class="next action-button" value="Next" />
+                                    <center>
+                                        <table class="table" style="width: 400px; margin-top: 40px;">
+                                            <thead>
+                                                <tr>
+                                                    <th> Payroll Month </th>
+                                                    <th> Work Days </th>
+                                                    <th> Days Worked </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-model="ssMonth">
+                                                <tr>
+                                                    <td style="width: 120px;"><label id="payoutMonth2">{{ssMonth}}</label></td>
+                                                    <td style="width: 120px;"><label id="totalDays"></label></td>
+                                                    <td style="width: 120px;"><input type="number" style=" height: 30px;" id="txtWorkDays" onchange="changeValue(1)" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">No. of Days worked</td>
+                                                    <td style="width: 120px;"><input type="number" style=" height: 30px;" id="txtNoofDays" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">LOP</td>
+                                                    <td style="width: 120px;"><input type="number" style=" height: 30px;" id="txtLop" /></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </center>
+                                </fieldset>
+                                <fieldset>
+                                    <h2 class="fs-title">Remarks</h2>
+
+                                    <input type="text" placeholder="Remarks" id="txtRemarks" />
+
+                                    <input type="button" name="previous" onclick="goNextTab('workdaysPage')" class="previous action-button-previous" value="Previous" />
+                                    <input type="submit" name="submit" class="submit action-button" value="Submit" />
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.MultiStep Form -->
+
+                </div>
+            </div>
+            <br />
+        </div>
+
+        <div>
+            <iframe src="" id="framecontent" style="width: 100%;height:470px;padding-left:15px;padding-right:15px;" frameborder="0" scrolling="auto"></iframe>
+        </div>
+    </div>
+
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    @*<script src="~/assets/pages/scripts/form-samples.min.js" type="text/javascript"></script>*@
+    @*<script src="~/assets/layouts/layout3/scripts/layout.min.js" type="text/javascript"></script>*@
+    @*<script src="~/assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>*@
+    <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <script src="~/assets/pages/scripts/components-date-time-pickers.min.js"></script>
+    <script src="~/assets/pages/scripts/components-date-time-pickers.js"></script>
+
+    <script>
+
+        function changeValue(type)
+        {
+            if(type == 1)
+                $("#txtNoofDays").val($("#txtWorkDays").val());
+            else if(type == 2)
+                $("#excessNotice").text($("#txtExcessNotice").val());
+        }
+
+        function daysInMonth (month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+        
+        var oAPICall;
+
+        var fresher;
+
+        var refNo, sEmpRefNo, roleId;
+
+        var fileValidate = 0 , isUploadEdu = "No";
+
+        function doc_keyUp(e) {
+
+            if (e.ctrlKey && e.keyCode == 81) {
+                parent.UserLock();
+            }
+        }
+
+        document.addEventListener('keyup', doc_keyUp, false);
+
+        var pageId;
+
+        function goNextTab(pgId)
+        {
+            pageId = pgId;
+        }
+
+        var isSeperationEmployee = 0;
+
+        function GoWithSeperationEmployees(){
+
+            isSeperationEmployee = 1;
+        }
+
+        var totDays;
+
+        //jQuery time
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var left, opacity, scale; //fieldset properties which we will animate
+        var animating; //flag to prevent quick multi-click glitches
+
+        $(".next").click(function(){
+            
+            if(pageId == "employeePage")
+            {
+                if(isSeperationEmployee == 1)
+                {
+                    var val = [];
+
+                    $(':checkbox:checked').each(function (i) {
+                        val[i] = $(this)[0].id;
+                    });
+
+                    if (val.length == 0) {
+                        msgalert("Error", "Please Choose one Employee", 3)
+                        return;
+                    }
+                    else if (val.length > 1) {
+                        msgalert("Error", "Please Choose only one Employee", 3)
+                        return;
+                    }
+
+                    sEmpRefNo = val[0];
+
+                }
+                else if (isSeperationEmployee == 0)
+                {
+                    var empRefNo = $("#ddlEmployee").val();
+
+                    if(empRefNo  === undefined || empRefNo == -1)
+                    {
+                        msgalert("Error", "Please Choose one Employee", 3)
+                        return;
+                    }
+
+                    sEmpRefNo = empRefNo;
+                }
+
+                
+            }
+            else if(pageId == "resignationPage")
+            {
+                var resiSubmitted = $("#txtresignSubDate").val();
+
+                var leavingDate = $("#txtLeavedate").val();
+
+                var leavingReason = $("#ddlReason").val();
+
+                var settlementDate = $("#txtSettledate").val();
+                
+                if (resiSubmitted == "") {
+                    msgalert("Error", "Please Enter Resignation Submission Date", 3)
+                    return;
+                }
+                if (leavingDate == "") {
+                    msgalert("Error", "Please Enter Leaving Date", 3)
+                    return;
+                }
+                if (settlementDate == "") {
+                    msgalert("Error", "Please Enter Settlement Date", 3)
+                    return;
+                }
+
+                if(isSeperationEmployee == 0)
+                {
+                    var ss = settlementDate.split(' ');
+
+                    var payMonth = ss[1] + ' ' + ss[2];
+
+                    $("#payoutMonth1").text(payMonth);
+
+                    $("#payoutMonth2").text(payMonth);
+                }
+
+            }
+            else if(pageId == "noticepayPage")
+            {
+                var noticePeriod = $("#txtNotice").val();
+
+                var daysServed = $("#txtServed").val();
+
+                var excessinNotice = $("#txtExcessNotice").val();
+
+                if (noticePeriod == "") {
+                    msgalert("Error", "Please Enter Notice Period Value", 3)
+                    return;
+                }
+                if (daysServed == "") {
+                    msgalert("Error", "Please Enter No of days Served Value", 3)
+                    return;
+                }
+                if (excessinNotice == "") {
+                    msgalert("Error", "Please Enter Excess in Notice Value", 3)
+                    return;
+                }
+
+                if(isSeperationEmployee == 0)
+                {
+                    var settleDate = $("#txtSettledate").val();
+
+                    var dt = new Date (settleDate);
+
+                    var sMonth = dt.getMonth() + 1;
+
+                    var sYear = dt.getFullYear();
+
+                    totDays = daysInMonth(sMonth, sYear);
+
+                    $("#totalDays").text(totDays);
+
+                }
+                else if(isSeperationEmployee == 1)
+                {
+                    var sMonth = $("#ddlMonth").val();
+
+                    var sYear = $("#ddlYear").val();
+
+                    totDays = daysInMonth(sMonth, sYear);
+
+                    $("#totalDays").text(totDays);
+                }
+
+            }
+            else if(pageId == "workdaysPage")
+            {
+                var workdays = $("#txtWorkDays").val();
+
+                var noofdays = $("#txtNoofDays").val();
+
+                var lopdays = $("#txtLop").val();
+                
+                if (workdays == "") {
+                    msgalert("Error", "Please Enter Days worked value", 3)
+                    return;
+                }
+                if (noofdays == "") {
+                    msgalert("Error", "Please Enter No of days worked Value", 3)
+                    return;
+                }
+                if (lopdays == "") {
+                    msgalert("Error", "Please Enter LOP values", 3)
+                    return;
+                }
+            }
+
+            if(animating) return false;
+            animating = true;
+	
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+	
+            //activate next step on progressbar using the index of next_fs
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+	
+            //show the next fieldset
+            next_fs.show(); 
+            //hide the current fieldset with style
+            current_fs.animate({opacity: 0}, {
+                step: function(now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale current_fs down to 80%
+                    scale = 1 - (1 - now) * 0.2;
+                    //2. bring next_fs from the right(50%)
+                    left = (now * 50)+"%";
+                    //3. increase opacity of next_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({
+                        'transform': 'scale('+scale+')',
+                        'position': 'absolute'
+                    });
+                    next_fs.css({'left': left, 'opacity': opacity});
+                }, 
+                duration: 800, 
+                complete: function(){
+                    current_fs.hide();
+                    animating = false;
+                }, 
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+        $(".previous").click(function(){
+            if(animating) return false;
+            animating = true;
+	
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
+	
+            //de-activate current step on progressbar
+            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+	
+            //show the previous fieldset
+            previous_fs.show(); 
+            //hide the current fieldset with style
+            current_fs.animate({opacity: 0}, {
+                step: function(now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale previous_fs from 80% to 100%
+                    scale = 0.8 + (1 - now) * 0.2;
+                    //2. take current_fs to the right(50%) - from 0%
+                    left = ((1-now) * 50)+"%";
+                    //3. increase opacity of previous_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({'left': left});
+                    previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
+                }, 
+                duration: 800, 
+                complete: function(){
+                    current_fs.hide();
+                    animating = false;
+                }, 
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+        $(".submit").click(function(){
+
+            var remarks = $("#txtRemarks").val();
+
+            if (remarks == "") {
+                msgalert("Error", "Please Enter Reason", 3);
+                return;
+            }
+           
+            angular.element(document.getElementById('controllerID')).scope().saveFinalSettlement(refNo, sEmpRefNo, totDays);
+
+        })
+
+        $(document).ready(function () {
+
+            var curDate = new Date();
+
+            oAPICall = new APICall();
+
+            var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+            refNo  = sUserDetails.EmployeeId;
+
+            roleId = sUserDetails.RoleId;
+
+        });
+    </script>
+
+</body>
+</html>
+<script src="~/Scripts/js/angular.min.js"></script>
+<script src="~/Scripts/AngularController/PayrollController.js"></script>
+

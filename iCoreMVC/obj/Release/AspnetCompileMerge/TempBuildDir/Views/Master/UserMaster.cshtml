@@ -1,0 +1,405 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link href="~/Content/css/style.css" rel="stylesheet" />*@
+
+<style>
+    .col-width {
+        width: 17%;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    .select2-container--default.select2-container--disabled .select2-selection--single {
+        background-color: white;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="UserMaster" class="divbody">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">User Profile</span>
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+
+                        </strong>
+                        <a href="#" title="Edit">
+                            <i class="fa fa-list" id="btnUserList"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnback"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" style="padding-top:15px">
+                    <div style="padding-top:15px" id="MainPage">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">UserName<font color="red">*</font> :</label>
+                                <div class="col-sm-7"><input type="text" id="txtusername" placeholder="Enter username here.." class="form-control"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Password<font color="red">*</font> :</label>
+                                <div class="col-sm-7"><input type="password" id="txtpassword" placeholder="Enter password here.." class="form-control" onkeyup="CheckPasswordStrength(this.value)"></div>
+                                <span id="password_strength" style="padding-left: 176px;"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Confirm Password<font color="red">*</font> :</label>
+                                <div class="col-sm-7"><input type="password" id="txtconfirmpassword" placeholder="Enter confirm password here.." class="form-control"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Access Type:</label>
+                                <div class="col-sm-7">
+                                    <div class="input-group-btn">
+                                        <select class="form-control" id="ddlacesstype" style="width:100%;"></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="data_1">
+                                <label class="col-sm-3 control-label">Active Date:</label>
+                                <div class="col-sm-7">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="text" id="txtactivedate" class="form-control" value="02/26/2016" readonly="readonly" style="background-color:white;">
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="data_1">
+                                <label class="col-sm-3 control-label">InActive Date:</label>
+                                <div class="col-sm-7">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="text" id="txtinactivedate" class="form-control" value="02/26/2016" readonly="readonly" style="background-color:white;">
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div id="ListPage">
+                        <div class="col-sm-12">
+                            <div class="ibox-content">
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblUserlistGrid"></table>
+                                    <div id="pagerUsergrid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <input type="hidden" id="hdnUserId" />
+    </div>
+</form>
+
+<script>
+    var passwordStrength;
+    localStorage.setItem("PageID", "UserMaster");
+
+    function BindAcessType() {
+        var Condition = "where delete_status=0";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectRoleAccessType");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlacesstype').append('<option value="' + Result[i]["role_id"] + '">' + Result[i]["role_name"] + '</option>');
+            }
+        }
+    }
+    function UserListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['User Id', 'User Name', '', '', '', '', '', ''],
+        colModel = [
+            { name: 'user_id', index: 'user_id', width: 60, align: "center", sorttype: "int", search: true },
+            { name: 'username', index: 'username', width: 110, align: "center", sorttype: false, search: true },
+            { name: 'role_id', index: 'role_id', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'password', index: 'password', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'active_date', index: 'active_date', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'inactive_date', index: 'inactive_date', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false }
+        ];
+        var mydata = '';
+        mydata = PopulateUserListData();
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblUserlistGrid', '#pagerUsergrid', 'User List', 290, 14, false, mydata);
+
+    }
+    function PopulateUserListData() {
+
+        var sCondition = " WHERE delete_status=0 order by 1 desc";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsUserMaster");
+        var sUserDt = [];
+        var sRoleId = $('#hdnRoleId').val();
+
+        if (Result != '' && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                var sUserId = Result[i].user_id;
+                var sUserName = Result[i].username;
+                var sPassword = Result[i].password;
+                sPassword = decodeBase64(sPassword);
+                var sRoleId = Result[i].role_id;
+                var sActiveDt = Result[i].active_date;
+                var sInActiveDt = Result[i].inactive_date;
+                sUserDt[i] = {
+                    user_id: sUserId, username: sUserName, password: sPassword, role_id: sRoleId, active_date: sActiveDt,
+                    inactive_date: sInActiveDt, company_code: 40, password_expiry: sInActiveDt, theme_preference: 1
+                };
+            }
+            return sUserDt;
+        }
+    }
+
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+
+    $(document).ready(function () {
+
+        BindAcessType();
+        $('#btnback').hide();
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblUserlistGrid').setGridWidth(sWidth);
+
+        });
+
+        $('#btnUserList').click(function () {
+            $('#btnSave').hide();
+            $('#ListPage').show();
+            $('#MainPage').hide();
+            $('#btnback').show();
+            $('#btnUserList').hide();
+            $('#tblUserlistGrid').jqGrid('GridUnload');
+            UserListGrid();
+        });
+
+        $('#btnback').click(function () {
+            $('#btnSave').show();
+            $('#ListPage').hide();
+            $('#MainPage').show();
+            $('#btnback').hide();
+            $('#btnUserList').show();
+            $('#txtpassword').val('');
+            $('#txtconfirmpassword').val('');
+            $('#txtusername').val('');
+            $('#password_strength').val('');
+            $('#ddlacesstype').val("" + 1 + "").change();
+
+        });
+
+        $('#txtusername').focusout(function () {
+            var ValidationSuccess = false;
+            var sUserName = $('#txtusername').val();
+            ValidationSuccess = ValidateForDuplication(sUserName, 'ChkDupClientUserName', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'This Username is already exist.. Try another', 3);
+                $('#txtusername').val("");
+                return false;
+            }
+
+        });
+
+        $('#txtpassword').focusout(function () {
+
+            if (document.getElementById('txtpassword').value == "") {
+                document.getElementById('txtpassword').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtpassword').style.borderColor = "green";
+            }
+        });
+        $('#txtconfirmpassword').focusout(function () {
+
+            if (document.getElementById('txtconfirmpassword').value == "") {
+                document.getElementById('txtconfirmpassword').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtconfirmpassword').style.borderColor = "green";
+            }
+        });
+
+        $('#btnSave').click(function () {
+
+            var sUserId = $('#hdnUserId').val();
+
+            if (document.getElementById('txtusername').value == "") {
+                document.getElementById('txtusername').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter mandatory fields', 2);
+                return;
+            }
+            if (document.getElementById('txtconfirmpassword').value == "") {
+                document.getElementById('txtconfirmpassword').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter mandatory fields', 2);
+                return;
+            }
+            if (document.getElementById('txtconfirmpassword').value != document.getElementById('txtpassword').value) {
+                document.getElementById('txtconfirmpassword').style.borderColor = "red";
+                document.getElementById('txtpassword').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Password do not match!..', 2);
+                return;
+            }
+            if ($("#password_strength").html() == "Weak" || $("#password_strength").html() == "Good") {
+                msgalert('Warning', 'Password strength must strong and continue..', 2);
+                return;
+            }
+            var ValidationSuccess = false;
+            var sUserName = $('#txtusername').val();
+            ValidationSuccess = ValidateForDuplication(sUserName, 'ChkDupClientUserName', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'Username alerady exist.. Try another', 3);
+                $('#txtusername').val("");
+                return false;
+            }
+            if (sUserId <= 0 && sUserId == "") {
+                var sActiveDt = $('#txtactivedate').val();
+                sActiveDt = new Date(sActiveDt);
+
+                var sInActiveDt = $('#txtinactivedate').val();
+                sInActiveDt = new Date(sInActiveDt);
+
+                var sPassword = encode64($('#txtpassword').val().toString());
+
+                var StrJsonDatas = eval({
+                    username: $('#txtusername').val(), password: sPassword, role_id: $('#ddlacesstype').val(),
+                    active_date: sActiveDt, inactive_date: sInActiveDt, created_by: CurrentUser, created_date: new Date(), delete_status: 0,
+                   company_code: 40, password_expiry: sInActiveDt, theme_preference: 1
+
+                });
+                var Result = oAPICall.InsertData(StrJsonDatas, 'CreateBtsUserMaster');
+                if (Result != null && Result != '') {
+                    var sUserId = Result[0].IDENTITY;
+                    $('#hdnUserId').val(sUserId);
+                    msgalert('Success', 'User details added successfully', 1);
+                }
+            }
+            else {
+                var sActiveDt = $('#txtactivedate').val();
+                sActiveDt = new Date(sActiveDt);
+
+                var sInActiveDt = $('#txtinactivedate').val();
+                sInActiveDt = new Date(sInActiveDt);
+                var sPassword = encode64($('#txtpassword').val().toString());
+
+                var sStrJsonDatas = eval({
+                    username: $('#txtusername').val(), password: sPassword, role_id: $('#ddlacesstype').val(),
+                    active_date: sActiveDt, inactive_date: sInActiveDt, created_by: CurrentUser, created_date: new Date(), delete_status: 0,
+                    company_code: 40, password_expiry: sInActiveDt, theme_preference: 1
+
+                });
+                var Condition = "where user_id=" + sUserId;
+                var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateBtsUserMaster', Condition);
+                if (Result != null && Result != '') {
+
+                    msgalert('Success', 'User details Updated successfully', 1);
+                }
+            }
+        });
+
+
+        $(document).delegate('#tblUserlistGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblUserlistGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                $('#MainPage').show();
+                $('#ListPage').hide();
+                $('#btnSave').show();
+                $('#hdnUserId').val($('#tblUserlistGrid').getCell(rowIds[rowid], 'user_id'));
+                $('#txtusername').val($('#tblUserlistGrid').getCell(rowIds[rowid], 'username'));
+                var sPassword = $('#tblUserlistGrid').getCell(rowIds[rowid], 'password');
+                $('#txtpassword').val(sPassword);
+                $('#txtconfirmpassword').val(sPassword);
+                $('#ddlacesstype').val("" + $('#tblUserlistGrid').getCell(rowIds[rowid], 'role_id') + "").change();
+                var sActiveDt = $('#tblUserlistGrid').getCell(rowIds[rowid], 'active_date');
+                sActiveDt = new Date(sActiveDt);
+                sActiveDt = FormatDate(sActiveDt, 1);
+                sActiveDt = GetDateFormated(sActiveDt, 'dd/mm/yy');
+                $('#txtactivedate').val(sActiveDt);
+              
+                var sInActiveDt = $('#tblUserlistGrid').getCell(rowIds[rowid], 'inactive_date');
+                sInActiveDt = new Date(sInActiveDt);
+                sInActiveDt = FormatDate(sInActiveDt, 1);
+                sInActiveDt = GetDateFormated(sInActiveDt, 'dd/mm/yy');
+                $('#txtinactivedate').val(sInActiveDt);
+                $("#txtusername").prop("disabled", true);
+                $('#btnback').hide();
+                $('#btnUserList').show();
+            }
+            else {
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    //text: "" + text + "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              var sUserId = $('#tblUserlistGrid').getCell(rowIds[rowid], 'user_id')
+              var sStrJsonDatas = eval({ delete_status: 1 });
+              var Condition = "where user_id=" + sUserId;
+              var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateBtsUserMaster', Condition);
+              if (Result != "" || Result != null) {
+                  $('#tblUserlistGrid').jqGrid('delRowData', rowid);
+                  msgalert('Success', 'Successfully Deleted', 1);
+                  $('#tblUserlistGrid').jqGrid('GridUnload');
+                  UserListGrid();
+              }
+          }
+          else {
+              return
+          }
+      });
+                return
+               
+
+            }
+        });
+    });
+
+</script>

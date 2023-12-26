@@ -1,0 +1,561 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link href="~/Content/css/style.css" rel="stylesheet" />*@
+
+<style>
+    /*.col-width {
+        width: 17%;
+    }*/
+</style>
+<style>
+
+    .capitalize {
+        text-transform: uppercase;
+    }
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    .select2-container--default.select2-container--disabled .select2-selection--single {
+        background-color: white;
+    }
+
+    /*
+        new style
+        */
+    select::-webkit-select-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    .select2-container {
+        font-size: 12px;
+    }
+
+    textarea::-webkit-input-placeholder {
+        font-size: 13px;
+        line-height: 2;
+    }
+
+    .setbackgroundcolor a {
+        color: green !important;
+    }
+
+    .DivBorder {
+        border: 1px solid grey;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="UserMaster" class="divbody">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label">My Filters</span>
+                    <div class="ibox-tools">
+                        @*<a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>*@
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+
+                        </strong>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-file-o" id="btnNew" onclick="parent.document.getElementById('framecontent').src = '../master/UserFilter'" title="New"></i>
+                            </a>
+                        </strong>
+                        <a href="#" title="Edit">
+                            <i class="fa fa-list" id="btnUserList"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnback"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" style="padding-top:15px">
+                    <div style="padding-top:15px" id="MainPage">
+                        <div class="col-sm-12">
+                            <!--Dividing col 6-->
+                            <div class="col-sm-6">
+
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Filter Name<font color="red">*</font> :</label>
+                                    <div class="col-sm-6">
+                                        <div class="input-group-btn">
+                                            <input type="text" id="txtFilterName" placeholder="Enter filter name here.." class="form-control" maxlength="15">
+                                        </div>
+                                        <center><label><font color="red" size="1">(Max 15 Characters, Use _ instead of Spaces)</font></label></center>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Status :</label>
+                                    <div class="input-group-btn">
+                                        <select class="select2_demo_3 form-control" id="ddlStatus" data-placeholder="Choose Status..." style="width:100%;">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                 
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Current Status :</label>
+                                    <div class="input-group-btn">
+                                        <select class="select2_demo_3 form-control" id="ddlCurrentStatus" data-placeholder="Choose Current Status..." style="width:100%;">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-6 control-label">Picture Status :</label>
+                                    <div class="input-group-btn">
+                                        <select class="select2_demo_3 form-control" id="ddlPictureStatus" data-placeholder="Choose Picture Status..." style="width:100%;">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <!--Edit Status-->
+                                <div class="form-group">
+                                    
+                                        <label class="col-sm-12 control-label"><font color="Blue" size="2">10 Filters allowed for a Single User</font></label>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div id="ListPage">
+                        <div class="col-sm-12">
+                            <div class="ibox-content">
+                                <div class="jqGrid_wrapper">
+                                    <table id="tblUserlistGrid"></table>
+                                    <div id="pagerUsergrid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <input type="hidden" id="hdnUserId" />
+        <input type="hidden" id="hdnFilterId" />
+    </div>
+</form>
+
+<script>
+    var ResultName = [];
+    var sIsEdit = 0;
+    //Date picker
+    function SetFilterDates() {
+        $('.input-group.date').datepicker({
+            //todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            format: "dd/mm/yyyy",
+            todayHighlight: false,
+            //startDate: cudt,
+            // endDate: cudt
+        });
+        $('.input-group.date.txtactivedate').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+
+            //startDate: cudt,
+            // endDate: cudt
+        });
+        $('.input-group.date.txtinactivedate').datepicker({
+            todayBtn: "linked",
+            keyboardNavigation: false,
+            forceParse: false,
+            calendarWeeks: false,
+            autoclose: true,
+            todayHighlight: true,
+            format: "dd/mm/yyyy"
+        });
+       
+
+        var d = new Date();
+        $(".input-group.date.txtactivedate").datepicker("setDate", d);
+        d.setYear(d.getFullYear() + 10);
+        $(".input-group.date.txtinactivedate").datepicker("setDate", d);
+
+
+        
+    }
+
+    function UserFilterPageLoad()
+    {
+        var sCondition = "where status_id > 0  and is_review_flag=0";
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectStatusValues");
+       
+
+        var sRoleId = $('#hdnRoleId').val();
+
+        if (Result != '' && Result != null)
+        {
+            for (var i = 0; i < Result.length; i++)
+            {
+                $('#ddlStatus').append('<option value="' + Result[i]["status_id"] + '">' + Result[i]["status_desc"] + '</option>');
+            }
+        }
+
+
+        var sCondition1 = "where LANGUAGE_CODE='1' and enumeration_key='Photo_Required'"+ "";
+        var strJsonDatas1 = eval({ strCondition: sCondition1, strFieldNames: null, strSessionID: UserSession });
+        var Result1 = oAPICall.SelectData(strJsonDatas1, "SelectPicStatusValues");
+        
+        if (Result1 != '' && Result1 != null) {
+            for (var i = 0; i < Result1.length; i++) {
+                $('#ddlPictureStatus').append('<option value="' + Result1[i]["value"] + '">' + Result1[i]["display_value"] + '</option>');
+            }
+        }
+        
+    }
+
+    localStorage.setItem("PageID", "UserFilter");
+
+    function UserListGrid(userId) {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['', '', 'Filter Name', '', '', '', 'Search Count', 'Last Used Date', '', '', ''],
+        colModel = [
+           
+            { name: 'filter_id', index: 'filter_id', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'user_id', index: 'user_id', width: 110, align: "center", sorttype: false, hidden:true },
+            { name: 'filter_name', index: 'filter_name', width: 110, align: "center", sorttype: false, search: true },
+            { name: 'status_id', index: 'status_id', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'status_reason_id', index: 'status_reason_id', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'pic_status_id', index: 'pic_status_id', width: 110, align: "center", sorttype: false, hidden: true },
+            { name: 'search_count', index: 'search_count', width: 110, align: "center", sorttype: false },
+            { name: 'last_used_date', index: 'last_used_date', width: 110, align: "center", sorttype: false },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false },
+            { name: 'delete_status', index: 'delete_status', width: 110, align: "center", sorttype: false, hidden: true }
+        ];
+        var mydata = '';
+        mydata = PopulateUserListData(userId);
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblUserlistGrid', '#pagerUsergrid', 'Filter List', 290, 14, false, mydata);
+
+    }
+    function PopulateUserListData(userId) {
+
+        var sCondition = "where delete_status=0 and user_id="+userId;
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectTFSFilterList");
+        var sUserDt = [];
+        var sRoleId = $('#hdnRoleId').val();
+
+        if (Result != '' && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+
+                var sUserId = Result[i].user_id;
+                var sFilterName = Result[i].filter_name;
+                var sFilterId = Result[i].filter_id;
+                var sStatusId = Result[i].status_id;
+                var sCuStatusId = Result[i].status_reason_id;
+                var sPicStatusId = Result[i].pic_status_id;
+                var sSearchCount = Result[i].search_count;
+                var sLastUsedDate = Result[i].last_used_date;
+
+                var index = sLastUsedDate.indexOf('T');
+                var date = sLastUsedDate.slice(0, index);
+
+                var index = sLastUsedDate.indexOf('T');
+                var date = sLastUsedDate.slice(0, index);
+
+
+             
+                sUserDt[i] = {
+                    user_id: sUserId, filter_id: sFilterId, filter_name: sFilterName, status_id: sStatusId, status_reason_id: sCuStatusId, pic_status_id: sPicStatusId,
+                    search_count: sSearchCount, last_used_date: date
+                };
+            }
+            return sUserDt;
+        }
+    }
+
+
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-trash-o text-md" title="Delete"></i> </a>';
+    }
+    function StatusBind() {
+        var sUserDt = [];
+        var sStatusVal = $('#ddlStatus').val();
+
+        var sCondition = "where status_id =" + sStatusVal;
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectCurrentStatusValues");
+      
+
+        if (Result != '' && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlCurrentStatus').append('<option value="' + Result[i]["status_reason_id"] + '">' + Result[i]["status_reason_desc"] + '</option>').change();
+            }
+        }
+    }
+
+    function Reset()
+    {
+        $('#hdnUserId').val('');
+        $('#hdnFilterId').val('');
+        $('#txtFilterName').val('');
+        $('#ddlStatus').val('').change();
+        $('#ddlCurrentStatus').val('').change();
+        $('#ddlPictureStatus').val('').change();
+    }
+
+    $(document).ready(function () {
+
+     
+        UserFilterPageLoad();
+
+        var sUserDetails = @Html.Raw(Json.Encode(@ViewBag.userDetails));
+
+        var userId = sUserDetails.UserID;
+
+        $('#hdnFilterId').attr("value", "");
+
+        //$('#hdnFilterId').val('');
+
+        $('#ddlStatus').change(function () {
+            $('#ddlCurrentStatus').empty().append();
+            StatusBind();
+        });
+
+        $('#btnback').hide();
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblUserlistGrid').setGridWidth(sWidth);
+
+        });
+
+        $('#btnUserList').click(function () {
+            $('#btnSave').hide();
+            $('#ListPage').show();
+            $('#MainPage').hide();
+            $('#btnback').show();
+            $('#btnUserList').hide();
+            $('#btnNew').hide();
+            $('#tblUserlistGrid').jqGrid('GridUnload');
+            UserListGrid(userId);
+        });
+
+        $('#btnback').click(function () {
+            $('#btnSave').show();
+            $('#ListPage').hide();
+            $('#MainPage').show();
+            $('#btnback').hide();
+            $('#btnNew').show();
+            $('#btnUserList').show();
+          
+            sIsEdit = 0;
+           
+        });
+
+        // button Save
+
+        $('#btnSave').click(function () {
+
+            var sUserId = $('#hdnUserId').val();
+
+            var sFilterId = $('#hdnFilterId').val();
+
+            if (sUserId == '' || sUserId == null)
+            {
+                sUserId = userId;
+            }
+
+            var filterName = document.getElementById("txtFilterName").value;
+            var status = document.getElementById("ddlStatus").value;
+            var cuStatus = document.getElementById("ddlCurrentStatus").value;
+            var picStatus = document.getElementById("ddlPictureStatus").value;
+
+
+
+            if (filterName == "") {
+                document.getElementById('txtFilterName').style.borderColor = "red";// this adds the error class
+                msgalert('Warning', 'Please enter Filter Name', 2);
+                return;
+            }
+
+            if(status == "" && cuStatus == "" && picStatus == "")
+            {
+                document.getElementById('ddlStatus').style.borderColor = "red";
+                document.getElementById('ddlCurrentStatus').style.borderColor = "red";
+                document.getElementById('ddlPictureStatus').style.borderColor = "red";
+                msgalert('Warning', 'Please choose atleast one filter', 2);
+                return;
+            }
+
+            if(status == "")
+            {
+                status = 0;
+            }
+            if(cuStatus == "")
+            {
+                cuStatus = 0;
+            }
+            if(picStatus == "")
+            {
+                picStatus = 0;
+            }
+          
+
+            sLastUsedDate = new Date();
+
+            
+            if (sFilterId <= 0 && sFilterId == "")
+            {
+
+                var sCondition = "where delete_status =0 and user_id="+sUserId;
+                var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+                var Result = oAPICall.SelectData(strJsonDatas, "SelectTFSFilterList");
+               
+                if (Result != '' && Result != null) {
+                    for (var i = 0; i < Result.length; i++) {
+                        if (filterName == Result[i]["filter_name"]) {
+                            document.getElementById('txtFilterName').style.borderColor = "red";// this adds the error class
+                            msgalert('Warning', 'The Filter Name already exists', 3);
+                            return;
+                        }
+                    }
+                }
+                if(Result.length == 10)
+                {
+                    msgalert('Warning', 'This User Reached Maximum Number of Filter, Please Delete Unnecessary filters and Continue', 3);
+                    return;
+                }
+
+           
+                var StrJsonDatas = eval({
+                    user_id: sUserId, filter_name: filterName, status_id: status, status_reason_id: cuStatus,
+                    pic_status_id: picStatus, search_count: 0, last_used_date: sLastUsedDate, delete_status:0
+                });
+
+                var Result = oAPICall.InsertData(StrJsonDatas, 'CreateTFSUserFilter');
+                if (Result != null && Result != '') {
+                    msgalert('Success', 'User details added successfully', 1);
+                    Reset();
+                }
+            }
+            else {
+                
+
+                var sStrJsonDatas = eval({
+                    user_id: sUserId, filter_name: filterName, status_id: status, status_reason_id: cuStatus,
+                    pic_status_id: picStatus, last_used_date: sLastUsedDate, delete_status:0
+                });
+
+               
+                var Condition = "where filter_id=" + sFilterId;
+                var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateTFSUserFilter', Condition);
+                if (Result != null && Result != '') {
+                    $('#btnNew').show();
+                    msgalert('Success', 'User details Updated successfully', 1);
+                    Reset();
+                }
+            }
+        });
+
+
+        $(document).delegate('#tblUserlistGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblUserlistGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                sIsEdit = 1;
+                $('#MainPage').show();
+                $('#ListPage').hide();
+                
+                var a1 = $('#tblUserlistGrid').getCell(rowIds[rowid], 'user_id');
+                var a2 = $('#tblUserlistGrid').getCell(rowIds[rowid], 'filter_id');
+
+               // $('#ddlacessLeveltype').val("" + $('#tblUserlistGrid').getCell(rowIds[rowid], 'access_level') + "").change();
+
+                var a3 = $('#tblUserlistGrid').getCell(rowIds[rowid], 'filter_name');
+                var a4 = $('#tblUserlistGrid').getCell(rowIds[rowid], 'status_id');
+                var a5 = $('#tblUserlistGrid').getCell(rowIds[rowid], 'status_reason_id');
+                var a6 = $('#tblUserlistGrid').getCell(rowIds[rowid], 'pic_status_id');
+
+                $('#hdnUserId').val(a1);
+                $('#hdnFilterId').val(a2);
+                $('#txtFilterName').val(a3);
+                $('#ddlStatus').val(a4).change();
+                $('#ddlCurrentStatus').val(a5).change();
+                $('#ddlPictureStatus').val(a6).change();
+
+
+                $('#btnback').hide();
+                $('#btnUserList').show();
+                $('#btnSave').show();
+                $('#btnNew').show();
+              
+               
+            }
+            else {
+                parent.swal({
+                    title: "Are you sure to delete?",
+                    //text: "" + text + "",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#ED5565",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+
+                },
+      function (isConfirm) {
+          if (isConfirm) {
+              var sFilterId = $('#tblUserlistGrid').getCell(rowIds[rowid], 'filter_id')
+              var sStrJsonDatas = eval({ delete_status: 1 });
+              var Condition = "where filter_id=" + sFilterId;
+              var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateTFSUserFilter', Condition);
+              if (Result != "" || Result != null) {
+                  $('#tblUserlistGrid').jqGrid('delRowData', rowid);
+                  msgalert('Success', 'Successfully Deleted', 1);
+                  $('#tblUserlistGrid').jqGrid('GridUnload');
+                  UserListGrid();
+              }
+          }
+          else {
+              return
+          }
+      });
+                return
+
+
+            }
+        });
+    });
+
+</script>

@@ -1,0 +1,1082 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link href="~/Content/css/style.css" rel="stylesheet" />*@
+
+<style>
+    .col-width {
+        width: 17%;
+    }
+
+    .select2-container--default.select2-container--disabled .select2-selection--single {
+        background-color: white;
+    }
+</style>
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    #loadingDiv {
+        position: absolute;
+        top: 150px;
+        right: -475px;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        z-index: 10000000;
+        opacity: 0.4;
+    }
+
+    .btn {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        border-radius: 0;
+        border: 1px solid transparent;
+        margin-bottom: 10px;
+        background-color: #3289C8;
+        color: #FFF;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+
+    <div id="CPD_Master" class="divbody">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>&nbsp;</h5> <span class="label ">Client Profile</span>
+                    <div class="ibox-tools">
+                        <a class="collapse-link" title="Minimize">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <strong>
+                            <a href="#">
+                                <i class="fa fa-save" id="btnSave" title="Save"></i>
+                            </a>
+
+                        </strong>
+                        <a href="#" title="List">
+                            <i class="fa fa-list" id="btnClientList"></i>
+                        </a>
+                        <a href="#" title="Back to Home">
+                            <i class="fa fa-backward" id="btnback"></i>
+                        </a>
+                    </div>
+                </div>
+                <div id="MainPage1">
+                    <div class="ibox-content" style="padding-top:15px">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Name<font color="red">*</font> :</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group ">
+                                        <div class="input-group-btn">
+                                            <select class="form-control" id="ddltitle" style="width:80px;">
+                                                <option value="1">Mr.</option>
+                                                <option value="2">Mrs.</option>
+                                                <option value="3">Ms.</option>
+                                            </select>
+                                        </div>
+                                        <input type="text" id="txtfullname" title="Please enter characters.." placeholder="Enter name here.." class="form-control" onkeypress="return onlyAlphabets(event,this);">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+
+                                <label class="col-sm-3 control-label">Email Id :</label>
+                                <div class="col-sm-9"><input type="email" id="txtemailid" placeholder="Enter email id here.." class="form-control"></div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Gender:</label>
+                                <div class="col-sm-9">
+
+
+                                    <div class="input-group-btn">
+                                        <select class="form-control" id="ddlgender" style="width:100%;">
+                                            <option value="1">Male</option>
+                                            <option value="2">Female</option>
+
+                                        </select>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">State:</label>
+                                <div class="col-sm-9">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlstate" data-placeholder="Choose a state...">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">City:</label>
+                                <div class="col-sm-9">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlcity" data-placeholder="Choose a city...">
+                                        <option></option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" style="display:none">
+                                <label class="col-sm-3 control-label">County:</label>
+                                <div class="col-sm-9">
+                                    <select style="width:100%" class="select2_demo_3 form-control" id="ddlcounty" data-placeholder="Choose a county...">
+                                        <option></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6" style="padding-right: 7px;">
+                            @*<div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Type:</label>
+                                        <div class="col-sm-9">
+                                            <div class="i-checks checkbox-inline"><label> <input type="radio" id="chkisclient" value="option1" checked="" name="a"> <i></i> Client </label></div>
+                                            <div class="i-checks checkbox-inline"><label> <input type="radio" id="chkispht" value="option2" name="a"> <i></i> Photographer </label></div>
+                                            <div class="i-checks checkbox-inline"><label> <input type="radio" value="option3" disabled="" name="a"> <i></i> Data Entry </label></div>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Address:</label>
+                                <div class="col-sm-9"><input type="text" id="txtaddress1" placeholder="Enter address here.." title="<<Enter Street No Street Name,City,State, Zipcode>>" class="form-control"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">ZipCode :</label>
+                                <div class="col-sm-9"><input type="text" id="txtzipcode" maxlength="5" placeholder="Enter zipcode here.." class="form-control" onpaste="return false" min="1" onkeypress="return isNumber(event)" /></div>
+
+                            </div>
+
+                            <div class="form-group" style="display:none">
+                                <label class="col-sm-3 control-label">Address Line 2:</label>
+                                <div class="col-sm-9"><input type="text" id="txtaddress2" placeholder="Enter address2 here.." class="form-control"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Mobile No:</label>
+                                <div class="col-sm-9"><input type="number" id="txtmobileno" placeholder="Enter mobile No here.." min="0" class="form-control"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Phone No:</label>
+                                <div class="col-sm-9"><input type="number" id="txtphoneno" placeholder="Enter phone No here.." min="0" class="form-control"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="ListPage">
+                    <div class="col-sm-12">
+
+                        <div class="ibox-content" style="padding-top:15px;padding-right: 7px;">
+                            <div class="jqGrid_wrapper">
+                                <table id="tblClientListGrid"></table>
+                                <div id="pagerClientgrid"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <input type="hidden" id="hdnClientId" />
+        <input type="hidden" id="hdnLatitude" />
+        <input type="hidden" id="hdnLongitude" />
+        <input type="hidden" id="hdntemppasswd" />
+        <div id="MailData" style="visibility: hidden">
+        </div>
+        <div id="loadingDiv" style="display: none;">
+            <img id="myImage" src="~/Content/Image/loading_spinner.gif">
+        </div><br>
+
+    </div>
+</form>
+
+<script>
+    localStorage.setItem("PageID", "SubClientMaster");
+
+    var sNextDate = '';
+
+    var qClientId = 0;
+
+    var sIsClient = 0;
+
+    function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    }
+
+    function onlyAlphabets(e, t) {
+        try {
+            if (window.event) {
+                var charCode = window.event.keyCode;
+            }
+            else if (e) {
+                var charCode = e.which;
+            }
+            else { return true; }
+            if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode == 32))
+                return true;
+            else
+                return false;
+        }
+        catch (err) {
+            alert(err.Description);
+        }
+    }
+
+    function BindState() {
+        var Condition = "where delete_status=0";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsState");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlstate').append('<option value="' + Result[i]["state_id"] + '">' + Result[i]["state_name"] + '</option>');
+            }
+        }
+    }
+    function BindBusState() {
+        var Condition = "where delete_status=0";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsState");
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlbusstate').append('<option value="' + Result[i]["state_id"] + '">' + Result[i]["state_name"] + '</option>');
+            }
+        }
+    }
+    function BindCounty() {
+        $('#ddlcounty').empty().append();
+        $('#ddlcounty').append('<option></option>');
+        var sStateId = $('#ddlstate').val();
+        var Condition = "where delete_status=0 and state_id=" + sStateId + "";
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsCounty");
+
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlcounty').append('<option value="' + Result[i]["county_id"] + '">' + Result[i]["county_name"] + '</option>');
+            }
+        }
+    }
+
+    function BindCity() {
+        var sStateId = $('#ddlstate').val();
+        var Condn = "where delete_status=0 and state_id=" + sStateId + "";
+        var strJsonDatas = eval({ strCondition: Condn, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsCity");
+        $('#ddlcity').empty().append();
+        $('#ddlcity').append('<option></option>');
+        if (Result != "" && Result != null) {
+            for (var i = 0; i < Result.length; i++) {
+                $('#ddlcity').append('<option value="' + Result[i]["city_id"] + '">' + Result[i]["city_name"] + '</option>');
+            }
+        }
+    }
+    function InsertSubClientMaster() {
+
+
+        if (document.getElementById('txtfullname').value == "") {
+            document.getElementById('txtfullname').style.borderColor = "red";// this adds the error class
+            msgalert('Warning', 'Please enter name and continue..!', 2);
+            $('#txtfullname').focus();
+            return;
+        }
+
+        var myVar = document.getElementById('txtfullname').value;
+        var myNum = +myVar;
+        if (!isNaN(myNum)) {
+            msgalert('Warning', 'Name should be character only..', 2);
+            document.getElementById('txtfullname').style.borderColor = "red";
+            return;
+        }
+
+
+        var sClientId = $('#hdnClientId').val();
+        if (sClientId <= 0 && sClientId == "") {
+            var ValidationSuccess = false;
+            var sUserName = $('#txtfullname').val();
+            ValidationSuccess = ValidateForDuplication(sUserName, 'ChkDupSubClientFullName', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'This Sub client already exist.. Try another', 3);
+                document.getElementById('txtfullname').style.borderColor = "red";
+                return false;
+            }
+        }
+        loader(1);
+        setTimeout(function () {
+            InsertSubClientMasterDetails();
+        }, 3000);
+    }
+    function editformatter(cellvalue, options, rowObject) {
+        return '<a href="#" id="' + options.rowId + '" action="edit"><i class="fa fa-edit text-md" title="Edit"></i> </a>';
+    }
+    function deleteformatter(cellvalue, options, rowObject) {
+        if (cellvalue == 1) {
+            return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-lock" title="Blocked" style="color:red"></i> </a>';
+        }
+        else {
+            return '<a href="#" id="' + options.rowId + '" action="delete"><i class="fa fa-unlock-alt" title="UnBlock"style="color:blue"></i> </a>';
+        }
+    }
+
+    function SubClientListGrid() {
+        var oJQGridFunctions = new JQGridFunctions();
+
+        colNames = ['Ref No.', 'Client', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Lock/Unloack'],
+        colModel = [
+            { name: 'ref_no', index: 'ref_no', width: 80, align: "center", sorttype: "int", search: true },
+            { name: 'full_name', index: 'full_name', width: 150, align: "center", sorttype: false, search: true },
+            { name: 'title', index: 'title', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'gender', index: 'gender', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'state_id', index: 'state_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'county_id', index: 'county_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'city', index: 'city', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'mobile_no', index: 'mobile_no', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'phone_no', index: 'phone_no', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'email_id', index: 'email_id', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'address1', index: 'address1', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'address2', index: 'address2', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'dob', index: 'dob', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'zipcode', index: 'zipcode', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'username', index: 'username', width: 80, align: "center", sorttype: "int", hidden: true },
+            { name: 'edit', index: 'edit', width: 25, sortable: false, formatter: editformatter, align: 'center', search: false },
+            { name: 'delete', index: 'delete', width: 25, sortable: false, formatter: deleteformatter, align: 'center', search: false },
+            { name: 'isblocked', index: 'username', width: 80, align: "center", sorttype: "int", hidden: true }
+        ];
+
+        var mydata = PopulateSubClientData();
+
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblClientListGrid', '#pagerClientgrid', 'Client List', 230, 10, false, mydata);
+        $("#1", "#tblClientListGrid").css({ display: "none" });
+    }
+
+
+    function PopulateSubClientData() {
+
+        var sCondition = " WHERE  client_ref_id=" + EmpId + " order by 1";  //user_type=1 is client
+        var strJsonDatas = eval({ strCondition: sCondition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectSubClient");
+        if (Result != '' && Result != null) {
+            var sClientRt = [];
+            for (var i = 0; i < Result.length; i++) {
+                var sRefId = Result[i].ref_no;
+                var sClientName = Result[i].full_name;
+                var sIsBlock = Result[i].delete_status;
+                sClientRt[i] = {
+                    ref_no: sRefId, full_name: sClientName, title: Result[i].title, gender: Result[i].gender, state_id: Result[i].state_id,
+                    county_id: Result[i].county_id, city: Result[i].city, mobile_no: Result[i].mobile_no, phone_no: Result[i].phone_no,
+                    address1: Result[i].address1, address2: Result[i].address2, zipcode: Result[i].zipcode, delete: sIsBlock,
+                    email_id: Result[i].email_id, dob: Result[i].dob, isblocked: sIsBlock
+                };
+            }
+            return sClientRt;
+
+        }
+    }
+
+
+    $(function () {
+
+        $("#btnSave").click(function () {
+
+            InsertSubClientMaster();
+        });
+
+        $('#txtfullname').focusout(function () {
+            if (document.getElementById('txtfullname').value == "") {
+                document.getElementById('txtfullname').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtfullname').style.borderColor = "green";
+            }
+
+        });
+
+        $('#txtusername').focusout(function () {
+
+            if (document.getElementById('txtusername').value == "") {
+                document.getElementById('txtusername').style.borderColor = "red";// this adds the error class
+
+            }
+            else {
+                document.getElementById('txtusername').style.borderColor = "green";
+            }
+        });
+
+        $('#ddlstate').change(function () {
+
+            $('#ddlcounty').val('').change();
+            $('#ddlcity').val('').change();
+            BindCounty();
+            BindCity();
+        });
+
+        $('#ddlcounty').change(function () {
+
+            BindCity();
+        });
+
+        $('#ddlcity').change(function () {
+            var sCity = $('#ddlcity option:selected').text();
+            if (sCity != "") {
+                $.ajax({
+                    url: "http://maps.googleapis.com/maps/api/geocode/json?address=" + sCity + "&sensor=false",
+                    type: "POST",
+                    success: function (res) {
+                        $('#hdnLatitude').val(res.results[0].geometry.location.lat);
+                        $('#hdnLongitude').val(res.results[0].geometry.location.lng);
+
+
+                    }
+                });
+            }
+        });
+
+
+
+
+    });
+    function show() {
+        document.getElementById("loadingDiv").style.display = "block";
+        // setTimeout("hide()", 7000);  // 5 seconds
+    }
+    function hide() {
+        document.getElementById("loadingDiv").style.display = "none";
+    }
+
+
+
+
+    function InsertSubClientMasterDetails() {
+
+
+        var sClientId = $('#hdnClientId').val();
+
+
+        var sCity = $('#ddlcity').val();
+        var sLatitude = $('#hdnLatitude').val();
+        var sLongitude = $('#hdnLongitude').val();
+
+        if (sClientId <= 0 && sClientId == "") {              // Create Mode
+            var sIsclient = 1;//1 is client type
+            var sMsgDesc = 'New Sub client details added successfully'
+            var StrJsonDatas = eval({
+                client_ref_id: EmpId,
+                title: $('#ddltitle').val(),
+                full_name: $('#txtfullname').val(),
+                gender: $('#ddlgender').val(),
+                email_id: $('#txtemailid').val(),
+                state_id: $('#ddlstate').val(),
+                county_id: $('#ddlcounty').val(),
+                city: sCity,
+                address1: $('#txtaddress1').val(),
+                address2: $('#txtaddress2').val(),
+                mobile_no: $('#txtmobileno').val(),
+                phone_no: $('#txtphoneno').val(),
+                zipcode: $('#txtzipcode').val(),
+                latitude: sLatitude,
+                longitude: sLongitude,
+                delete_status: 0,
+                created_by: CurrentUser,
+                created_date: new Date()
+
+            });
+            var Result = oAPICall.InsertData(StrJsonDatas, 'CreateSubClientMaster');
+            if (Result != null && Result != '') {
+                sClientId = Result[0].IDENTITY;
+                $('#hdnClientId').val(sClientId);
+                InsertSubClientMastertfs(Result[0].IDENTITY);
+                msgalert('Success', sMsgDesc, 1);
+                loader(0);
+
+                if (qClientId > 0) {
+                    loader(0);
+                    window.location = "UserSettings";
+
+                }
+                parent.document.getElementById('framecontent').src = '../Master/SubClientMaster';
+            }
+        }
+        else {
+            var sMsgDesc = 'Client details updated successfully'
+            var StrJsonDatas = eval({
+                title: $('#ddltitle').val(),
+                full_name: $('#txtfullname').val(),
+                gender: $('#ddlgender').val(),
+                email_id: $('#txtemailid').val(),
+                state_id: $('#ddlstate').val(),
+                county_id: $('#ddlcounty').val(),
+                city: $('#ddlcity').val(),
+                address1: $('#txtaddress1').val(),
+                address2: $('#txtaddress2').val(),
+                mobile_no: $('#txtmobileno').val(),
+                phone_no: $('#txtphoneno').val(),
+                zipcode: $('#txtzipcode').val(),
+                delete_status: 0,
+                updated_by: CurrentUser,
+                updated_date: new Date()
+
+            });
+            var sCondition = "where ref_no=" + sClientId + "";
+            var Result = oAPICall.UpdateData(StrJsonDatas, 'UpdateSubClientMaster', sCondition);
+            if (Result != null && Result != '') {
+                msgalert('Success', sMsgDesc, 1);
+                UpdateSubClientMasterDetailsTFS(sClientId)
+                loader(0);
+                if (qClientId > 0) {
+                    window.location = "UserSettings";
+                }
+            }
+        }
+    }
+    function InsertSubClientMastertfs(sSubClientId) {
+        var ParentId = "";
+        var Condition = ' where bts_client_id=' + EmpId;
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectClientTFS");
+        if (Result != null || Result != '') {
+
+            ParentId = Result[0].CM_CUSTOMER_ID;
+        }
+        var StrJsonDatas = eval({
+            bts_sub_client_id: sSubClientId,
+            CM_CUSTOMER_CODE: "BTS_SUB" + sSubClientId,
+            CM_CUSTOMER_FULL_NAME: $('#txtfullname').val(),
+            CM_CUSTOMER_NAME: $('#txtfullname').val(),
+            CM_EMAIL: $('#txtemailid').val(),
+            CM_PO_BOX: $('#txtzipcode').val(),
+            CM_CITY: "1",
+            CM_TEL_NO: $('#txtmobileno').val() + "," + $('#txtphoneno').val(),
+            language_code: 1,
+            CM_CUSTOMER_STATUS: "Active",
+            CM_STATE: $('#ddlstate').val(),
+            country_code: 503,
+            CM_ADDRESS1: $('#txtaddress1').val(),
+            CM_ADDRESS2: $('#txtaddress2').val(),
+            active_date: new Date(),
+            CM_TRADE_LIC_EXP_DATE: new Date(),
+            CM_DELETESTATUS: 0,
+            CM_CREATEDBY: CurrentUser,
+            CM_CREATEDDATE: new Date(),
+            IsParent: 0,
+            ParentId: ParentId,
+            CM_BUSINESS_TYPE: 0,
+            CM_PRICING_CATEGORY: 'pp',
+        });
+
+        var Result = oAPICall.InsertData(StrJsonDatas, 'CreateClientMasterOM');
+    }
+
+    function UpdateSubClientMasterDetailsTFS(sClientId) {
+        var StrJsonDatas = eval({
+
+            CM_CUSTOMER_FULL_NAME: $('#txtfullname').val(),
+            CM_CUSTOMER_NAME: $('#txtfullname').val(),
+            CM_EMAIL: $('#txtemailid').val(),
+            CM_PO_BOX: $('#txtzipcode').val(),
+            CM_CITY: "1",
+            CM_TEL_NO: $('#txtmobileno').val() + "," + $('#txtphoneno').val(),
+           
+            CM_STATE: $('#ddlstate').val(),
+            
+            CM_ADDRESS1: $('#txtaddress1').val(),
+            CM_ADDRESS2: $('#txtaddress2').val(),
+            
+
+        });
+
+
+
+
+
+        var sCondition = "where bts_sub_client_id=" + sClientId + "";
+        //var Result = oAPICall.InsertData(StrJsonDatas, 'CreateSubClientMaster');
+        var Result = oAPICall.UpdateData(StrJsonDatas, 'UpdateClientMasterOM', sCondition);
+    }
+
+  
+
+    ///////////////////////////////////////////////////////////////Mail Code Start ///////////////////////////////////////////////////////////////////
+
+    function SendEMail() {
+        //loadingalert();
+        var sMailTo = $('#txtemailid').val();
+        var sMailBody = CreateMailBody();
+        var StrJsonDatas = eval({
+            mail_to: sMailTo,
+            mail_subject: 'BTS Client Login Credentials Created Successfully',
+            mail_body: sMailBody
+
+        });
+        var Result = oAPICall.Sendmail(StrJsonDatas, 'sendmail');
+        if (Result != null || Result != '') {
+            CreateMailLog();
+        }
+    }
+
+
+    function CreateMailBody() {
+        var sName = $('#txtfullname').val();
+        var sUsername = $('#txtusername').val();
+        var sPasswd = $('#hdntemppasswd').val();
+        var appurl = '@(System.Configuration.ConfigurationManager.AppSettings["appurl"].ToString())'
+        var sNewURL = window.location.protocol + "//" + window.location.host + "/" + appurl + "";
+        //var sNewURL = window.location.protocol + "//" + window.location.host + "/" + "";
+        var Condition = ' where mail_type=1 '; // mail type 1  is New Client Creation
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectEmailTemplate");
+
+        if (Result != null || Result != '') {
+            var sMailData = Result[0].mail_body;
+
+            document.getElementById('MailData').innerHTML = sMailData;
+            document.getElementById('sUrl').innerHTML = sNewURL;
+            document.getElementById('sUsername').innerHTML = sUsername;
+            document.getElementById('sPassword').innerHTML = sPasswd;
+            document.getElementById('company_address').innerHTML = CompanyName;
+        }
+        return document.getElementById('MailData').innerHTML;
+    }
+
+    function CreateMailLog() {
+        var mail_type = "1"; // New Client Creation Mail type
+        var username = $('#txtusername').val();
+        var mail_from = "icorepioneertech@gmail.com";
+        var mail_to = $('#txtemailid').val();
+        var mail_cc = "";
+        var mail_bcc = "";
+        var mail_sub = 'BTS Client Login Credentials Created Successfully';
+        var mail_body = CreateMailBody();
+        var mail_send_datetime = new Date();
+        var dt = dateFormat(dt, "isoDateTime");
+        var loginuser = CurrentUserName;
+        var mail_sendornot = 1; //set to 0 if mail not send
+        var mail_attachment = 1; //set to 0 if there is no attachment
+
+        var strJsonDatas = eval({
+            mail_temp_no: mail_type, mail_from: mail_from, mail_to: mail_to, mail_cc: mail_cc, mail_bcc: mail_bcc,
+            mail_sub: mail_sub, mail_body: mail_body, loginuser: CurrentUser, mail_send_datetime: mail_send_datetime, mail_send_by: CurrentUser,
+            mail_sendornot: mail_sendornot, mail_attachment: mail_attachment
+        });
+
+        var Result = oAPICall.InsertData(strJsonDatas, 'CreateEmailLog');
+
+    }
+
+    ///////////////////////////////////////////////////////////////Mail Code end ///////////////////////////////////////////////////////////////////
+
+
+    function processfunctiion(s) {
+        if (s == 1) {
+            msgalert("ECESIS-BTS", "", 1)
+        }
+        else {
+            msgalert("ECESIS-BTS", "", 3)
+        }
+    }
+
+    function Reset() {
+
+        $('#hdnClientId').val('');
+        $('#txtfullname').val('');
+        $('#txtemailid').val('');
+        $('#txtaddress1').val('');
+        $('#txtaddress2').val('');
+        $('#txtmobileno').val('');
+        $('#txtphoneno').val('');
+        $('#txtusername').val('');
+        $('#txtzipcode').val('');
+        $('#ddlstate').val('').change();
+        $('#ddlcounty').val('').change();
+        $('#ddlcity').val('').change();
+        $('#ddlbusstate').val('').change();
+        $("#txtusername").prop("disabled", false);
+    }
+
+    function LoadSubClientData(qClientId) {
+        var Condition = " where ref_no=" + qClientId + "";
+
+        var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+        var Result = oAPICall.SelectData(strJsonDatas, "SelectSubClient");
+
+        if (Result != "" && Result != null) {
+            $('#MainPage1').show();
+            //$('#MainPage2').show();
+            $('#ListPage').hide();
+            $('#hdnClientId').val(qClientId);
+            $('#txtusername').val(Result[0].username);
+            $('#txtfullname').val(Result[0].full_name);
+            $('#ddltitle').val(Result[0].title);
+            $('#txtemailid').val(Result[0].email_id);
+            $('#ddlgender').val(Result[0].gender);
+            var sStateId = Result[0].state_id;
+            $('#ddlstate').val("" + sStateId + "").change();
+            $('#ddlcounty').val("" + Result[0].county_id + "").change();
+            $('#ddlcity').val("" + Result[0].city + "").change();
+            $('#txtaddress1').val(Result[0].address1);
+            $('#txtaddress2').val(Result[0].address2);
+            $('#txtmobileno').val(Result[0].mobile_no);
+            $('#txtphoneno').val(Result[0].phone_no);
+            $('#txtzipcode').val(Result[0].zipcode);
+            $('#btnback').hide();
+            $('#btnPhotoghrList').show();
+        }
+    }
+
+    $(document).ready(function () {
+
+
+
+        $('#btnback').hide();
+        $('#MainPage1').show();
+        $('#MainPage2').show();
+        $('#ListPage').hide();
+        var sWidth = $('.tab-content').width();
+        $('#tblClientListGrid').setGridWidth(sWidth - 20);
+
+        $(window).bind('resize', function () {
+            var sWidth = $('.jqGrid_wrapper').width();
+            $('#tblClientListGrid').setGridWidth(sWidth);
+
+        });
+        $('#txtaddress1').tooltip();
+
+
+        qClientId = GetQueryStringParams("qSubclientId");
+
+        document.getElementById('txtfullname').focus();
+
+        BindState();
+        BindBusState();
+        //BindCounty();
+        //BindCity();
+        if (qClientId > 0) {
+            LoadSubClientData(qClientId);
+        }
+        //else {
+        //    setTimeout(function () {
+
+        //        LoadClientData(EmpId);
+        //        sIsClient = EmpId;
+        //    }, 1000);
+        //}
+        var sChange = "";
+        $("#txtaddress1").blur(function () {
+            var subaddress = $.trim($("#txtaddress1").val());
+            var n = subaddress.split(" ");
+            var zipcode = n[n.length - 1].split("-")
+            //return n[n.length - 1];
+
+            if (!isNaN(zipcode[0])) {
+                $("#txtzipcode").val(zipcode[0])
+                sChange = "ok";
+                $("#txtzipcode").trigger("change");
+            }
+            else {
+                msgalert('Warning', 'Zipcode is not valid in address please enter manually', 2);//sucess-1, warning-2, error-3
+                $('#txtzipcode').focus();
+                $("#txtzipcode").val("");
+                $("#ddlstate").val("").change();
+                $("#ddlcity").val("").change();
+                return;
+            }
+        });
+        $("#txtzipcode").change(function () {
+
+            if ($("#txtzipcode").val() != "") {
+                var Condition = "where zip_code=" + $("#txtzipcode").val() + "and delete_status =0";
+                var strJsonDatas = eval({ strCondition: Condition, strFieldNames: null, strSessionID: UserSession });
+                var Result = oAPICall.SelectData(strJsonDatas, "SelectBtsZipCodeMaster");
+                if (Result != "" && Result != null) {
+                    $("#ddlstate").val(Result[0]["state_id"]).change();
+                    $("#ddlcity").val(Result[0]["city_id"]).change();
+                }
+                else {
+                    $('#txtzipcode').focus();
+                    $("#ddlstate").val("").change();
+                    $("#ddlcity").val("").change();
+                    if (sChange == "ok") {
+                        $("#txtzipcode").val("");
+                        sChange = "";
+                        msgalert('Warning', 'Zipcode is not found contact vendor or Enter manually', 2);//sucess-1, warning-2, error-3
+                    }
+                    else {
+                        msgalert('Warning', 'Zipcode is not found contact vendor or continue with same', 2);//sucess-1, warning-2, error-3
+                    }
+
+                }
+            }
+            else {
+                $('#txtzipcode').focus();
+                $("#txtzipcode").val("");
+                $("#ddlstate").val("").change();
+                $("#ddlcity").val("").change();
+            }
+        });
+        $('#btnClientList').click(function () {
+
+            $('#btnSave').hide();
+            if (qClientId > 0) {
+                window.location = 'UserSettings'
+            }
+            if (access_level == 1) {
+                $('#MainPage1').hide();
+                $('#MainPage2').hide();
+                $('#ListPage').show();
+                $('#btnback').show();
+                $('#btnClientList').hide();
+                $('#tblClientListGrid').jqGrid('GridUnload');
+                SubClientListGrid();
+            }
+            else if (sIsClient != EmpId) {
+                $('#MainPage1').hide();
+                $('#MainPage2').hide();
+                $('#ListPage').show();
+                $('#btnback').show();
+                $('#btnClientList').hide();
+                $('#tblClientListGrid').jqGrid('GridUnload');
+                SubClientListGrid();
+            }
+
+        });
+        $('#btnback').click(function () {
+            $('#btnSave').show();
+            $('#MainPage1').show();
+            $('#MainPage2').show();
+            $('#ListPage').hide();
+            $('#btnback').hide();
+            $('#btnClientList').show();
+            $('#tblClientListGrid').jqGrid('GridUnload');
+            SubClientListGrid();
+            Reset();
+
+        });
+
+        $('#txtusername').focusout(function () {
+            var ValidationSuccess = false;
+            var sUserName = $('#txtusername').val();
+            ValidationSuccess = ValidateForDuplication(sUserName, 'ChkDupClientUserName', '', '');
+            if (!ValidationSuccess) {
+                msgalert('Error', 'Username already exist.. Try another', 3);
+                document.getElementById('txtusername').style.borderColor = "red";
+                return false;
+            }
+        });
+
+        $('#txtemailid').focusout(function () {
+            if (document.getElementById('txtemailid').value == "") {
+                document.getElementById('txtemailid').style.borderColor = "red";// this adds the error class
+
+            }
+            else if ($('#hdnClientId').val() <= 0) {
+                var ValidationSuccess = false;
+                var sEmailId = $.trim($("#txtemailid").val());
+                var sSplitEmail = sEmailId.split(qRegdata);
+                ValidationSuccess = ValidateForDuplicationMail(sSplitEmail[0], sSplitEmail[1], 'ChkDupClientEmailId', '', '');
+                if (!ValidationSuccess) {
+                    msgalert('Error', 'Email id already exist.. Try another', 3);
+                    document.getElementById('txtemailid').style.borderColor = "red";
+                    return false;
+                }
+                else {
+                    document.getElementById('txtemailid').style.borderColor = "green";
+                }
+            }
+
+        });
+
+
+        //////////////////////////////////////////////////////////Random password Start ///////////////////////////////////////////////
+
+        var chars = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+        var string_length = 8;
+        var randomstring = '';
+        var charCount = 0;
+        var numCount = 0;
+
+        for (var i = 0; i < string_length; i++) {
+            // If random bit is 0, there are less than 3 digits already saved, and there are not already 5 characters saved, generate a numeric value.
+            if ((Math.floor(Math.random() * 2) == 0) && numCount < 3 || charCount >= 5) {
+                var rnum = Math.floor(Math.random() * 10);
+                randomstring += rnum;
+                numCount += 1;
+            } else {
+                // If any of the above criteria fail, go ahead and generate an alpha character from the chars string
+                var rnum = Math.floor(Math.random() * chars.length);
+                randomstring += chars.substring(rnum, rnum + 1);
+                charCount += 1;
+            }
+
+        }
+        $('#hdntemppasswd').val(randomstring);
+
+        //////////////////////////////////////////////////////////Random password end ///////////////////////////////////////////////
+
+
+        YAHOO.namespace("example.container");
+        YAHOO.example.container.wait = new YAHOO.widget.Panel("wait",
+                                                       {
+                                                           width: "240px",
+                                                           fixedcenter: true,
+                                                           close: false,
+                                                           draggable: false,
+                                                           zindex: 4,
+                                                           modal: true,
+                                                           visible: false
+                                                       }
+                                                       );
+        YAHOO.example.container.wait.setHeader("Loading, please wait...");
+        YAHOO.example.container.wait.setBody("<img src=\"http://us.i1.yimg.com/us.yimg.com/i/us/per/gr/gp/rel_interstitial_loading.gif\"/>");
+        YAHOO.example.container.wait.render(document.body);
+
+
+
+        $(document).delegate('#tblClientListGrid .jqgrow td a[href="#"]', 'click', function () {
+            var rowIds = $('#tblClientListGrid').jqGrid('getDataIDs');
+            var r1 = rowIds[0];
+            var rowid = parseInt($(this).attr('id') - 1);
+            if ($(this).attr('action') == 'edit') {
+                $('#MainPage1').show();
+                //$('#MainPage2').show();
+                $('#ListPage').hide();
+                $('#btnSave').show();
+                var sRefNo = $('#tblClientListGrid').getCell(rowIds[rowid], 'ref_no');
+                $('#hdnClientId').val(sRefNo);
+                $('#txtfullname').val($('#tblClientListGrid').getCell(rowIds[rowid], 'full_name'));
+                $('#ddltitle').val($('#tblClientListGrid').getCell(rowIds[rowid], 'title'));
+                $('#txtemailid').val($('#tblClientListGrid').getCell(rowIds[rowid], 'email_id'));
+                $('#ddlgender').val($('#tblClientListGrid').getCell(rowIds[rowid], 'gender'));
+                var sStateId = $('#tblClientListGrid').getCell(rowIds[rowid], 'state_id');
+                $('#ddlstate').val("" + sStateId + "").change();
+                $('#ddlcounty').val("" + $('#tblClientListGrid').getCell(rowIds[rowid], 'county_id') + "").change();
+                $('#ddlcity').val("" + $('#tblClientListGrid').getCell(rowIds[rowid], 'city') + "").change();
+                $('#txtaddress1').val($('#tblClientListGrid').getCell(rowIds[rowid], 'address1'));
+                $('#txtzipcode').val($('#tblClientListGrid').getCell(rowIds[rowid], 'zipcode'));
+                $('#txtaddress2').val($('#tblClientListGrid').getCell(rowIds[rowid], 'address2'));
+                $('#txtmobileno').val($('#tblClientListGrid').getCell(rowIds[rowid], 'mobile_no'));
+                $('#txtphoneno').val($('#tblClientListGrid').getCell(rowIds[rowid], 'phone_no'));
+                $('#btnback').hide();
+                $('#btnClientList').show();
+            }
+            else {
+                /////////////////////////////delete code start////////////////////////
+
+                var sIsBlock = $('#tblClientListGrid').getCell(rowIds[rowid], 'isblocked');
+                if (sIsBlock == 0) {
+                    parent.swal({
+                        title: "Are you sure to block?",
+                        //text: "" + text + "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#ED5565",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+
+                    },
+           function (isConfirm) {
+               if (isConfirm) {
+                   var sRefId = $('#tblClientListGrid').getCell(rowIds[rowid], 'ref_no')
+                   var sStrJsonDatas = eval({ delete_status: 1 });
+                   var Condition = "where ref_no=" + sRefId;
+                   var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateSubClientMaster', Condition);
+
+                   if (Result != "" || Result != null) {
+                       $('#tblClientListGrid').jqGrid('setCell', rowid, 'delete', '1');
+                       msgalert('Success', 'Successfully Blocked', 1);
+
+                       $('#tblClientListGrid').jqGrid('GridUnload');
+                       SubClientListGrid();
+                   }
+               }
+               else {
+                   return
+               }
+           });
+                }
+                else {
+                    parent.swal({
+                        title: "Are you sure to Unblock?",
+                        //text: "" + text + "",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#ED5565",
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        closeOnConfirm: false,
+                        closeOnCancel: true
+
+                    },
+                  function (isConfirm) {
+                      if (isConfirm) {
+                          var sStrJsonDatas = eval({ delete_status: 0 });
+                          var sRefId = $('#tblClientListGrid').getCell(rowIds[rowid], 'ref_no')
+                          var Condition = "where ref_no=" + sRefId;
+                          var Result = oAPICall.UpdateData(sStrJsonDatas, 'UpdateSubClientMaster', Condition);
+                          if (Result != "" || Result != null) {
+                              $('#tblClientListGrid').jqGrid('setCell', rowid, 'delete', '0');
+                                  msgalert('Success', 'Successfully UnBlocked', 1);
+                                  $('#tblClientListGrid').jqGrid('GridUnload');
+                                  SubClientListGrid();
+                          }
+                      }
+                      else {
+                          return
+                      }
+                  });
+                }
+                /////////////////////////////end////////////////////////
+
+
+            }
+        });
+
+
+
+    });
+
+</script>

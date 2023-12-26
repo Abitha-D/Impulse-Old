@@ -1,0 +1,108 @@
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\BussinessLayer.dll
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\BussinessLayer.pdb
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\BussinessLayer\obj\Debug\BussinessLayer.dll
+D:\Project\BPO_ECESIS_Tracking\BPO_Tracking_V1\BPO_Tracking_V1\iCoreMVC\BussinessLayer\obj\Debug\BussinessLayer.pdb
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\BussinessLayer.dll
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\BussinessLayer.pdb
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\obj\Debug\BussinessLayer.dll
+D:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\obj\Debug\BussinessLayer.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\BussinessLayer.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\BussinessLayer.pdb
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\obj\Debug\BussinessLayer.dll
+E:\BPO_TRAKING\BPO_Tracking_V1\iCoreMVC\BussinessLayer\obj\Debug\BussinessLayer.pdb
+D:\peeru\BTS\26-02-2016\BussinessLayer\bin\Debug\BussinessLayer.dll
+D:\peeru\BTS\26-02-2016\BussinessLayer\bin\Debug\BussinessLayer.pdb
+D:\peeru\BTS\26-02-2016\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+D:\peeru\BTS\26-02-2016\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+D:\peeru\BTS\26-02-2016\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\peeru\BTS\26-02-2016\BussinessLayer\obj\Debug\BussinessLayer.dll
+D:\peeru\BTS\26-02-2016\BussinessLayer\obj\Debug\BussinessLayer.pdb
+D:\PROJECT\22-06-2016\BussinessLayer\bin\Debug\BussinessLayer.dll
+D:\PROJECT\22-06-2016\BussinessLayer\bin\Debug\BussinessLayer.pdb
+D:\PROJECT\22-06-2016\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+D:\PROJECT\22-06-2016\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+D:\PROJECT\22-06-2016\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\PROJECT\22-06-2016\BussinessLayer\obj\Debug\BussinessLayer.dll
+D:\PROJECT\22-06-2016\BussinessLayer\obj\Debug\BussinessLayer.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\bin\Debug\BussinessLayer.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\bin\Debug\BussinessLayer.pdb
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\obj\Debug\BussinessLayer.dll
+F:\Project\ECESIS\BTS\iCore_BTS-V2\BussinessLayer\obj\Debug\BussinessLayer.pdb
+F:\Project\ECESIS\OMS_V1\BussinessLayer\bin\Debug\BussinessLayer.dll
+F:\Project\ECESIS\OMS_V1\BussinessLayer\bin\Debug\BussinessLayer.pdb
+F:\Project\ECESIS\OMS_V1\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+F:\Project\ECESIS\OMS_V1\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+F:\Project\ECESIS\OMS_V1\BussinessLayer\obj\Debug\BussinessLayer.dll
+F:\Project\ECESIS\OMS_V1\BussinessLayer\obj\Debug\BussinessLayer.pdb
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\bin\Debug\BussinessLayer.dll
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\bin\Debug\BussinessLayer.pdb
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\obj\Debug\BussinessLayer.dll
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\obj\Debug\BussinessLayer.pdb
+E:\Projects\ECESIS\TFS_OM\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\bin\Debug\BussinessLayer.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\bin\Debug\BussinessLayer.pdb
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\obj\Debug\BussinessLayer.dll
+E:\Programs 64bit\Starnex Technologies\Projects\Ecesis\TFS_BTS\Src\TFS_OM\BussinessLayer\obj\Debug\BussinessLayer.pdb
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\bin\Debug\BussinessLayer.dll
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\bin\Debug\BussinessLayer.pdb
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\obj\Debug\BussinessLayer.dll
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\obj\Debug\BussinessLayer.pdb
+D:\Projects\TFSOMV2\TFS_OM\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\Projects\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.dll
+D:\Projects\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.pdb
+D:\Projects\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.dll
+D:\Projects\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.pdb
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.dll
+D:\Desktop\My Application\Anoop\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.pdb
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.dll
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.pdb
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.dll
+D:\Projects\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.pdb
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.dll
+D:\Projects\Impulse27-05-2019\Impulse27-05-2019\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.pdb
+D:\Projects\Impulse\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.dll
+D:\Projects\Impulse\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.pdb
+D:\Projects\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+D:\Projects\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.dll
+D:\Projects\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.pdb
+F:\Solution\Impulse\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.dll
+F:\Solution\Impulse\Impulse_HR\BussinessLayer\bin\Debug\BussinessLayer.pdb
+F:\Solution\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+F:\Solution\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+F:\Solution\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
+F:\Solution\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.dll
+F:\Solution\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.pdb

@@ -1,0 +1,311 @@
+﻿
+@{
+    ViewBag.Title = "EmployeepersonalReport";
+}
+<style>
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    /*data-placeholder{
+
+    }*/
+    .error {
+        border: 2px solid red;
+    }
+
+    .select2-container--default.select2-container--disabled .select2-selection--single {
+        background-color: white;
+    }
+
+    /*
+        new style
+        */
+    select::-webkit-select-placeholder {
+        font-size: 12px;
+        line-height: 2;
+    }
+
+    .select2-container {
+        font-size: 12px;
+    }
+
+    textarea::-webkit-input-placeholder {
+        font-size: 13px;
+        line-height: 2;
+    }
+
+    .setbackgroundcolor a {
+        color: green !important;
+    }
+
+    .DivBorder {
+        border: 1px solid grey;
+    }
+</style>
+
+<form method="get" class="form-horizontal">
+    <div id="EmpRpt" class="divbody">
+        <div class="col-sm-12" style="padding-right:10px">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content" id="rptemp">
+                    <div style="padding-top:15px" id="MainPage">
+                        
+                        <div class="col-sm-12">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label class="col-sm-3 control-label">Employee Code :</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" style="width:50%" id="txtEmployeecode" placeholder="Enter Employee code here.." class="form-control" style="background-color:white;" required="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-3 control-label">Company :</label>
+                                    <div class="col-sm-9">
+                                        <select style="width:50%" class="select2_demo_3 form-control" id="ddlcompany" data-placeholder="Choose a company...">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-3 control-label">Department :</label>
+                                    <div class="col-sm-9">
+                                        <select style="width:50%" class="select2_demo_3 form-control" id="ddldepartment" data-placeholder="Choose a department...">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label class="col-sm-3 control-label">Designation :</label>
+                                    <div class="col-sm-9">
+                                        <select style="width:50%" class="select2_demo_3 form-control" id="ddldesignation" data-placeholder="Choose a designation...">
+                                            <option></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                            <div class="col-sm-12">
+                                <div class="col-sm-6"></div>
+
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="col-sm-7"></div>
+                                        <div class="col-sm-5">
+                                            <button type="button" class="btn btn-primary" id="btnGenerate">Generate</button>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="col-sm-3">
+
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary" id="btnReset">Reset</button>
+
+                                    </div>
+                                </div>
+                                </div>
+                            
+                            
+                        </div>
+                    <div class="col-sm-12" style="padding-top:20px;">
+                        <div id="ListPage">
+                            <div class="col-sm-12">
+                                <div class="ibox-content">
+                                    <div class="jqGrid_wrapper">
+                                        <table id="tblEmployeerptGrid"></table>
+                                        <div id="pagerEmployeerptgrid"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                    </div>
+                </div>
+              </div>
+            </div>
+    <div class="col-sm-12 hidden" id="divframe" style="height:350px;">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <iframe src="" id="frmreport" style="width: 100%" frameborder="0" scrolling="auto"></iframe>
+            </div>
+        </div>
+    </div>
+       
+</form>
+<script>
+    var ResultEmployee;
+    function EmployeepersonalReportPageLoad() {
+        var sData1 = [], sData2 = [];
+        var strJsonData = eval({ CurrentUser: 1});
+        var Result = "";
+        $.ajax({
+            url: "GetEmployeepersonalReportPageLoad",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            data: JSON.stringify(strJsonData),
+            success: function (data) {
+
+
+                var ResultCompany = jQuery.parseJSON(data.strCompany);
+                var ResultDepartment = jQuery.parseJSON(data.strDepartment);
+                var ResultDesignation = jQuery.parseJSON(data.strDesignation);
+                ResultEmployee = jQuery.parseJSON(data.strEmployeelist);
+                // ----------------------------------- COMPANY --------------------------
+                if (ResultCompany != "" && ResultCompany != null) {
+                   
+                    for (var i = 0; i < ResultCompany.length; i++) {
+                        $('#ddlcompany').append('<option value="' + ResultCompany[i]["SM_STATION_ID"] + '">' + ResultCompany[i]["SM_STATION_NAME"] + '</option>');
+                    }
+                }
+                // ----------------------------------- Department --------------------------
+                if (ResultDepartment != "" && ResultDepartment != null) {
+                   
+                    for (var i = 0; i < ResultDepartment.length; i++) {
+                        $('#ddldepartment').append('<option value="' + ResultDepartment[i]["dept_id"] + '">' + ResultDepartment[i]["display_value"] + '</option>');
+                    }
+                }
+                // ----------------------------------- Designation --------------------------
+                if (ResultDesignation != "" && ResultDesignation != null) {
+                  
+                    for (var i = 0; i < ResultDesignation.length; i++) {
+                        $('#ddldesignation').append('<option value="' + ResultDesignation[i]["designation_id"] + '">' + ResultDesignation[i]["display_value"] + '</option>');
+                    }
+                }            
+            }
+        });
+    }
+    function EmployeeListGrids() {
+        var oJQGridFunctions = new JQGridFunctions();
+        colNames = ['Employee Code', 'Employee Name',''],
+        colModel = [
+
+                { name: 'Employeecode', index: 'Employeecode', width: 80, align: "Left", search: true },
+                { name: 'Employeename', index: 'Employeename', width: 80, align: "Left", search: true },
+                { name: 'EmpId', index: 'EmpId', width: 80, align: "Left", search: true ,hidden:true},             
+        ];
+        var mydata = '';      
+        oJQGridFunctions.CustomJqGrid(colNames, colModel, '#tblEmployeerptGrid', '#pagerEmployeerptgrid', 'Employee List', 290, 14, false, mydata,true);
+    }
+    function BindEmployee() {        
+        var companyid = $('#ddlcompany').val();
+        var departmentid = $('#ddldepartment').val();
+        var designationid = $('#ddldesignation').val();
+        var employeecode = $('#txtEmployeecode').val();
+        var Data = [];
+       // $('#tblEmployeerptGrid').jqGrid('GridUnload');
+       // EmployeeListGrids();
+        
+        $('#tblEmployeerptGrid').jqGrid('clearGridData');
+        
+        if (ResultEmployee != '' && ResultEmployee != null) {
+            for (var i = 0; i < ResultEmployee.length; i++) {
+                var firstname = ResultEmployee[i].EM_EMPLOYEE_NAME;
+                var lastname = ResultEmployee[i].EM_EMP_FULL_NAME;
+                //-------------------------Filter by Employee Code--------------------------------
+                if (employeecode != '' && ResultEmployee[i].EM_EMPLOYEE_CODE == employeecode && ResultEmployee[i].empt_status == 1) {
+                    Data[i] = {
+                        EmpId: ResultEmployee[i].EM_EMPLOYEE_ID, Employeecode: ResultEmployee[i].EM_EMPLOYEE_CODE, Employeename: firstname + ' ' + lastname
+                    }
+
+                    jQuery('#tblEmployeerptGrid').jqGrid('addRowData', i + 1, Data[i]);
+                }
+                //-------------------------Filter by company Name--------------------------------
+                if (companyid > 0 && employeecode == '' && departmentid == "" && ResultEmployee[i].empt_comp_id == companyid && ResultEmployee[i].empt_status == 1) {
+                    Data[i] = {
+                        EmpId: ResultEmployee[i].EM_EMPLOYEE_ID, Employeecode: ResultEmployee[i].EM_EMPLOYEE_CODE, Employeename: firstname + ' ' + lastname
+                    }
+
+                    jQuery('#tblEmployeerptGrid').jqGrid('addRowData', i + 1, Data[i]);
+                }
+                //-------------------------Filter by department Name----------------------------
+                if (departmentid > 0 && ResultEmployee[i].EM_DEPT_ID == departmentid && designationid == "" && ResultEmployee[i].empt_comp_id == companyid && ResultEmployee[i].empt_status == 1) {
+                    Data[i] = {
+                        EmpId: ResultEmployee[i].EM_EMPLOYEE_ID, Employeecode: ResultEmployee[i].EM_EMPLOYEE_CODE, Employeename: firstname + ' ' + lastname
+                    }
+
+                    jQuery('#tblEmployeerptGrid').jqGrid('addRowData', i + 1, Data[i]);
+                }
+                //-------------------------Filter by Designation Name--------------------------
+                if (designationid > 0 && ResultEmployee[i].EM_DESIGNATION_ID == designationid && ResultEmployee[i].EM_DEPT_ID == departmentid && ResultEmployee[i].empt_comp_id == companyid && ResultEmployee[i].empt_status == 1) {
+                    Data[i] = {
+                        EmpId: ResultEmployee[i].EM_EMPLOYEE_ID, Employeecode: ResultEmployee[i].EM_EMPLOYEE_CODE, Employeename: firstname + ' ' + lastname
+                    }
+
+                    jQuery('#tblEmployeerptGrid').jqGrid('addRowData', i + 1, Data[i]);
+                }
+            }
+        }
+    }
+    function GenerateReport() {
+        var report_codition = "" ;
+        var report_id = "4"; 
+        var rowIds = $('#tblEmployeerptGrid').jqGrid('getDataIDs');
+        //var Rowids = $("#tblEmployeerptGrid").getGridParam('selarrrow');
+        var Rowids = $('#tblEmployeerptGrid').jqGrid('getGridParam', 'selarrrow');
+        var Emp_list = '';
+        if (Rowids.length > 0) {
+            $('#divframe').removeClass("hidden")
+            $('#divcred').addClass("hidden")
+            for (i = 0; i < Rowids.length; i++) {
+                var RowData = $("#tblEmployeerptGrid").jqGrid('getRowData', Rowids[i]);
+                Emp_list += RowData.EmpId + ',';
+                report_codition = Emp_list.length > 0 ? 'where emp_ref_no in (' + Emp_list.replace(/,\s*$/, "") +')' :''; 
+                    document.getElementById('frmreport').src = '';
+                    document.getElementById('frmreport').src = '../Content/ReportsData/ReportViewer.aspx?report_id=' + report_id +'&report_codition=' + report_codition  ;
+                    $('#divframe').show();
+                    $('#EmpRpt').hide();
+            }
+        }      
+    }
+
+    $(document).ready(function () {
+        EmployeepersonalReportPageLoad();
+        EmployeeListGrids();
+        $('#ddlcompany').change(function () {
+
+            BindEmployee();
+        });
+        $('#ddldepartment').change(function () {
+
+            BindEmployee();
+        });
+        $('#ddldesignation').change(function () {
+
+            BindEmployee();
+        });
+        $('#txtEmployeecode').focusout(function () {
+            BindEmployee();
+        });
+        $("#btnGenerate").click(function () {
+            var Rowids = $("#tblEmployeerptGrid").getGridParam('selarrrow');
+            if (Rowids <= 0) {
+                msgalert("Warning", "Please Select at least one Employee", 2);
+                return false;
+            }
+            GenerateReport();
+        });
+        $(function () {
+            var newheight = $(window).height() - 55;
+            $('#frmreport').css({ height: newheight + 'px' });
+        });
+    });
+</script>

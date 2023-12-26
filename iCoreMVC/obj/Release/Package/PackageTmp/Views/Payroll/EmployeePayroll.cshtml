@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "MyPayroll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <style>
+        td {
+            padding: 10px;
+        }
+
+        .boldClass {
+            font-weight: bold;
+        }
+
+        .table-bordered, .table-bordered > tbody > tr > td,
+        .table-bordered > tbody > tr > th,
+        .table-bordered > tfoot > tr > td,
+        .table-bordered > tfoot > tr > th,
+        .table-bordered > thead > tr > td,
+        .table-bordered > thead > tr > th {
+            border: 1px solid #000000;
+        }
+        .dropdownClass{
+            background-color: #fbfbfb;
+             opacity: 1; 
+             border: 1px solid #6ec5d2; 
+             color: black;
+             width:300px;
+        }
+    </style>
+</head>
+
+<body ng-app="PayrollDetails" ng-controller="Payroll" ng-init="GetEmployees()">
+
+    @if (Session["role_id"].ToString() == "1" || Session["role_id"].ToString() == "9" || Session["role_id"].ToString() == "10")
+    {
+        <center>
+
+            @*<select class="select2_demo_3 form-control select2" style="background-color: #fbfbfb; opacity: 1; border: 1px solid #6ec5d2; color: black; "
+                data-ng-options="emp as emp.emp_full_name for emp in EmployeeList track by emp.emp_ref_no | orderBy:'emp_full_name' ">*@
+            <select class="select2_demo_3 form-control select2 dropdownClass" ng-change="getPayrollDetails()" id="ddlEmp" ng-model="SalaryPayroll">
+                <option ng-repeat="emp in EmployeeList" value="{{emp.emp_ref_no}}">{{emp.emp_full_name}}</option>
+            </select>
+            <br/>
+            <br/>
+            <input type="text" class="hidden" id="searchBox" placeholder="Search" style="width: 35%; margin-left: 490px;">
+
+        </center>
+
+        <div class="col-md-12 hidden" ng-model="SalaryPayroll" id="payrollDetails">
+            <div class="col-md-2"></div>
+            <div class="col-md-3">
+                <table class="table-bordered" style="width:100%;">
+                    <tbody>
+                        <tr>
+                            <td>Basic</td>
+                            <td>{{SalaryPayroll.basic}}</td>
+                        </tr>
+                        <tr>
+                            <td>HRA</td>
+                            <td>{{SalaryPayroll.HRA}}</td>
+                        </tr>
+                        <tr>
+                            <td>Living Allowance</td>
+                            <td>{{SalaryPayroll.living_allowance}}</td>
+                        </tr>
+                        <tr>
+                            <td>Conveyance Allowance</td>
+                            <td>{{SalaryPayroll.conveyance_allowance}}</td>
+                        </tr>
+                        <tr>
+                            <td>Production Allowance</td>
+                            <td>{{SalaryPayroll.production_allowance}}</td>
+                        </tr>
+                        <tr>
+                            <td>Medical Allowance</td>
+                            <td>{{SalaryPayroll.medical_allowance}}</td>
+                        </tr>
+                        <tr>
+                            <td class="boldClass">Gross Pay</td>
+                            <td>{{SalaryPayroll.gross_pay}}</td>
+                        </tr>
+
+                        @*<tr>
+                                <td>Special Incentives</td>
+                                <td>{{SalaryPayroll.incentives}}</td>
+                            </tr>*@
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3">
+                <table class="table-bordered" style="width:100%;">
+
+                    <tbody>
+                        <tr>
+                            <td>Employee PF</td>
+                            <td>{{SalaryPayroll.PF}}</td>
+                        </tr>
+                        <tr>
+                            <td>Employee ESI</td>
+                            <td>{{SalaryPayroll.ESI}}</td>
+                        </tr>
+                        <tr>
+                            <td>Income Tax</td>
+                            <td>{{SalaryPayroll.income_tax}}</td>
+                        </tr>
+                        <tr>
+                            <td>Others</td>
+                            <td>{{SalaryPayroll.others}}</td>
+                        </tr>
+                        <tr>
+                            <td>Total Deduction</td>
+                            <td>{{SalaryPayroll.total_deduction}}</td>
+                        </tr>
+                        <tr>
+                            <td class="boldClass">Net Pay</td>
+                            <td>{{SalaryPayroll.net_pay}}</td>
+                        </tr>
+                        @*<tr>
+                                <td>Employee Pension</td>
+                                <td>{{SalaryPayroll.pension}}</td>
+                            </tr>*@
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3">
+                <table class="table-bordered" style="width:100%;">
+                    <tbody>
+                        <tr>
+                            <td>Employer PF</td>
+                            <td>{{SalaryPayroll.PF_employer}}</td>
+                        </tr>
+                        <tr>
+                            <td>Employer ESI</td>
+                            <td>{{SalaryPayroll.ESI_employer}}</td>
+                        </tr>
+                        <tr>
+                            <td>Gratutiy</td>
+                            <td>{{SalaryPayroll.gratuity}}</td>
+                        </tr>
+                        <tr>
+                            <td>Annual Bonus</td>
+                            <td>{{SalaryPayroll.annual_bonus}}</td>
+                        </tr>
+                        <tr>
+                            <td class="boldClass">Total Cost to the Company</td>
+                            <td>{{SalaryPayroll.total_cost_company}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1 style="color:red">Un-Authorized Access, ID Send to Admin</h1>
+    }
+        
+
+   
+</body>
+</html>
+<script src="~/Scripts/js/angular.min.js"></script>
+<script src="~/Scripts/AngularController/PayrollController.js"></script>
+
