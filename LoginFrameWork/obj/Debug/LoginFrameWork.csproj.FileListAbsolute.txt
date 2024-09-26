@@ -142,3 +142,12 @@ F:\Solution\Impulse\Impulse_HR\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
 F:\Solution\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
 F:\Solution\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.dll
 F:\Solution\Impulse\Impulse_HR\LoginFrameWork\obj\Debug\LoginFrameWork.pdb
+C:\Abitha\Impulse-HR-Development\Impulse-Old\LoginFrameWork\bin\Debug\LoginFrameWork.dll
+C:\Abitha\Impulse-HR-Development\Impulse-Old\LoginFrameWork\bin\Debug\LoginFrameWork.pdb
+C:\Abitha\Impulse-HR-Development\Impulse-Old\LoginFrameWork\bin\Debug\BussinessLayer.dll
+C:\Abitha\Impulse-HR-Development\Impulse-Old\LoginFrameWork\bin\Debug\Newtonsoft.Json.dll
+C:\Abitha\Impulse-HR-Development\Impulse-Old\LoginFrameWork\bin\Debug\BussinessLayer.pdb
+C:\Abitha\Impulse-HR-Development\Impulse-Old\LoginFrameWork\bin\Debug\Newtonsoft.Json.xml
+C:\Abitha\Impulse-HR-Development\Impulse-Old\LoginFrameWork\obj\Debug\LoginFrameWork.csprojResolveAssemblyReference.cache
+C:\Abitha\Impulse-HR-Development\Impulse-Old\LoginFrameWork\obj\Debug\LoginFrameWork.dll
+C:\Abitha\Impulse-HR-Development\Impulse-Old\LoginFrameWork\obj\Debug\LoginFrameWork.pdb

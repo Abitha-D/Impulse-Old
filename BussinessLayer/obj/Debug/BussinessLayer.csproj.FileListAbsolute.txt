@@ -106,3 +106,10 @@ F:\Solution\Impulse\Impulse_HR\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
 F:\Solution\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache
 F:\Solution\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.dll
 F:\Solution\Impulse\Impulse_HR\BussinessLayer\obj\Debug\BussinessLayer.pdb
+C:\Abitha\Impulse-HR-Development\Impulse-Old\BussinessLayer\bin\Debug\BussinessLayer.dll
+C:\Abitha\Impulse-HR-Development\Impulse-Old\BussinessLayer\bin\Debug\BussinessLayer.pdb
+C:\Abitha\Impulse-HR-Development\Impulse-Old\BussinessLayer\bin\Debug\Newtonsoft.Json.dll
+C:\Abitha\Impulse-HR-Development\Impulse-Old\BussinessLayer\bin\Debug\Newtonsoft.Json.xml
+C:\Abitha\Impulse-HR-Development\Impulse-Old\BussinessLayer\obj\Debug\BussinessLayer.dll
+C:\Abitha\Impulse-HR-Development\Impulse-Old\BussinessLayer\obj\Debug\BussinessLayer.pdb
+C:\Abitha\Impulse-HR-Development\Impulse-Old\BussinessLayer\obj\Debug\BussinessLayer.csprojResolveAssemblyReference.cache

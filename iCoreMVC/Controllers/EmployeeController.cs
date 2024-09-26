@@ -153,6 +153,14 @@ namespace Impulse.Controllers
 
         }
         
+        //for attendance
+        public string SelectEmpWeeklyAttendance(ProcedureData objProcedureData)
+        {
+            Commonfunctions commonFunctionObj = new Commonfunctions();
+            return commonFunctionObj.ExecuteProcedure("GetEmployeeWeeklyAttendance", objProcedureData);
+        }
+
+
         public string SelectMandatoryValues(GetDatas objGetData)
         {
             Commonfunctions commonFunctionObj = new Commonfunctions();
@@ -727,6 +735,9 @@ namespace Impulse.Controllers
         public string SelectAttendanceMaster(GetDatas objGetData)
         {
             Commonfunctions commonFunctionObj = new Commonfunctions();
+            //return commonFunctionObj.SelectData(objGetData, "IM_TB_ATTENDANCE_TYPE_MASTER");
+
+            //for attendance
             return commonFunctionObj.SelectData(objGetData, "IM_TB_ATTENDANCE_TYPE_MASTER");
 
         }

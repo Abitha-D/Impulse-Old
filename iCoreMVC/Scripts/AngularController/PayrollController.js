@@ -881,18 +881,18 @@ myApp.controller('Payroll', function ($scope, $http, $location, $window) {
             WorkWeek: 1
         }
 
-        if (roleId == 1) {
+        if (roleId == 1) { //ADMIN
             Condition = "where delete_status = 0 order by emp_full_name asc";
         }
-        else if (roleId == 9 || roleId == 10) {
+        else if (roleId == 9 || roleId == 10) { //HR and ACCOUNTS
 
             Condition = "where delete_status = 0 AND company_id != 3 order by emp_full_name asc";
         }
-        else if (roleId == 27) {
+        else if (roleId == 27) { //MECHANICAL HR
 
             Condition = "where delete_status = 0 AND company_id = 3 order by emp_full_name asc";
         }
-        else if (roleId == 2) {
+        else if (roleId == 2) { //MANAGERS
 
             Condition = "where delete_status = 0 and report_to_manager = " + refNo + " order by emp_full_name asc";
         }

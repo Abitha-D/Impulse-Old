@@ -1740,6 +1740,10 @@ table.dataTable thead > tr > td.sorting {
 .table.custom-table > thead > tr > th {
 	padding: 10px 8px;
 	vertical-align: middle;
+
+/*new for attendance*/
+
+border: 1px solid black;
 }
 .table.custom-table > tbody > tr > td:first-child,
 .table.custom-table > thead > tr > th:first-child {

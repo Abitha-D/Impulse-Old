@@ -259,6 +259,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
     };
 
+  
     vm.GetAttendanceMasterValues = function () {
 
         var Condition = "";
@@ -503,27 +504,73 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                         }
 
                         for (var i = 0; i < vm.CurrentAttendance.length; i++) {
-                            if (vm.CurrentAttendance[i]["attendance_type"] == 0) {
+                            //for attendance
+
+                            if (vm.CurrentAttendance[i]["attendance_type"] == 1) {
                                 vm.CurrentAttendance[i]["class_name"] = "atType back-green";
                             }
-                            else if (vm.CurrentAttendance[i]["attendance_type"] == 1) {
-                                vm.CurrentAttendance[i]["class_name"] = "atType back-red";
-                            }
                             else if (vm.CurrentAttendance[i]["attendance_type"] == 2) {
-                                vm.CurrentAttendance[i]["class_name"] = "atType back-blue";
-                            }
-                            else if (vm.CurrentAttendance[i]["attendance_type"] == 3) {
                                 vm.CurrentAttendance[i]["class_name"] = "atType back-orange";
                             }
+                            else if (vm.CurrentAttendance[i]["attendance_type"] == 3) {
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-black";
+                            }
                             else if (vm.CurrentAttendance[i]["attendance_type"] == 4) {
-                                vm.CurrentAttendance[i]["class_name"] = "atType back-dark-blue";
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-light-green";
                             }
                             else if (vm.CurrentAttendance[i]["attendance_type"] == 5) {
-                                vm.CurrentAttendance[i]["class_name"] = "atType back-brown";
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-red";
                             }
                             else if (vm.CurrentAttendance[i]["attendance_type"] == 6) {
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-yellow";
+                            }
+                            else if (vm.CurrentAttendance[i]["attendance_type"] == 7) {
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-blue";
+                            }
+                            else if (vm.CurrentAttendance[i]["attendance_type"] == 8) {
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-light-blue";
+                            }
+                            else if (vm.CurrentAttendance[i]["attendance_type"] == 9) {
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-brown";
+                            }
+                            else if (vm.CurrentAttendance[i]["attendance_type"] == 10) {
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-pink";
+                            }
+                            else if (vm.CurrentAttendance[i]["attendance_type"] == 11) {
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-purple";
+                            }
+                            else if (vm.CurrentAttendance[i]["attendance_type"] == 12) {
                                 vm.CurrentAttendance[i]["class_name"] = "atType back-magenta";
                             }
+                            else if (vm.CurrentAttendance[i]["attendance_type"] == 13) {
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-dark-blue";
+                            }
+                            else if (vm.CurrentAttendance[i]["attendance_type"] == 14) {
+                                vm.CurrentAttendance[i]["class_name"] = "atType back-grey";
+                            }
+
+
+                            //if (vm.CurrentAttendance[i]["attendance_type"] == 0) {
+                            //    vm.CurrentAttendance[i]["class_name"] = "atType back-green";
+                            //}
+                            //else if (vm.CurrentAttendance[i]["attendance_type"] == 1) {
+                            //    vm.CurrentAttendance[i]["class_name"] = "atType back-red";
+                            //}
+                            //else if (vm.CurrentAttendance[i]["attendance_type"] == 2) {
+                            //    vm.CurrentAttendance[i]["class_name"] = "atType back-blue";
+                            //}
+                            //else if (vm.CurrentAttendance[i]["attendance_type"] == 3) {
+                            //    vm.CurrentAttendance[i]["class_name"] = "atType back-orange";
+                            //}
+                            //else if (vm.CurrentAttendance[i]["attendance_type"] == 4) {
+                            //    vm.CurrentAttendance[i]["class_name"] = "atType back-dark-blue";
+                            //}
+                            //else if (vm.CurrentAttendance[i]["attendance_type"] == 5) {
+                            //    vm.CurrentAttendance[i]["class_name"] = "atType back-brown";
+                            //}
+                            //else if (vm.CurrentAttendance[i]["attendance_type"] == 6) {
+                            //    vm.CurrentAttendance[i]["class_name"] = "atType back-magenta";
+                            //}
                         }
                     }
 
@@ -534,27 +581,73 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             else
             {
                 for (var i = 0; i < vm.CurrentAttendance.length; i++) {
-                    if (vm.CurrentAttendance[i]["attendance_type"] == 0) {
+
+                    //for attendance
+
+                    if (vm.CurrentAttendance[i]["attendance_type"] == 1) {
                         vm.CurrentAttendance[i]["class_name"] = "atType back-green";
                     }
-                    else if (vm.CurrentAttendance[i]["attendance_type"] == 1) {
-                        vm.CurrentAttendance[i]["class_name"] = "atType back-red";
-                    }
                     else if (vm.CurrentAttendance[i]["attendance_type"] == 2) {
-                        vm.CurrentAttendance[i]["class_name"] = "atType back-blue";
-                    }
-                    else if (vm.CurrentAttendance[i]["attendance_type"] == 3) {
                         vm.CurrentAttendance[i]["class_name"] = "atType back-orange";
                     }
+                    else if (vm.CurrentAttendance[i]["attendance_type"] == 3) {
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-black";
+                    }
                     else if (vm.CurrentAttendance[i]["attendance_type"] == 4) {
-                        vm.CurrentAttendance[i]["class_name"] = "atType back-dark-blue";
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-light-green";
                     }
                     else if (vm.CurrentAttendance[i]["attendance_type"] == 5) {
-                        vm.CurrentAttendance[i]["class_name"] = "atType back-brown";
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-red";
                     }
                     else if (vm.CurrentAttendance[i]["attendance_type"] == 6) {
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-yellow";
+                    }
+                    else if (vm.CurrentAttendance[i]["attendance_type"] == 7) {
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-blue";
+                    }
+                    else if (vm.CurrentAttendance[i]["attendance_type"] == 8) {
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-light-blue";
+                    }
+                    else if (vm.CurrentAttendance[i]["attendance_type"] == 9) {
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-brown";
+                    }
+                    else if (vm.CurrentAttendance[i]["attendance_type"] == 10) {
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-pink";
+                    }
+                    else if (vm.CurrentAttendance[i]["attendance_type"] == 11) {
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-purple";
+                    }
+                    else if (vm.CurrentAttendance[i]["attendance_type"] == 12) {
                         vm.CurrentAttendance[i]["class_name"] = "atType back-magenta";
                     }
+                    else if (vm.CurrentAttendance[i]["attendance_type"] == 13) {
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-dark-blue";
+                    }
+                    else if (vm.CurrentAttendance[i]["attendance_type"] == 14) {
+                        vm.CurrentAttendance[i]["class_name"] = "atType back-grey";
+                    }
+
+                    //if (vm.CurrentAttendance[i]["attendance_type"] == 0) {
+                    //    vm.CurrentAttendance[i]["class_name"] = "atType back-green";
+                    //}
+                    //else if (vm.CurrentAttendance[i]["attendance_type"] == 1) {
+                    //    vm.CurrentAttendance[i]["class_name"] = "atType back-red";
+                    //}
+                    //else if (vm.CurrentAttendance[i]["attendance_type"] == 2) {
+                    //    vm.CurrentAttendance[i]["class_name"] = "atType back-blue";
+                    //}
+                    //else if (vm.CurrentAttendance[i]["attendance_type"] == 3) {
+                    //    vm.CurrentAttendance[i]["class_name"] = "atType back-orange";
+                    //}
+                    //else if (vm.CurrentAttendance[i]["attendance_type"] == 4) {
+                    //    vm.CurrentAttendance[i]["class_name"] = "atType back-dark-blue";
+                    //}
+                    //else if (vm.CurrentAttendance[i]["attendance_type"] == 5) {
+                    //    vm.CurrentAttendance[i]["class_name"] = "atType back-brown";
+                    //}
+                    //else if (vm.CurrentAttendance[i]["attendance_type"] == 6) {
+                    //    vm.CurrentAttendance[i]["class_name"] = "atType back-magenta";
+                    //}
                 }
             }
 
@@ -682,31 +775,76 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 {
                     switch (vm.AL[i]["d" + j]) {
 
-                        case -1:
-                            vm.AttendaceList[i]["text" + j] = "N/A";
-                            vm.AttendaceList[i]["day" + j] = "fs-9";
-                            break;
-                        case 0:
-                            vm.AttendaceList[i]["day" + j] = "fa fa-check";
-                            break;
+                        //For Attendance
                         case 1:
-                            vm.AttendaceList[i]["day" + j] = "fa fa-clock-o";
+                            //vm.AttendaceList[i]["text" + j] = "N/A";
+                            vm.AttendaceList[i]["day" + j] = "fa fa-user-plus";
                             break;
                         case 2:
-                            vm.AttendaceList[i]["day" + j] = "fa fa-stethoscope";
-                            break;
-                        case 3:
                             vm.AttendaceList[i]["day" + j] = "fa fa-hourglass-end";
                             break;
+                        case 3:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-level-down";
+                            break;
                         case 4:
-                            vm.AttendaceList[i]["day" + j] = "fa fa-user-times";
+                            vm.AttendaceList[i]["day" + j] = "fa fa-check";
                             break;
                         case 5:
-                            vm.AttendaceList[i]["day" + j] = "fa fa-close";
+                            vm.AttendaceList[i]["day" + j] = "fa fa-times";
                             break;
                         case 6:
-                            vm.AttendaceList[i]["day" + j] = "fa fa-wheelchair";
+                            vm.AttendaceList[i]["day" + j] = "fa fa-clock-o";
                             break;
+                        case 7:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-user-times";
+                            break;
+                        case 8:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-info";
+                            break;
+                        case 9:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-hourglass-o";
+                            break;
+                        case 10:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-female";
+                            break;
+                        case 11:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-male";
+                            break;
+                        case 12:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-stethoscope";
+                            break;
+                        case 13:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-long-arrow-left";
+                            break;
+                        case 14:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-power-off";
+                            break;
+
+                        //case -1:
+                        //    vm.AttendaceList[i]["text" + j] = "N/A";
+                        //    vm.AttendaceList[i]["day" + j] = "fs-9";
+                        //    break;
+                        //case 0:
+                        //    vm.AttendaceList[i]["day" + j] = "fa fa-check";
+                        //    break;
+                        //case 1:
+                        //    vm.AttendaceList[i]["day" + j] = "fa fa-clock-o";
+                        //    break;
+                        //case 2:
+                        //    vm.AttendaceList[i]["day" + j] = "fa fa-stethoscope";
+                        //    break;
+                        //case 3:
+                        //    vm.AttendaceList[i]["day" + j] = "fa fa-hourglass-end";
+                        //    break;
+                        //case 4:
+                        //    vm.AttendaceList[i]["day" + j] = "fa fa-user-times";
+                        //    break;
+                        //case 5:
+                        //    vm.AttendaceList[i]["day" + j] = "fa fa-close";
+                        //    break;
+                        //case 6:
+                        //    vm.AttendaceList[i]["day" + j] = "fa fa-wheelchair";
+                        //    break;
                     }
                 }
                 
@@ -719,6 +857,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         //    console.log($scope.type);
 
     };
+
 
     vm.GetMyAttendance = function (refNo) {
 
@@ -766,31 +905,76 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 for (var j = 1; j <= 31; j++) {
                     switch (vm.AL[i]["d" + j]) {
 
-                        case -1:
-                            vm.MyAttendaceList[i]["text" + j] = "N/A";
-                            vm.MyAttendaceList[i]["day" + j] = "fs-9";
-                            break;
-                        case 0:
-                            vm.MyAttendaceList[i]["day" + j] = "fa fa-check";
-                            break;
+                        //For Attendance
                         case 1:
-                            vm.MyAttendaceList[i]["day" + j] = "fa fa-clock-o";
+                            //vm.AttendaceList[i]["text" + j] = "N/A";
+                            vm.AttendaceList[i]["day" + j] = "fa fa-user-plus";
                             break;
                         case 2:
-                            vm.MyAttendaceList[i]["day" + j] = "fa fa-stethoscope";
+                            vm.AttendaceList[i]["day" + j] = "fa fa-hourglass-end";
                             break;
                         case 3:
-                            vm.MyAttendaceList[i]["day" + j] = "fa fa-hourglass-end";
+                            vm.AttendaceList[i]["day" + j] = "fa fa-level-down";
                             break;
                         case 4:
-                            vm.MyAttendaceList[i]["day" + j] = "fa fa-user-times";
+                            vm.AttendaceList[i]["day" + j] = "fa fa-check";
                             break;
                         case 5:
-                            vm.MyAttendaceList[i]["day" + j] = "fa fa-close";
+                            vm.AttendaceList[i]["day" + j] = "fa fa-times";
                             break;
                         case 6:
-                            vm.MyAttendaceList[i]["day" + j] = "fa fa-wheelchair";
+                            vm.AttendaceList[i]["day" + j] = "fa fa-clock-o";
                             break;
+                        case 7:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-user-times";
+                            break;
+                        case 8:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-info";
+                            break;
+                        case 9:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-hourglass-o";
+                            break;
+                        case 10:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-female";
+                            break;
+                        case 11:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-male";
+                            break;
+                        case 12:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-stethoscope";
+                            break;
+                        case 13:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-long-arrow-left";
+                            break;
+                        case 14:
+                            vm.AttendaceList[i]["day" + j] = "fa fa-power-off";
+                            break;
+
+                        //case -1:
+                        //    vm.MyAttendaceList[i]["text" + j] = "N/A";
+                        //    vm.MyAttendaceList[i]["day" + j] = "fs-9";
+                        //    break;
+                        //case 0:
+                        //    vm.MyAttendaceList[i]["day" + j] = "fa fa-check";
+                        //    break;
+                        //case 1:
+                        //    vm.MyAttendaceList[i]["day" + j] = "fa fa-clock-o";
+                        //    break;
+                        //case 2:
+                        //    vm.MyAttendaceList[i]["day" + j] = "fa fa-stethoscope";
+                        //    break;
+                        //case 3:
+                        //    vm.MyAttendaceList[i]["day" + j] = "fa fa-hourglass-end";
+                        //    break;
+                        //case 4:
+                        //    vm.MyAttendaceList[i]["day" + j] = "fa fa-user-times";
+                        //    break;
+                        //case 5:
+                        //    vm.MyAttendaceList[i]["day" + j] = "fa fa-close";
+                        //    break;
+                        //case 6:
+                        //    vm.MyAttendaceList[i]["day" + j] = "fa fa-wheelchair";
+                        //    break;
                     }
                 }
 
@@ -802,6 +986,41 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         //    console.log($scope.type);
 
+    };
+
+    vm.getTitle = function (iconClass) {
+        switch (iconClass) {
+            case "fa fa-user-plus":
+                return "Full Day";
+            case "fa fa-hourglass-end":
+                return "Half Day";
+            case "fa fa-level-down":
+                return "Loss of Pay";
+            case "fa fa-check":
+                return "Present";
+            case "fa fa-times":
+                return "Absent";
+            case "fa fa-clock-o":
+                return "Planned Leave";
+            case "fa fa-user-times":
+                return "Casual Leave";
+            case "fa fa-info":
+                return "Comp Off";
+            case "fa fa-hourglass-o":
+                return "LOP Half Day";
+            case "fa fa-female":
+                return "Maternity Leave";
+            case "fa fa-male":
+                return "Paternity Leave";
+            case "fa fa-stethoscope":
+                return "Medical Leave";
+            case "fa fa-long-arrow-left":
+                return "Previous Year Leave";
+            case "fa fa-power-off":
+                return "Holiday";
+            default:
+                return "";
+        }
     };
 
     vm.DeleteEmployee = function () {
@@ -3843,5 +4062,831 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         if (!strFound) alert("String '" + str + "' not found!")
         return;
     };
+
+    function getDaysInWeek(selectedYear, selectedMonth, selectedWeek) {
+        // Create a date object for the first day of the selected month
+        let firstDay = new Date(selectedYear, selectedMonth - 1, 1); // Month is 0-indexed
+
+        // Get the day of the week for the 1st day (0 = Sunday, 6 = Saturday)
+        let firstDayOfWeek = firstDay.getDay();
+
+        // Calculate the start of the selected week
+        let startOfWeek = (selectedWeek - 1) * 7 + 1 - firstDayOfWeek;
+
+        // Calculate the end of the week (7 days from the start of the week)
+        let endOfWeek = startOfWeek + 6;
+
+        // Get the total number of days in the selected month
+        let lastDayOfMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+
+        // Adjust the start and end of the week if they fall outside the month's bounds
+        startOfWeek = Math.max(1, startOfWeek);
+        endOfWeek = Math.min(lastDayOfMonth, endOfWeek);
+
+        // Return an array of days to display
+        let daysInWeek = [];
+        for (let i = startOfWeek; i <= endOfWeek; i++) {
+            daysInWeek.push(i);
+        }
+
+        return daysInWeek;
+    }
+
+    // Example usage
+    //let selectedYear = 2024;
+    //let selectedMonth = 9; // September
+    //let selectedWeek = 1; // Week 1
+    //let days = getDaysInWeek(selectedYear, selectedMonth, selectedWeek);
+    //console.log("Days in selected week: ", days);
+    $scope.isViewVisible = false; // Initially hidden
+
+    // Watch for when the view becomes visible
+    $scope.$watch('isViewVisible', function (newValue, oldValue) {
+        if (newValue === true) {
+            // Call your function to update days in the week when view becomes visible
+            updatedaysinweek($scope.selectedYear, $scope.selectedMonth, $scope.selectedWeek);
+            $scope.GetHours($scope.roleId, $scope.refNo);
+        }
+    });
+
+    // Example function to toggle the visibility
+   
+    function updatedaysinweek(year, month, week) {
+        // Assuming getDaysInWeek returns an array of days for the given year, month, and week
+        let days = getDaysInWeek(year, month, week);
+    
+        // Update the daysInWeek in $scope
+        $scope.daysInWeek = days;
+
+        // If days are available, set the WeekStartDay and WeekEndDay
+        if (days.length > 0) {
+            $scope.WeekStartDay = days[0]; // First day in the array
+            $scope.WeekEndDay = days[days.length - 1]; // Last day in the array
+        } else {
+            // Handle the case where there are no days (error handling)
+            $scope.WeekStartDay = null;
+            $scope.WeekEndDay = null;
+            msgalert("Error", "No days found for the selected week", 3);
+        }
+    }
+
+  
+    vm.selectedWeek = 1;
+    // Get the current date
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
+    var currentMonth = currentDate.getMonth() + 1; // getMonth() returns month from 0-11
+
+    // Initialize the selected year and month with current values
+    vm.selectedYear = currentYear.toString();
+    vm.selectedMonth = currentMonth.toString();
+
+    vm.GetEmpManagerlist = function (roleId, refNo) {
+        var Condition;
+        var param = {
+            WorkWeek: 1
+        };
+
+        if (roleId == 1) {
+            Condition = "where delete_status = 0 order by emp_full_name asc";
+        } else if (roleId == 9 || roleId == 10) {
+            Condition = "where delete_status = 0 AND company_id != 3 order by emp_full_name asc";
+        } else if (roleId == 27) {
+            Condition = "where delete_status = 0 AND company_id = 3 order by emp_full_name asc";
+        } else if (roleId == 2) {
+            Condition = "where delete_status = 0 and report_to_manager = " + refNo + " order by emp_full_name asc";
+        }
+
+        var strJsonDatas = eval({ strCondition: Condition });
+        var msg2 = JSON.stringify(strJsonDatas);
+
+        // Return the promise from the HTTP request
+        return $http({
+            method: 'POST',
+            url: 'SelectManagerandEmployee',
+            data: msg2
+        }).then(function (response) {
+            vm.EmpManagerList = response.data;
+
+            for (var i = 0; i < vm.EmpManagerList.length; i++) {
+                if (vm.EmpManagerList[i]["file_path"] === undefined) {
+                    vm.EmpManagerList[i]["file_path"] = "../Content/Image/avatar.png";
+                }
+            }
+        }, function (error) {
+            console.error("Error fetching employee manager list:", error);
+        });
+    };
+
+    vm.GetEmpWeeklyAttendance = function (year, month, WeekStartDay, WeekEndDay) {
+        var paramNames = [], paramValues = [];
+        paramNames.push('Year');
+        paramValues.push(year);
+        paramNames.push('Month');
+        paramValues.push(month);
+        paramNames.push('WeekStartDay');
+        paramValues.push(WeekStartDay);
+        paramNames.push('WeekEndDay');
+        paramValues.push(WeekEndDay);
+
+        var strJsonDatas = eval({ strSessionID: '', ProcParameters: paramNames, ProcInputData: paramValues });
+        var msg2 = JSON.stringify(strJsonDatas);
+
+        // Return the promise from the HTTP request
+        return $http({
+            method: 'POST',
+            url: 'SelectEmpWeeklyAttendance',
+            data: msg2
+        }).then(function (response) {
+            vm.WeeklyAttendance = response.data;
+        }, function (error) {
+            console.error("Error fetching weekly attendance:", error);
+        });
+    };
+
+    // Getting working hours and OT hours function
+    vm.GetHours = function (roleId, refNo) {
+        var month = $('#viewWHandOT #ddlMonth').val();
+        var year = $('#viewWHandOT #ddlYear').val();
+        var week = $('#viewWHandOT #ddlWeek').val();
+
+        if (month == 0) {
+            msgalert("Error", "Please choose Month", 3);
+            return;
+        }
+
+        if (year == 0) {
+            msgalert("Error", "Please choose Year", 3);
+            return;
+        }
+
+        if (week == 0) {
+            msgalert("Error", "Please choose Week", 3);
+            return;
+        }
+
+        updatedaysinweek(year, month, week);
+
+        // Call GetEmpManagerlist and wait for it to complete
+        vm.GetEmpManagerlist(roleId, refNo).then(function () {
+            // After GetEmpManagerlist has completed, call GetEmpWeeklyAttendance
+            return vm.GetEmpWeeklyAttendance(year, month, $scope.WeekStartDay, $scope.WeekEndDay);
+        }).then(function () {
+            // This block executes after GetEmpWeeklyAttendance completes
+
+            // Reset the valid attendance list
+            vm.validempweeklyattendance = [];
+
+            // Loop through WeeklyAttendance
+            for (var i = 0; i < vm.WeeklyAttendance.length; i++) {
+                var attendanceEntry = vm.WeeklyAttendance[i];
+
+                // Check if the employee exists in EmpManagerList
+                var employeeExists = vm.EmpManagerList.some(function (emp) {
+                    return emp.emp_ref_no === attendanceEntry.emp_ref_no; // Assuming emp_ref_no is the unique identifier
+                });
+
+                // If employee exists, push the attendance entry into validempweeklyattendance
+                if (employeeExists) {
+                    vm.validempweeklyattendance.push(attendanceEntry);
+                }
+            }
+
+            var attendanceRecords = [];
+
+            // Group by employee reference number (emp_ref_no)
+            var groupedAttendance = {};
+            vm.validempweeklyattendance.forEach(function (entry) {
+                if (!groupedAttendance[entry.emp_ref_no]) {
+                    // Initialize the group for each employee
+                    groupedAttendance[entry.emp_ref_no] = {
+                        emp_name: entry.emp_name,
+                        emp_ref_no: entry.emp_ref_no,
+                        days: [],
+                        totalHours: 0,
+                        totalWH: 0,
+                        totalRH: 0,
+                        totalOT: 0
+                    };
+                }
+
+                // Process day-wise data
+                var employee = groupedAttendance[entry.emp_ref_no];
+
+                // Add the day's data to the employee's days array
+                employee.days.push({
+                    day: entry.Day,
+                    WH: entry.WH,
+                    RH: Math.max(0, entry.RH), // Set RH to 0 if less than 0
+                    OT: entry.OT,
+                    Status: entry.Status,
+                    TotalHours: entry.TotalHours
+                });
+
+                // Add to the employee's total values
+                employee.totalHours += entry.TotalHours;
+                employee.totalWH += entry.WH;
+                employee.totalRH += Math.max(0, entry.RH); // Ignore negative RH
+                employee.totalOT += entry.OT;
+            });
+
+            // Convert grouped data into an array
+            for (var emp_ref_no in groupedAttendance) {
+                if (groupedAttendance.hasOwnProperty(emp_ref_no)) {
+                    attendanceRecords.push(groupedAttendance[emp_ref_no]);
+                }
+            }
+
+            // Update the $scope with the formatted data
+            $scope.attendanceRecords = attendanceRecords;
+
+            console.log($scope.attendanceRecords); // Check the formatted records
+        }).catch(function (error) {
+            // Handle any errors that occur in either of the promises
+            console.error("Error fetching data:", error);
+        });
+    };
+
+    //$scope.attendanceRecords = [
+    //{
+    //    emp_name: 'JIJA JOSEPH',
+    //    days: [
+    //        { day: 22, WH: 12.00, RH: -4.00, OT: 4.00 },
+    //        { day: 24, WH: 1.50, RH: 6.50, OT: 0.00 }
+    //    ]
+    //},
+    //{
+    //    emp_name: 'Test Admin',
+    //    days: [
+    //        { day: 24, WH: 0.00, RH: 0.00, OT: 0.00 }
+    //    ]
+    //}
+    //];
+
+    // Get attendance for a specific day
+    $scope.getAttendanceForDay = function (days, day) {
+        return days.find(function (d) { return d.day === day; }) || null;
+    };
+
+    //// Calculate total hours (WH, RH, OT) for each employee
+    //$scope.getTotalHours = function (days) {
+    //    return days.reduce(function (total, record) {
+    //        return total + record.WH + record.RH + record.OT;
+    //    }, 0);
+    //};
+
+
+    // Initialize the selected year and month
+    // Get the current date
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
+    var currentMonth = currentDate.getMonth() + 1; // getMonth() returns month from 0-11
+
+    // Initialize the selected year and month with current values
+    $scope.selectedYear = currentYear.toString();
+    $scope.selectedMonth = currentMonth.toString();
+
+    //for attendance module
+    $scope.openModal = function (empRefNo, day, year, month, empName, title) {
+        var empName = empName;
+        var title = title;
+
+        $("#attendance_info .modal-body .card-title small").empty();
+        $("#attendance_info .modal-body .punch-det.empName p").empty();
+        $("#attendance_info .modal-body .punch-det.attendance-title p").empty();
+        $("#attendance_info .modal-body .punch-info .punch-hours.total-hours span").empty();
+        $("#attendance_info .modal-body .punch-info .punch-hours.worked-hours span").empty();
+        $("#attendance_info .modal-body .punch-info .punch-hours.break-hours span").empty();
+        $("#attendance_info .modal-body .statistics .stats-box.basic-working-hours h3").empty();
+        $("#attendance_info .modal-body .statistics .stats-box.overtime h3").empty();
+        $("#attendance_info .modal-body .res-activity-list.activities").empty();
+        $("#attendance_info .modal-body .res-activity-list.breakactivites").empty();
+
+        // Create a new Date object
+        var date = new Date(year, month - 1, day); // month - 1 because JavaScript Date object is 0-indexed for months
+
+        // Format the date with weekday, year, month, and day
+        var formattedDate = date.toLocaleDateString('en-US', {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+
+        // Update the text of the element
+        $("#attendance_info .modal-body .card-title small").empty().text(formattedDate);
+
+        day = day.toString().padStart(2, '0');
+        month = month.toString().padStart(2, '0');
+
+        var logintimemerged = year + "-" + month + "-" + day + "T00:00:00.000Z"; //2024-08-05T00:00:00.000Z
+
+        fetchAttendanceData(empRefNo, logintimemerged, empName, title, function (attendanceData, BreakTimeData, empName, title) {
+            updateModalContent(attendanceData, BreakTimeData, empName, title);
+
+            // Open the modal
+            parent.$("#attendance_info").modal({
+                "backdrop": "static",
+                "keyboard": true,
+                "show": true
+            });
+
+            // Open the modal
+            //$('#attendance_info').modal('show');
+        });
+    };
+
+    function fetchAttendanceData(empRefNo, logintimemerged, empName, title, callback) {
+        console.log(empName);
+        console.log(title);
+        var GetAllAttendancesApiUrl = 'http://13.202.88.154/Impulse_Attendance/api/Attendance/GetAllTodayAttendances';
+        var GetAllBreakTimesApiUrl = 'http://13.202.88.154/Impulse_Attendance/api/Attendance/GetAllBreakTimes';
+        var requestBody = {
+            attendance_Id: 0,
+            emp_Ref_No: empRefNo,
+            emp_Code: "string",
+            login_Time: logintimemerged,
+            logout_Time: new Date().toISOString(),
+            attendance_Status: 0,
+            remarks: "string",
+            delete_Status: 0
+        };
+
+        fetch(GetAllAttendancesApiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            if (data.apiStatus === 0) {
+                try {
+                    // Extract and parse the attendanceRecord from apiStatusMessage
+                    var apiStatusMessage = data.apiStatusMessage;
+                    var jsonStartIndex = apiStatusMessage.indexOf('[');
+                    var jsonEndIndex = apiStatusMessage.lastIndexOf(']') + 1;
+                    var jsonString = apiStatusMessage.substring(jsonStartIndex, jsonEndIndex);
+                    var attendanceRecord = JSON.parse(jsonString);
+
+                    if (attendanceRecord.length === 0) {
+
+                        $("#attendance_info .modal-body .punch-det.empName p").empty().text(empName);
+                        $("#attendance_info .modal-body .punch-det.attendance-title p").empty().text(title);
+
+                        $("#attendance_info .modal-body .punch-info .punch-hours.total-hours span").empty().text("00:00:00 hrs");
+                        $("#attendance_info .modal-body .punch-info .punch-hours.worked-hours span").empty().text("00:00:00 hrs");
+                        $("#attendance_info .modal-body .punch-info .punch-hours.break-hours span").empty().text("00:00:00 hrs");
+                        $("#attendance_info .modal-body .statistics .stats-box.basic-working-hours h3").empty().text("0 hrs");
+                        $("#attendance_info .modal-body .statistics .stats-box.overtime h3").empty().text("0 hrs");
+
+                        var activityList = $("#attendance_info .modal-body .res-activity-list.activities");
+                        activityList.empty(); // Clear existing list
+
+                        var breakactivityList = $("#attendance_info .modal-body .res-activity-list.breakactivites");
+                        breakactivityList.empty(); // Clear existing list
+
+                        var punchInItem = '<li>' +
+                         '<p class="mb-0">Punch In at</p>' +
+                         '<p class="res-activity-time">' +
+                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                         '</p>' +
+                     '</li>';
+
+                        activityList.append(punchInItem);
+
+                        var punchOutItem = '<li>' +
+                         '<p class="mb-0">Punch Out at</p>' +
+                         '<p class="res-activity-time">' +
+                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                         '</p>' +
+                     '</li>';
+
+                        activityList.append(punchOutItem);
+
+                        var breakpunchInItem = '<li>' +
+                         '<p class="mb-0">Break In at</p>' +
+                         '<p class="res-activity-time">' +
+                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                         '</p>' +
+                     '</li>';
+                        breakactivityList.append(breakpunchInItem);
+
+                        var breakpunchOutItem = '<li>' +
+                         '<p class="mb-0">Break In at</p>' +
+                         '<p class="res-activity-time">' +
+                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                         '</p>' +
+                     '</li>';
+                        breakactivityList.append(breakpunchOutItem);
+
+                    }
+                    else {
+                        var attendanceIds = attendanceRecord.map(function (record) {
+                            return record.Attendance_Id;
+                        });
+
+
+                        console.log(attendanceIds);
+
+                        var requestBodyBreakTimes = {
+                            break_Id: 0,
+                            emp_Ref_No: 0,
+                            attendance_Ids: attendanceIds,
+                            break_In_Time: "string",
+                            break_Out_Time: "string",
+                            total_Break_Hours: "string",
+                            remarks: "string"
+                        }
+
+                        fetch(GetAllBreakTimesApiUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(requestBodyBreakTimes)
+                        })
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            if (data.apiStatus === 0) {
+                                try {
+                                    // Extract and parse the attendanceRecord from apiStatusMessage
+                                    var breaktimeapiStatusMessage = data.apiStatusMessage;
+                                    var breaktimejsonStartIndex = breaktimeapiStatusMessage.indexOf('[');
+                                    var breaktimejsonEndIndex = breaktimeapiStatusMessage.lastIndexOf(']') + 1;
+                                    var breaktimejsonString = breaktimeapiStatusMessage.substring(breaktimejsonStartIndex, breaktimejsonEndIndex);
+                                    var BreakTimeRecord = JSON.parse(breaktimejsonString);
+
+                                    callback(attendanceRecord, BreakTimeRecord, empName, title);
+                                }
+                                catch (e) {
+                                    console.error("Error parsing break time data:", e);
+                                }
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error("Fetch Error:", error);
+                        });
+                    }
+                    
+
+                    
+                } catch (e) {
+                    console.error("Error parsing attendance data:", e);
+                }
+            } else {
+                console.error("API Error: " + data.apiStatusMessage);
+            }
+        })
+        .catch(function (error) {
+            console.error("Fetch Error:", error);
+        });
+    }
+
+    function updateModalContent(attendanceData, BreakTimeData, empName, title) {
+        if (attendanceData.length === 0) {
+            console.log("No attendance data available.");
+            return;
+        }
+
+        if (BreakTimeData.length === 0) {
+            console.log("No breaktime data available.");
+            
+            // Assuming the first record for punch in and out times
+            var firstRecord = attendanceData[0];
+            var punchInTime = firstRecord.Login_Time;
+            var punchOutTime = firstRecord.Logout_Time;
+
+            var punchInDate = new Date(punchInTime);
+            var punchOutDate = new Date(punchOutTime);
+
+            var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+
+            var loginDateText = punchInDate.toLocaleString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+            //$("#attendance_info .modal-body .card-title small").text(loginDateText);
+
+            // Update the employee name
+            $("#attendance_info .modal-body .punch-det.empName p").empty().text(empName);
+
+            // Update the attendance status title
+            $("#attendance_info .modal-body .punch-det.attendance-title p").empty().text(title);
+
+            ////////////////////////////////////////////////////////////////////////////
+            // Get the current date and time
+            var currentTime = new Date();
+
+            // Calculate the time difference for the last login time if logout time is null
+            var timeDifference = attendanceData.reduce(function (acc, record) {
+                if (record.Logout_Time === null) {
+                    var loginTimeValue = new Date(record.Login_Time);
+                    acc += currentTime - loginTimeValue;
+                }
+                return acc;
+            }, 0);
+
+            // Sum the total time differences between login and logout times
+            var totalTimeDifferenceMs = attendanceData.reduce(function (acc, record) {
+                if (record.Logout_Time !== null) {
+                    var loginTime = new Date(record.Login_Time);
+                    var logoutTime = new Date(record.Logout_Time);
+                    acc += (logoutTime - loginTime);
+                }
+                return acc;
+            }, 0);
+
+            totalTimeDifferenceMs += timeDifference
+
+            var totalSeconds = Math.floor(totalTimeDifferenceMs / 1000);
+            var hours = Math.floor(totalSeconds / 3600);
+            var minutes = Math.floor((totalSeconds % 3600) / 60);
+            var seconds = totalSeconds % 60;
+            var formattedTotalTime = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+
+            ///////////////////////////////////
+
+            var breaktimeformatted = "00" + ":" + "00" + ":" + "00";
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // Convert formattedTotalTime to total seconds
+            var totalTimeParts = formattedTotalTime.split(':').map(Number);
+            var totalTimeInSeconds = (totalTimeParts[0] * 3600) + (totalTimeParts[1] * 60) + totalTimeParts[2];
+
+            // Convert breaktimeformatted to total seconds
+            var breakTimeParts = breaktimeformatted.split(':').map(Number);
+            var breakTimeInSeconds = (breakTimeParts[0] * 3600) + (breakTimeParts[1] * 60) + breakTimeParts[2];
+
+            // Subtract break time from total time
+            var workedTimeInSeconds = totalTimeInSeconds - breakTimeInSeconds;
+
+            // Convert workedTimeInSeconds back to HH:MM:SS format
+            var workedHours = Math.floor(workedTimeInSeconds / 3600);
+            workedTimeInSeconds %= 3600;
+            var workedMinutes = Math.floor(workedTimeInSeconds / 60);
+            var workedSeconds = workedTimeInSeconds % 60;
+
+            var workedTime = String(workedHours).padStart(2, '0') + ':' + String(workedMinutes).padStart(2, '0') + ':' + String(workedSeconds).padStart(2, '0');
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            var totalhours = formattedTotalTime + " hrs";
+            var workedhourtime = workedTime + " hrs";
+            var breakhours = breaktimeformatted + " hrs";
+
+            var basicworkinghour = workedHours + " hrs";
+
+
+            // Calculate overtime hours if basic working hour is greater than 8
+            var overtimeHours = 0;
+            var overtime = 0;
+            if (workedHours > 8) {
+                overtimeHours = workedHours - 8;
+            }
+            var overtime = overtimeHours + " hrs";
+
+            $("#attendance_info .modal-body .punch-info .punch-hours.total-hours span").empty().text(totalhours);
+            $("#attendance_info .modal-body .punch-info .punch-hours.worked-hours span").empty().text(workedhourtime);
+            $("#attendance_info .modal-body .punch-info .punch-hours.break-hours span").empty().text(breakhours);
+
+
+            $("#attendance_info .modal-body .statistics .stats-box.basic-working-hours h3").empty().text(basicworkinghour);
+            $("#attendance_info .modal-body .statistics .stats-box.overtime h3").empty().text(overtime);
+
+            ////////////////////////////////////////////////////////////////////////////
+
+
+
+            // Update activity list
+            var activityList = $("#attendance_info .modal-body .res-activity-list.activities");
+            activityList.empty(); // Clear existing list
+
+            var breakactivityList = $("#attendance_info .modal-body .res-activity-list.breakactivites");
+            breakactivityList.empty(); // Clear existing list
+
+            var breakpunchInItem = '<li>' +
+                         '<p class="mb-0">Break In at</p>' +
+                         '<p class="res-activity-time">' +
+                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                         '</p>' +
+                     '</li>';
+            breakactivityList.append(breakpunchInItem);
+
+            var breakpunchOutItem = '<li>' +
+                         '<p class="mb-0">Break In at</p>' +
+                         '<p class="res-activity-time">' +
+                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                         '</p>' +
+                     '</li>';
+            breakactivityList.append(breakpunchOutItem);
+
+            attendanceData.forEach(function (record) {
+                if (record.Login_Time) {
+                    var punchInItem = '<li>' +
+                         '<p class="mb-0">Punch In at</p>' +
+                         '<p class="res-activity-time">' +
+                             '<i class="fa fa-clock-o"></i> ' + new Date(record.Login_Time).toLocaleString('en-US', options) +
+                         '</p>' +
+                     '</li>';
+                    activityList.append(punchInItem);
+                }
+                if (record.Logout_Time) {
+                    var punchOutItem = '<li>' +
+                        '<p class="mb-0">Punch Out at</p>' +
+                        '<p class="res-activity-time">' +
+                            '<i class="fa fa-clock-o"></i> ' + new Date(record.Logout_Time).toLocaleString('en-US', options) +
+                        '</p>' +
+                    '</li>';
+                    activityList.append(punchOutItem);
+                }
+            });
+            
+        }
+        else {
+            // Assuming the first record for punch in and out times
+            var firstRecord = attendanceData[0];
+            var punchInTime = firstRecord.Login_Time;
+            var punchOutTime = firstRecord.Logout_Time;
+
+            var punchInDate = new Date(punchInTime);
+            var punchOutDate = new Date(punchOutTime);
+
+            var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+
+            var loginDateText = punchInDate.toLocaleString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+            //$("#attendance_info .modal-body .card-title small").text(loginDateText);
+
+            // Update the employee name
+            $("#attendance_info .modal-body .punch-det.empName p").empty().text(empName);
+
+            // Update the attendance status title
+            $("#attendance_info .modal-body .punch-det.attendance-title p").empty().text(title);
+
+            ////////////////////////////////////////////////////////////////////////////
+            // Get the current date and time
+            var currentTime = new Date();
+
+            // Calculate the time difference for the last login time if logout time is null
+            var timeDifference = attendanceData.reduce(function (acc, record) {
+                if (record.Logout_Time === null) {
+                    var loginTimeValue = new Date(record.Login_Time);
+                    acc += currentTime - loginTimeValue;
+                }
+                return acc;
+            }, 0);
+
+            // Sum the total time differences between login and logout times
+            var totalTimeDifferenceMs = attendanceData.reduce(function (acc, record) {
+                if (record.Logout_Time !== null) {
+                    var loginTime = new Date(record.Login_Time);
+                    var logoutTime = new Date(record.Logout_Time);
+                    acc += (logoutTime - loginTime);
+                }
+                return acc;
+            }, 0);
+
+            totalTimeDifferenceMs += timeDifference
+
+            var totalSeconds = Math.floor(totalTimeDifferenceMs / 1000);
+            var hours = Math.floor(totalSeconds / 3600);
+            var minutes = Math.floor((totalSeconds % 3600) / 60);
+            var seconds = totalSeconds % 60;
+            var formattedTotalTime = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+
+            ///////////////////////////////////
+
+            var totalSeconds = BreakTimeData.reduce(function (acc, record) {
+                var timeParts = record.Total_Break_Hours.split(':').map(function (part) {
+                    return parseInt(part, 10);
+                });
+
+                var hours = timeParts[0];
+                var minutes = timeParts[1];
+                var seconds = timeParts[2];
+
+                return acc + (hours * 3600) + (minutes * 60) + seconds;
+            }, 0);
+
+            var totalHours = Math.floor(totalSeconds / 3600);
+            totalSeconds %= 3600;
+            var totalMinutes = Math.floor(totalSeconds / 60);
+            var totalSecondsLeft = totalSeconds % 60;
+
+            var formattedHours = String(totalHours).padStart(2, '0');
+            var formattedMinutes = String(totalMinutes).padStart(2, '0');
+            var formattedSeconds = String(totalSecondsLeft).padStart(2, '0');
+
+            var breaktimeformatted = formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // Convert formattedTotalTime to total seconds
+            var totalTimeParts = formattedTotalTime.split(':').map(Number);
+            var totalTimeInSeconds = (totalTimeParts[0] * 3600) + (totalTimeParts[1] * 60) + totalTimeParts[2];
+
+            // Convert breaktimeformatted to total seconds
+            var breakTimeParts = breaktimeformatted.split(':').map(Number);
+            var breakTimeInSeconds = (breakTimeParts[0] * 3600) + (breakTimeParts[1] * 60) + breakTimeParts[2];
+
+            // Subtract break time from total time
+            var workedTimeInSeconds = totalTimeInSeconds - breakTimeInSeconds;
+
+            // Convert workedTimeInSeconds back to HH:MM:SS format
+            var workedHours = Math.floor(workedTimeInSeconds / 3600);
+            workedTimeInSeconds %= 3600;
+            var workedMinutes = Math.floor(workedTimeInSeconds / 60);
+            var workedSeconds = workedTimeInSeconds % 60;
+
+            var workedTime = String(workedHours).padStart(2, '0') + ':' + String(workedMinutes).padStart(2, '0') + ':' + String(workedSeconds).padStart(2, '0');
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            var totalhours = formattedTotalTime + " hrs";
+            var workedhourtime = workedTime + " hrs";
+            var breakhours = breaktimeformatted + " hrs";
+
+            var basicworkinghour = workedHours + " hrs";
+
+
+            // Calculate overtime hours if basic working hour is greater than 8
+            var overtimeHours = 0;
+            var overtime = 0;
+            if (workedHours > 8) {
+                overtimeHours = workedHours - 8;
+            }
+            var overtime = overtimeHours + " hrs";
+
+            $("#attendance_info .modal-body .punch-info .punch-hours.total-hours span").empty().text(totalhours);
+            $("#attendance_info .modal-body .punch-info .punch-hours.worked-hours span").empty().text(workedhourtime);
+            $("#attendance_info .modal-body .punch-info .punch-hours.break-hours span").empty().text(breakhours);
+
+
+            $("#attendance_info .modal-body .statistics .stats-box.basic-working-hours h3").empty().text(basicworkinghour);
+            $("#attendance_info .modal-body .statistics .stats-box.overtime h3").empty().text(overtime);
+
+            ////////////////////////////////////////////////////////////////////////////
+
+
+
+            // Update activity list
+            var activityList = $("#attendance_info .modal-body .res-activity-list.activities");
+            activityList.empty(); // Clear existing list
+
+            var breakactivityList = $("#attendance_info .modal-body .res-activity-list.breakactivites");
+            breakactivityList.empty(); // Clear existing list
+
+
+            attendanceData.forEach(function (record) {
+                if (record.Login_Time) {
+                    var punchInItem = '<li>' +
+                         '<p class="mb-0">Punch In at</p>' +
+                         '<p class="res-activity-time">' +
+                             '<i class="fa fa-clock-o"></i> ' + new Date(record.Login_Time).toLocaleString('en-US', options) +
+                         '</p>' +
+                     '</li>';
+                    activityList.append(punchInItem);
+                }
+                if (record.Logout_Time) {
+                    var punchOutItem = '<li>' +
+                        '<p class="mb-0">Punch Out at</p>' +
+                        '<p class="res-activity-time">' +
+                            '<i class="fa fa-clock-o"></i> ' + new Date(record.Logout_Time).toLocaleString('en-US', options) +
+                        '</p>' +
+                    '</li>';
+                    activityList.append(punchOutItem);
+                }
+            });
+
+
+
+            BreakTimeData.forEach(function (breakrecord) {
+                if (breakrecord.Break_In_Time) {
+                    var breakpunchInItem = '<li>' +
+                         '<p class="mb-0">Break In at</p>' +
+                         '<p class="res-activity-time">' +
+                             '<i class="fa fa-clock-o"></i> ' + new Date(breakrecord.Break_In_Time).toLocaleString('en-US', options) +
+                         '</p>' +
+                     '</li>';
+                    breakactivityList.append(breakpunchInItem);
+                }
+                if (breakrecord.Break_Out_Time) {
+                    var breakpunchOutItem = '<li>' +
+                        '<p class="mb-0">Break Out at</p>' +
+                        '<p class="res-activity-time">' +
+                            '<i class="fa fa-clock-o"></i> ' + new Date(breakrecord.Break_Out_Time).toLocaleString('en-US', options) +
+                        '</p>' +
+                    '</li>';
+                    breakactivityList.append(breakpunchOutItem);
+                }
+            });
+        }
+
+        
+    }
+
 });
 

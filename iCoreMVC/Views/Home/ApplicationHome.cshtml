@@ -184,6 +184,15 @@
             background-color: #eff3f7;
             padding: 15px;
         }
+
+        .stats-box p {
+            font-size: 15px !important;
+        }
+
+
+        .iframe-style {
+            height: 700px;
+        }
     </style>
 
 </head>
@@ -522,7 +531,12 @@
         </div>
         <!-- END HEADER -->
         <!-- BEGIN CONTAINER -->
-        <div class="page-container" style="height:550px;">
+        @*<div class="page-container" style="height:550px;">
+            
+            Height changed for attenance module
+            *@
+        
+        <div class="page-container" style="height: 730px;">
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
 
@@ -1251,7 +1265,7 @@
         
     </div>
     
-    <div class="modal custom-modal fade" id="attendance_info" role="dialog" style="display: none;margin: 0px auto;" aria-hidden="true">
+    @*<div class="modal custom-modal fade" id="attendance_info" role="dialog" style="display: none;margin: 0px auto;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1270,11 +1284,18 @@
                                         <h6>Punch In at</h6>
                                         <p>Wed, 11th Mar 2019 10.00 AM</p>
                                     </div>
-                                    <div class="punch-info">
-                                        <div class="punch-hours">
-                                            <span>3.45 hrs</span>
+                                    <div class="punch-info" style="display: flex;">
+                                        <div class="punch-hours" style="border: 5px solid #8e44ad;">
+                                            <span>08:13:03 hrs</span>
+                                        </div>
+                                        <div class="punch-hours" style="border: 5px solid #26c281;">
+                                            <span>07:13:03 hrs</span>
+                                        </div>
+                                        <div class="punch-hours" style="border: 5px solid #ff9b44;">
+                                            <span>01:13:03 hrs</span>
                                         </div>
                                     </div>
+                                   
                                     <div class="punch-det">
                                         <h6>Punch Out at</h6>
                                         <p>Wed, 20th Feb 2019 9.00 PM</p>
@@ -1283,14 +1304,14 @@
                                         <div class="row">
                                             <div class="col-md-6 col-6 text-center">
                                                 <div class="stats-box">
-                                                    <p>Break</p>
-                                                    <h6>1.21 hrs</h6>
+                                                    <p>Basic Working Hours</p>
+                                                    <h3>8 hrs</h3>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-6 text-center">
                                                 <div class="stats-box">
                                                     <p>Overtime</p>
-                                                    <h6>3 hrs</h6>
+                                                    <h3>3 hrs</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -1299,53 +1320,107 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="card recent-activity">
-                                <div class="card-body">
-                                    <h5 class="card-title">Activity</h5>
-                                    <ul class="res-activity-list">
-                                        <li>
-                                            <p class="mb-0">Punch In at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                10.00 AM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch Out at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                11.00 AM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch In at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                11.15 AM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch Out at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                1.30 PM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch In at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                2.00 PM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch Out at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                7.30 PM.
-                                            </p>
-                                        </li>
-                                    </ul>
+                            <div class="col-md-6">
+                                <div class="card recent-activity">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Activity</h5>
+                                        <ul class="res-activity-list activities">
+                                            
+                                            <li>
+                                                <p class="mb-0">Punch In at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    10.00 AM.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="mb-0">Punch Out at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    11.00 AM.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="mb-0">Punch In at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    11.15 AM.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="mb-0">Punch Out at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    1.30 PM.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="mb-0">Punch In at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    2.00 PM.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="mb-0">Punch Out at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    7.30 PM.
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card recent-activity">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Break Activity</h5>
+                                        <ul class="res-activity-list">
+                                            <li>
+                                                <p class="mb-0">Break In at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    10.00 AM.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="mb-0">Break Out at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    11.00 AM.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="mb-0">Break In at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    11.15 AM.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="mb-0">Break Out at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    1.30 PM.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="mb-0">Break In at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    2.00 PM.
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p class="mb-0">Break Out at</p>
+                                                <p class="res-activity-time">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    7.30 PM.
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1353,7 +1428,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
     <div class="modal custom-modal fade" id="employee_report" role="dialog" style="display: none;margin: 0px auto;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
