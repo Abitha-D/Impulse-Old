@@ -1,5 +1,10 @@
 ﻿@{
     Layout = "../Shared/_ApplicationHome.cshtml";
+    var empRefNo = Session["emp_ref_no"];
+    var attendanceId = Session["attendance_id"];
+
+    var empFirstname = Session["Emp_First_Name"];
+    var empLastname = Session["Emp_Last_Name"];
     //Layout = "";
 }
 
@@ -51,7 +56,7 @@
     <link href="~/assets/pages/css/NewStyle.css" rel="stylesheet" />
 
     @*<script src="~/Scripts/js/EmployeeDetails.js"></script>*@
-    <script src="~/Scripts/angular.min.js"> </script>
+    <script src="~/Scripts/angular.min.js"></script>
 
     <style>
         .page-quick-sidebar-wrapper {
@@ -127,12 +132,12 @@
 
         .pace.pace-inactive .pace-progress {
             display: none;
-            height:0px;
+            height: 0px;
         }
 
         .pace.pace-inactive {
             display: none;
-            height:0px;
+            height: 0px;
         }
 
         .msgIcon {
@@ -140,7 +145,8 @@
             font-size: 20px;
             margin-top: 15px;
         }
-        .chatting{
+
+        .chatting {
             z-index: 9999;
             position: fixed;
             top: 220px;
@@ -154,44 +160,62 @@
             border: 2px solid #72c8d5;
             border-radius: 15px;
         }
-        .chattingHeader{
-            padding:10px;
-            background-color:white;
-            color:black;
+
+        .chattingHeader {
+            padding: 10px;
+            background-color: white;
+            color: black;
             font-size: 20px;
         }
-        .chattingImg{
+
+        .chattingImg {
             border-radius: 50%;
             border: 1px solid #72c8d5;
         }
-        .chattingtextbox{
+
+        .chattingtextbox {
             width: 260px;
             height: 40px;
             color: black;
             border: 1px solid black;
             font-size: 15px;
         }
-        .closeBtn{
+
+        .closeBtn {
             float: right;
             font-size: 20px;
             margin-top: 10px;
             color: black;
         }
 
-        .iframe-style{
+        .iframe-style {
             width: 100%;
-            height: 560px;
+            height: 700px;
             background-color: #eff3f7;
             padding: 15px;
         }
 
-        .stats-box p {
-            font-size: 15px !important;
+        .attendance-btn .markin-btn {
+            /*background-color: #53ad53 !important;
+            border-color: #53ad53 !important;*/
+            background-color: #2c952c !important;
+            border-color: #2c952c !important;
         }
 
+            .attendance-btn .markin-btn:hover {
+                background-color: #2c952c !important;
+                border-color: #2c952c !important;
+            }
 
-        .iframe-style {
-            height: 700px;
+        .attendance-btn .markout-btn {
+            background-color: #da3f3f !important;
+            border-color: #da3f3f !important;
+        }
+
+        .note-text {
+            color: red;
+            padding: 5px;
+            font-size: 12px;
         }
     </style>
 
@@ -217,6 +241,16 @@
                     <!-- BEGIN TOP NAVIGATION MENU -->
                     <div class="top-menu" style=" margin-top: 0px">
                         <ul class="nav navbar-nav pull-right">
+                            <li class="warning-note">
+                                <p class="note-text"></p>
+                            </li>
+
+                            <li class="attendance-btn" style="padding: 15px;">
+                                <button class="btn red-sunglo pull-right markin-btn" type="button" onclick="markAttendance('markin')">Mark In</button>
+                            </li>
+                            <li class="attendance-btn" style="padding: 15px;">
+                                <button class="btn red-sunglo pull-right markout-btn" type="button" onclick="markAttendance('markout')">Mark Out</button>
+                            </li>
                             <!-- BEGIN NOTIFICATION DROPDOWN -->
                             <li class="dropdown dropdown-extended dropdown-notification dropdown-dark" id="header_notification_bar">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" @*data-hover="dropdown"*@ data-close-others="true">
@@ -451,27 +485,27 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
                                     @*<li>
-                                        <a href="page_user_profile_1.html">
-                                            <i class="icon-user"></i> My Profile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="app_calendar.html">
-                                            <i class="icon-calendar"></i> My Calendar
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="app_inbox.html">
-                                            <i class="icon-envelope-open"></i> My Inbox
-                                            <span class="badge badge-danger"> 3 </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="app_todo_2.html">
-                                            <i class="icon-rocket"></i> My Tasks
-                                            <span class="badge badge-success"> 7 </span>
-                                        </a>
-                                    </li>*@
+                    <a href="page_user_profile_1.html">
+                        <i class="icon-user"></i> My Profile
+                    </a>
+                </li>
+                <li>
+                    <a href="app_calendar.html">
+                        <i class="icon-calendar"></i> My Calendar
+                    </a>
+                </li>
+                <li>
+                    <a href="app_inbox.html">
+                        <i class="icon-envelope-open"></i> My Inbox
+                        <span class="badge badge-danger"> 3 </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="app_todo_2.html">
+                        <i class="icon-rocket"></i> My Tasks
+                        <span class="badge badge-success"> 7 </span>
+                    </a>
+                </li>*@
                                     <li class="divider"> </li>
                                     <li>
                                         <a onclick="UserLock()">
@@ -507,8 +541,8 @@
                             <input type="text" class="form-control" id="searchBox" placeholder=&#128269; style="color: #0e0e0e;background-color: #f7f7f7; height: 35px; width: 200px; border-radius: 5px; cursor: text;">
                             <span class="">
                                 @*<a href="javascript:;" class="btn submit">
-                                    <i class="icon-magnifier"></i>
-                                </a>*@
+                                        <i class="icon-magnifier"></i>
+                                    </a>*@
                             </span>
                         </div>
                     </form>
@@ -521,7 +555,6 @@
                     <!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the dropdown opening on mouse hover -->
                     <div class="hor-menu">
                         <ul class="nav navbar-nav" id="menus">
-                            
                         </ul>
                     </div>
                     <!-- END MEGA MENU -->
@@ -532,10 +565,10 @@
         <!-- END HEADER -->
         <!-- BEGIN CONTAINER -->
         @*<div class="page-container" style="height:550px;">
-            
+
             Height changed for attenance module
-            *@
-        
+        *@
+
         <div class="page-container" style="height: 730px;">
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
@@ -757,40 +790,40 @@
                         </a>
                     </li>
                     @*<li>
-                        <a href="javascript:;" data-target="#quick_sidebar_tab_2" data-toggle="tab">
-                            Alerts
-                            <span class="badge badge-success">7</span>
-                        </a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                            More
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu pull-right">
-                            <li>
-                                <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
-                                    <i class="icon-bell"></i> Alerts
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
-                                    <i class="icon-info"></i> Notifications
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
-                                    <i class="icon-speech"></i> Activities
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
-                                    <i class="icon-settings"></i> Settings
-                                </a>
-                            </li>
-                        </ul>
-                    </li>*@
+                            <a href="javascript:;" data-target="#quick_sidebar_tab_2" data-toggle="tab">
+                                Alerts
+                                <span class="badge badge-success">7</span>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                More
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
+                                        <i class="icon-bell"></i> Alerts
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
+                                        <i class="icon-info"></i> Notifications
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
+                                        <i class="icon-speech"></i> Activities
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="javascript:;" data-target="#quick_sidebar_tab_3" data-toggle="tab">
+                                        <i class="icon-settings"></i> Settings
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>*@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active page-quick-sidebar-chat" id="quick_sidebar_tab_1">
@@ -898,348 +931,348 @@
                         </div>
                     </div>
                     @*<div class="tab-pane page-quick-sidebar-alerts" id="quick_sidebar_tab_2">
-                        <div class="page-quick-sidebar-alerts-list">
-                            <h3 class="list-heading">General</h3>
-                            <ul class="feeds list-items">
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-info">
-                                                    <i class="fa fa-check"></i>
-                                                </div>
-                                            </div>
-                                            <div class="cont-col2">
-                                                <div class="desc">
-                                                    You have 4 pending tasks.
-                                                    <span class="label label-sm label-warning ">
-                                                        Take action
-                                                        <i class="fa fa-share"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date"> Just now </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <div class="col1">
-                                            <div class="cont">
-                                                <div class="cont-col1">
-                                                    <div class="label label-sm label-success">
-                                                        <i class="fa fa-bar-chart-o"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="cont-col2">
-                                                    <div class="desc"> Finance Report for year 2013 has been released. </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col2">
-                                            <div class="date"> 20 mins </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-danger">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                            </div>
-                                            <div class="cont-col2">
-                                                <div class="desc"> You have 5 pending membership that requires a quick review. </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date"> 24 mins </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-info">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </div>
-                                            </div>
-                                            <div class="cont-col2">
-                                                <div class="desc">
-                                                    New order received with
-                                                    <span class="label label-sm label-success"> Reference Number: DR23923 </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date"> 30 mins </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-success">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                            </div>
-                                            <div class="cont-col2">
-                                                <div class="desc"> You have 5 pending membership that requires a quick review. </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date"> 24 mins </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-info">
-                                                    <i class="fa fa-bell-o"></i>
-                                                </div>
-                                            </div>
-                                            <div class="cont-col2">
-                                                <div class="desc">
-                                                    Web server hardware needs to be upgraded.
-                                                    <span class="label label-sm label-warning"> Overdue </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date"> 2 hours </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <div class="col1">
-                                            <div class="cont">
-                                                <div class="cont-col1">
-                                                    <div class="label label-sm label-default">
-                                                        <i class="fa fa-briefcase"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="cont-col2">
-                                                    <div class="desc"> IPO Report for year 2013 has been released. </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col2">
-                                            <div class="date"> 20 mins </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                            <h3 class="list-heading">System</h3>
-                            <ul class="feeds list-items">
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-info">
-                                                    <i class="fa fa-check"></i>
-                                                </div>
-                                            </div>
-                                            <div class="cont-col2">
-                                                <div class="desc">
-                                                    You have 4 pending tasks.
-                                                    <span class="label label-sm label-warning ">
-                                                        Take action
-                                                        <i class="fa fa-share"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date"> Just now </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <div class="col1">
-                                            <div class="cont">
-                                                <div class="cont-col1">
-                                                    <div class="label label-sm label-danger">
-                                                        <i class="fa fa-bar-chart-o"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="cont-col2">
-                                                    <div class="desc"> Finance Report for year 2013 has been released. </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col2">
-                                            <div class="date"> 20 mins </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-default">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                            </div>
-                                            <div class="cont-col2">
-                                                <div class="desc"> You have 5 pending membership that requires a quick review. </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date"> 24 mins </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-info">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </div>
-                                            </div>
-                                            <div class="cont-col2">
-                                                <div class="desc">
-                                                    New order received with
-                                                    <span class="label label-sm label-success"> Reference Number: DR23923 </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date"> 30 mins </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-success">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                            </div>
-                                            <div class="cont-col2">
-                                                <div class="desc"> You have 5 pending membership that requires a quick review. </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date"> 24 mins </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="col1">
-                                        <div class="cont">
-                                            <div class="cont-col1">
-                                                <div class="label label-sm label-warning">
-                                                    <i class="fa fa-bell-o"></i>
-                                                </div>
-                                            </div>
-                                            <div class="cont-col2">
-                                                <div class="desc">
-                                                    Web server hardware needs to be upgraded.
-                                                    <span class="label label-sm label-default "> Overdue </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col2">
-                                        <div class="date"> 2 hours </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
+                            <div class="page-quick-sidebar-alerts-list">
+                                <h3 class="list-heading">General</h3>
+                                <ul class="feeds list-items">
+                                    <li>
                                         <div class="col1">
                                             <div class="cont">
                                                 <div class="cont-col1">
                                                     <div class="label label-sm label-info">
-                                                        <i class="fa fa-briefcase"></i>
+                                                        <i class="fa fa-check"></i>
                                                     </div>
                                                 </div>
                                                 <div class="cont-col2">
-                                                    <div class="desc"> IPO Report for year 2013 has been released. </div>
+                                                    <div class="desc">
+                                                        You have 4 pending tasks.
+                                                        <span class="label label-sm label-warning ">
+                                                            Take action
+                                                            <i class="fa fa-share"></i>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col2">
-                                            <div class="date"> 20 mins </div>
+                                            <div class="date"> Just now </div>
                                         </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="tab-pane page-quick-sidebar-settings" id="quick_sidebar_tab_3">
-                        <div class="page-quick-sidebar-settings-list">
-                            <h3 class="list-heading">General Settings</h3>
-                            <ul class="list-items borderless">
-                                <li>
-                                    Enable Notifications
-                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF">
-                                </li>
-                                <li>
-                                    Allow Tracking
-                                    <input type="checkbox" class="make-switch" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF">
-                                </li>
-                                <li>
-                                    Log Errors
-                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="danger" data-on-text="ON" data-off-color="default" data-off-text="OFF">
-                                </li>
-                                <li>
-                                    Auto Sumbit Issues
-                                    <input type="checkbox" class="make-switch" data-size="small" data-on-color="warning" data-on-text="ON" data-off-color="default" data-off-text="OFF">
-                                </li>
-                                <li>
-                                    Enable SMS Alerts
-                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF">
-                                </li>
-                            </ul>
-                            <h3 class="list-heading">System Settings</h3>
-                            <ul class="list-items borderless">
-                                <li>
-                                    Security Level
-                                    <select class="form-control input-inline input-sm input-small">
-                                        <option value="1">Normal</option>
-                                        <option value="2" selected>Medium</option>
-                                        <option value="e">High</option>
-                                    </select>
-                                </li>
-                                <li>
-                                    Failed Email Attempts
-                                    <input class="form-control input-inline input-sm input-small" value="5" />
-                                </li>
-                                <li>
-                                    Secondary SMTP Port
-                                    <input class="form-control input-inline input-sm input-small" value="3560" />
-                                </li>
-                                <li>
-                                    Notify On System Error
-                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="danger" data-on-text="ON" data-off-color="default" data-off-text="OFF">
-                                </li>
-                                <li>
-                                    Notify On SMTP Error
-                                    <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="warning" data-on-text="ON" data-off-color="default" data-off-text="OFF">
-                                </li>
-                            </ul>
-                            <div class="inner-content">
-                                <button class="btn btn-success">
-                                    <i class="icon-settings"></i> Save Changes
-                                </button>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label label-sm label-success">
+                                                            <i class="fa fa-bar-chart-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc"> Finance Report for year 2013 has been released. </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col2">
+                                                <div class="date"> 20 mins </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-danger">
+                                                        <i class="fa fa-user"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc"> You have 5 pending membership that requires a quick review. </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 24 mins </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-info">
+                                                        <i class="fa fa-shopping-cart"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">
+                                                        New order received with
+                                                        <span class="label label-sm label-success"> Reference Number: DR23923 </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 30 mins </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-success">
+                                                        <i class="fa fa-user"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc"> You have 5 pending membership that requires a quick review. </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 24 mins </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-info">
+                                                        <i class="fa fa-bell-o"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">
+                                                        Web server hardware needs to be upgraded.
+                                                        <span class="label label-sm label-warning"> Overdue </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 2 hours </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label label-sm label-default">
+                                                            <i class="fa fa-briefcase"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc"> IPO Report for year 2013 has been released. </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col2">
+                                                <div class="date"> 20 mins </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <h3 class="list-heading">System</h3>
+                                <ul class="feeds list-items">
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-info">
+                                                        <i class="fa fa-check"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">
+                                                        You have 4 pending tasks.
+                                                        <span class="label label-sm label-warning ">
+                                                            Take action
+                                                            <i class="fa fa-share"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> Just now </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label label-sm label-danger">
+                                                            <i class="fa fa-bar-chart-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc"> Finance Report for year 2013 has been released. </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col2">
+                                                <div class="date"> 20 mins </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-default">
+                                                        <i class="fa fa-user"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc"> You have 5 pending membership that requires a quick review. </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 24 mins </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-info">
+                                                        <i class="fa fa-shopping-cart"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">
+                                                        New order received with
+                                                        <span class="label label-sm label-success"> Reference Number: DR23923 </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 30 mins </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-success">
+                                                        <i class="fa fa-user"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc"> You have 5 pending membership that requires a quick review. </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 24 mins </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="col1">
+                                            <div class="cont">
+                                                <div class="cont-col1">
+                                                    <div class="label label-sm label-warning">
+                                                        <i class="fa fa-bell-o"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="cont-col2">
+                                                    <div class="desc">
+                                                        Web server hardware needs to be upgraded.
+                                                        <span class="label label-sm label-default "> Overdue </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col2">
+                                            <div class="date"> 2 hours </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <div class="col1">
+                                                <div class="cont">
+                                                    <div class="cont-col1">
+                                                        <div class="label label-sm label-info">
+                                                            <i class="fa fa-briefcase"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cont-col2">
+                                                        <div class="desc"> IPO Report for year 2013 has been released. </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col2">
+                                                <div class="date"> 20 mins </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                    </div>*@
+                        <div class="tab-pane page-quick-sidebar-settings" id="quick_sidebar_tab_3">
+                            <div class="page-quick-sidebar-settings-list">
+                                <h3 class="list-heading">General Settings</h3>
+                                <ul class="list-items borderless">
+                                    <li>
+                                        Enable Notifications
+                                        <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                    </li>
+                                    <li>
+                                        Allow Tracking
+                                        <input type="checkbox" class="make-switch" data-size="small" data-on-color="info" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                    </li>
+                                    <li>
+                                        Log Errors
+                                        <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="danger" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                    </li>
+                                    <li>
+                                        Auto Sumbit Issues
+                                        <input type="checkbox" class="make-switch" data-size="small" data-on-color="warning" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                    </li>
+                                    <li>
+                                        Enable SMS Alerts
+                                        <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="success" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                    </li>
+                                </ul>
+                                <h3 class="list-heading">System Settings</h3>
+                                <ul class="list-items borderless">
+                                    <li>
+                                        Security Level
+                                        <select class="form-control input-inline input-sm input-small">
+                                            <option value="1">Normal</option>
+                                            <option value="2" selected>Medium</option>
+                                            <option value="e">High</option>
+                                        </select>
+                                    </li>
+                                    <li>
+                                        Failed Email Attempts
+                                        <input class="form-control input-inline input-sm input-small" value="5" />
+                                    </li>
+                                    <li>
+                                        Secondary SMTP Port
+                                        <input class="form-control input-inline input-sm input-small" value="3560" />
+                                    </li>
+                                    <li>
+                                        Notify On System Error
+                                        <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="danger" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                    </li>
+                                    <li>
+                                        Notify On SMTP Error
+                                        <input type="checkbox" class="make-switch" checked data-size="small" data-on-color="warning" data-on-text="ON" data-off-color="default" data-off-text="OFF">
+                                    </li>
+                                </ul>
+                                <div class="inner-content">
+                                    <button class="btn btn-success">
+                                        <i class="icon-settings"></i> Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>*@
                 </div>
             </div>
         </div>
-       
+
         <div class="chatting hidden">
             <div style="color: black;height:40px;">
                 <div class="chattingHeader">
@@ -1262,164 +1295,165 @@
 
             </div>
         </div>
-        
+
     </div>
-    
+
     @*<div class="modal custom-modal fade" id="attendance_info" role="dialog" style="display: none;margin: 0px auto;" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Attendance Info</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card punch-status">
-                                <div class="card-body">
-                                    <h5 class="card-title">Timesheet <small class="text-muted">11 Mar 2019</small></h5>
-                                    <div class="punch-det">
-                                        <h6>Punch In at</h6>
-                                        <p>Wed, 11th Mar 2019 10.00 AM</p>
-                                    </div>
-                                    <div class="punch-info" style="display: flex;">
-                                        <div class="punch-hours" style="border: 5px solid #8e44ad;">
-                                            <span>08:13:03 hrs</span>
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Attendance Info</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card punch-status">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Timesheet <small class="text-muted">11 Mar 2019</small></h5>
+                                        <div class="punch-det">
+                                            <h6>Punch In at</h6>
+                                            <p>Wed, 11th Mar 2019 10.00 AM</p>
                                         </div>
-                                        <div class="punch-hours" style="border: 5px solid #26c281;">
-                                            <span>07:13:03 hrs</span>
-                                        </div>
-                                        <div class="punch-hours" style="border: 5px solid #ff9b44;">
-                                            <span>01:13:03 hrs</span>
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="punch-det">
-                                        <h6>Punch Out at</h6>
-                                        <p>Wed, 20th Feb 2019 9.00 PM</p>
-                                    </div>
-                                    <div class="statistics">
-                                        <div class="row">
-                                            <div class="col-md-6 col-6 text-center">
-                                                <div class="stats-box">
-                                                    <p>Basic Working Hours</p>
-                                                    <h3>8 hrs</h3>
-                                                </div>
+                                        <div class="punch-info" style="display: flex;">
+                                            <div class="punch-hours" style="border: 5px solid #8e44ad;">
+                                                <span>08:13:03 hrs</span>
                                             </div>
-                                            <div class="col-md-6 col-6 text-center">
-                                                <div class="stats-box">
-                                                    <p>Overtime</p>
-                                                    <h3>3 hrs</h3>
+                                            <div class="punch-hours" style="border: 5px solid #26c281;">
+                                                <span>07:13:03 hrs</span>
+                                            </div>
+                                            <div class="punch-hours" style="border: 5px solid #ff9b44;">
+                                                <span>01:13:03 hrs</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="punch-det">
+                                            <h6>Punch Out at</h6>
+                                            <p>Wed, 20th Feb 2019 9.00 PM</p>
+                                        </div>
+                                        <div class="statistics">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6 text-center">
+                                                    <div class="stats-box">
+                                                        <p>Basic Working Hours</p>
+                                                        <h3>8 hrs</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-6 text-center">
+                                                    <div class="stats-box">
+                                                        <p>Overtime</p>
+                                                        <h3>3 hrs</h3>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
                             <div class="col-md-6">
-                                <div class="card recent-activity">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Activity</h5>
-                                        <ul class="res-activity-list activities">
-                                            
-                                            <li>
-                                                <p class="mb-0">Punch In at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    10.00 AM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Punch Out at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    11.00 AM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Punch In at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    11.15 AM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Punch Out at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    1.30 PM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Punch In at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    2.00 PM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Punch Out at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    7.30 PM.
-                                                </p>
-                                            </li>
-                                        </ul>
+                                <div class="col-md-6">
+                                    <div class="card recent-activity">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Activity</h5>
+                                            <ul class="res-activity-list activities">
+
+                                                <li>
+                                                    <p class="mb-0">Punch In at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        10.00 AM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Punch Out at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        11.00 AM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Punch In at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        11.15 AM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Punch Out at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        1.30 PM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Punch In at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        2.00 PM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Punch Out at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        7.30 PM.
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card recent-activity">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Break Activity</h5>
-                                        <ul class="res-activity-list">
-                                            <li>
-                                                <p class="mb-0">Break In at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    10.00 AM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Break Out at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    11.00 AM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Break In at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    11.15 AM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Break Out at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    1.30 PM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Break In at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    2.00 PM.
-                                                </p>
-                                            </li>
-                                            <li>
-                                                <p class="mb-0">Break Out at</p>
-                                                <p class="res-activity-time">
-                                                    <i class="fa fa-clock-o"></i>
-                                                    7.30 PM.
-                                                </p>
-                                            </li>
-                                        </ul>
+                                <div class="col-md-6">
+                                    <div class="card recent-activity">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Break Activity</h5>
+                                            <ul class="res-activity-list">
+                                                <li>
+                                                    <p class="mb-0">Break In at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        10.00 AM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Break Out at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        11.00 AM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Break In at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        11.15 AM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Break Out at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        1.30 PM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Break In at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        2.00 PM.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p class="mb-0">Break Out at</p>
+                                                    <p class="res-activity-time">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        7.30 PM.
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1427,8 +1461,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
 
     <div class="modal custom-modal fade" id="employee_report" role="dialog" style="display: none;margin: 0px auto;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -1598,7 +1631,7 @@
             }
         });
 
-        
+
 
     }
 
@@ -2038,10 +2071,1102 @@
             $('#searchBox').val("");
         }
     }
-   
-     </script>
 
-    <script src="~/Scripts/angular.min.js"> </script>
+    </script>
+
+    <script>
+
+        // Function to set the button's state based on localStorage
+        function setButtonState() {
+            var markInButton = document.querySelector('.markin-btn');
+            var markOutButton = document.querySelector('.markout-btn');
+
+            if (localStorage.getItem('markInDisabled') === 'true') {
+                markInButton.disabled = true;
+            } else {
+                markInButton.disabled = false;
+            }
+
+            if (localStorage.getItem('markOutDisabled') === 'true') {
+                markOutButton.disabled = true;
+            } else {
+                markOutButton.disabled = false;
+            }
+        }
+
+        // Call setButtonState when the page loads
+        window.onload = setButtonState();//function () {
+            //setButtonState();
+
+            // Optionally clear localStorage flags for the next day
+            //localStorage.removeItem('markInDisabled');
+            //localStorage.removeItem('markOutDisabled');
+        //};
+
+        function compareTimes(sleeptime, logintime) {
+            // Convert sleeptime to Date object
+            var sleepDate = new Date(sleeptime);
+
+            // Extract date and time parts from logintime string
+            var loginDateParts = logintime.split(' ');
+            var loginDateString = loginDateParts.slice(0, 4).join(' ');
+            var loginTimeString = loginDateParts[4] + ' ' + loginDateParts[5] + ' ' + loginDateParts[6];
+
+            // Convert logintime to Date object
+            var loginDate = new Date(loginDateString + ' ' + loginTimeString);
+
+            // Compare sleeptime and logintime
+            if (sleepDate > loginDate) {
+                console.log("Sleep Time is greater than Login Time");
+                return true;
+            } else {
+                console.log("Sleep Time is not greater than Login Time");
+                return false;
+            }
+        }
+
+
+        function fetchSleepWakeTimes(callback) {
+            var LoginTimeValue = localStorage.getItem('LoginTimeValue');
+            var LogoutTimeValue = localStorage.getItem('LogoutTimeValue');
+
+            if (LoginTimeValue == "null") {
+                LoginTimeValue = null;
+            }
+
+            if (LogoutTimeValue == "null") {
+                LogoutTimeValue = null;
+            }
+
+            $.ajax({
+                url: '../Home/GetSleepWakeTimes', // Adjust the path relative to your current URL structure
+                type: 'GET',
+                success: function (data) {
+                    console.log("Sleep/Wake Events:", data);
+
+                    // Clear previous entries
+                    $('#sleepWakeEvents').empty();
+
+                    // Array to store valid sleep and wake events
+                    var validSleepWakeEvents = [];
+
+                    // Loop through each sleep/wake event
+                    $.each(data, function (index, event) {
+                        if (LoginTimeValue != null && LogoutTimeValue == null) {
+                            var comparestatus = compareTimes(event.SleepTime, LoginTimeValue);
+                            if (comparestatus) {
+                                validSleepWakeEvents.push({
+                                    SleepTime: event.SleepTime,
+                                    WakeTime: event.WakeTime // Handle if WakeTime is null
+                                });
+                            }
+                        }
+                    });
+
+                    // Log valid sleep/wake events after login
+                    console.log("Valid Sleep/Wake Events after LoginTime:", validSleepWakeEvents);
+
+                    // Execute the callback with the result
+                    callback(validSleepWakeEvents);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching sleep/wake times:', error);
+                    // Execute the callback with an empty array or any error handling you prefer
+                    callback([]);
+                }
+            });
+        }
+
+        function fetchSleepWakeTimeswithoutclearpreviousentries(callback) {
+            var LoginTimeValue = localStorage.getItem('LoginTimeValue');
+            var LogoutTimeValue = localStorage.getItem('LogoutTimeValue');
+
+            if (LoginTimeValue == "null") {
+                LoginTimeValue = null;
+            }
+
+            if (LogoutTimeValue == "null") {
+                LogoutTimeValue = null;
+            }
+
+            $.ajax({
+                url: '../Home/GetSleepWakeTimeswithoutClearEntry', // Adjust the path relative to your current URL structure
+                type: 'GET',
+                success: function (data) {
+                    console.log("Sleep/Wake Events:", data);
+
+                    // Clear previous entries
+                    $('#sleepWakeEvents').empty();
+
+                    // Array to store valid sleep and wake events
+                    var validSleepWakeEventsNoClear = [];
+
+                    // Loop through each sleep/wake event
+                    $.each(data, function (index, event) {
+                        if (LoginTimeValue != null && LogoutTimeValue == null) {
+                            var comparestatus = compareTimes(event.SleepTime, LoginTimeValue);
+                            if (comparestatus) {
+                                validSleepWakeEventsNoClear.push({
+                                    SleepTime: event.SleepTime,
+                                    WakeTime: event.WakeTime // Handle if WakeTime is null
+                                });
+                            }
+                        }
+                    });
+
+                    // Log valid sleep/wake events after login
+                    console.log("Valid Sleep/Wake Events after LoginTime:", validSleepWakeEventsNoClear);
+
+                    // Execute the callback with the result
+                    callback(validSleepWakeEventsNoClear);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching sleep/wake times:', error);
+                    // Execute the callback with an empty array or any error handling you prefer
+                    callback([]);
+                }
+            });
+        }
+
+        // Function to calculate total duration and format as "HH:MM:SS"
+        function calculateDurations(events) {
+            var formattedDurations = [];
+
+            // Use a traditional function syntax instead of arrow function
+            events.forEach(function (event) {
+                // Convert string times to Date objects
+                var sleepTime = new Date(event.SleepTime);
+                var wakeTime = new Date(event.WakeTime);
+
+                // Calculate duration in milliseconds
+                var durationMilliseconds = wakeTime - sleepTime;
+
+                // Convert milliseconds to total seconds
+                var totalSeconds = Math.floor(durationMilliseconds / 1000);
+                var hours = Math.floor(totalSeconds / 3600);
+                var minutes = Math.floor((totalSeconds % 3600) / 60);
+                var seconds = totalSeconds % 60;
+
+                // Format hours, minutes, seconds as "HH:MM:SS"
+                var formattedDuration =
+                    (hours < 10 ? '0' : '') + hours + ':' +
+                    (minutes < 10 ? '0' : '') + minutes + ':' +
+                    (seconds < 10 ? '0' : '') + seconds;
+
+                // Add formatted duration to the array
+                formattedDurations.push(formattedDuration);
+            });
+
+            // Join the formatted durations with commas
+            var result = formattedDurations.join(',');
+
+            return result;
+        }
+
+        // Function to convert "HH:MM:SS" to total seconds
+        function timeToSeconds(timeStr) {
+            var parts = timeStr.split(':');
+            return (+parts[0]) * 3600 + (+parts[1]) * 60 + (+parts[2]);
+        }
+
+        // Function to convert total seconds to "HH:MM:SS"
+        function secondsToTime(seconds) {
+            var h = Math.floor(seconds / 3600);
+            var m = Math.floor((seconds % 3600) / 60);
+            var s = seconds % 60;
+            return [h, m, s].map(function (v) { return v < 10 ? '0' + v : v; }).join(':');
+        }
+
+        function CreateMailBody(empFirstname, empLastname) {
+            var mailBody = "<p>Dear " + empFirstname + " " + empLastname + ",</p>" +
+                           "<p>It has been observed that you forgot to logout from the system. Please make sure to logout properly at the end of your shift to ensure accurate attendance records.</p>" +
+                           "<p>Thank you for your cooperation.</p>" +
+                           "<p>Best regards,</p>" +
+                           "<p>HR Team</p>";
+            return mailBody;
+        }
+
+
+        function SendEMail(empMailIDValue, managerMailIDValue, empFirstname, empLastname) {
+            //loadingalert();
+            var sMailTo = "abithaecesis@gmail.com";
+            var sMailCc = managerMailIDValue;
+            var sMailBody = CreateMailBody(empFirstname, empLastname);
+            var StrJsonDatas = eval({
+                mail_to: sMailTo,
+                mail_cc: sMailCc,
+                mail_subject: 'Reminder: Please Logout from the System',
+                mail_body: sMailBody
+
+            });
+            var Result = oAPICall.Sendmail(StrJsonDatas, 'sendmailwithcc');
+            if (Result != null || Result != '') {
+                //CreateMailLog();
+
+
+                var attendanceId = localStorage.getItem('attendance_id');
+
+                var UpdateLogoutTimeapiURL = 'http://13.202.88.154/Impulse_Attendance/api/Attendance/UpdateLogoutTime';
+                var requestBody = {
+                    attendance_Id: attendanceId,
+                    emp_Ref_No: 0,
+                    login_Time: new Date().toISOString(),
+                    logout_Time: new Date().toISOString(),
+                    attendance_Status: 0, // Assuming 1 for Mark In and 0 for Mark Out
+                    remarks: 'string',
+                    delete_Status: 0
+                };
+
+                fetch(UpdateLogoutTimeapiURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    if (data.apiStatus === 0) {
+
+                        window.location.href = '../Home/Logout';
+
+                    }
+                    else {
+
+                    }
+                })
+                .catch(function (error) {
+
+                });
+            }
+        }
+
+    function markAttendance(type) {
+        var empRefNo = '@empRefNo'; // Get employee reference number from session
+        //var attendanceId = '@attendanceId';
+        var apiURL = type === 'markin'
+            ? 'http://13.202.88.154/Impulse_Attendance/api/Attendance/MarkInLog'
+            : 'http://13.202.88.154/Impulse_Attendance/api/Attendance/MarkOutLog'; // Assuming a similar URL for Mark Out
+
+        var markInButton = document.querySelector('.markin-btn');
+        var markOutButton = document.querySelector('.markout-btn');
+
+        if (type == 'markin') {
+            var requestBody = {
+                attendance_Id: 0,
+                emp_Ref_No: empRefNo,
+                emp_Code: 'string',
+                login_Time: new Date().toISOString(),
+                logout_Time: new Date().toISOString(),
+                attendance_Status: 0, // Assuming 1 for Mark In and 0 for Mark Out
+                remarks: 'string',
+                delete_Status: 0
+            };
+
+
+
+            fetch(apiURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.apiStatus === 0) {
+
+                    // Parse the JSON string in the result to get the APIStatusMessage
+                    var resultMessage = JSON.parse(data.result);
+                    var apiStatusMessage = resultMessage.APIStatusMessage;
+
+                    // Extract the Attendance ID value using a regular expression
+                    var attendanceIdMatch = apiStatusMessage.match(/Attendance ID: (\d+)/);
+                    var attendanceIdValue = attendanceIdMatch ? attendanceIdMatch[1] : null;
+
+                    //Session["attendance_id"] = attendanceIdValue;
+                    // Store the attendance ID value in localStorage
+                    localStorage.setItem('attendance_id', attendanceIdValue);
+
+                    // Extract the No_of_days value using a regular expression
+                    var noOfDaysMatch = apiStatusMessage.match(/No_of_days: (\d+(\.\d+)?)/);
+                    var noOfDaysValue = noOfDaysMatch ? noOfDaysMatch[1] : null;
+
+                    localStorage.setItem('noOfDays', noOfDaysValue);
+
+
+                    // Actions to perform if noOfDaysValue is not 0.5
+                    markInButton.disabled = true;
+                    localStorage.setItem('markInDisabled', 'true');
+
+                    parent.swal({
+                        title: "Today Attendance Marked Successfully",
+                        //text: "" + text + "",
+                        type: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonClass: "btn-danger",
+                        confirmButtonText: "Ok",
+                        cancelButtonText: "No",
+                        closeOnConfirm: true,
+                        //closeOnCancel: true,
+                        showLoaderOnConfirm: true,
+                    });
+
+
+                    //alert('Success: ' + data.result);
+                }
+                else {
+                    //button.disabled = false;
+                    markInButton.disabled = false;
+                    localStorage.setItem('markInDisabled', 'false');
+
+
+                    // Parse the JSON string in the result to get the APIStatusMessage
+                    var resultMessage = JSON.parse(data.result);
+                    var apiStatusMessage = resultMessage.APIStatusMessage;
+
+
+
+                    // Check if apiStatusMessage contains "Leave applied for today"
+                    if (apiStatusMessage.includes("Leave applied for today")) {
+                        // Extract the parts of the message
+                        var leaveMessage, noOfDaysText, noOfDaysValue;
+
+                        // Use regular expression to extract the parts
+                        var leaveMessageMatch = apiStatusMessage.match(/^(Leave applied for today)/);
+                        var noOfDaysMatch = apiStatusMessage.match(/No_of_days: (\d+(\.\d+)?)/);
+
+                        if (leaveMessageMatch) {
+                            leaveMessage = leaveMessageMatch[1];
+                        }
+
+                        if (noOfDaysMatch) {
+                            noOfDaysText = noOfDaysMatch[0];
+                            noOfDaysValue = noOfDaysMatch[1];
+                        }
+
+                        //button.disabled = false;
+                        markInButton.disabled = false;
+                        localStorage.setItem('markInDisabled', 'false');
+
+                        markOutButton.disabled = true;
+                        localStorage.setItem('markOutDisabled', 'true');
+
+                        parent.swal({
+                            title: "Leave Applied for Today! Please cancel the leave?",
+                            //text: "" + text + "",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonClass: "btn-danger",
+                            confirmButtonText: "Ok",
+                            cancelButtonText: "No",
+                            closeOnConfirm: true,
+                            //closeOnCancel: true,
+                            showLoaderOnConfirm: true,
+
+                        });
+
+                    }
+                    else {
+                        parent.swal({
+                            title: apiStatusMessage,
+                            //text: "" + text + "",
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonClass: "btn-danger",
+                            confirmButtonText: "Ok",
+                            cancelButtonText: "No",
+                            closeOnConfirm: true,
+                            //closeOnCancel: true,
+                            showLoaderOnConfirm: true,
+
+                        });
+                    }
+
+                    //alert('Error: ' + data.apiStatusMessage);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                //button.disabled = false;
+                markInButton.disabled = false;
+                localStorage.setItem('markInDisabled', 'false');
+            });
+        }
+        else { //markout api call
+            // Retrieve attendance_id from localStorage
+            var empRefNo = '@empRefNo'; // Get employee reference number from session
+
+            var CheckForLoginapiURL = 'http://13.202.88.154/Impulse_Attendance/api/Attendance/CheckForLogin';
+
+            var GetAllTodayAttendancesapiURL = 'http://13.202.88.154/Impulse_Attendance/api/Attendance/GetAllTodayAttendances';
+            var GetAllBreakTimesapiURL = 'http://13.202.88.154/Impulse_Attendance/api/Attendance/GetAllBreakTimes';
+            var AddBreakTimeapiURL = 'http://13.202.88.154/Impulse_Attendance/api/Attendance/InsertBreakTime';
+
+            var requestBody = {
+                attendance_Id: 0,
+                emp_Ref_No: empRefNo,
+                emp_Code: 'string',
+                login_Time: new Date().toISOString(),
+                logout_Time: new Date().toISOString(),
+                attendance_Status: 0, // Assuming 1 for Mark In and 0 for Mark Out
+                remarks: 'string',
+                delete_Status: 0
+            };
+
+            fetch(CheckForLoginapiURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.apiStatus === 0) {
+                    var apistatusmessage = data.apiStatusMessage;
+
+                    // Extract the Attendance ID value using a regular expression
+                    var attendanceExistsMatch = apistatusmessage.match(/AttendanceExists: (\d+)/);
+                    var attendanceExistsValue = attendanceExistsMatch ? attendanceExistsMatch[1] : null;
+
+                    // Extract the Attendance ID value using a regular expression
+                    var LogoutTimeMatch = apistatusmessage.match(/LogoutTime: (\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}:\d{2} [AP]M)/);
+                    var LogoutTimeValue = LogoutTimeMatch ? new Date(LogoutTimeMatch[1]) : null;
+                    localStorage.setItem('LogoutTimeValue', LogoutTimeValue);
+
+                    // Extract the Attendance ID value using a regular expression
+                    var LoginTimeMatch = apistatusmessage.match(/LoginTime: (\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}:\d{2} [AP]M)/);
+                    var LoginTimeValue = LoginTimeMatch ? new Date(LoginTimeMatch[1]) : null;
+                    localStorage.setItem('LoginTimeValue', LoginTimeValue);
+
+                    // Extract the EmpMailID value using a regular expression
+                    var empMailIDMatch = apistatusmessage.match(/EmpMailID: ([^\s]+)/);
+                    var empMailIDValue = empMailIDMatch ? empMailIDMatch[1] : null;
+                    console.log("Employee Mail ID: ", empMailIDValue);
+
+                    // Extract the ManagerMailID value using a regular expression
+                    var managerMailIDMatch = apistatusmessage.match(/ManagerMailID: ([^\s]+)/);
+                    var managerMailIDValue = managerMailIDMatch ? managerMailIDMatch[1] : null;
+                    console.log("Manager Mail ID: ", managerMailIDValue);
+
+                    var currentDate = new Date();
+
+                    if (attendanceExistsValue != 0) {
+                        if (LoginTimeValue != null && LogoutTimeValue == null) {
+
+                            // Get the current date and time
+                            var currentTime = new Date();
+
+                            // Calculate the difference in milliseconds
+                            var timeDifference = currentTime - LoginTimeValue;
+
+                            // Convert milliseconds to hours
+                            var hoursDifference = timeDifference / (1000 * 60 * 60);
+                            hoursDifference = Math.floor(hoursDifference);
+                            localStorage.setItem('hoursDifference', hoursDifference);
+
+                            var GetAllTodayAttendancesRequestBody = {
+                                attendance_Id: 0,
+                                emp_Ref_No: empRefNo,
+                                emp_Code: "string",
+                                login_Time: LoginTimeValue,
+                                logout_Time: "2024-07-25T04:50:13.329Z",
+                                attendance_Status: 0,
+                                remarks: "string",
+                                delete_Status: 0
+                            };
+
+                            fetch(GetAllTodayAttendancesapiURL, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(GetAllTodayAttendancesRequestBody)
+                            })
+                            .then(function (response) {
+                                return response.json();
+                            })
+                            .then(function (data) {
+                                if (data.apiStatus === 0) {
+                                    var apistatusmessage = data.apiStatusMessage;
+
+                                    // Extract attendance records
+                                    var recordsString = apistatusmessage.split('AttendanceRecord: ')[1];
+                                    var attendanceRecords = JSON.parse(recordsString);
+
+                                    // Store all attendance_ids
+                                    var allAttendanceIds = attendanceRecords.map(function (record) {
+                                        return record.Attendance_Id;
+                                    });
+
+                                    console.log("All Attendance IDs:", allAttendanceIds);
+
+                                    // Store attendance_ids where logout_time is not null
+                                    var attendanceIdsWithLogout = attendanceRecords.filter(function (record) {
+                                        return record.Logout_Time !== null;
+                                    }).map(function (record) {
+                                        return record.Attendance_Id;
+                                    });
+
+                                    console.log("Attendance IDs with Logout", attendanceIdsWithLogout);
+
+                                    // Calculate total time differences in milliseconds
+                                    var totalTimeDifferenceMs = attendanceRecords.reduce(function (acc, record) {
+                                        if (record.Logout_Time !== null) {
+                                            var loginTime = new Date(record.Login_Time);
+                                            var logoutTime = new Date(record.Logout_Time);
+                                            return acc + (logoutTime - loginTime);
+                                        }
+                                        return acc;
+                                    }, 0);
+
+                                    console.log("Total Time DifferenceMs With Logout", totalTimeDifferenceMs);
+
+                                    // Add hoursDifference to totalTimeDifferenceMs
+                                    totalTimeDifferenceMs += timeDifference
+                                    //* 3600000; // Convert hoursDifference to milliseconds and add
+
+                                    console.log("FINAL Total Time DifferenceMs With Logout", totalTimeDifferenceMs);
+
+                                    // Convert total time difference to HH:MM:SS format
+                                    var totalSeconds = Math.floor(totalTimeDifferenceMs / 1000);
+                                    var hours = Math.floor(totalSeconds / 3600);
+                                    var minutes = Math.floor((totalSeconds % 3600) / 60);
+                                    var seconds = totalSeconds % 60;
+                                    var formattedTime = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+
+                                    console.log("Formatted Time Differences: ", formattedTime);
+
+                                    var GetAllBreakTimesRequestBody = {
+                                        break_Id: 0,
+                                        emp_Ref_No: 0,
+                                        attendance_Ids: allAttendanceIds,
+                                        break_In_Time: "string",
+                                        break_Out_Time: "string",
+                                        total_Break_Hours: "string",
+                                        remarks: "string"
+                                    };
+
+                                    fetch(GetAllBreakTimesapiURL, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(GetAllBreakTimesRequestBody)
+                                    })
+                                    .then(function (response) {
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        if (data.apiStatus === 0) {
+                                            var apistatusmessage = data.apiStatusMessage;
+
+                                            // Extract attendance records
+                                            var breakrecordsString = apistatusmessage.split('BreakTimeRecord: ')[1];
+                                            var breakRecords = JSON.parse(breakrecordsString);
+
+                                            // Store all attendance_ids
+                                            var allbreakHours = breakRecords.map(function (record) {
+                                                return record.Total_Break_Hours;
+                                            });
+
+                                            console.log("Total Break Hours:", allbreakHours);
+
+                                            // Calculate total seconds from all break hours
+                                            var totalSeconds = allbreakHours.reduce(function (total, timeStr) {
+                                                return total + timeToSeconds(timeStr);
+                                            }, 0);
+
+                                            // Convert total seconds to "HH:MM:SS"
+                                            var totalBreakTimeFormatted = secondsToTime(totalSeconds);
+
+                                            console.log("Total Break Time Formatted: " + totalBreakTimeFormatted);
+
+                                            var validSleepWakeEventsVariableNoClear;
+
+                                            var totalBreakDurationNoClear;
+                                            var sleepTimeStringNoClear;
+                                            var wakeTimeStringNoClear;
+
+                                            fetchSleepWakeTimeswithoutclearpreviousentries(function (validSleepWakeEventsNoClear) {
+
+                                                validSleepWakeEventsVariableNoClear = validSleepWakeEventsNoClear;
+                                                console.log("Returned Valid Sleep/Wake Events:", validSleepWakeEventsVariableNoClear);
+
+                                                // Initialize arrays to hold sleep times and wake times
+                                                var sleepTimesNoClear = [];
+                                                var wakeTimesNoClear = [];
+
+                                                // Iterate over the validSleepWakeEventsVariable array
+                                                validSleepWakeEventsVariableNoClear.forEach(function (event) {
+                                                    sleepTimesNoClear.push(event.SleepTime);
+                                                    wakeTimesNoClear.push(event.WakeTime);
+                                                });
+
+                                                // Join the arrays into comma-separated strings
+                                                sleepTimeStringNoClear = sleepTimesNoClear.join(',');
+                                                wakeTimeStringNoClear = wakeTimesNoClear.join(',');
+
+                                                totalBreakDurationNoClear = calculateDurations(validSleepWakeEventsVariableNoClear);
+                                                console.log("Total Duration Based on No clear:", totalBreakDurationNoClear);
+
+                                                // Split the input string into individual duration strings
+                                                var durations = totalBreakDurationNoClear.split(',');
+
+                                                // Calculate total seconds from all durations
+                                                var totalSecondsNoClear = durations.reduce(function (total, timeStr) {
+                                                    return total + timeToSeconds(timeStr);
+                                                }, 0);
+
+                                                // Convert total seconds to "HH:MM:SS"
+                                                var totalBreakTimeFormattedNoClear = secondsToTime(totalSecondsNoClear);
+
+                                                console.log("Total Break Time Based on No Clear Formated: " + totalBreakTimeFormattedNoClear);
+
+                                                // Convert each time to total seconds
+                                                var breaktimeviaapi = timeToSeconds(totalBreakTimeFormatted);
+                                                var breaktimenoclear = timeToSeconds(totalBreakTimeFormattedNoClear);
+
+                                                if (isNaN(breaktimenoclear)) {
+                                                    breaktimenoclear = 0;
+                                                }
+
+                                                // Sum the total seconds
+                                                var totalSecondsbreaktime = breaktimeviaapi + breaktimenoclear;
+
+                                                // Convert the total seconds back to "HH:MM:SS"
+                                                var finalTotalBreakTime = secondsToTime(totalSecondsbreaktime);
+                                                console.log("Final Total Break Time:", finalTotalBreakTime);
+
+
+                                                // Convert total hours and break hours to total seconds
+                                                var totaltimeinSeconds = timeToSeconds(formattedTime);
+                                                var breakSeconds = timeToSeconds(finalTotalBreakTime);
+
+                                                if (isNaN(breakSeconds)) {
+                                                    breakSeconds = 0;
+                                                }
+                                                // Subtract break hours from total hours
+                                                var workedSeconds = totaltimeinSeconds - breakSeconds;
+
+                                                // Convert the result back to "HH:MM:SS"
+                                                var workedHours = secondsToTime(workedSeconds);
+
+                                                console.log("Worked Hours: " + workedHours);
+                                                //old code starts
+
+                                                var attendanceId = localStorage.getItem('attendance_id');
+
+                                                var LoginTimeValue = localStorage.getItem('LoginTimeValue');
+                                                var LogoutTimeValue = localStorage.getItem('LogoutTimeValue');
+                                                var hoursDifference = localStorage.getItem('hoursDifference');
+
+                                                if (formattedTime == "NaN:NaN:NaN") {
+                                                    formattedTime = "00:00:00";
+                                                }
+                                                if (finalTotalBreakTime == "NaN:NaN:NaN") {
+                                                    finalTotalBreakTime = "00:00:00";
+                                                }
+                                                if (workedHours == "NaN:NaN:NaN") {
+                                                    workedHours = "00:00:00";
+                                                }
+
+                                                var attendancestatus;
+
+                                                if (workedHours >= 6) {
+                                                    attendancestatus = 1;
+                                                }
+                                                else if (workedHours < 6) {
+                                                    attendancestatus = 2;
+                                                }
+
+                                                parent.swal({
+                                                    title: "Are you sure you want to logout shift?",
+                                                    text: "Total Hours: " + formattedTime + "\n" +
+                                                          "Break Hours: " + finalTotalBreakTime + "\n" +
+                                                          "Worked Hours: " + workedHours,
+                                                    type: "warning",
+                                                    showCancelButton: true, // Display both confirm and cancel buttons
+                                                    confirmButtonColor: "#DD6B55",
+                                                    confirmButtonClass: "btn-danger",
+                                                    confirmButtonText: "Yes",
+                                                    cancelButtonText: "No",
+                                                    closeOnConfirm: true,
+                                                    closeOnCancel: true,
+                                                    showLoaderOnConfirm: true
+                                                }, function (isConfirm) {
+                                                    if (isConfirm) {
+                                                        // Store result in a variable
+                                                        var validSleepWakeEventsVariable;
+
+                                                        var totalBreakDuration;
+                                                        var sleepTimeString;
+                                                        var wakeTimeString;
+
+                                                        fetchSleepWakeTimes(function (validSleepWakeEvents) {
+
+                                                            validSleepWakeEventsVariable = validSleepWakeEvents;
+                                                            console.log("Returned Valid Sleep/Wake Events:", validSleepWakeEventsVariable);
+
+                                                            // Initialize arrays to hold sleep times and wake times
+                                                            var sleepTimes = [];
+                                                            var wakeTimes = [];
+
+                                                            // Iterate over the validSleepWakeEventsVariable array
+                                                            validSleepWakeEventsVariable.forEach(function (event) {
+                                                                sleepTimes.push(event.SleepTime);
+                                                                wakeTimes.push(event.WakeTime);
+                                                            });
+
+                                                            // Join the arrays into comma-separated strings
+                                                            sleepTimeString = sleepTimes.join(',');
+                                                            wakeTimeString = wakeTimes.join(',');
+
+                                                            totalBreakDuration = calculateDurations(validSleepWakeEventsVariable);
+                                                            console.log("Total Duration:", totalBreakDuration);
+
+                                                            var attendanceIdArray = [parseInt(attendanceId)];  // Convert to integer and wrap in an array
+                                                            var requestBody = {
+                                                                break_Id: 0,
+                                                                emp_Ref_No: empRefNo,
+                                                                attendance_Ids: attendanceIdArray,
+                                                                break_In_Time: sleepTimeString,
+                                                                break_Out_Time: wakeTimeString,
+                                                                total_Break_Hours: totalBreakDuration,
+                                                                remarks: "string"
+                                                            };
+
+                                                            fetch(AddBreakTimeapiURL, {
+                                                                method: 'POST',
+                                                                headers: {
+                                                                    'Content-Type': 'application/json'
+                                                                },
+                                                                body: JSON.stringify(requestBody)
+                                                            })
+                                                            .then(function (response) {
+                                                                return response.json();
+                                                            })
+                                                            .then(function (data) {
+                                                                if (data.apiStatus === 0) {
+                                                                    var requestBody = {
+                                                                        attendance_Id: attendanceId,
+                                                                        emp_Ref_No: empRefNo,
+                                                                        login_Time: new Date().toISOString(),
+                                                                        logout_Time: new Date().toISOString(),
+                                                                        attendance_Status: attendancestatus, // Assuming 1 for Mark In and 0 for Mark Out
+                                                                        remarks: 'string',
+                                                                        delete_Status: 0
+                                                                    };
+
+                                                                    fetch(apiURL, {
+                                                                        method: 'POST',
+                                                                        headers: {
+                                                                            'Content-Type': 'application/json'
+                                                                        },
+                                                                        body: JSON.stringify(requestBody)
+                                                                    })
+                                                                    .then(function (response) {
+                                                                        return response.json();
+                                                                    })
+                                                                    .then(function (data) {
+                                                                        if (data.apiStatus === 0) {
+                                                                            var apistatusmessage = data.apiStatusMessage;
+
+
+                                                                            markOutButton.disabled = true;
+                                                                            localStorage.setItem('markOutDisabled', 'true');
+
+                                                                            markInButton.disabled = false;
+                                                                            localStorage.setItem('markInDisabled', 'false');
+
+                                                                            // Extract the Attendance ID value using a regular expression
+                                                                            var TotalHoursMatch = apistatusmessage.match(/Total Hours: (\d+)/);
+                                                                            var TotalHoursValue = TotalHoursMatch ? TotalHoursMatch[1] : null;
+
+                                                                            setTimeout(function () {
+                                                                                parent.swal({
+                                                                                    title: "Logout Time Marked Successfully",
+                                                                                    //text: "" + text + "",
+                                                                                    type: "success",
+                                                                                    showCancelButton: false,
+                                                                                    confirmButtonColor: "#DD6B55",
+                                                                                    confirmButtonClass: "btn-danger",
+                                                                                    confirmButtonText: "Ok",
+                                                                                    cancelButtonText: "No",
+                                                                                    closeOnConfirm: true,
+                                                                                    //closeOnCancel: true,
+                                                                                    showLoaderOnConfirm: true,
+                                                                                }, function (isConfirm) {
+                                                                                    // Reload the page after the user confirms
+                                                                                    if (isConfirm) {
+                                                                                        window.location.reload();
+                                                                                    }
+                                                                                });
+                                                                            }, 100);
+                                                                        }
+                                                                        else {
+                                                                            parent.swal({
+                                                                                title: apiStatusMessage,
+                                                                                //text: "" + text + "",
+                                                                                type: "warning",
+                                                                                showCancelButton: false,
+                                                                                confirmButtonColor: "#DD6B55",
+                                                                                confirmButtonClass: "btn-danger",
+                                                                                confirmButtonText: "Ok",
+                                                                                cancelButtonText: "No",
+                                                                                closeOnConfirm: true,
+                                                                                //closeOnCancel: true,
+                                                                                showLoaderOnConfirm: true,
+
+                                                                            });
+                                                                        }
+                                                                    }).catch(function (error) {
+                                                                        //button.disabled = false;
+
+                                                                    });
+                                                                }
+
+                                                            })
+                                                            .catch(function (error) {
+                                                                //button.disabled = false;
+
+                                                            });
+                                                        });
+
+
+                                                    } else {
+                                                        // If Yes is clicked, do not disable the button
+                                                        //button.disabled = false;
+                                                        //window.location.href = '../Home/Logout';
+                                                        markOutButton.disabled = false;
+                                                        localStorage.setItem('markOutDisabled', 'false');
+                                                    }
+                                                });
+
+                                                //old code ends
+                                            });
+
+
+
+                                        }
+                                        else {
+
+                                        }
+                                    }).catch(function (error) {
+                                        //button.disabled = false;
+
+                                    });
+
+
+
+                                }
+                                else {
+
+                                }
+                            }).catch(function (error) {
+                                //button.disabled = false;
+                                markOutButton.disabled = false;
+                                localStorage.setItem('markOutDisabled', 'false');
+                            });
+                        }
+                    }
+
+
+
+                }
+                else {
+
+                }
+            })
+            .catch(function (error) {
+                //button.disabled = false;
+
+            });
+
+
+
+
+
+
+        }
+
+    }
+    </script>
+
+    @*routing for leave approval grid*@
+    <script>
+        function GetParameterValues(param) {
+            var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < url.length; i++) {
+                var urlparam = url[i].split('=');
+                if (urlparam[0] == param) {
+                    return urlparam[1];
+                }
+            }
+        }
+
+        $(document).ready(function () {
+            var checkUrl = GetParameterValues("page");
+            if (checkUrl == "grid") {
+            setTimeout(function() {
+                    $('a#10025').trigger('click');
+            },1000);
+            }
+            var empRefNo = '@empRefNo'; // Get employee reference number from session
+
+            var empFirstname = '@empFirstname';
+            var empLastname = '@empLastname';
+
+            var apiURL = 'http://13.202.88.154/Impulse_Attendance/api/Attendance/CheckForLogin';
+
+            var markInButton = document.querySelector('.markin-btn');
+            var markOutButton = document.querySelector('.markout-btn');
+
+            var requestBody = {
+                attendance_Id: 0,
+                emp_Ref_No: empRefNo,
+                login_Time: new Date().toISOString(),
+                logout_Time: new Date().toISOString(),
+                attendance_Status: 0, // Assuming 1 for Mark In and 0 for Mark Out
+                remarks: 'string',
+                delete_Status: 0
+            };
+
+            fetch(apiURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.apiStatus === 0) {
+                    var apistatusmessage = data.apiStatusMessage;
+
+                    // Extract the Attendance ID value using a regular expression
+                    var attendanceExistsMatch = apistatusmessage.match(/AttendanceExists: (\d+)/);
+                    var attendanceExistsValue = attendanceExistsMatch ? attendanceExistsMatch[1] : null;
+
+                    // Extract the Attendance ID value using a regular expression
+                    var LogoutTimeMatch = apistatusmessage.match(/LogoutTime: (\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}:\d{2} [AP]M)/);
+                    var LogoutTimeValue = LogoutTimeMatch ? new Date(LogoutTimeMatch[1]) : null;
+                    localStorage.setItem('LogoutTimeValue', LogoutTimeValue);
+
+                    // Extract the Attendance ID value using a regular expression
+                    var LoginTimeMatch = apistatusmessage.match(/LoginTime: (\d{1,2}\/\d{1,2}\/\d{4} \d{1,2}:\d{2}:\d{2} [AP]M)/);
+                    var LoginTimeValue = LoginTimeMatch ? new Date(LoginTimeMatch[1]) : null;
+                    localStorage.setItem('LoginTimeValue', LoginTimeValue);
+
+                    // Extract the EmpMailID value using a regular expression
+                    var empMailIDMatch = apistatusmessage.match(/EmpMailID: ([^\s]+)/);
+                    var empMailIDValue = empMailIDMatch ? empMailIDMatch[1] : null;
+                    console.log("Employee Mail ID: ", empMailIDValue);
+
+                    // Extract the ManagerMailID value using a regular expression
+                    var managerMailIDMatch = apistatusmessage.match(/ManagerMailID: ([^\s]+)/);
+                    var managerMailIDValue = managerMailIDMatch ? managerMailIDMatch[1] : null;
+                    console.log("Manager Mail ID: ", managerMailIDValue);
+
+                    // Get the current date
+                    var currentDate = new Date();
+
+                    if (attendanceExistsValue != 0) { //attendance exists
+
+                        if (LoginTimeValue !== null && LogoutTimeValue !== null && LoginTimeValue.getDate() === currentDate.getDate() && LoginTimeValue.getMonth() === currentDate.getMonth() && LoginTimeValue.getFullYear() === currentDate.getFullYear()) {
+                            markOutButton.disabled = false;
+                            localStorage.setItem('markOutDisabled', 'true');
+
+                            markInButton.disabled = false;
+                            localStorage.setItem('markInDisabled', 'true');
+                        }
+                        else {
+                            if (LoginTimeValue != null && LogoutTimeValue == null) {
+
+                                function updateHoursDifference() {
+                                    // Get the current date and time
+                                    var currentTime = new Date();
+
+                                    // Calculate the difference in milliseconds
+                                    var timeDifference = currentTime - LoginTimeValue;
+
+                                    // Convert milliseconds to hours, minutes, and seconds
+                                    var totalSeconds = Math.floor(timeDifference / 1000);
+                                    var hours = Math.floor(totalSeconds / 3600);
+                                    var minutes = Math.floor((totalSeconds % 3600) / 60);
+                                    var seconds = totalSeconds % 60;
+
+                                    // Format the difference as "hours:MM:SS"
+                                    var hoursDifference = hours + ":" + String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
+                                    localStorage.setItem('hoursDifference', hoursDifference);
+
+                                    if (hours >= 15) {
+                                        // Show the warning message in red
+                                        //errorMsgDiv.innerHTML += "&nbsp;&nbsp;&nbsp;Warning: Worked " + hoursDifference + " hours! Will be marked as LOP";
+
+                                        SendEMail(empMailIDValue, managerMailIDValue, empFirstname, empLastname);
+
+                                        //clearInterval(intervalID);
+                                        //window.location.href = '../Home/Logout';
+                                        // Uncomment the line below to set the text color to red
+                                        // errorMsgDiv.style.color = 'red';
+                                    }
+                                }
+                                updateHoursDifference();
+                                setInterval(updateHoursDifference, 300000);
+                            }
+                            if (LogoutTimeValue !== null) { //logout time exists
+
+                                markOutButton.disabled = false;
+                                localStorage.setItem('markOutDisabled', 'false');
+
+                                markInButton.disabled = false;
+                                localStorage.setItem('markInDisabled', 'false');
+                            }
+                            else {
+                                localStorage.setItem('attendance_id', attendanceExistsValue);
+                                markOutButton.disabled = false;
+                                localStorage.setItem('markOutDisabled', 'false');
+
+                                markInButton.disabled = true;
+                                localStorage.setItem('markInDisabled', 'true');
+                            }
+                        }
+
+                    }
+                    else {
+                        markOutButton.disabled = false;
+                        localStorage.setItem('markOutDisabled', 'false');
+
+                        markInButton.disabled = false;
+                        localStorage.setItem('markInDisabled', 'false');
+                    }
+
+                }
+                else {
+
+                }
+            })
+            .catch(function (error) {
+                //button.disabled = false;
+                markOutButton.disabled = false;
+                localStorage.setItem('markOutDisabled', 'false');
+            });
+        });
+    </script>
+    <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/AngularController/HomeController.js"></script>
 
 </body>

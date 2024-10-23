@@ -349,5 +349,74 @@ namespace BussinessLayer.EMail
             }
 
         }
+
+        public string sendmailwithCCs(string strJsonData)
+        {
+            SqlConnection sqlCon = new SqlConnection(connectionstring);
+            SqlCommand sqlCmd = new SqlCommand();
+            try
+            {
+
+                var jss = new JavaScriptSerializer();
+                Dictionary<string, string> sData = jss.Deserialize<Dictionary<string, string>>(strJsonData);
+
+                var toMail = sData["mail_to"];
+                var ccMail = sData["mail_cc"];
+
+                SmtpClient mailClient = new SmtpClient();
+                var message = new MailMessage();
+                if (toMail.Contains(','))
+                {
+                    string[] toMails = toMail.Split(',');
+
+                    foreach (string tm in toMails)
+                    {
+                        message.To.Add(tm);
+                    }
+                }
+                else
+                {
+                    message.To.Add(toMail);
+                }
+                //message.To.Add(sData["mail_to"]);  // replace with valid value 
+
+                if (ccMail.Contains(','))
+                {
+                    string[] ccMails = ccMail.Split(',');
+
+                    foreach (string tm in ccMails)
+                    {
+                        message.CC.Add(tm);
+                    }
+                }
+                else
+                {
+                    message.CC.Add(ccMail);
+                }
+                //message.CC.Add(sData["mail_cc"]);
+                message.Subject = sData["mail_subject"];
+                message.Body = sData["mail_body"];
+                message.IsBodyHtml = true;
+                //message.Attachments.Add(attach);
+
+                message.Priority = MailPriority.High;
+
+                bool isssl = Convert.ToBoolean(ConfigurationManager.AppSettings["mailssl"]);
+
+                mailClient.EnableSsl = isssl;
+                mailClient.Send(message);
+
+                message.Dispose();
+                mailClient.Dispose();
+                return "Mail send sucessfully..";
+
+            }
+            catch (SmtpFailedRecipientsException ex)
+            {
+                string er = ex.Message;
+                return "Sorry mail can't send... Check your internet connection...";
+            }
+
+        }
     }
 }

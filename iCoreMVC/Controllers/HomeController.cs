@@ -21,6 +21,11 @@ using BussinessLayer.EMail;
 
 using System.Text.RegularExpressions;
 
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+
 namespace Impulse.Controllers
 {
     public class HomeController : Controller
@@ -28,10 +33,99 @@ namespace Impulse.Controllers
         //
         // GET: /Impulse/Home/
 
+        private readonly string GetEmpIDapiURL = "http://13.202.88.154/Impulse_Attendance/api/Attendance/GetIdByEmployeeCode";
+
         Commonfunctions commonFunctionObj = new Commonfunctions();
         LoginFrameWork.Authentication.UserModel sUserDetails = new LoginFrameWork.Authentication.UserModel();
 
         EMail emailobj = new EMail();
+
+        #region systemwakesleep
+
+        private static DateTime? lastSleepTime;
+        private static DateTime? lastWakeTime;
+        private static List<Dictionary<string, string>> sleepWakeEvents = new List<Dictionary<string, string>>();
+
+        [HttpPost]
+        public ActionResult RecordSleepEvent(string sleepTime)
+        {
+            DateTime parsedSleepTime;
+            if (DateTime.TryParse(sleepTime, out parsedSleepTime))
+            {
+                lastSleepTime = parsedSleepTime;
+
+                var sleepEvent = new Dictionary<string, string>
+                {
+                    { "SleepTime", lastSleepTime.Value.ToString("yyyy-MM-dd HH:mm:ss") }
+                };
+
+                sleepWakeEvents.Add(sleepEvent);
+                Session["SleepWakeEvents"] = JsonConvert.SerializeObject(sleepWakeEvents);
+
+                Console.WriteLine("Sleep Time Recorded: " + lastSleepTime.Value.ToString("yyyy-MM-dd HH:mm:ss"));
+            }
+            return Json(new { success = true });
+        }
+
+        [HttpPost]
+        public ActionResult RecordWakeEvent(string wakeTime)
+        {
+            DateTime parsedWakeTime;
+            if (DateTime.TryParse(wakeTime, out parsedWakeTime))
+            {
+                lastWakeTime = parsedWakeTime;
+
+                var wakeEvent = new Dictionary<string, string>
+                {
+                    { "WakeTime", lastWakeTime.Value.ToString("yyyy-MM-dd HH:mm:ss") }
+                };
+
+                // Check if there's a previous sleep event to pair with this wake event
+                if (sleepWakeEvents.Count > 0 && !sleepWakeEvents[sleepWakeEvents.Count - 1].ContainsKey("WakeTime"))
+                {
+                    sleepWakeEvents[sleepWakeEvents.Count - 1]["WakeTime"] = lastWakeTime.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                }
+                else
+                {
+                    sleepWakeEvents.Add(wakeEvent);
+                }
+
+                Session["SleepWakeEvents"] = JsonConvert.SerializeObject(sleepWakeEvents);
+
+                Console.WriteLine("Wake Time Recorded: " + lastWakeTime.Value.ToString("yyyy-MM-dd HH:mm:ss"));
+            }
+            return Json(new { success = true });
+        }
+
+        public ActionResult GetSleepWakeTimes()
+        {
+            //return Json(new
+            //{
+            //    sleepTime = lastSleepTime.HasValue ? lastSleepTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "No data",
+            //    wakeTime = lastWakeTime.HasValue ? lastWakeTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "No data"
+            //}, JsonRequestBehavior.AllowGet);
+
+            var eventsToReturn = new List<Dictionary<string, string>>(sleepWakeEvents); // Copy the events to return
+            sleepWakeEvents.Clear(); // Clear the original list
+
+            return Json(eventsToReturn, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetSleepWakeTimeswithoutClearEntry()
+        {
+            //return Json(new
+            //{
+            //    sleepTime = lastSleepTime.HasValue ? lastSleepTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "No data",
+            //    wakeTime = lastWakeTime.HasValue ? lastWakeTime.Value.ToString("yyyy-MM-dd HH:mm:ss") : "No data"
+            //}, JsonRequestBehavior.AllowGet);
+
+            var eventsToReturn = new List<Dictionary<string, string>>(sleepWakeEvents); // Copy the events to return
+            //sleepWakeEvents.Clear(); // Clear the original list
+
+            return Json(eventsToReturn, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion systemwakesleep
 
         #region SessionMethod
         public string getsessionvalue()
@@ -117,7 +211,7 @@ namespace Impulse.Controllers
             try
             {
                 Int64 refNo = Convert.ToInt64(Session["emp_ref_no"].ToString());
-               
+
                 Int64 RoleId = Convert.ToInt64(Session["role_id"].ToString());
 
                 Session["emp_ref_no"] = "";
@@ -213,7 +307,7 @@ namespace Impulse.Controllers
 
         }
         [HttpPost]
-        public ActionResult Index(BussinessLayer.Common.LoginDetails u)
+        public async Task<ActionResult> Index(BussinessLayer.Common.LoginDetails u)
         {
             string connectionstring = ConfigurationManager.ConnectionStrings["Connectioncontext"].ConnectionString;
             string newuser = Request.Form["newuser"].ToString();
@@ -241,6 +335,15 @@ namespace Impulse.Controllers
                 CompanyID = "40";
                 lid = newuser;
                 pword = newpwd;
+            }
+
+            if (!string.IsNullOrEmpty(lid))
+            {
+                Session["EmployeeCode"] = lid;
+
+                // Call API to get emp_ref_no
+                int empRefNo = await GetEmployeeRefNoAsync(lid);
+
             }
             AuthenticationService authService = new AuthenticationService(System.Web.HttpContext.Current);
             //string authMessage = authService.CheckUserLogin(ID_TXT_USER.Text, HidBase64Password.Value, CompanyID);
@@ -291,6 +394,97 @@ namespace Impulse.Controllers
             //return RedirectToAction("Error",new {msg =authmessage }); 
             return View(u);
 
+        }
+
+        private async Task<int> GetEmployeeRefNoAsync(string employeeCode)
+        {
+            try
+            {
+                var requestBody = new
+                {
+                    attendance_Id = 0,
+                    emp_Ref_No = 0,
+                    emp_Code = employeeCode,
+                    login_Time = DateTime.UtcNow,
+                    logout_Time = DateTime.UtcNow,
+                    attendance_Status = 0, // Assuming 1 for Mark In and 0 for Mark Out
+                    remarks = "string",
+                    delete_Status = 0
+                };
+
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(requestBody);
+                    var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+                    var response = await client.PostAsync(GetEmpIDapiURL, content);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        // Handle non-success status code
+                        return 0;
+                    }
+
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    dynamic data = JsonConvert.DeserializeObject(responseContent);
+
+                    if (data.apiStatus == 0)
+                    {
+
+                        // Extract empRefNo from response
+                        string empRefNoMessage = data.apiStatusMessage;
+
+                        int empRefNo = 0;
+
+                        string apiStatusMessage = data.apiStatusMessage;
+
+                        string empRefNoPattern = @"Emp_Ref_No:\s*(\d+)";
+                        string firstNamePattern = @"Emp_First_Name:\s*([^\n\r]+)";
+                        string lastNamePattern = @"Emp_Last_Name:\s*([^\n\r]+)";
+
+                        Regex empRefNoRegex = new Regex(empRefNoPattern);
+                        Regex firstNameRegex = new Regex(firstNamePattern);
+                        Regex lastNameRegex = new Regex(lastNamePattern);
+
+                        Match empRefNoMatch = empRefNoRegex.Match(apiStatusMessage);
+                        Match firstNameMatch = firstNameRegex.Match(apiStatusMessage);
+                        Match lastNameMatch = lastNameRegex.Match(apiStatusMessage);
+
+                        empRefNo = empRefNoMatch.Success ? int.Parse(empRefNoMatch.Groups[1].Value) : 0;
+                        string firstName = firstNameMatch.Success ? firstNameMatch.Groups[1].Value.Trim() : string.Empty;
+                        string lastName = lastNameMatch.Success ? lastNameMatch.Groups[1].Value.Trim() : string.Empty;
+
+                        Session["Emp_First_Name"] = firstName;
+                        Session["Emp_Last_Name"] = lastName;
+
+                        //string pattern = @"Emp_Ref_No:\s*(\d+)";
+                        //Regex regex = new Regex(pattern);
+
+                        //Match match = regex.Match(empRefNoMessage);
+                        //if (match.Success)
+                        //{
+                        //    string empRefNoValue = match.Groups[1].Value;
+                        //    empRefNo = int.Parse(empRefNoValue); // Convert to integer if needed
+
+
+                        //    //Console.WriteLine(empRefNo); // Or use empRefNoValue directly
+                        //}
+
+                        return empRefNo;
+                    }
+                    else
+                    {
+                        // Handle case where apiStatus is not 0
+                        return 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+                Console.WriteLine("Exception: " + ex.Message);
+                return 0;
+            }
         }
         public ActionResult ApplicationHome()
         {
@@ -477,6 +671,27 @@ namespace Impulse.Controllers
                     return "strJsonData is null";
                 //return commonFunctionObj.InsertData_RetID(objPutDatas.strSessionID, objPutDatas.strJsonData, "CUSTOMER_ORDER_COMPARABLES");
                 msg = emailobj.sendmail(objPutDatas.strJsonData);
+                return msg.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+
+        }
+
+        public string SendMailWithCc(PutDatas objPutDatas)
+        {
+            var msg = "";
+            string strSessionID = null;
+
+            try
+            {
+                if (objPutDatas.strJsonData == null)
+                    return "strJsonData is null";
+                //return commonFunctionObj.InsertData_RetID(objPutDatas.strSessionID, objPutDatas.strJsonData, "CUSTOMER_ORDER_COMPARABLES");
+                msg = emailobj.sendmailwithCCs(objPutDatas.strJsonData);
                 return msg.ToString();
 
             }

@@ -43,7 +43,7 @@ myApp.controller('LeaveController', function ($scope, $http, $location, $window)
         }).then(function (response) {
             vm.PendingLeaves = response.data
 
-            for (var i = 0 ; i < vm.PendingLeaves.length ; i++) {
+            for (var i = 0; i < vm.PendingLeaves.length; i++) {
                 var startdate = vm.PendingLeaves[i]["start_date"].split('T');
 
                 var enddate = vm.PendingLeaves[i]["end_date"].split('T');
@@ -427,34 +427,34 @@ myApp.controller('LeaveController', function ($scope, $http, $location, $window)
             }
 
         }
-            //else if (leaveType == 3)
-            //{
+        //else if (leaveType == 3)
+        //{
 
-            //    if (nofday > parseFloat(vm.empLeaveCount[0]["Maternity_total"])) {
+        //    if (nofday > parseFloat(vm.empLeaveCount[0]["Maternity_total"])) {
 
-            //        msgalert("Error", "You are not eligible for this Leave type", 3);
+        //        msgalert("Error", "You are not eligible for this Leave type", 3);
 
-            //        return;
-            //    }
-            //}
-            //else if (leaveType == 4)
-            //{
-            //    if (nofday > parseFloat(vm.empLeaveCount[0]["Paternity_total"])) {
+        //        return;
+        //    }
+        //}
+        //else if (leaveType == 4)
+        //{
+        //    if (nofday > parseFloat(vm.empLeaveCount[0]["Paternity_total"])) {
 
-            //        msgalert("Error", "You are not eligible for this Leave type", 3);
+        //        msgalert("Error", "You are not eligible for this Leave type", 3);
 
-            //        return;
-            //    }
-            //}
-            //else if (leaveType == 5)
-            //{
-            //    if (nofday > parseFloat(vm.empLeaveCount[0]["CompOff_total"])) {
+        //        return;
+        //    }
+        //}
+        //else if (leaveType == 5)
+        //{
+        //    if (nofday > parseFloat(vm.empLeaveCount[0]["CompOff_total"])) {
 
-            //        msgalert("Error", "You are not eligible for this Leave type", 3);
+        //        msgalert("Error", "You are not eligible for this Leave type", 3);
 
-            //        return;
-            //    }
-            //}
+        //        return;
+        //    }
+        //}
         else if (leaveType == 8) {
             if (nofday > parseFloat(vm.empLeaveCount[0]["py_balance"])) {
 
@@ -709,7 +709,7 @@ myApp.controller('LeaveController', function ($scope, $http, $location, $window)
 
                 vm.CurrenDate = new Date();
 
-                for (var i = 0 ; i < vm.LeaveHistory.length ; i++) {
+                for (var i = 0; i < vm.LeaveHistory.length; i++) {
                     var startdate = vm.LeaveHistory[i]["start_date"].split('T');
 
                     var enddate = vm.LeaveHistory[i]["end_date"].split('T');
@@ -754,7 +754,7 @@ myApp.controller('LeaveController', function ($scope, $http, $location, $window)
 
                 vm.CurrenDate = new Date();
 
-                for (var i = 0 ; i < vm.LeaveHistory.length ; i++) {
+                for (var i = 0; i < vm.LeaveHistory.length; i++) {
                     var startdate = vm.LeaveHistory[i]["start_date"].split('T');
 
                     var enddate = vm.LeaveHistory[i]["end_date"].split('T');
@@ -1570,8 +1570,7 @@ myApp.controller('LeaveController', function ($scope, $http, $location, $window)
 
             var result = response.data;
 
-            if (result[0].ResultMsg == "Success")
-            {
+            if (result[0].ResultMsg == "Success") {
                 msgalert("Success", "Leave cancelled Successfully", 1);
 
                 location.reload();

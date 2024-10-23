@@ -189,6 +189,7 @@
                                 <th> Status  </th>
                                 <th> Approve /Reject Reason  </th>
                                 <th> Cancel Leave </th>
+                                @* For Attendance *@
                                 <th> Cancelled Reason  </th>
                             </tr>
                         </thead>
@@ -203,212 +204,215 @@
                                 <td> {{lh.status_reason}} </td>
                                 <td> {{lh.approvalReason}} </td>
                                 <td>
-                                    <div ng-if="lh.is_approved == '1'">
-                                        <button type="button" id="{{lh.leave_ent_ref_no}}" name="{{lh.leave_ent_ref_no}}" onclick="openCancelModel(this)" class="btn btn-outline red btn-sm" data-toggle="modal" data-target="#LeaveCancelModal">Cancel Leave</button>
-                                    </div>
-                                    
-                                </td>
-                                <td> {{lh.cancellation_reason}} </td>
-                                <td>
-                                    @*<div class="mt-action-buttons">
-                <div ng-if="lh.is_approved == '0'">
-                    <div class="btn-group btn-group-circle">
-                        <button type="button" id="{{lh.leave_ent_ref_no}}" ng-click="ModifyLeave(lh.leave_ent_ref_no)" class="btn green btn-outline" style="margin-right:0px;">Modify</button>
-                        <button type="button" id="{{lh.leave_ent_ref_no}}" ng-click="UpdateLeaveDetails(3,lh.leave_ent_ref_no)" class="btn red btn-outline" style="margin-right: 0px;" data-target="#CancelModal" data-toggle="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>*@
-                                    @*<div ng-if="lh.is_approved == '1' && lh.end_date > CurrenDate">
-                <div class="btn-group btn-group-circle">
-                    <button type="button" id="{{lh.leave_ent_ref_no}}" ng-click="UpdateLeaveDetails(3,lh.leave_ent_ref_no)" class="btn red btn-outline" style="margin-right: 0px;" data-target="#CancelModal" data-toggle="modal">Cancel</button>
-                </div>
-            </div>*@
-                                    <div ng-if="lh.is_approved == '0'">
-                                        <i class="fas fa-exclamation-circle" style="margin-left: 45px;font-size:30px;color: #fff456;text-shadow: 1px 1px 10px black;margin-top:15px;"></i>
-                                    </div>
-                                    <div ng-if="lh.is_approved == '1'">
-                                        <i class="far fa-check-circle" style="margin-left: 45px;font-size:30px;color:#26C281;margin-top:15px;"></i>
-                                    </div>
-                                    <div ng-if="lh.is_approved == '2'">
-                                        <i class="far fa-times-circle" style="margin-left: 45px;font-size:30px;color:#E35B5A;margin-top:15px;"></i>
-                                    </div>
-                                    <div ng-if="lh.is_approved == '3'">
-                                        <i class="fa fa-ban" style="margin-left: 45px;font-size:30px;color:#de4f5a;margin-top:15px;"></i>
-                                    </div>
+                                    @* For Attendance *@
+                                <div ng-if="lh.is_approved == '1'">
+                                    <button type="button" id="{{lh.leave_ent_ref_no}}" name="{{lh.leave_ent_ref_no}}" onclick="openCancelModel(this)" class="btn btn-outline red btn-sm" data-toggle="modal" data-target="#LeaveCancelModal">Cancel Leave</button>
+                                </div>
 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            </td>
+                            <td> {{lh.cancellation_reason}} </td>
+                            <td>
+                                @*<div class="mt-action-buttons">
+                                        <div ng-if="lh.is_approved == '0'">
+                                            <div class="btn-group btn-group-circle">
+                                                <button type="button" id="{{lh.leave_ent_ref_no}}" ng-click="ModifyLeave(lh.leave_ent_ref_no)" class="btn green btn-outline" style="margin-right:0px;">Modify</button>
+                                                <button type="button" id="{{lh.leave_ent_ref_no}}" ng-click="UpdateLeaveDetails(3,lh.leave_ent_ref_no)" class="btn red btn-outline" style="margin-right: 0px;" data-target="#CancelModal" data-toggle="modal">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                @*<div ng-if="lh.is_approved == '1' && lh.end_date > CurrenDate">
+                                        <div class="btn-group btn-group-circle">
+                                            <button type="button" id="{{lh.leave_ent_ref_no}}" ng-click="UpdateLeaveDetails(3,lh.leave_ent_ref_no)" class="btn red btn-outline" style="margin-right: 0px;" data-target="#CancelModal" data-toggle="modal">Cancel</button>
+                                        </div>
+                                    </div>*@
+                                <div ng-if="lh.is_approved == '0'">
+                                    <i class="fas fa-exclamation-circle" style="margin-left: 45px;font-size:30px;color: #fff456;text-shadow: 1px 1px 10px black;margin-top:15px;"></i>
+                                </div>
+                                <div ng-if="lh.is_approved == '1'">
+                                    <i class="far fa-check-circle" style="margin-left: 45px;font-size:30px;color:#26C281;margin-top:15px;"></i>
+                                </div>
+                                <div ng-if="lh.is_approved == '2'">
+                                    <i class="far fa-times-circle" style="margin-left: 45px;font-size:30px;color:#E35B5A;margin-top:15px;"></i>
+                                </div>
+                                <div ng-if="lh.is_approved == '3'">
+                                    <i class="fa fa-ban" style="margin-left: 45px;font-size:30px;color:#de4f5a;margin-top:15px;"></i>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
-            <div class="modal fade" id="LeaveCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-model="PendingLeaves.emp_ref_no">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title" id="exampleModalLabel">Leave Cancel</h2>
-                        </div>
-                        <div class="modal-body">
-                            <label style="font-size:20px;">Mention Reason for Cancelling Leave</label>
-                            <input type="text" style="margin-left: 50px; height:30px; width: 400px; color: black;" id="txtCancelReason" />
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onclick="CancelLeave()">Cancel Leave</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="modify">
-                <div class="col-md-6" style="margin-top:125px">
-                    <table class="table" style="box-shadow: 0px 0px 15px 2px #868f96">
-                        <thead>
-                            <tr class="centeralign">
-                                <th class="centeralign"> Type </th>
-                                <th class="centeralign"> Casual </th>
-                                <th class="centeralign"> Sick </th>
-                                <th class="centeralign"> Maternity </th>
-                                <th class="centeralign"> Paternity </th>
-                                <th class="centeralign"> Comp Off </th>
-                                <th class="centeralign"> On Duty </th>
-                                <th class="centeralign"> L O P </th>
-                                <th class="centeralign"> Compassionate </th>
-                            </tr>
-                        </thead>
-                        <tbody ng-repeat="lc in empLeaveCount">
-                            <tr class="centeralign">
-                                <td class="centeralign"> Taken </td>
-                                <td class="centeralign">{{lc.Casual_taken}}</td>
-                                <td class="centeralign">{{lc.Sick_taken}}</td>
-                                <td class="centeralign">{{lc.Maternity_taken}}</td>
-                                <td class="centeralign">{{lc.Paternity_taken}}</td>
-                                <td class="centeralign">{{lc.CompOff_taken}}</td>
-                                <td class="centeralign">{{lc.OnDuty_taken}}</td>
-                                <td class="centeralign">{{lc.LossofPay_taken}}</td>
-                                <td class="centeralign">{{lc.Compassionate_taken}}</td>
-                            </tr>
-                            <tr class="centeralign">
-                                <td class="centeralign"> Balance </td>
-                                <td class="centeralign">{{lc.Casual_total}}</td>
-                                <td class="centeralign">{{lc.Sick_total}}</td>
-                                <td class="centeralign">{{lc.Maternity_total}}</td>
-                                <td class="centeralign">{{lc.Paternity_total}}</td>
-                                <td class="centeralign">{{lc.CompOff_total}}</td>
-                                <td class="centeralign">-</td>
-                                <td class="centeralign">-</td>
-                                <td class="centeralign">-</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-6" ng-model="EmpLeaveHistory" style="margin-top:20px;">
-                    <div>
-                        <div class="form-group form-md-line-input has-info">
-                            <select class="form-control" id="ddlLeaveType">
-                                <option value="-1">Choose Leave Type</option>
-                                <option value="1">Earned/Casual Leave</option>
-                                <option value="2">Sick Leave</option>
-                                <option value="3">Maternity</option>
-                                <option value="4">Paternity</option>
-                                <option value="5">Comp Off</option>
-                                <option value="6">On Duty</option>
-                                <option value="7">Loss of Pay</option>
-                                <option value="8">Compassionate</option>
-                            </select>
-                            <label for="form_control_1">Leave Type</label>
-                        </div>
-                        <div class="form-group form-md-line-input">
-                            <textarea class="form-control" rows="3" placeholder="Enter Leave reason" id="txtReason" ng-model="EmpLeaveHistory[0].reason"></textarea>
-                            <label for="form_control_1" style=" color: #2679e0">Reason</label>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3" style=" color: #2679e0">Date Range</label>
-                            <div class="col-md-4">
-                                <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                                    <input type="text" class="form-control" name="from" id="txtfromdt" autocomplete="off" ng-model="EmpLeaveHistory[0].start_date">
-                                    <span class="input-group-addon"> to </span>
-                                    <input type="text" class="form-control" name="to" id="txtTodate" autocomplete="off" ng-model="EmpLeaveHistory[0].end_date" onchange="GetNofDays()">
-                                </div>
-                                <!-- /input-group -->
-                                <span class="help-block">  </span>
-                            </div>
-                        </div>
-                        <br /><br /><br />
-                        <div class="form-group">
-                            <label class="control-label col-md-3" style=" color: #2679e0">Total No.of Days</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="to" id="txttotal" style="width:50%;" ng-model="EmpLeaveHistory[0].no_of_days">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-
-                            <div class="col-md-12">
-                                <div class="input-group" id="DayHalf">
-                                    <div class="icheck-inline">
-                                        <label>
-                                            <input type="checkbox" ng-model="isChecked" id="isHalf" ng-change="GetNofDays()"> Is it a Half Day?
-                                        </label>
-                                    </div>
-                                </div>
-                                <button style="float:right" type="button" class="btn green btn-outline" id="btnsave" ng-click="UpdateLeaveDetails(1,EmpLeaveHistory[0].leave_ent_ref_no)">Save Change</button>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-model="PendingLeaves.emp_ref_no">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h2 class="modal-title" id="exampleModalLabel">Cancellation</h2>
-                                </div>
-                                <div class="modal-body">
-                                    <label style="font-size:20px;">Mention Reason for Cancelling Leave</label>
-                                    <input type="text" style="margin-left: 50px; height:30px; width: 400px; color: black;" id="txtCancelReason" />
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" ng-click="UpdateLeaveDetails(2,2)">Save changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Modal -->
-            <!--End Modal -->
-
         </div>
-        <!-- END CONTAINER -->
-        <!--[if lt IE 9]>
-        <script src="~/assets/global/plugins/respond.min.js"></script>
-        <script src="~/assets/global/plugins/excanvas.min.js"></script>
-        <![endif]-->
-        <!-- BEGIN CORE PLUGINS -->
-        <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-        <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
-        <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
-        <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-        <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-        <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-        <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
-        @*<script src="~/assets/pages/scripts/form-samples.min.js" type="text/javascript"></script>*@
-        @*<script src="~/assets/layouts/layout3/scripts/layout.min.js" type="text/javascript"></script>*@
-        @*<script src="~/assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>*@
-        <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-        <script src="~/assets/pages/scripts/components-date-time-pickers.min.js"></script>
-        <script src="~/assets/pages/scripts/components-date-time-pickers.js"></script>.
+
+        @* For Attendance *@
+        <div class="modal fade" id="LeaveCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-model="PendingLeaves.emp_ref_no">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLabel">Leave Cancel</h2>
+                    </div>
+                    <div class="modal-body">
+                        <label style="font-size:20px;">Mention Reason for Cancelling Leave</label>
+                        <input type="text" style="margin-left: 50px; height:30px; width: 400px; color: black;" id="txtCancelReason" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="CancelLeave()">Cancel Leave</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* For Attendance *@
+
+        <div id="modify">
+            <div class="col-md-6" style="margin-top:125px">
+                <table class="table" style="box-shadow: 0px 0px 15px 2px #868f96">
+                    <thead>
+                        <tr class="centeralign">
+                            <th class="centeralign"> Type </th>
+                            <th class="centeralign"> Casual </th>
+                            <th class="centeralign"> Sick </th>
+                            <th class="centeralign"> Maternity </th>
+                            <th class="centeralign"> Paternity </th>
+                            <th class="centeralign"> Comp Off </th>
+                            <th class="centeralign"> On Duty </th>
+                            <th class="centeralign"> L O P </th>
+                            <th class="centeralign"> Compassionate </th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="lc in empLeaveCount">
+                        <tr class="centeralign">
+                            <td class="centeralign"> Taken </td>
+                            <td class="centeralign">{{lc.Casual_taken}}</td>
+                            <td class="centeralign">{{lc.Sick_taken}}</td>
+                            <td class="centeralign">{{lc.Maternity_taken}}</td>
+                            <td class="centeralign">{{lc.Paternity_taken}}</td>
+                            <td class="centeralign">{{lc.CompOff_taken}}</td>
+                            <td class="centeralign">{{lc.OnDuty_taken}}</td>
+                            <td class="centeralign">{{lc.LossofPay_taken}}</td>
+                            <td class="centeralign">{{lc.Compassionate_taken}}</td>
+                        </tr>
+                        <tr class="centeralign">
+                            <td class="centeralign"> Balance </td>
+                            <td class="centeralign">{{lc.Casual_total}}</td>
+                            <td class="centeralign">{{lc.Sick_total}}</td>
+                            <td class="centeralign">{{lc.Maternity_total}}</td>
+                            <td class="centeralign">{{lc.Paternity_total}}</td>
+                            <td class="centeralign">{{lc.CompOff_total}}</td>
+                            <td class="centeralign">-</td>
+                            <td class="centeralign">-</td>
+                            <td class="centeralign">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6" ng-model="EmpLeaveHistory" style="margin-top:20px;">
+                <div>
+                    <div class="form-group form-md-line-input has-info">
+                        <select class="form-control" id="ddlLeaveType">
+                            <option value="-1">Choose Leave Type</option>
+                            <option value="1">Earned/Casual Leave</option>
+                            <option value="2">Sick Leave</option>
+                            <option value="3">Maternity</option>
+                            <option value="4">Paternity</option>
+                            <option value="5">Comp Off</option>
+                            <option value="6">On Duty</option>
+                            <option value="7">Loss of Pay</option>
+                            <option value="8">Compassionate</option>
+                        </select>
+                        <label for="form_control_1">Leave Type</label>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                        <textarea class="form-control" rows="3" placeholder="Enter Leave reason" id="txtReason" ng-model="EmpLeaveHistory[0].reason"></textarea>
+                        <label for="form_control_1" style=" color: #2679e0">Reason</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style=" color: #2679e0">Date Range</label>
+                        <div class="col-md-4">
+                            <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
+                                <input type="text" class="form-control" name="from" id="txtfromdt" autocomplete="off" ng-model="EmpLeaveHistory[0].start_date">
+                                <span class="input-group-addon"> to </span>
+                                <input type="text" class="form-control" name="to" id="txtTodate" autocomplete="off" ng-model="EmpLeaveHistory[0].end_date" onchange="GetNofDays()">
+                            </div>
+                            <!-- /input-group -->
+                            <span class="help-block">  </span>
+                        </div>
+                    </div>
+                    <br /><br /><br />
+                    <div class="form-group">
+                        <label class="control-label col-md-3" style=" color: #2679e0">Total No.of Days</label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="to" id="txttotal" style="width:50%;" ng-model="EmpLeaveHistory[0].no_of_days">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-md-12">
+                            <div class="input-group" id="DayHalf">
+                                <div class="icheck-inline">
+                                    <label>
+                                        <input type="checkbox" ng-model="isChecked" id="isHalf" ng-change="GetNofDays()"> Is it a Half Day?
+                                    </label>
+                                </div>
+                            </div>
+                            <button style="float:right" type="button" class="btn green btn-outline" id="btnsave" ng-click="UpdateLeaveDetails(1,EmpLeaveHistory[0].leave_ent_ref_no)">Save Change</button>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal fade" id="CancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-model="PendingLeaves.emp_ref_no">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="modal-title" id="exampleModalLabel">Cancellation</h2>
+                            </div>
+                            <div class="modal-body">
+                                <label style="font-size:20px;">Mention Reason for Cancelling Leave</label>
+                                <input type="text" style="margin-left: 50px; height:30px; width: 400px; color: black;" id="txtCancelReason" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" ng-click="UpdateLeaveDetails(2,2)">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <!--End Modal -->
 
     </div>
+    <!-- END CONTAINER -->
+    <!--[if lt IE 9]>
+    <script src="~/assets/global/plugins/respond.min.js"></script>
+    <script src="~/assets/global/plugins/excanvas.min.js"></script>
+    <![endif]-->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="~/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="~/assets/global/scripts/app.min.js" type="text/javascript"></script>
+    @*<script src="~/assets/pages/scripts/form-samples.min.js" type="text/javascript"></script>*@
+    @*<script src="~/assets/layouts/layout3/scripts/layout.min.js" type="text/javascript"></script>*@
+    @*<script src="~/assets/layouts/layout3/scripts/demo.min.js" type="text/javascript"></script>*@
+    <script src="~/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+    <script src="~/assets/pages/scripts/components-date-time-pickers.min.js"></script>
+    <script src="~/assets/pages/scripts/components-date-time-pickers.js"></script>.
 
-    <script>
+</div>
+
+<script>
         function GetNofDays()
         {
             var frmDt = $('#txtfromdt').val();
@@ -436,7 +440,7 @@
                 $("#DayHalf").removeClass('hidden');
             }
         }
-        
+
         var refNo, roleId;
 
         function doc_keyUp(e) {
@@ -453,11 +457,11 @@
             var EmprefNo = $('#ddlEmployee').val();
 
             angular.element(document.getElementById('controllerID')).scope().MyLeaveHistory(EmprefNo,1);
-            
+
         }
 
         var leaveEntrRefNo = 0;
-
+	//for attendance
         function openCancelModel(leaveRefNo)
         {
             leaveEntrRefNo = leaveRefNo.id;
@@ -476,6 +480,7 @@
 
             angular.element(document.getElementById('controllerID')).scope().CancelApprovedLeave(leaveEntrRefNo,cancelReason, refNo);
         }
+        //for attendnace ends
 
         $(document).ready(function () {
 
@@ -489,7 +494,7 @@
 
         });
 
-    </script>
+</script>
 </body>
 </html>
 <script src="~/Scripts/js/angular.min.js"></script>

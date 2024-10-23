@@ -71,13 +71,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             msgalert("Success", "Experience Deleted", 1);
 
-          //  var exModal = document.getElementById('experience_info');
+            //  var exModal = document.getElementById('experience_info');
 
-          //  exModal.style.display = "none";
+            //  exModal.style.display = "none";
 
-          //  var exDelModal = document.getElementById('Exper_DeleteModal');
+            //  var exDelModal = document.getElementById('Exper_DeleteModal');
 
-          //  exDelModal.style.display = "none";
+            //  exDelModal.style.display = "none";
 
             vm.BindValues(sEmpRefNo);
 
@@ -86,34 +86,34 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         });
     };
 
-    vm.saveEmployeeExperience = function (id,type){
+    vm.saveEmployeeExperience = function (id, type) {
 
-        var company = $('#txtCompany'+ id).val();
+        var company = $('#txtCompany' + id).val();
         var location = $('#txtLocation' + id).val();
         var exper = $('#txtExp' + id).val();
         var design = $('#txtDesi' + id).val();
         var refName = $('#txtReference' + id).val();
         var refCont = $('#txtPhonenumber' + id).val();
 
-        if(company == ''){
+        if (company == '') {
 
             msgalert("Error", "Please Enter Company Name", 3);
 
             return;
         }
-        if(location == ''){
+        if (location == '') {
 
             msgalert("Error", "Please Enter Location", 3);
 
             return;
         }
-        if(exper == ''){
+        if (exper == '') {
 
             msgalert("Error", "Please Enter Experience", 3);
 
             return;
         }
-        if(design == ''){
+        if (design == '') {
 
             msgalert("Error", "Please Enter Job Position", 3);
 
@@ -121,8 +121,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         }
 
 
-        if (type == 1)
-        {
+        if (type == 1) {
             var valueData = "{emp_ref_no:'" + sEmpRefNo + "', company_name: '" + company + "', location: '" + location + "',experience: '" + exper + "',designation: '" + design
                 + "',reference: '" + refName + "',phone_number: '" + refCont + "',delete_status: '0' }";
 
@@ -146,8 +145,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             });
         }
-        else
-        {
+        else {
             var sCondition = "where emp_exp_det_id = " + id;
 
             var valueData = "{company_name: '" + company + "', location: '" + location + "',experience: '" + exper + "',designation: '" + design
@@ -178,7 +176,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             });
         }
 
-        
+
 
     };
 
@@ -204,14 +202,14 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         }).then(function (response) {
 
             vm.details = response.data
-            
+
 
         }, function (error) {
 
         });
 
     };
-    
+
     vm.GetEmplist = function (roleId, refNo) {
         var Condition;
         var param = {
@@ -245,25 +243,23 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         }).then(function (response) {
             vm.EmpList = response.data
 
-            for (var i = 0; i < vm.EmpList.length; i++)
-            {
-                if(vm.EmpList[i]["file_path"] === undefined)
-                {
+            for (var i = 0; i < vm.EmpList.length; i++) {
+                if (vm.EmpList[i]["file_path"] === undefined) {
                     vm.EmpList[i]["file_path"] = "../Content/Image/avatar.png";
                 }
             }
-            
+
         }, function (error) {
 
         });
 
     };
 
-  
+
     vm.GetAttendanceMasterValues = function () {
 
         var Condition = "";
-       
+
         var strJsonDatas = eval({ strCondition: Condition });
 
         var msg2 = JSON.stringify(strJsonDatas);
@@ -272,12 +268,11 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             method: 'POST',
             url: 'SelectAttendanceMaster',
             data: msg2
-        }).then(function (response)
-        {
+        }).then(function (response) {
             vm.AttendanceType = response.data
 
             //for (var i = 0; i < vm.EmpList.length; i++) {
-                
+
             //}
 
         }, function (error) {
@@ -294,27 +289,23 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             val[i] = $(this)[0].id;
         });
 
-        if(val.length == 0)
-        {
+        if (val.length == 0) {
             msgalert("Error", "Please Choose any one Employee", 3)
             return;
         }
 
         var atype = $('#ddlAttType').val();
 
-        if(atype == -2)
-        {
+        if (atype == -2) {
             msgalert("Error", "Please Choose valid attendance type", 3)
             document.getElementById('ddlAttType').style.borderColor = "red";
             return;
         }
-        else
-        {
+        else {
             document.getElementById('ddlAttType').style.borderColor = "#e3e3e3";
         }
 
-        if (val[0] == "checkall")
-        {
+        if (val[0] == "checkall") {
             val[0] = 0;
         }
 
@@ -333,9 +324,8 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         var success;
 
         var temp = 0;
-        
-        for (var i = 0; i < val.length; i++)
-        {
+
+        for (var i = 0; i < val.length; i++) {
             var values = val[i] + '~' + month + '~' + year + '~' + day + '~' + atype + '~';
 
             var paramNames = [], paramValues = [];
@@ -356,30 +346,25 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 method: 'POST',
                 url: 'SaveAttendance',
                 data: msg2
-            }).then(function (response) 
-            {
-                if (temp == 0)
-                {
+            }).then(function (response) {
+                if (temp == 0) {
                     loader(1);
                 }
-                
+
 
                 vm.Sample = response.data
 
                 temp++;
 
-                if (temp == val.length)
-                {
+                if (temp == val.length) {
                     var result = vm.Sample[0]["ResultMsg"];
 
-                    if (result == "Inserted" || result == "Updated")
-                    {
+                    if (result == "Inserted" || result == "Updated") {
                         vm.GetOneDayValue(refNo, roleId)
 
                         loader(0);
 
-                        if (month < 4 && atype == 5)
-                        {
+                        if (month < 4 && atype == 5) {
 
                         }
 
@@ -390,18 +375,18 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                     }
                 }
 
-                
+
 
             }, function (error) {
 
             });
-            
+
         }
 
-        
+
     };
 
-    vm.GetOneDayValue = function ( refno, roleID) {
+    vm.GetOneDayValue = function (refno, roleID) {
 
         var dt = $('#txtDate').val();
 
@@ -413,12 +398,10 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var year = spDt[2];
 
-        if (roleID == 1 || roleID == 9 || roleID == 10)
-        {
+        if (roleID == 1 || roleID == 9 || roleID == 10) {
             var Condition = "where month = " + month + " and year = " + year + "  and day = " + day + " and delete_status = 0 order by attendance_type desc";
         }
-        else
-        {
+        else {
             var Condition = "where month = " + month + " and year = " + year + "  and day = " + day + " and report_to_manager = " + refno + " and delete_status = 0 order by attendance_type desc";
         }
 
@@ -430,18 +413,14 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             method: 'POST',
             url: 'SelectCurrentAttendance',
             data: msg2
-        }).then(function (response)
-        {
+        }).then(function (response) {
             vm.CurrentAttendance = response.data
 
-            if(vm.CurrentAttendance.length >= 0 )
-            {
-                if (roleID == 1 || roleID == 9 || roleID == 10)
-                {
+            if (vm.CurrentAttendance.length >= 0) {
+                if (roleID == 1 || roleID == 9 || roleID == 10) {
                     var Condition = "where delete_status = 0 order by emp_ref_no asc";
                 }
-                else
-                {
+                else {
                     var Condition = "where report_to_manager = " + refno + " and delete_status = 0 order by emp_ref_no asc";
                 }
 
@@ -453,30 +432,24 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                     method: 'POST',
                     url: 'SelectEmployeeDetails',
                     data: msg2
-                }).then(function (response)
-                {
+                }).then(function (response) {
                     vm.CurrentDateAttendance = response.data
-                    
+
                     var temp = 0;
 
-                    if (vm.CurrentDateAttendance.length != 0)
-                    {
+                    if (vm.CurrentDateAttendance.length != 0) {
                         var presentValue = vm.CurrentAttendance;
 
                         var curValue = presentValue;
 
                         var length = curValue.length;
-                        
-                        for( var i = 0 ; i < vm.CurrentDateAttendance.length; i++)
-                        {
+
+                        for (var i = 0; i < vm.CurrentDateAttendance.length; i++) {
                             temp = 1;
 
-                            if (length != 0)
-                            {
-                                for (var j = 0; j < length; j++)
-                                {
-                                    if (curValue[j]["emp_ref_no"] != vm.CurrentDateAttendance[i]["emp_ref_no"])
-                                    {
+                            if (length != 0) {
+                                for (var j = 0; j < length; j++) {
+                                    if (curValue[j]["emp_ref_no"] != vm.CurrentDateAttendance[i]["emp_ref_no"]) {
                                         var obj = {
                                             emp_ref_no: vm.CurrentDateAttendance[i]["emp_ref_no"],
                                             emp_name: vm.CurrentDateAttendance[i]["emp_first_name"] + ' ' + vm.CurrentDateAttendance[i]["emp_last_name"]
@@ -486,14 +459,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                                         temp = 0;
                                     }
                                 }
-                                if (temp!=0){
+                                if (temp != 0) {
                                     vm.CurrentAttendance.push(obj);
                                 }
-                                
+
 
                             }
-                            else
-                            {
+                            else {
                                 var obj = {
                                     emp_ref_no: vm.CurrentDateAttendance[i]["emp_ref_no"],
                                     emp_name: vm.CurrentDateAttendance[i]["emp_first_name"] + ' ' + vm.CurrentDateAttendance[i]["emp_last_name"]
@@ -578,8 +550,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
                 });
             }
-            else
-            {
+            else {
                 for (var i = 0; i < vm.CurrentAttendance.length; i++) {
 
                     //for attendance
@@ -658,62 +629,51 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
     };
 
-    vm.changeBackground = function (id)
-    {
-        var value = $('#'+id).val();
+    vm.changeBackground = function (id) {
+        var value = $('#' + id).val();
 
-        if (value == 0)
-        {
+        if (value == 0) {
             document.getElementById(id).style.backgroundColor = "green";
             document.getElementById(id).style.color = "white";
         }
-        else if (value == 1)
-        {
+        else if (value == 1) {
             document.getElementById(id).style.backgroundColor = "green";
             document.getElementById(id).style.color = "white";
         }
-        else if (value == 2)
-        {
+        else if (value == 2) {
             document.getElementById(id).style.backgroundColor = "green";
             document.getElementById(id).style.color = "white";
         }
-        else if (value == 3)
-        {
+        else if (value == 3) {
             document.getElementById(id).style.backgroundColor = "green";
             document.getElementById(id).style.color = "white";
         }
-        else if (value == 4)
-        {
+        else if (value == 4) {
             document.getElementById(id).style.backgroundColor = "green";
             document.getElementById(id).style.color = "white";
         }
-        else if (value == 5)
-        {
+        else if (value == 5) {
             document.getElementById(id).style.backgroundColor = "green";
             document.getElementById(id).style.color = "white";
         }
-        else if (value == 6)
-        {
+        else if (value == 6) {
             document.getElementById(id).style.backgroundColor = "green";
             document.getElementById(id).style.color = "white";
         }
 
     };
 
-    vm.GetAttendance = function (roleId, refNo)
-    {
+    vm.GetAttendance = function (roleId, refNo) {
         var month = $('#ddlMonth').val();
 
         var year = $('#ddlYear').val();
 
-        if (month == 0)
-        {
+        if (month == 0) {
             msgalert("Error", "Please choose Month", 3);
             return;
         }
 
-        if (year == 0)
-        {
+        if (year == 0) {
             msgalert("Error", "Please choose Year", 3);
             return;
         }
@@ -744,14 +704,12 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             method: 'POST',
             url: 'SelectEmployeeAttendance',
             data: msg2
-        }).then(function (response)
-        {
+        }).then(function (response) {
             vm.AttendaceList = response.data
 
             vm.GetAttendanceMasterValues();
 
-            if (vm.AttendaceList.length == 0)
-            {
+            if (vm.AttendaceList.length == 0) {
                 msgalert("Error", "No Datas Found for this Month", 3);
                 return;
             }
@@ -768,11 +726,9 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             vm.AL = vm.AttendaceList;
 
-            for (var i = 0; i < vm.AL.length; i++)
-            {
+            for (var i = 0; i < vm.AL.length; i++) {
 
-                for (var j = 1; j <= 31; j++)
-                {
+                for (var j = 1; j <= 31; j++) {
                     switch (vm.AL[i]["d" + j]) {
 
                         //For Attendance
@@ -847,7 +803,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                         //    break;
                     }
                 }
-                
+
             }
 
         }, function (error) {
@@ -863,7 +819,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var year = $('#ddlYear').val();
 
-        
+
         if (year == 0) {
             msgalert("Error", "Please choose Year", 3);
             return;
@@ -892,8 +848,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             //vm.GetAttendanceMasterValues();
 
-            if (vm.MyAttendaceList.length == 0)
-            {
+            if (vm.MyAttendaceList.length == 0) {
                 msgalert("Error", "No Datas Found for this Year", 3);
                 return;
             }
@@ -1060,7 +1015,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 headers: { "Content-Type": "application/json" }
             });
             post1.success(function (data, status) {
-                
+
                 msgalert("Success", "Employee Deleted Successfully", 1);
 
                 window.location.reload();
@@ -1104,7 +1059,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         scale_id = id;
 
-        var Condition = "where sl_no= "+id;
+        var Condition = "where sl_no= " + id;
 
         var strJsonDatas = eval({ strCondition: Condition });
 
@@ -1119,7 +1074,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             vm.ScaleValue = response.data
 
             scale_name = vm.ScaleValue[0]["scale_name"];
-            
+
         }, function (error) {
 
         });
@@ -1149,20 +1104,17 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             vm.EmpScaleId = vm.ScaleValue[0]["scale_id"];
 
-            if(vm.ScaleValue[0]["bank_name"] === undefined)
-            {
+            if (vm.ScaleValue[0]["bank_name"] === undefined) {
                 vm.ScaleValue[0]["bank_name"] = "HDFC";
             }
 
             $("#paymentMethod").val(vm.ScaleValue[0]["payment_method"]).change();
 
-            if(vm.ScaleValue[0]["pf_na"] == 1)
-            {
+            if (vm.ScaleValue[0]["pf_na"] == 1) {
                 document.getElementById("pfNA").checked = true;
             }
 
-            if(vm.ScaleValue[0]["esi_na"] == 1)
-            {
+            if (vm.ScaleValue[0]["esi_na"] == 1) {
                 document.getElementById("esiNA").checked = true;
             }
 
@@ -1198,12 +1150,11 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         vm.GetEmpExp(ref);
 
-       // vm.GetSalaryDetails(ref);
+        // vm.GetSalaryDetails(ref);
 
     };
-    
-    function resetValues()
-    {
+
+    function resetValues() {
         $("#txtScaleName").val("");
         $("#txtSalBasic").val("");
         $("#txtSalHRA").val("");
@@ -1222,7 +1173,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
     }
 
     vm.ExpEdit = function (index) {
- 
+
         var table = document.getElementById('exptbl');
 
         var rows = index + 1;
@@ -1242,14 +1193,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var fileName = fPath + '/' + fName;
 
-        if (fName != "")
-        {
+        if (fName != "") {
             var fileType = fName.split('.');
 
             fileType = fileType[1];
 
             if (fileType != "pdf") {
-                
+
                 parent.$('#expDocImg').attr('src', '../content/Image/image_icon.png');
 
             }
@@ -1291,8 +1241,8 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         a_gratuity = parseInt($("#txtSalGratuity").val()) * 12;
         a_annual_bonus = parseInt($("#txtSalAnnual").val()) * 12;
         a_pension = parseInt($("#txtSalPension").val()) * 12;
-        a_others = parseInt($("#txtSalOthers").val()) * 12; 
-        a_prof_tax = parseInt($("#txtSalProftax").val()) * 12; 
+        a_others = parseInt($("#txtSalOthers").val()) * 12;
+        a_prof_tax = parseInt($("#txtSalProftax").val()) * 12;
         a_total_deduction = parseInt($("#txtSalDeduction").val()) * 12;
         a_gross_pay = parseInt($("#txtSalGrossPay").val()) * 12;
         a_net_pay = parseInt($("#txtSalNetPay").val()) * 12;
@@ -1435,8 +1385,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             ESIemp = 0;
         }
 
-        if(payment < 0)
-        {
+        if (payment < 0) {
             msgalert("Warning", "Please Choose Payment Method", 2);
 
             return;
@@ -1456,15 +1405,14 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var pf_na = 0, esi_na = 0;
 
-        if (document.getElementById("pfNA").checked == true)
-        {
+        if (document.getElementById("pfNA").checked == true) {
             pf_na = 1;
         }
 
         if (document.getElementById("esiNA").checked == true) {
             esi_na = 1;
         }
-        
+
         var valueData = "{scale_name:'" + scale + "',scale_id:'" + scale_id + "',basic:" + basic + ",HRA:" + hra + ",living_allowance:" + living + ",conveyance_allowance:" + conveyance
             + ",production_allowance:" + production + ", medical_allowance:" + medical + ",incentives:" + incentive + ",total_deduction:" + total_deduction + ",pension:" + pension
             + ",income_tax:" + incomeTax + ",others:" + others + ",gross_pay:" + GrossPay + ",PF:" + pf + ",ESI:" + esi + ",net_pay:" + NetPay
@@ -1472,7 +1420,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             + ",a_basic:" + a_basic + ",a_HRA:" + a_HRA + ",a_living_allowance:" + a_living_allowance + ",a_conveyance_allowance:" + a_conveyance_allowance + ",a_production_allowance:" + a_production_allowance
             + ",a_medical_allowance:" + a_medical_allowance + ",a_incentives:" + a_incentives + ",a_total_deduction:" + a_total_deduction + ",a_pension:" + a_pension + ",a_income_tax:" + a_income_tax
             + ",a_others:" + a_others + ",a_gross_pay:" + a_gross_pay + ",a_PF:" + a_PF + ",a_ESI:" + a_ESI + ",a_net_pay:" + a_net_pay + ",a_PF_employer:" + a_PF_employer
-            + ",a_ESI_employer:" + a_ESI_employer + ",a_gratuity:" + a_gratuity + ",a_annual_bonus:" + a_annual_bonus + ",a_total_cost_company: " + a_total_cost_company 
+            + ",a_ESI_employer:" + a_ESI_employer + ",a_gratuity:" + a_gratuity + ",a_annual_bonus:" + a_annual_bonus + ",a_total_cost_company: " + a_total_cost_company
             + ", payment_method: '" + payment + "',bank_name: '" + bankName + "',updated_by: '" + userRef + "',updated_date: '" + curDate + "',pf_na : " + pf_na + ", esi_na : " + esi_na + "}";
 
         var sCondition = "where ref_no = " + sEmpRefNo;
@@ -1489,8 +1437,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             headers: { "Content-Type": "application/json" }
         }).then(function (response) {
 
-            if (salaryFill != 1)
-            {
+            if (salaryFill != 1) {
                 var sCondition = "where emp_ref_no = " + sEmpRefNo;
 
                 var valueData = "{salary_fill: 1}";
@@ -1528,22 +1475,21 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
                 });
             }
-            else
-            {
+            else {
                 msgalert("Success", "Salary Updated Successfully", 1);
             }
-            
-            
+
+
         }, function (error) {
 
         });
     };
 
     vm.saveEmployeeEducationDetails = function (ref) {
-        
+
         var sCondition = "where ref_no = " + ref;
 
-        var sslcDocum, twelthDocum, gradDocum, pgradDocum, syllabus = 0 ;
+        var sslcDocum, twelthDocum, gradDocum, pgradDocum, syllabus = 0;
 
         var sslcPer = $('#txtsslcper').val();
         var sslcSyllabus = $('#ddlsslcsyllabus').val();
@@ -1560,14 +1506,14 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         var postgradYOP = $('#txtpgradyop').val();
         //var postgradDoc = document.getElementById('pgradDocDown').getAttribute("href");
 
-        
-        if (sslcPer == "" ) {
+
+        if (sslcPer == "") {
 
             msgalert("Error", "Enter SSLC Percentage", 3);
 
             return;
         }
-        if (sslcSyllabus < 0 ) {
+        if (sslcSyllabus < 0) {
 
             msgalert("Error", "Choose SSLC Syllabus", 3);
 
@@ -1591,7 +1537,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         if (postgrad == -1) {
             postgrad = syllabus;
         }
-       
+
 
         //if (sslcDoc != "null")
         //{
@@ -1685,7 +1631,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             var designation = $("#EmpDesignation").val();
 
             var reportManager = $("#EmpManager").val();
-            
+
             if (fName == "") {
                 msgalert("Error", "Enter First Name", 3);
 
@@ -1767,8 +1713,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 return;
             }
 
-            if (employeeCompany == 3)
-            {
+            if (employeeCompany == 3) {
                 var empShift = $("#ddlShift").val();
 
                 var empShiftTime = $("#ddlShiftTime").val();
@@ -1790,8 +1735,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             var dt = dob.split('/');
 
-            if (dt[0] > 12)
-            {
+            if (dt[0] > 12) {
                 dob = dt[1] + '/' + dt[0] + '/' + dt[2];
             }
 
@@ -1802,10 +1746,8 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 roleId = 2;
             }
 
-            if (level == 1)
-            {
-                if(designation == 17)
-                {
+            if (level == 1) {
+                if (designation == 17) {
                     roleId = 12;
                 }
                 //else
@@ -1820,13 +1762,12 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 + "',emp_level: '" + level + "',emp_desgination: '" + designation + "',report_to_manager: '" + reportManager + "',role_id: '" + roleId + "',updated_date: '" + curdate +
                 "',updated_by: '" + userRef + "'}";
 
-            if (employeeCompany == 3)
-            {
+            if (employeeCompany == 3) {
                 valueData = "{emp_first_name: '" + fName + "', emp_last_name: '" + lName + "',date_of_birth: '" + dob + "',email_id: '" + email + "',emp_joining_date: '" + joiningDate
-                + "',gender: '" + gender + "',local_street: '" + addr1 + "',local_level: '" + addr2 + "',local_unit: '" + city + "',local_state: '" + state
-                + "',local_country: '" + country + "',local_postal_code: '" + pincode + "',mobile_number: '" + mobile + "',emp_department: '" + department
-                + "',emp_level: '" + level + "',emp_desgination: '" + designation + "',report_to_manager: '" + reportManager + "',role_id: '" + roleId + "',updated_date: '" + curdate +
-                "',updated_by: '" + userRef + "',emp_shift: '" + empShift + "',emp_shift_time: '" + empShiftTime + "'}";
+                    + "',gender: '" + gender + "',local_street: '" + addr1 + "',local_level: '" + addr2 + "',local_unit: '" + city + "',local_state: '" + state
+                    + "',local_country: '" + country + "',local_postal_code: '" + pincode + "',mobile_number: '" + mobile + "',emp_department: '" + department
+                    + "',emp_level: '" + level + "',emp_desgination: '" + designation + "',report_to_manager: '" + reportManager + "',role_id: '" + roleId + "',updated_date: '" + curdate +
+                    "',updated_by: '" + userRef + "',emp_shift: '" + empShift + "',emp_shift_time: '" + empShiftTime + "'}";
             }
 
             var sCondition1 = "WHERE ref_no = " + ref;
@@ -1844,9 +1785,9 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 dataType: 'json',
                 headers: { "Content-Type": "application/json" }
             }).then(function (response) {
-                
 
-                
+
+
             }, function (error) {
 
             });
@@ -1880,23 +1821,19 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
                 return;
             }
-            if (marital == 2)
-            {
-                if (spouseName == "")
-                {
+            if (marital == 2) {
+                if (spouseName == "") {
                     msgalert("Error", "Enter Spouse Name", 3);
 
                     return;
                 }
-                if (spouseCont == "")
-                {
+                if (spouseCont == "") {
                     msgalert("Error", "Enter Spouse Contact", 3);
 
                     return;
                 }
             }
-            if (busstop == "")
-            {
+            if (busstop == "") {
                 msgalert("Error", "Enter Nearest Bus Stop", 3);
 
                 return;
@@ -1907,8 +1844,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             //    return;
             //}
-            if (aadhaar == "")
-            {
+            if (aadhaar == "") {
                 msgalert("Error", "Enter Aadhaar Number", 3);
 
                 return;
@@ -1920,7 +1856,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             //    return;
             //}
             if (esi == "") {
-                
+
                 esi = 0;
             }
             if (UAN == "") {
@@ -1946,13 +1882,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             var contact2 = $('#txtEmPhone2').val();
 
 
-            if (name1 == "" ) {
+            if (name1 == "") {
 
                 msgalert("Error", "Enter Primary Emergency Contact Name", 3);
 
                 return;
             }
-            if (relationship1 == "" ) {
+            if (relationship1 == "") {
 
                 msgalert("Error", "Enter Primary Emergency Contact Relationship", 3);
 
@@ -2000,7 +1936,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
     };
 
     vm.GetManagerList = function (refNo) {
-        
+
         var paramNames = [], paramValues = [];
 
         paramNames.push('refNo');
@@ -2070,7 +2006,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
     vm.bindSyllabus = function (type) {
 
-        var sCondition = "WHERE enumeration_key in ('"+type+"')";
+        var sCondition = "WHERE enumeration_key in ('" + type + "')";
 
         var strJsonDatas = eval({ strCondition: sCondition });
 
@@ -2105,10 +2041,8 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             vm.Grads = response.data
 
-            for(var i = 0; i < vm.Grads.length; i++)
-            {
-                if(vm.Grads[i]["value"] == vm.Result[0]["graduation"])
-                {
+            for (var i = 0; i < vm.Grads.length; i++) {
+                if (vm.Grads[i]["value"] == vm.Result[0]["graduation"]) {
                     vm.Result[0]["graduation"] = vm.Grads[i]["display_value"];
                 }
             }
@@ -2140,7 +2074,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
     };
 
     vm.bindBloodGroup = function () {
-        
+
         var sCondition = "WHERE enumeration_key in ('Blood_group')";
 
         var strJsonDatas = eval({ strCondition: sCondition });
@@ -2201,40 +2135,35 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             //    vm.Result[0]["date_of_birth"] = dob[0];
             //}
 
-            vm.BloodGroup =  vm.Result[0]["blood_group_id"];
+            vm.BloodGroup = vm.Result[0]["blood_group_id"];
 
             vm.bindBloodGroup();
 
             salaryFill = vm.Result[0]["salary_fill"];
 
-            if (vm.Result[0]["sslc_syllabus"] !== undefined)
-            {
+            if (vm.Result[0]["sslc_syllabus"] !== undefined) {
                 vm.sslcSyllabus = vm.Result[0]["sslc_syllabus"];
 
                 vm.bindSyllabus('Syllabus');
             }
-            else
-            {
+            else {
                 vm.sslcSyllabus = 0;
 
                 vm.bindSyllabus('Syllabus');
             }
 
-            if (vm.Result[0]["twelth_syllabus"] !== undefined)
-            {
+            if (vm.Result[0]["twelth_syllabus"] !== undefined) {
                 vm.twelthSyllabus = vm.Result[0]["twelth_syllabus"];
 
                 vm.bindSyllabus('Syllabus');
             }
-            else
-            {
+            else {
                 vm.twelthSyllabus = 0;
 
                 vm.bindSyllabus('Syllabus');
             }
 
-            if (vm.Result[0]["graduation"] !== undefined)
-            {
+            if (vm.Result[0]["graduation"] !== undefined) {
                 vm.graduation = vm.Result[0]["graduation"];
 
                 if (vm.Result[0]["graduation"] == 0) {
@@ -2243,33 +2172,28 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
                 vm.bindGraduation('Graduation');
             }
-            else
-            {
+            else {
                 vm.graduation = 0;
 
                 vm.bindGraduation('Graduation');
             }
 
-            if (vm.Result[0]["post_graduation"] !== undefined)
-            {
+            if (vm.Result[0]["post_graduation"] !== undefined) {
                 vm.pgraduation = vm.Result[0]["post_graduation"];
 
-                if (vm.Result[0]["post_graduation"] == 0)
-                {
+                if (vm.Result[0]["post_graduation"] == 0) {
                     vm.Result[0]["post_graduation_value"] = "";
                 }
 
                 vm.bindPostGraduation('Post_Graduation');
             }
-            else
-            {
+            else {
                 vm.pgraduation = 0;
 
                 vm.bindPostGraduation('Post_Graduation');
             }
 
-            if (userRoleID == 9 && vm.Result[0]["role_id"] == 2)
-            {
+            if (userRoleID == 9 && vm.Result[0]["role_id"] == 2) {
                 $('#bankStatutory').addClass('hidden');
             }
 
@@ -2287,8 +2211,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             employeeCompany = vm.Result[0]["company_id"];
 
-            if (vm.Result[0]["company_id"] == 3)
-            {
+            if (vm.Result[0]["company_id"] == 3) {
                 $('#ddlShift').val(vm.Result[0]["emp_shift"]).change();
 
                 $('#ddlShiftTime').val(vm.Result[0]["emp_shift_time"]).change();
@@ -2298,27 +2221,23 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             //vm.Designation();
 
-            if (vm.Result[0]["gender"] == 1)
-            {
+            if (vm.Result[0]["gender"] == 1) {
                 vm.Result[0]["gender"] = "Male";
             }
-            else if (vm.Result[0]["gender"] == 2)
-            {
+            else if (vm.Result[0]["gender"] == 2) {
                 vm.Result[0]["gender"] = "Female"
             }
 
             $('#marital').val(vm.Result[0]["maritial_status"]).change();
 
-            if (vm.Result[0]["maritial_status"] == 1)
-            {
+            if (vm.Result[0]["maritial_status"] == 1) {
                 vm.Result[0]["maritial_status"] = "Single";
 
                 $("#spouse").addClass("hidden");
 
                 $("#spouseDIV").addClass("hidden");
             }
-            else if (vm.Result[0]["maritial_status"] == 2)
-            {
+            else if (vm.Result[0]["maritial_status"] == 2) {
                 vm.Result[0]["maritial_status"] = "Married";
 
                 $("#spouse").removeClass("hidden");
@@ -2332,13 +2251,11 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 Result[0]["local_level"] = "";
             }
 
-            if (vm.Result[0]["designation"] === undefined)
-            {
+            if (vm.Result[0]["designation"] === undefined) {
                 vm.Result[0]["designation"] = 'Production Team';
             }
 
-            if (vm.Result[0]["department"] === undefined)
-            {
+            if (vm.Result[0]["department"] === undefined) {
                 vm.Result[0]["department"] = 'BPO';
             }
 
@@ -2373,86 +2290,80 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $("#ddllevel").val(Result[0]["emp_level"]).change();
 
             bindDesignation(Result[0]["emp_desgination"]);
-            
+
             $("#ddlnotice").val(Result[0]["emp_notice_period"]).change();
 
             $("#ddlreview").val(Result[0]["emp_first_review"]).change();
 
             bindManager(Result[0]["report_to_manager"], empRefNo);
 
-            if (Result[0]["file_path"] === undefined)
-            {
+            if (Result[0]["file_path"] === undefined) {
                 Result[0]["file_path"] = "../Content/Employee/EmployeeImages/AdministratorECESIS_59887f8ca64d1.png";
             }
 
-            if (Result[0]["manager_pic"] === undefined)
-            {
+            if (Result[0]["manager_pic"] === undefined) {
                 Result[0]["manager_pic"] = "../Content/Employee/EmployeeImages/AdministratorECESIS_59887f8ca64d1.png";
             }
 
-            if (Result[0]["file_path"] != "")
-            {
+            if (Result[0]["file_path"] != "") {
                 $('#userProfileView').attr('src', Result[0]["file_path"]);
                 $('#imagePreview').attr('src', Result[0]["file_path"]);
             }
-            
+
             vm.GetDocumentDetails();
-            
+
             vm.GetEmpExp(empRefNo);
 
             vm.GetManagerList(empRefNo);
 
             vm.GetSalaryDetails(empRefNo);
-        
+
         });
     };
 
     vm.GetDocumentDetails = function () {
 
         var EmployeeDocuments = [
-                                { doc_name: "Personal File Checklist", doc_completed: "" },
-                                { doc_name: "JOINING FORMS", doc_completed: "" },
-                                { doc_name: "Interview Evaluation Form", doc_completed: "",fileName:"" },
-                                { doc_name: "Biodata/CV/Application Forms", doc_completed: "" },
-                                { doc_name: "Id Proof", doc_completed: "" },
-                                { doc_name: "CERTIFICATES", doc_completed: "" },
-                                { doc_name: "SSLC/ School Leaving Certificate", doc_completed: "" },
-                                { doc_name: "PU or Equivalent", doc_completed: "" },
-                                { doc_name: "UG Degree Certificates", doc_completed: "" },
-                                { doc_name: "PG Degree Certificates", doc_completed: "" },
-                                { doc_name: "Any Other Certificates (if any)", doc_completed: "" },
-                                { doc_name: "Experience Certificate (if any)", doc_completed: "" },
-                                { doc_name: "Salary Certificate From previous employer", doc_completed: "" },
-                                { doc_name: "Relieving Order from previous employer (if any)", doc_completed: "" },
-                                { doc_name: "Reference Check", doc_completed: "" },
-                                { doc_name: "STATUTORY", doc_completed: "" },
-                                { doc_name: "Appointment Letter/ Agreement/Contract/Bond", doc_completed: "" },
-                                { doc_name: "Non Disclosure Agreement", doc_completed: "" },
-                                { doc_name: "Form 11 of EPF", doc_completed: "" },
-                                { doc_name: "Form F of Gratuity", doc_completed: "" },
-                                { doc_name: "Form 1 ESI", doc_completed: "" }];
+            { doc_name: "Personal File Checklist", doc_completed: "" },
+            { doc_name: "JOINING FORMS", doc_completed: "" },
+            { doc_name: "Interview Evaluation Form", doc_completed: "", fileName: "" },
+            { doc_name: "Biodata/CV/Application Forms", doc_completed: "" },
+            { doc_name: "Id Proof", doc_completed: "" },
+            { doc_name: "CERTIFICATES", doc_completed: "" },
+            { doc_name: "SSLC/ School Leaving Certificate", doc_completed: "" },
+            { doc_name: "PU or Equivalent", doc_completed: "" },
+            { doc_name: "UG Degree Certificates", doc_completed: "" },
+            { doc_name: "PG Degree Certificates", doc_completed: "" },
+            { doc_name: "Any Other Certificates (if any)", doc_completed: "" },
+            { doc_name: "Experience Certificate (if any)", doc_completed: "" },
+            { doc_name: "Salary Certificate From previous employer", doc_completed: "" },
+            { doc_name: "Relieving Order from previous employer (if any)", doc_completed: "" },
+            { doc_name: "Reference Check", doc_completed: "" },
+            { doc_name: "STATUTORY", doc_completed: "" },
+            { doc_name: "Appointment Letter/ Agreement/Contract/Bond", doc_completed: "" },
+            { doc_name: "Non Disclosure Agreement", doc_completed: "" },
+            { doc_name: "Form 11 of EPF", doc_completed: "" },
+            { doc_name: "Form F of Gratuity", doc_completed: "" },
+            { doc_name: "Form 1 ESI", doc_completed: "" }];
 
         var Result = vm.Result[0];
 
         vm.EmployeeDocuments = EmployeeDocuments;
 
-        if (Result["interview_form"] === undefined)
-        {
+        if (Result["interview_form"] === undefined) {
             EmployeeDocuments[0]["doc_completed"] = "fa fa-times";
         }
         else {
             EmployeeDocuments[0]["doc_completed"] = "fa fa-check";
         }
 
-        if(Result["interview_form"] === undefined)
-        {
+        if (Result["interview_form"] === undefined) {
             EmployeeDocuments[2]["doc_completed"] = "fa fa-times";
 
             $('#interviewFormView').addClass('hidden');
             $('#interviewFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[2]["doc_completed"] = "fa fa-check";
 
             var res = Result["interview_form"].split("_");
@@ -2463,15 +2374,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#interviewFormUpload').addClass('hidden');
         }
 
-        if (Result["cv"] === undefined)
-        {
+        if (Result["cv"] === undefined) {
             EmployeeDocuments[3]["doc_completed"] = "fa fa-times";
 
             $('#cvFormView').addClass('hidden');
             $('#cvFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[3]["doc_completed"] = "fa fa-check";
 
             var res = Result["cv"].split("_");
@@ -2482,15 +2391,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#cvFormUpload').addClass('hidden');
         }
 
-        if (Result["id_proof"] === undefined)
-        {
+        if (Result["id_proof"] === undefined) {
             EmployeeDocuments[4]["doc_completed"] = "fa fa-times";
 
             $('#idFormView').addClass('hidden');
             $('#idFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[4]["doc_completed"] = "fa fa-check";
 
             var res = Result["id_proof"].split("_");
@@ -2501,15 +2408,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#idFormUpload').addClass('hidden');
         }
 
-        if (Result["sslc_certificate"] === undefined)
-        {
+        if (Result["sslc_certificate"] === undefined) {
             EmployeeDocuments[6]["doc_completed"] = "fa fa-times";
 
             $('#sslcFormView').addClass('hidden');
             $('#sslcFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[6]["doc_completed"] = "fa fa-check";
 
             var res = Result["sslc_certificate"].split("_");
@@ -2520,15 +2425,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#sslcFormUpload').addClass('hidden');
         }
 
-        if (Result["pu_certificate"] === undefined)
-        {
+        if (Result["pu_certificate"] === undefined) {
             EmployeeDocuments[7]["doc_completed"] = "fa fa-times";
 
             $('#puFormView').addClass('hidden');
             $('#puFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[7]["doc_completed"] = "fa fa-check";
 
             var res = Result["pu_certificate"].split("_");
@@ -2539,15 +2442,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#puFormUpload').addClass('hidden');
         }
 
-        if (Result["ug_certificate"] === undefined)
-        {
+        if (Result["ug_certificate"] === undefined) {
             EmployeeDocuments[8]["doc_completed"] = "fa fa-times";
 
             $('#ugFormView').addClass('hidden');
             $('#ugFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[8]["doc_completed"] = "fa fa-check";
 
             var res = Result["ug_certificate"].split("_");
@@ -2575,15 +2476,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#pgFormUpload').addClass('hidden');
         }
 
-        if (Result["other_certificate"] === undefined)
-        {
+        if (Result["other_certificate"] === undefined) {
             EmployeeDocuments[10]["doc_completed"] = "fa fa-times";
 
             $('#otherFormView').addClass('hidden');
             $('#otherFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[10]["doc_completed"] = "fa fa-check";
 
             var res = Result["other_certificate"].split("_");
@@ -2594,15 +2493,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#otherFormUpload').addClass('hidden');
         }
 
-        if (Result["experience_certificate"] === undefined)
-        {
+        if (Result["experience_certificate"] === undefined) {
             EmployeeDocuments[11]["doc_completed"] = "fa fa-times";
 
             $('#experienceFormView').addClass('hidden');
             $('#experienceFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[11]["doc_completed"] = "fa fa-check";
 
             var res = Result["experience_certificate"].split("_");
@@ -2613,15 +2510,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#experienceFormUpload').addClass('hidden');
         }
 
-        if (Result["salary_certificate"] === undefined)
-        {
+        if (Result["salary_certificate"] === undefined) {
             EmployeeDocuments[12]["doc_completed"] = "fa fa-times";
 
             $('#salaryFormView').addClass('hidden');
             $('#salaryFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[12]["doc_completed"] = "fa fa-check";
 
             var res = Result["salary_certificate"].split("_");
@@ -2632,15 +2527,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#salaryFormUpload').addClass('hidden');
         }
 
-        if (Result["releiving_certificate"] === undefined)
-        {
+        if (Result["releiving_certificate"] === undefined) {
             EmployeeDocuments[13]["doc_completed"] = "fa fa-times";
 
             $('#releivingFormView').addClass('hidden');
             $('#releivingFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[13]["doc_completed"] = "fa fa-check";
 
             var res = Result["releiving_certificate"].split("_");
@@ -2651,15 +2544,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#releivingFormUpload').addClass('hidden');
         }
 
-        if (Result["reference_check"] === undefined)
-        {
+        if (Result["reference_check"] === undefined) {
             EmployeeDocuments[14]["doc_completed"] = "fa fa-times";
 
             $('#referenceFormView').addClass('hidden');
             $('#referenceFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[14]["doc_completed"] = "fa fa-check";
 
             var res = Result["reference_check"].split("_");
@@ -2670,15 +2561,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#referenceFormUpload').addClass('hidden');
         }
 
-        if (Result["appoinment_letter"] === undefined)
-        {
+        if (Result["appoinment_letter"] === undefined) {
             EmployeeDocuments[16]["doc_completed"] = "fa fa-times";
 
             $('#appoinmentFormView').addClass('hidden');
             $('#appoinmentFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[16]["doc_completed"] = "fa fa-check";
 
             var res = Result["appoinment_letter"].split("_");
@@ -2689,15 +2578,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#appoinmentFormUpload').addClass('hidden');
         }
 
-        if (Result["non_disclosure_agreement"] === undefined)
-        {
+        if (Result["non_disclosure_agreement"] === undefined) {
             EmployeeDocuments[17]["doc_completed"] = "fa fa-times";
 
             $('#nondisclosureFormView').addClass('hidden');
             $('#nondisclosureFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[17]["doc_completed"] = "fa fa-check";
 
             var res = Result["non_disclosure_agreement"].split("_");
@@ -2708,15 +2595,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#nondisclosureFormUpload').addClass('hidden');
         }
 
-        if (Result["form_11"] === undefined)
-        {
+        if (Result["form_11"] === undefined) {
             EmployeeDocuments[18]["doc_completed"] = "fa fa-times";
 
             $('#epfFormView').addClass('hidden');
             $('#epfFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[18]["doc_completed"] = "fa fa-check";
 
             var res = Result["form_11"].split("_");
@@ -2727,15 +2612,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#epfFormUpload').addClass('hidden');
         }
 
-        if (Result["form_f"] === undefined)
-        {
+        if (Result["form_f"] === undefined) {
             EmployeeDocuments[19]["doc_completed"] = "fa fa-times";
 
             $('#gratuityFormView').addClass('hidden');
             $('#gratuityFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[19]["doc_completed"] = "fa fa-check";
 
             var res = Result["form_f"].split("_");
@@ -2746,15 +2629,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $('#gratuityFormUpload').addClass('hidden');
         }
 
-        if (Result["form_1"] === undefined)
-        {
+        if (Result["form_1"] === undefined) {
             EmployeeDocuments[20]["doc_completed"] = "fa fa-times";
 
             $('#esiFormView').addClass('hidden');
             $('#esiFormUpload').removeClass('hidden');
         }
-        else
-        {
+        else {
             EmployeeDocuments[20]["doc_completed"] = "fa fa-check";
 
             var res = Result["form_1"].split("_");
@@ -2811,7 +2692,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         });
     };
 
-    vm.DoEmployeeAction = function (ref, manager, empName ,value) {
+    vm.DoEmployeeAction = function (ref, manager, empName, value) {
 
         var sMailTo, sManagerName, username, password, sMailBody;
 
@@ -2838,7 +2719,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         });
 
 
-        if(value == 1)//1 for Accept
+        if (value == 1)//1 for Accept
         {
             var valueData = "{ is_accept: 1}";
 
@@ -2996,7 +2877,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             });
         }
-        else if(value == 2) //2 fro Reject
+        else if (value == 2) //2 fro Reject
         {
             var valueData = "{ is_accept: 2}";
 
@@ -3155,8 +3036,8 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         var s = parent.document.getElementById('framecontent').contentWindow;
 
         //.myClick(refeNo)
-       // parent.window.frames['framecontent'].myClick();
-       // vm.BindValues(refeNo);
+        // parent.window.frames['framecontent'].myClick();
+        // vm.BindValues(refeNo);
     };
 
     vm.GetPassword = function (ref) {
@@ -3174,7 +3055,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         var msg2 = JSON.stringify(strJsonDatas);
 
         //var Condition = "where ref_no = "+ ref ;
-        
+
         //var strJsonDatas = eval({ strCondition: Condition });
 
         //var msg2 = JSON.stringify(strJsonDatas);
@@ -3198,8 +3079,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var cup = $("#curPass").val();
 
-        if(cup != password)
-        {
+        if (cup != password) {
             msgalert("Error", "Incorrect Current Password", 3);
 
             $('#btnSubmit').attr('disabled', 'disabled');
@@ -3215,14 +3095,12 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var newConfPass = $("#confNewPass").val();
 
-        if(newPass != newConfPass)
-        {
+        if (newPass != newConfPass) {
             msgalert("Error", "Password doesn't match", 3);
 
             return;
         }
-        if(newPass.length < 8)
-        {
+        if (newPass.length < 8) {
             msgalert("Warning", "Password Length Should be of minimum 8 characters", 2);
 
             return;
@@ -3234,7 +3112,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var valueData = "{password: '" + sPass + "', updated_by: '" + refNo + "', updated_date: '" + curDate + "'}";
 
-        var sCondition = "WHERE ref_no = " + refNo ;
+        var sCondition = "WHERE ref_no = " + refNo;
 
         var strJsonDatas = eval({ strJsonData: valueData, strCondition: sCondition, strSessionID: null });
 
@@ -3246,7 +3124,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             data: msg2,
             dataType: 'json',
             headers: { "Content-Type": "application/json" }
-        }).then(function (response){
+        }).then(function (response) {
 
             alert("Password Changed Successfully! Now you can login..!");
 
@@ -3259,11 +3137,10 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
     };
 
     vm.CheckUsername = function () {
-        
+
         var username = $("#usernames").val();
 
-        if (username == "" || username == null)
-        {
+        if (username == "" || username == null) {
             $("#errorClass").removeClass("hidden");
 
             $("#errorClass1").addClass("hidden");
@@ -3271,7 +3148,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             return;
         }
 
-        var Condition = "where emp_ref_code = '" + username +"'";
+        var Condition = "where emp_ref_code = '" + username + "'";
 
         var strJsonDatas = eval({ strCondition: Condition });
 
@@ -3287,13 +3164,11 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             var name = vm.sUserDetails[0];
 
-            if (name === undefined)
-            {
+            if (name === undefined) {
                 $("#errorClass").addClass("hidden");
                 $("#errorClass1").removeClass("hidden");
             }
-            else
-            {
+            else {
                 var name = vm.sUserDetails[0]["emp_first_name"] + ' ' + vm.sUserDetails[0]["emp_last_name"];
 
                 var ref = vm.sUserDetails[0]["emp_ref_no"];
@@ -3376,8 +3251,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             return;
         }
-        else
-        {
+        else {
             $("#verificationCode").addClass("hidden");
 
             $("#newPassword").removeClass("hidden");
@@ -3453,7 +3327,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         if (id == "managerMeeti") {
             document.getElementById("managerNoti").checked = false;
-                    }
+        }
         else if (id == "managerNoti") {
             document.getElementById("managerMeeti").checked = false;
         }
@@ -3465,14 +3339,12 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var date = $("#txtfromdt").val();
 
-        if(reason == "")
-        {
+        if (reason == "") {
             $("#reasonError").removeClass("hidden");
-            
+
             return;
         }
-        else
-        {
+        else {
             $("#reasonError").addClass("hidden");
         }
 
@@ -3485,28 +3357,23 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             $("#dateError").addClass("hidden");
         }
 
-        if (document.getElementById("managerNoti").checked == true)
-        {
+        if (document.getElementById("managerNoti").checked == true) {
             mgrNotifi = 1;
         }
-        else
-        {
+        else {
             mgrNotifi = 0;
         }
 
-        if (document.getElementById("managerMeeti").checked == true)
-        {
+        if (document.getElementById("managerMeeti").checked == true) {
             mgrMeeting = 1;
         }
-        else
-        {
+        else {
             mgrMeeting = 0;
         }
-        
+
         var curDate = formatDate(new Date());
 
-        if(mgrNotifi == 1)
-        {
+        if (mgrNotifi == 1) {
             var valueData = "{ref_no:'" + separationRef + "',applied_date:'" + curDate + "',preferred_date:'" + date + "',notice_date:'" + noticeDate + "',reason:'" +
                 reason + "',report_to_manager: 2, status: 0, is_manager_approve: 0,is_ceo_approve: 0 ,is_direct_admin: 1 }";
 
@@ -3545,8 +3412,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             });
         }
-        else
-        {
+        else {
             var valueData = "{ref_no:'" + separationRef + "', applied_date:'" + curDate + "',preferred_date:'" + date + "',notice_date:'" + noticeDate + "', reason:'" +
                 reason + "', report_to_manager:'" + sepManager + "', status: 0, is_manager_approve:0, is_ceo_approve:0, is_direct_admin: 0}";
 
@@ -3575,8 +3441,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                     data: msg2
                 }).then(function (response) {
 
-                    if (mgrMeeting == 1)
-                    {
+                    if (mgrMeeting == 1) {
                         var Data = "{type: 'Meeting....', manager_ref_no: '" + sepManager + "', emp_ref_no: '" + separationRef + "', page_name: 'Employee Seperation', page_url:'../Employee/SeparationList', page_id: 10023, role_id: '" + sepManagerRole + "', delete_status: 0 }";
 
                         var strJsonDatas1 = eval({ strJsonData: Data, strFieldNames: null, strSessionID: null });
@@ -3595,8 +3460,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
                         });
                     }
-                    else
-                    {
+                    else {
                         msgalert("Success", "Separation Applied", 1);
 
                         window.location.reload();
@@ -3607,7 +3471,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             });
         }
 
-        
+
     };
 
     vm.GetSeperationList = function (roleID, ref) {
@@ -3629,19 +3493,17 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         var strJsonDatas = eval({ strSessionID: '', ProcParameters: paramNames, ProcInputData: paramValues });
 
         var msg2 = JSON.stringify(strJsonDatas);
-        
+
         $http({
             method: 'POST',
             url: 'SelectSeperationList',
             data: msg2
         }).then(function (response) {
 
-            if (response.data == [])
-            {
+            if (response.data == []) {
                 vm.SeparationList["reason"] = "No Datas Found";
             }
-            else
-            {
+            else {
                 vm.SeparationList = response.data
 
                 $('#sepList').removeClass('hidden');
@@ -3653,7 +3515,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 $('#seperationList').addClass('hidden');
             }
 
-            
+
 
         }, function (error) {
 
@@ -3715,16 +3577,16 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var report_id = "62";
 
-        var file_name = "Employee Details "+ fName + " " + lName;
-      
+        var file_name = "Employee Details " + fName + " " + lName;
+
         parent.document.getElementById('reportFrame').src = '../Content/ReportsData/ReportViewer.aspx?report_id=' + report_id + '&report_codition=' + report_codition + '&file_name=' + file_name;
-        
+
         parent.$("#employee_report").modal({
             "backdrop": "static",
             "keyboard": true,
             "show": true
         });
-        
+
     };
 
     var seperation;
@@ -3738,17 +3600,14 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var resignDate;
 
-        if(document.getElementById('notice').checked == true)
-        {
+        if (document.getElementById('notice').checked == true) {
             resignDate = 1;
         }
-        else if (document.getElementById('prefer').checked == true)
-        {
+        else if (document.getElementById('prefer').checked == true) {
             resignDate = 2;
         }
 
-        if (type == 1)
-        {
+        if (type == 1) {
             var paramNames = [], paramValues = [];
 
             paramNames.push('type');
@@ -3767,8 +3626,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             paramValues.push(seperation);
         }
-        else if (type == 2)
-        {
+        else if (type == 2) {
 
             var reason = $('#txtReason').val();
 
@@ -3827,7 +3685,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         paramNames.push('sRoleId');
 
         paramValues.push(roleId);
-        
+
         paramNames.push('type');
 
         paramValues.push(1);
@@ -3844,26 +3702,23 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
             vm.BirthdayEmployees = response.data;
 
-            for (var i = 0; i < vm.BirthdayEmployees.length; i++)
-            {
-                if (i == 0)
-                {
+            for (var i = 0; i < vm.BirthdayEmployees.length; i++) {
+                if (i == 0) {
                     //BirthEmployees = vm.BirthdayEmployees[i].emp_full_name;
 
                     BirthEmployees = BirthEmployees + '<br/><br/>' + vm.BirthdayEmployees[i].emp_full_name;
 
                     BirthEmpCode = vm.BirthdayEmployees[i].emp_ref_code;
                 }
-                else
-                {
+                else {
                     BirthEmployees = BirthEmployees + '<br/><br/>' + vm.BirthdayEmployees[i].emp_full_name;
 
                     BirthEmpCode = BirthEmpCode + '&nbsp;' + vm.BirthdayEmployees[i].emp_ref_code;
                 }
 
-                
+
             }
-            
+
             var paramNames = [], paramValues = [];
 
             paramNames.push('sRoleId');
@@ -3890,12 +3745,10 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
                 for (var i = 0; i < vm.MailId.length; i++) {
 
-                    if (i == 0)
-                    {
+                    if (i == 0) {
                         vm.EmpMailId = vm.MailId[i].mail_id;
                     }
-                    else
-                    {
+                    else {
                         vm.EmpMailId = vm.EmpMailId + ',' + vm.MailId[i].mail_id;
                     }
                 }
@@ -3903,7 +3756,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             }, function (error) {
 
             });
-            
+
         }, function (error) {
 
         });
@@ -3912,18 +3765,16 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
     var Birthtemplate;
 
-    vm.SelectTemplate = function (template){
+    vm.SelectTemplate = function (template) {
 
-        if(template == 'temp1')
-        {
+        if (template == 'temp1') {
             Birthtemplate = 'temp1';
 
             document.getElementById("temp1").style.border = "4px solid rgb(46, 177, 40)";
 
             document.getElementById("temp2").style.border = "2px solid white";
         }
-        else if(template == 'temp2')
-        {
+        else if (template == 'temp2') {
             Birthtemplate = 'temp2';
 
             document.getElementById("temp2").style.border = "4px solid rgb(46, 177, 40)";
@@ -3939,8 +3790,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var toMailId = $("#txtToMail").val();
 
-        if (toMailId == "")
-        {
+        if (toMailId == "") {
             msgalert("ERROR", "Please Enter TO Mail Id to send Birthday Mail", 3);
 
             return;
@@ -3948,7 +3798,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         var ccMail = "kv@ecesistech.com, tk@ecesistech.com, hr@ecesistech.com";
 
-        if (Birthtemplate == 'temp1'){
+        if (Birthtemplate == 'temp1') {
 
             tempId = 28;
 
@@ -3959,8 +3809,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             tempId = 29;
         }
 
-        if (tempId == "")
-        {
+        if (tempId == "") {
             msgalert("ERROR", "Please Choose any one template", 3);
 
             return;
@@ -4110,11 +3959,11 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
     });
 
     // Example function to toggle the visibility
-   
+
     function updatedaysinweek(year, month, week) {
         // Assuming getDaysInWeek returns an array of days for the given year, month, and week
         let days = getDaysInWeek(year, month, week);
-    
+
         // Update the daysInWeek in $scope
         $scope.daysInWeek = days;
 
@@ -4130,7 +3979,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
         }
     }
 
-  
+
     vm.selectedWeek = 1;
     // Get the current date
     var currentDate = new Date();
@@ -4288,6 +4137,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                 employee.totalWH += entry.WH;
                 employee.totalRH += Math.max(0, entry.RH); // Ignore negative RH
                 employee.totalOT += entry.OT;
+
+                // Format the totals to two decimal places
+                employee.totalHours = parseFloat(employee.totalHours.toFixed(2));
+                employee.totalWH = parseFloat(employee.totalWH.toFixed(2));
+                employee.totalRH = parseFloat(employee.totalRH.toFixed(2));
+                employee.totalOT = parseFloat(employee.totalOT.toFixed(2));
+
             });
 
             // Convert grouped data into an array
@@ -4296,6 +4152,13 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
                     attendanceRecords.push(groupedAttendance[emp_ref_no]);
                 }
             }
+
+
+            // Sort the attendanceRecords array by totalHours in descending order
+            attendanceRecords.sort(function (a, b) {
+                return b.totalHours - a.totalHours; // Sort by totalHours descending
+            });
+
 
             // Update the $scope with the formatted data
             $scope.attendanceRecords = attendanceRecords;
@@ -4310,18 +4173,30 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
     //$scope.attendanceRecords = [
     //{
     //    emp_name: 'JIJA JOSEPH',
+    //    emp_ref_no: 108,
+    //    totalHours: 16,     // Higher total hours, appears first
+    //    totalWH: 13.5,
+    //    totalRH: 6.5,
+    //    totalOT: 4,
     //    days: [
-    //        { day: 22, WH: 12.00, RH: -4.00, OT: 4.00 },
-    //        { day: 24, WH: 1.50, RH: 6.50, OT: 0.00 }
+    //        { day: 22, WH: 12.00, RH: 0.00, OT: 4.00, Status: 'FULL DAY', TotalHours: 8 },
+    //        { day: 24, WH: 1.50, RH: 6.50, OT: 0.00, Status: 'FULL DAY', TotalHours: 8 }
     //    ]
     //},
     //{
     //    emp_name: 'Test Admin',
+    //    emp_ref_no: 1,
+    //    totalHours: 0,      // Lower total hours, appears later
+    //    totalWH: 0,
+    //    totalRH: 0,
+    //    totalOT: 0,
     //    days: [
-    //        { day: 24, WH: 0.00, RH: 0.00, OT: 0.00 }
+    //        { day: 24, WH: 0.00, RH: 0.00, OT: 0.00, Status: 'PLANNED LEAVE', TotalHours: 0 }
     //    ]
     //}
     //];
+
+
 
     // Get attendance for a specific day
     $scope.getAttendanceForDay = function (days, day) {
@@ -4419,133 +4294,133 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             },
             body: JSON.stringify(requestBody)
         })
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            if (data.apiStatus === 0) {
-                try {
-                    // Extract and parse the attendanceRecord from apiStatusMessage
-                    var apiStatusMessage = data.apiStatusMessage;
-                    var jsonStartIndex = apiStatusMessage.indexOf('[');
-                    var jsonEndIndex = apiStatusMessage.lastIndexOf(']') + 1;
-                    var jsonString = apiStatusMessage.substring(jsonStartIndex, jsonEndIndex);
-                    var attendanceRecord = JSON.parse(jsonString);
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.apiStatus === 0) {
+                    try {
+                        // Extract and parse the attendanceRecord from apiStatusMessage
+                        var apiStatusMessage = data.apiStatusMessage;
+                        var jsonStartIndex = apiStatusMessage.indexOf('[');
+                        var jsonEndIndex = apiStatusMessage.lastIndexOf(']') + 1;
+                        var jsonString = apiStatusMessage.substring(jsonStartIndex, jsonEndIndex);
+                        var attendanceRecord = JSON.parse(jsonString);
 
-                    if (attendanceRecord.length === 0) {
+                        if (attendanceRecord.length === 0) {
 
-                        $("#attendance_info .modal-body .punch-det.empName p").empty().text(empName);
-                        $("#attendance_info .modal-body .punch-det.attendance-title p").empty().text(title);
+                            $("#attendance_info .modal-body .punch-det.empName p").empty().text(empName);
+                            $("#attendance_info .modal-body .punch-det.attendance-title p").empty().text(title);
 
-                        $("#attendance_info .modal-body .punch-info .punch-hours.total-hours span").empty().text("00:00:00 hrs");
-                        $("#attendance_info .modal-body .punch-info .punch-hours.worked-hours span").empty().text("00:00:00 hrs");
-                        $("#attendance_info .modal-body .punch-info .punch-hours.break-hours span").empty().text("00:00:00 hrs");
-                        $("#attendance_info .modal-body .statistics .stats-box.basic-working-hours h3").empty().text("0 hrs");
-                        $("#attendance_info .modal-body .statistics .stats-box.overtime h3").empty().text("0 hrs");
+                            $("#attendance_info .modal-body .punch-info .punch-hours.total-hours span").empty().text("00:00:00 hrs");
+                            $("#attendance_info .modal-body .punch-info .punch-hours.worked-hours span").empty().text("00:00:00 hrs");
+                            $("#attendance_info .modal-body .punch-info .punch-hours.break-hours span").empty().text("00:00:00 hrs");
+                            $("#attendance_info .modal-body .statistics .stats-box.basic-working-hours h3").empty().text("0 hrs");
+                            $("#attendance_info .modal-body .statistics .stats-box.overtime h3").empty().text("0 hrs");
 
-                        var activityList = $("#attendance_info .modal-body .res-activity-list.activities");
-                        activityList.empty(); // Clear existing list
+                            var activityList = $("#attendance_info .modal-body .res-activity-list.activities");
+                            activityList.empty(); // Clear existing list
 
-                        var breakactivityList = $("#attendance_info .modal-body .res-activity-list.breakactivites");
-                        breakactivityList.empty(); // Clear existing list
+                            var breakactivityList = $("#attendance_info .modal-body .res-activity-list.breakactivites");
+                            breakactivityList.empty(); // Clear existing list
 
-                        var punchInItem = '<li>' +
-                         '<p class="mb-0">Punch In at</p>' +
-                         '<p class="res-activity-time">' +
-                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
-                         '</p>' +
-                     '</li>';
+                            var punchInItem = '<li>' +
+                                '<p class="mb-0">Punch In at</p>' +
+                                '<p class="res-activity-time">' +
+                                '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                                '</p>' +
+                                '</li>';
 
-                        activityList.append(punchInItem);
+                            activityList.append(punchInItem);
 
-                        var punchOutItem = '<li>' +
-                         '<p class="mb-0">Punch Out at</p>' +
-                         '<p class="res-activity-time">' +
-                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
-                         '</p>' +
-                     '</li>';
+                            var punchOutItem = '<li>' +
+                                '<p class="mb-0">Punch Out at</p>' +
+                                '<p class="res-activity-time">' +
+                                '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                                '</p>' +
+                                '</li>';
 
-                        activityList.append(punchOutItem);
+                            activityList.append(punchOutItem);
 
-                        var breakpunchInItem = '<li>' +
-                         '<p class="mb-0">Break In at</p>' +
-                         '<p class="res-activity-time">' +
-                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
-                         '</p>' +
-                     '</li>';
-                        breakactivityList.append(breakpunchInItem);
+                            var breakpunchInItem = '<li>' +
+                                '<p class="mb-0">Break In at</p>' +
+                                '<p class="res-activity-time">' +
+                                '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                                '</p>' +
+                                '</li>';
+                            breakactivityList.append(breakpunchInItem);
 
-                        var breakpunchOutItem = '<li>' +
-                         '<p class="mb-0">Break In at</p>' +
-                         '<p class="res-activity-time">' +
-                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
-                         '</p>' +
-                     '</li>';
-                        breakactivityList.append(breakpunchOutItem);
+                            var breakpunchOutItem = '<li>' +
+                                '<p class="mb-0">Break In at</p>' +
+                                '<p class="res-activity-time">' +
+                                '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                                '</p>' +
+                                '</li>';
+                            breakactivityList.append(breakpunchOutItem);
 
-                    }
-                    else {
-                        var attendanceIds = attendanceRecord.map(function (record) {
-                            return record.Attendance_Id;
-                        });
+                        }
+                        else {
+                            var attendanceIds = attendanceRecord.map(function (record) {
+                                return record.Attendance_Id;
+                            });
 
 
-                        console.log(attendanceIds);
+                            console.log(attendanceIds);
 
-                        var requestBodyBreakTimes = {
-                            break_Id: 0,
-                            emp_Ref_No: 0,
-                            attendance_Ids: attendanceIds,
-                            break_In_Time: "string",
-                            break_Out_Time: "string",
-                            total_Break_Hours: "string",
-                            remarks: "string"
+                            var requestBodyBreakTimes = {
+                                break_Id: 0,
+                                emp_Ref_No: 0,
+                                attendance_Ids: attendanceIds,
+                                break_In_Time: "string",
+                                break_Out_Time: "string",
+                                total_Break_Hours: "string",
+                                remarks: "string"
+                            }
+
+                            fetch(GetAllBreakTimesApiUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(requestBodyBreakTimes)
+                            })
+                                .then(function (response) {
+                                    return response.json();
+                                })
+                                .then(function (data) {
+                                    if (data.apiStatus === 0) {
+                                        try {
+                                            // Extract and parse the attendanceRecord from apiStatusMessage
+                                            var breaktimeapiStatusMessage = data.apiStatusMessage;
+                                            var breaktimejsonStartIndex = breaktimeapiStatusMessage.indexOf('[');
+                                            var breaktimejsonEndIndex = breaktimeapiStatusMessage.lastIndexOf(']') + 1;
+                                            var breaktimejsonString = breaktimeapiStatusMessage.substring(breaktimejsonStartIndex, breaktimejsonEndIndex);
+                                            var BreakTimeRecord = JSON.parse(breaktimejsonString);
+
+                                            callback(attendanceRecord, BreakTimeRecord, empName, title);
+                                        }
+                                        catch (e) {
+                                            console.error("Error parsing break time data:", e);
+                                        }
+                                    }
+                                })
+                                .catch(function (error) {
+                                    console.error("Fetch Error:", error);
+                                });
                         }
 
-                        fetch(GetAllBreakTimesApiUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(requestBodyBreakTimes)
-                        })
-                        .then(function (response) {
-                            return response.json();
-                        })
-                        .then(function (data) {
-                            if (data.apiStatus === 0) {
-                                try {
-                                    // Extract and parse the attendanceRecord from apiStatusMessage
-                                    var breaktimeapiStatusMessage = data.apiStatusMessage;
-                                    var breaktimejsonStartIndex = breaktimeapiStatusMessage.indexOf('[');
-                                    var breaktimejsonEndIndex = breaktimeapiStatusMessage.lastIndexOf(']') + 1;
-                                    var breaktimejsonString = breaktimeapiStatusMessage.substring(breaktimejsonStartIndex, breaktimejsonEndIndex);
-                                    var BreakTimeRecord = JSON.parse(breaktimejsonString);
 
-                                    callback(attendanceRecord, BreakTimeRecord, empName, title);
-                                }
-                                catch (e) {
-                                    console.error("Error parsing break time data:", e);
-                                }
-                            }
-                        })
-                        .catch(function (error) {
-                            console.error("Fetch Error:", error);
-                        });
+
+                    } catch (e) {
+                        console.error("Error parsing attendance data:", e);
                     }
-                    
-
-                    
-                } catch (e) {
-                    console.error("Error parsing attendance data:", e);
+                } else {
+                    console.error("API Error: " + data.apiStatusMessage);
                 }
-            } else {
-                console.error("API Error: " + data.apiStatusMessage);
-            }
-        })
-        .catch(function (error) {
-            console.error("Fetch Error:", error);
-        });
+            })
+            .catch(function (error) {
+                console.error("Fetch Error:", error);
+            });
     }
 
     function updateModalContent(attendanceData, BreakTimeData, empName, title) {
@@ -4556,7 +4431,7 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
 
         if (BreakTimeData.length === 0) {
             console.log("No breaktime data available.");
-            
+
             // Assuming the first record for punch in and out times
             var firstRecord = attendanceData[0];
             var punchInTime = firstRecord.Login_Time;
@@ -4669,42 +4544,42 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             breakactivityList.empty(); // Clear existing list
 
             var breakpunchInItem = '<li>' +
-                         '<p class="mb-0">Break In at</p>' +
-                         '<p class="res-activity-time">' +
-                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
-                         '</p>' +
-                     '</li>';
+                '<p class="mb-0">Break In at</p>' +
+                '<p class="res-activity-time">' +
+                '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                '</p>' +
+                '</li>';
             breakactivityList.append(breakpunchInItem);
 
             var breakpunchOutItem = '<li>' +
-                         '<p class="mb-0">Break In at</p>' +
-                         '<p class="res-activity-time">' +
-                             '<i class="fa fa-clock-o"></i> ' + 'N/A' +
-                         '</p>' +
-                     '</li>';
+                '<p class="mb-0">Break In at</p>' +
+                '<p class="res-activity-time">' +
+                '<i class="fa fa-clock-o"></i> ' + 'N/A' +
+                '</p>' +
+                '</li>';
             breakactivityList.append(breakpunchOutItem);
 
             attendanceData.forEach(function (record) {
                 if (record.Login_Time) {
                     var punchInItem = '<li>' +
-                         '<p class="mb-0">Punch In at</p>' +
-                         '<p class="res-activity-time">' +
-                             '<i class="fa fa-clock-o"></i> ' + new Date(record.Login_Time).toLocaleString('en-US', options) +
-                         '</p>' +
-                     '</li>';
+                        '<p class="mb-0">Punch In at</p>' +
+                        '<p class="res-activity-time">' +
+                        '<i class="fa fa-clock-o"></i> ' + new Date(record.Login_Time).toLocaleString('en-US', options) +
+                        '</p>' +
+                        '</li>';
                     activityList.append(punchInItem);
                 }
                 if (record.Logout_Time) {
                     var punchOutItem = '<li>' +
                         '<p class="mb-0">Punch Out at</p>' +
                         '<p class="res-activity-time">' +
-                            '<i class="fa fa-clock-o"></i> ' + new Date(record.Logout_Time).toLocaleString('en-US', options) +
+                        '<i class="fa fa-clock-o"></i> ' + new Date(record.Logout_Time).toLocaleString('en-US', options) +
                         '</p>' +
-                    '</li>';
+                        '</li>';
                     activityList.append(punchOutItem);
                 }
             });
-            
+
         }
         else {
             // Assuming the first record for punch in and out times
@@ -4843,20 +4718,20 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             attendanceData.forEach(function (record) {
                 if (record.Login_Time) {
                     var punchInItem = '<li>' +
-                         '<p class="mb-0">Punch In at</p>' +
-                         '<p class="res-activity-time">' +
-                             '<i class="fa fa-clock-o"></i> ' + new Date(record.Login_Time).toLocaleString('en-US', options) +
-                         '</p>' +
-                     '</li>';
+                        '<p class="mb-0">Punch In at</p>' +
+                        '<p class="res-activity-time">' +
+                        '<i class="fa fa-clock-o"></i> ' + new Date(record.Login_Time).toLocaleString('en-US', options) +
+                        '</p>' +
+                        '</li>';
                     activityList.append(punchInItem);
                 }
                 if (record.Logout_Time) {
                     var punchOutItem = '<li>' +
                         '<p class="mb-0">Punch Out at</p>' +
                         '<p class="res-activity-time">' +
-                            '<i class="fa fa-clock-o"></i> ' + new Date(record.Logout_Time).toLocaleString('en-US', options) +
+                        '<i class="fa fa-clock-o"></i> ' + new Date(record.Logout_Time).toLocaleString('en-US', options) +
                         '</p>' +
-                    '</li>';
+                        '</li>';
                     activityList.append(punchOutItem);
                 }
             });
@@ -4866,26 +4741,26 @@ myApp.controller('Employees', function ($scope, $http, $location, $window) {
             BreakTimeData.forEach(function (breakrecord) {
                 if (breakrecord.Break_In_Time) {
                     var breakpunchInItem = '<li>' +
-                         '<p class="mb-0">Break In at</p>' +
-                         '<p class="res-activity-time">' +
-                             '<i class="fa fa-clock-o"></i> ' + new Date(breakrecord.Break_In_Time).toLocaleString('en-US', options) +
-                         '</p>' +
-                     '</li>';
+                        '<p class="mb-0">Break In at</p>' +
+                        '<p class="res-activity-time">' +
+                        '<i class="fa fa-clock-o"></i> ' + new Date(breakrecord.Break_In_Time).toLocaleString('en-US', options) +
+                        '</p>' +
+                        '</li>';
                     breakactivityList.append(breakpunchInItem);
                 }
                 if (breakrecord.Break_Out_Time) {
                     var breakpunchOutItem = '<li>' +
                         '<p class="mb-0">Break Out at</p>' +
                         '<p class="res-activity-time">' +
-                            '<i class="fa fa-clock-o"></i> ' + new Date(breakrecord.Break_Out_Time).toLocaleString('en-US', options) +
+                        '<i class="fa fa-clock-o"></i> ' + new Date(breakrecord.Break_Out_Time).toLocaleString('en-US', options) +
                         '</p>' +
-                    '</li>';
+                        '</li>';
                     breakactivityList.append(breakpunchOutItem);
                 }
             });
         }
 
-        
+
     }
 
 });
